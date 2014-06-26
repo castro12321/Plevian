@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Plevian
+namespace Plevian.Map
 {
     class MapFileReader
     {
-        public static void save(Map map, File mapFile)
+        public void save(Map map, File mapFile)
         {
         }
     }
