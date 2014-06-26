@@ -13,7 +13,6 @@ namespace Plevian
 
         public Map(int x, int y)
         {
-
             fields = new TerrainTypes[x, y];
             
             generateMap();
