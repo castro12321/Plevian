@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Plevian
 {
@@ -35,6 +36,9 @@ namespace Plevian
             map.place(new Map.Location(1, 3), TerrainTypes.MOUNTAINS);
             map.place(new Map.Location(2, 3), TerrainTypes.VILLAGE);
             map.place(new Map.Location(3, 3), TerrainTypes.PLAINS);
+
+            Save save = new Save("save1");
+            new Map.MapFileWriter().save(map, save);
         }
     }
 }

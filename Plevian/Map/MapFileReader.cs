@@ -9,7 +9,7 @@ namespace Plevian.Map
 {
     class MapFileReader
     {
-        public Map read(File mapFile)
+        public Map read(Save save)
         {
             return null;
         }
