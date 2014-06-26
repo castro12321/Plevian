@@ -8,11 +8,13 @@ namespace Plevian.Map
 {
     class Map
     {
+        public readonly int sizeX, sizeY;
         private TerrainTypes[,] fields;
-
 
         public Map(int x, int y)
         {
+            this.sizeX = x;
+            this.sizeY = y;
             fields = new TerrainTypes[x, y];
             for (int _x = 0; _x < x; ++x)
                 for (int _y = 0; _y < y; ++y)
@@ -22,6 +24,11 @@ namespace Plevian.Map
         public void place(Location where, TerrainTypes type)
         {
             fields[where.x, where.y] = type;
+        }
+
+        public TerrainTypes typeAt(Location where)
+        {
+            return fields[where.x, where.y];
         }
     }
 }
