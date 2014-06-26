@@ -9,9 +9,8 @@ namespace Plevian.Map
 {
     class MapFileWriter
     {
-        public Map read(File mapFile)
+        public void save(Map map, File mapFile)
         {
-            return null;
         }
     }
 }
