@@ -8,11 +8,14 @@ namespace Plevian
 {
     class Map
     {
-        private byte[,] fields;
+        private TerrainTypes[,] fields;
+
 
         public Map(int x, int y)
         {
-            fields = new byte[x, y];
+
+            fields = new TerrainTypes[x, y];
+            
             generateMap();
         }
 
@@ -27,9 +30,7 @@ namespace Plevian
 
         private void generateMap()
         {
+            
         }
-
-        public void saveMap();
-
     }
 }
