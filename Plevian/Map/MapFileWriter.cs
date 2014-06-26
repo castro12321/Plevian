@@ -7,11 +7,18 @@ using System.IO;
 
 namespace Plevian.Map
 {
+    /// <summary>
+    /// Provides naive and slow map saving
+    /// </summary>
     class MapFileWriter
     {
         public void save(Map map, Save save)
         {
             FileStream fs = new FileStream(save.getMapFile(), FileMode.OpenOrCreate, FileAccess.Write);
+
+            fs.WriteByte((byte)map.sizeX);
+            fs.WriteByte((byte)map.sizeY);
+            fs.WriteByte((byte)'\n');
 
             TerrainTypes[,] fields = map.getMap();
             for (int row = 0; row < map.sizeY; ++row)
