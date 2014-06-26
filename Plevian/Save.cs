@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Plevian
 {
@@ -13,6 +14,8 @@ namespace Plevian
         public Save(String path)
         {
             this.path = path + "\\";
+            //if (!Directory.Exists(path))
+            Directory.CreateDirectory(path);
         }
 
         public String getMapFile()

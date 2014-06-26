@@ -30,5 +30,10 @@ namespace Plevian.Map
         {
             return fields[where.x, where.y];
         }
+
+        public TerrainTypes[,] getMap()
+        {
+            return fields;
+        }
     }
 }
