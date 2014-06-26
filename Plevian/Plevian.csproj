@@ -49,6 +49,7 @@
     <Compile Include="Map\MapFileReader.cs" />
     <Compile Include="Map\MapFileWriter.cs" />
     <Compile Include="Map\MapGenerator.cs" />
+    <Compile Include="Save.cs" />
     <Compile Include="TerrainTypes.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
