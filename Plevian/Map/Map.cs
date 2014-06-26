@@ -14,6 +14,8 @@ namespace Plevian.Map
         public Map(int x, int y)
         {
             fields = new TerrainTypes[x, y];
+            foreach (TerrainTypes field in fields)
+                field = TerrainTypes.PLAINS;
         }
 
         public void place(Location where, TerrainTypes type)
