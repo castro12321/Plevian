@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Map\Location.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\MapFileReader.cs" />
     <Compile Include="Map\MapFileWriter.cs" />
