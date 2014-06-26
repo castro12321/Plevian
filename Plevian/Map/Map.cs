@@ -14,22 +14,11 @@ namespace Plevian.Map
         public Map(int x, int y)
         {
             fields = new TerrainTypes[x, y];
-            
-            generateMap();
         }
 
-        /// <summary>
-        /// Loads map from file
-        /// </summary>
-        /// <param name="path">path to the file</param>
-        public Map(string path)
+        public void place(Location where, TerrainTypes type)
         {
-
-        }
-
-        private void generateMap()
-        {
-            
+            fields[where.x, where.y] = type;
         }
     }
 }
