@@ -52,5 +52,10 @@ namespace Plevian.Buildings
         {
             return getConstructionTimeFor(level+1);
         }
+
+        public bool isBuilt()
+        {
+            return level > 0;
+        }
     }
 }

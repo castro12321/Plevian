@@ -28,13 +28,21 @@ namespace Plevian.Village
         
         public void collectProduction()
         {
-            foreach (Buildings.Building building in buildings)
-                addResources(building.getProduction());
+            foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> building in buildings)
+                addResources(building.Value.getProduction());
+        }
+
+        public bool isBuilt(Buildings.BuildingType type)
+        {
+            return buildings[type].isBuilt();
         }
 
         public void build(Buildings.Building building)
         {
-
+            if (isBuilt(building.type))
+                return;
         }
+
+        public void upgrade(Buildings.BuildingType )
     }
 }
