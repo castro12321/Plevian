@@ -8,7 +8,7 @@ namespace Plevian.Village
 {
     class Village
     {
-        private List<Buildings.Building> buildings = new List<Buildings.Building>();
+        private Dictionary<Buildings.BuildingType, Buildings.Building> buildings = new Dictionary<Buildings.BuildingType, Buildings.Building>();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
         public Resources.Resources resources { get; private set; }
         
@@ -37,12 +37,18 @@ namespace Plevian.Village
             return buildings[type].isBuilt();
         }
 
-        public void build(Buildings.Building building)
+        public void build(Buildings.BuildingType buildingType)
         {
-            if (isBuilt(building.type))
+            if (isBuilt(buildingType))
                 return;
+
+
         }
 
-        public void upgrade(Buildings.BuildingType )
+        public void upgrade(Buildings.BuildingType buildingType)
+        {
+            if(!isBuilt(buildingType))
+
+        }
     }
 }
