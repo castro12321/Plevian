@@ -45,7 +45,6 @@ namespace Plevian.Resources
             return new Resources(food, wood, iron, stone);
         }
 
-        /* Probably will be unused. Uncomment later
         public static bool operator >(Resources lh, Resources rh)
         {
             return (lh.food > rh.food && lh.stone > rh.stone && lh.wood > rh.wood && lh.iron > rh.iron);
@@ -65,6 +64,5 @@ namespace Plevian.Resources
         {
             return (lh.food <= rh.food || lh.stone <= rh.stone || lh.wood <= rh.wood || lh.iron <= rh.iron);
         }
-        */
     }
 }
