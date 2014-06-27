@@ -22,8 +22,9 @@ namespace Plevian
             new Map.MapFileWriter().save(map, save);
              */
 
-            Village.Village village = new Village.Village();
-            village.collectProduction();
+            Game game = new Game();
+            while (true)
+                game.tick();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

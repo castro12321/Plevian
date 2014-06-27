@@ -14,7 +14,7 @@ namespace Plevian
 
         public GameTime(LocalTime gameTime)
         {
-            this.gameTime = gameTime;
+            GameTime.gameTime = gameTime;
             systemTime = currentTimeSeconds();
         }
 
@@ -32,7 +32,7 @@ namespace Plevian
             return (ulong)((currentTime - epoch).TotalSeconds);
         }
 
-        public LocalTime add(LocalTime time)
+        public static LocalTime add(LocalTime time)
         {
             return gameTime + time;
         }
