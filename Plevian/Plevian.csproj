@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Buildings\Building.cs" />
     <Compile Include="Buildings\BuildingType.cs" />
+    <Compile Include="Buildings\TownHall.cs" />
     <Compile Include="Map\Location.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\MapFileReader.cs" />

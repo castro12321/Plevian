@@ -9,10 +9,12 @@ namespace Plevian.Buildings
     public abstract class Building
     {
         public readonly BuildingType type;
+        public int level { get; private set; }
 
         public abstract String getDisplayName();
-        public abstract int getPriceForNextLevel();
+        public abstract Resources getPriceForNextLevel();
         public abstract Resources getProduction();
+        public abstract int getMaxLevel();
 
         public Building(BuildingType type)
         {
