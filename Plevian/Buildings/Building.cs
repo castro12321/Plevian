@@ -12,13 +12,34 @@ namespace Plevian.Buildings
         public int level { get; private set; }
 
         public abstract String getDisplayName();
-        public abstract Resources.Resources getPriceForNextLevel();
+        public abstract Resources.Resources getPriceFor(int level);
         public abstract Resources.Resources getProduction();
         public abstract int getMaxLevel();
 
         public Building(BuildingType type)
         {
             this.type = type;
+        }
+
+        public void upgrade()
+        {
+            level++;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>Price for current level</returns>
+        public Resources.Resources getPrice()
+        {
+            return getPriceFor(level);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>Price for next level</returns>
+        public Resources.Resources getPriceForNextLevel()
+        {
+            return getPriceFor(level + 1);
         }
     }
 }
