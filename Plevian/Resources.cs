@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plevian
 {
-    class Resources
+    public class Resources
     {
         int food,
             wood,
