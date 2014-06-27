@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plevian
+namespace Plevian.Resources
 {
     public class Resources
     {
-        int food,
+        public readonly int 
+            food,
             wood,
             iron,
             stone;
@@ -28,24 +29,23 @@ namespace Plevian
 
         public static Resources operator +(Resources lh, Resources rh)
         {
-            Resources res = new Resources();
-            res.wood = lh.wood + rh.wood;
-            res.iron = lh.iron + rh.iron;
-            res.stone = lh.stone + rh.stone;
-            res.food = lh.food + rh.food;
-            return res;
+            int food = lh.food + rh.food;
+            int wood = lh.wood + rh.wood;
+            int iron = lh.iron + rh.iron;
+            int stone = lh.stone + rh.stone;
+            return new Resources(food, wood, iron, stone);
         }
 
         public static Resources operator -(Resources lh, Resources rh)
         {
-            Resources res = new Resources();
-            res.wood = lh.wood - rh.wood;
-            res.iron = lh.iron - rh.iron;
-            res.stone = lh.stone - rh.stone;
-            res.food = lh.food - rh.food;
-            return res;
+            int food = lh.food - rh.food;
+            int wood = lh.wood - rh.wood;
+            int iron = lh.iron - rh.iron;
+            int stone = lh.stone - rh.stone;
+            return new Resources(food, wood, iron, stone);
         }
 
+        /* Probably will be unused. Uncomment later
         public static bool operator >(Resources lh, Resources rh)
         {
             return (lh.food > rh.food && lh.stone > rh.stone && lh.wood > rh.wood && lh.iron > rh.iron);
@@ -65,5 +65,6 @@ namespace Plevian
         {
             return (lh.food <= rh.food || lh.stone <= rh.stone || lh.wood <= rh.wood || lh.iron <= rh.iron);
         }
+        */
     }
 }

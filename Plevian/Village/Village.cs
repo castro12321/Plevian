@@ -10,6 +10,6 @@ namespace Plevian.Village
     {
         private List<Buildings.Building> buildings = new List<Buildings.Building>();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
-        private Resources resources = new Resources();
+        private Resources.Resources resources = new Resources.Resources();
     }
 }
