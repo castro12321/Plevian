@@ -9,29 +9,29 @@ namespace Plevian.Map
     class Map
     {
         public readonly int sizeX, sizeY;
-        private TerrainTypes[,] fields;
+        private TerrainType[,] fields;
 
         public Map(int x, int y)
         {
             this.sizeX = x;
             this.sizeY = y;
-            fields = new TerrainTypes[x, y];
+            fields = new TerrainType[x, y];
             for (int _x = 0; _x < x; ++_x)
                 for (int _y = 0; _y < y; ++_y)
-                    place(new Location(_x, _y), TerrainTypes.PLAINS);
+                    place(new Location(_x, _y), TerrainType.PLAINS);
         }
 
-        public void place(Location where, TerrainTypes type)
+        public void place(Location where, TerrainType type)
         {
             fields[where.x, where.y] = type;
         }
 
-        public TerrainTypes typeAt(Location where)
+        public TerrainType typeAt(Location where)
         {
             return fields[where.x, where.y];
         }
 
-        public TerrainTypes[,] getMap()
+        public TerrainType[,] getMap()
         {
             return fields;
         }

@@ -19,9 +19,9 @@ namespace Plevian.Map
         {
             Map map = new Map(x, y);
             Random rand = new Random();
-            foreach (TerrainTypes terType in (TerrainTypes[])Enum.GetValues(typeof(TerrainTypes)))
+            foreach (TerrainType terType in (TerrainType[])Enum.GetValues(typeof(TerrainType)))
             {
-                if (terType == TerrainTypes.PLAINS) continue;
+                if (terType == TerrainType.PLAINS) continue;
 
                 for(int i = 0;i < 10;++i)
                 {

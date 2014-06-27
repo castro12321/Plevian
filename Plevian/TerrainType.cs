@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plevian
 {
-    public enum TerrainTypes
+    public enum TerrainType
     {
         VILLAGE = 1,
         PLAINS,
