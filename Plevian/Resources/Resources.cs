@@ -64,5 +64,20 @@ namespace Plevian.Resources
         {
             return (lh.food <= rh.food || lh.stone <= rh.stone || lh.wood <= rh.wood || lh.iron <= rh.iron);
         }
+
+        public static Resources operator *(Resources lh, float rh)
+        {
+            
+            int wood  = (int)(lh.wood * rh);
+            int food = (int)(lh.food * rh);
+            int iron = (int)(lh.iron * rh);
+            int stone = (int)(lh.stone * rh);
+            return new Resources(food, wood, iron, stone);
+        }
+
+        public static Resources operator *(Resources lh, int rh)
+        {
+            return lh * (float)rh;
+        }
     }
 }
