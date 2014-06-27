@@ -35,7 +35,7 @@ namespace Plevian
             fs.Read(buffer, 0, 8);
             ulong gameTime = BitConverter.ToUInt64(buffer, 0);
             fs.Close();
-            return new GameTime(new LocalTime(gameTime);
+            return new GameTime(new LocalTime(gameTime));
         }
     }
 }

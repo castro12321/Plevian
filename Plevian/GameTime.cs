@@ -8,7 +8,7 @@ namespace Plevian
 {
     class GameTime
     {
-        private static const DateTime epoch = new DateTime(1970, 1, 1);
+        private static DateTime epoch = new DateTime(1970, 1, 1);
         private ulong systemTime = 0;
         public LocalTime gameTime { get; private set; }
 
@@ -30,6 +30,11 @@ namespace Plevian
         {
             DateTime currentTime = DateTime.UtcNow;
             return (ulong)((currentTime - epoch).TotalSeconds);
+        }
+
+        public LocalTime add(LocalTime time)
+        {
+            return gameTime + time;
         }
     }
 }
