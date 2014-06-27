@@ -24,7 +24,6 @@ namespace Plevian
 
             Village.Village village = new Village.Village();
             village.collectProduction();
-            village.build();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
