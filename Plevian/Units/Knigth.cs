@@ -9,6 +9,11 @@ namespace Plevian.Units
 {
     class Knigth : Unit
     {
+        public Knigth()
+        {
+
+        }
+
         public static readonly int attackStrength = 20;
 
         public static readonly int defenseOnInfantry = 50;
@@ -22,7 +27,6 @@ namespace Plevian.Units
         public static readonly Resources.Resources upkeepCost = new Iron(1) + new Food(5);
 
         public static readonly UnitType unitType = UnitType.KNIGHT;
-
 
         public int getAttackStrength() { return attackStrength; }
 
