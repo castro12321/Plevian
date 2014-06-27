@@ -16,11 +16,15 @@ namespace Plevian
         [STAThread]
         static void Main()
         {
+            /*
             Map.Map map = (new MapGenerator().Generate(10, 10));
-
             Save save = new Save("save1");
             new Map.MapFileWriter().save(map, save);
+             */
 
+            Village.Village village = new Village.Village();
+            village.collectProduction();
+            village.build();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
