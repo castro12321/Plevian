@@ -27,6 +27,11 @@ namespace Plevian.Resources
             wood = food = iron = stone = 0;
         }
 
+        public Boolean canAfford(Resources price)
+        {
+            return this >= price;
+        }
+
         public static Resources operator +(Resources lh, Resources rh)
         {
             int food = lh.food + rh.food;

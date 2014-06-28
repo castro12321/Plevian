@@ -27,5 +27,10 @@ namespace Plevian
         {
             return new LocalTime(lh.seconds + rh.seconds);
         }
+
+        public void addSeconds(ulong seconds)
+        {
+            this.seconds += seconds;
+        }
     }
 }
