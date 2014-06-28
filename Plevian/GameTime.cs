@@ -10,11 +10,11 @@ namespace Plevian
     {
         private static DateTime epoch = new DateTime(1970, 1, 1);
         private ulong systemTime = 0;
-        public static LocalTime gameTime { get; private set; }
+        public static LocalTime time { get; private set; }
 
         public GameTime(LocalTime gameTime)
         {
-            GameTime.gameTime = gameTime;
+            GameTime.time = gameTime;
             systemTime = currentTimeSeconds();
         }
 
@@ -23,11 +23,11 @@ namespace Plevian
             ulong currentSystemTime = currentTimeSeconds();
             ulong datediff = currentSystemTime - systemTime;
             systemTime = currentSystemTime;
-            gameTime.addSeconds(datediff);
+            time.addSeconds(datediff);
             return datediff;
         }
 
-        public ulong currentTimeSeconds()
+        private ulong currentTimeSeconds()
         {
             DateTime currentTime = DateTime.UtcNow;
             return (ulong)((currentTime - epoch).TotalSeconds);
@@ -35,7 +35,7 @@ namespace Plevian
 
         public static LocalTime add(LocalTime time)
         {
-            return gameTime + time;
+            return GameTime.time + time;
         }
     }
 }

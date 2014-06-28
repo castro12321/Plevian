@@ -83,5 +83,10 @@ namespace Plevian.Resource
         {
             return lh * (float)rh;
         }
+
+        public override string ToString()
+        {
+            return "F: " + food + " W:" + wood + " S:" + stone + " I: " + iron;
+        }
     }
 }
