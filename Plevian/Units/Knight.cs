@@ -7,9 +7,9 @@ using Plevian.Resources;
 
 namespace Plevian.Units
 {
-    class Knigth : Unit
+    class Knight : Unit
     {
-        public Knigth()
+        public Knight()
         {
         }
 
