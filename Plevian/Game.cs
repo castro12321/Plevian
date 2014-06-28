@@ -25,9 +25,12 @@ namespace Plevian
         private Village village = new Village();
         public void tick()
         {
+            System.Threading.Thread.Sleep(250);
             ulong timediff = gameTime.updateTime();
-            while(timediff --> 0)
+            while (timediff --> 0)
+            {
                 village.tick();
+            }
         }
     }
 }
