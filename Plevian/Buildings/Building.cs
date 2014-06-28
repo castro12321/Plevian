@@ -15,7 +15,7 @@ namespace Plevian.Buildings
         public abstract String getDisplayName();
         public abstract LocalTime getConstructionTimeFor(int level);
         public abstract Resources getPriceFor(int level);
-        public abstract Resources getProduction();
+        public abstract Resources getProductionFor(int level);
         public abstract int getMaxLevel();
 
         public Building(BuildingType type)
@@ -26,6 +26,11 @@ namespace Plevian.Buildings
         public void upgrade()
         {
             level++;
+        }
+
+        public Resources getProduction()
+        {
+            return getProductionFor(level);
         }
 
         /// <summary>

@@ -19,9 +19,9 @@ namespace Plevian.Buildings
             return "Ratusz";
         }
 
-        public override Resources getProduction()
+        public override Resources getProductionFor(int level)
         {
-            return new Resources();
+            return new Resources(level, level, level, level);
         }
 
         public override int getMaxLevel()
