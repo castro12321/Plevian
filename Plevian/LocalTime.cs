@@ -52,5 +52,10 @@ namespace Plevian
         {
             return lh.seconds <= rh.seconds;
         }
+
+        public override string ToString()
+        {
+            return seconds.ToString();
+        }
     }
 }
