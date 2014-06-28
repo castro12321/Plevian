@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plevian.Exceptions;
 
 namespace Plevian.Units
 {
@@ -23,7 +24,7 @@ namespace Plevian.Units
 
             foreach (var pair in rh.units)
             {
-                if (army.units[pair.Key] != null)
+                if (army.units.ContainsKey(pair.Key))
                 {
                     army.units[pair.Key].quanity += pair.Value.quanity;
                 }
@@ -35,19 +36,72 @@ namespace Plevian.Units
             return army;
         }
 
-        public static Army operator -(Army lh, Army rh)
+        public static Army operator +(Army lh, Unit rh)
         {
-            return new Army();
-        }
-
-        public static bool operator >=(Army lh, Army rh)
-        {
+            Army army = new Army();
+            UnitType unitType = rh.getUnitType();
             foreach (var pair in lh.units)
             {
-                if (rh.units[pair.Key] == null) return false;
-                if (rh.units[pair.Key].quanity > pair.Value.quanity) return false;
+                army.units.Add(pair.Key, pair.Value);
+            }
+
+            if (!army.units.ContainsKey(unitType))
+            {
+                army.units.Add(unitType, rh);
+            }
+            else
+            {
+                int quanity = rh.quanity;
+                army.units[unitType].quanity += quanity;
+            }
+
+            return army;
+
+        }
+
+        public static Army operator -(Army lh, Army rh)
+        {
+            if( lh.canDivide(rh) == false) throw new ExceptionNotEnoughUnits();
+            Army army = new Army();
+
+            foreach (var pair in lh.units)
+            {
+                army.units.Add(pair.Key, pair.Value);
+            }
+            
+            foreach( var pair in rh.units )
+            {
+                army.units[pair.Key].quanity -= pair.Value.quanity;
+
+                if (army.units[pair.Key].quanity == 0) army.units.Remove(pair.Key);
+            }
+
+            return army;
+        }
+
+        /// <summary>
+        /// Checks wheter the army( this ) is able to divide into another army
+        /// </summary>
+        /// <param name="other">another army into which this will be divided to</param>
+        /// <returns></returns>
+        public bool canDivide(Army other)
+        {
+            foreach (var pair in other.units)
+            {
+                if (units.ContainsKey(pair.Key) == false) return false;
+                if (units[pair.Key].quanity < pair.Value.quanity) return false;
             }
             return true;
+        }
+
+        public void listArmy()
+        {
+            Console.WriteLine("Army listing :");
+            foreach (var pair in units)
+            {
+                string name = Enum.GetName(typeof(UnitType), pair.Key);
+                Console.WriteLine(name + " - " + pair.Value.quanity);
+            }
         }
 
 

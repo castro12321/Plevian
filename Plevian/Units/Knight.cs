@@ -9,7 +9,8 @@ namespace Plevian.Units
 {
     class Knight : Unit
     {
-        public Knight()
+        public Knight(int quanity = 0)
+            : base(quanity)
         {
         }
 

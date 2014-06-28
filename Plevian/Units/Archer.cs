@@ -9,7 +9,8 @@ namespace Plevian.Units
 {
     class Archer : Unit
     {
-        public Archer()
+        public Archer(int quanity = 0)
+            : base(quanity)
         {
         }
 

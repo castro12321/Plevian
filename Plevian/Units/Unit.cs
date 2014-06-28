@@ -11,6 +11,12 @@ namespace Plevian.Units
     {
         public int quanity;
 
+        public Unit(int quanity = 0)
+        {
+            this.quanity = quanity;
+        }
+
+
         public abstract int getAttackStrength();
 
         public abstract int getDefenseOnInfantry();
