@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Plevian.Buildings;
 using Plevian.Resource;
+using Plevian.Debugging;
 
 namespace Plevian.Villages
 {
@@ -12,6 +13,7 @@ namespace Plevian.Villages
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
+        private Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         public Resources resources { get; private set; }
 
         public Village()
@@ -42,18 +44,37 @@ namespace Plevian.Villages
             collectProduction();
             finishBuilding();
             finishRecruiting();
+            Logger.c("village " + resources);
         }
 
         private void collectProduction()
         {
             foreach (KeyValuePair<BuildingType, Building> building in buildings)
+            {
+                Logger.c(building.Value.getDisplayName() + " produces " + building.Value.getProduction());
                 addResources(building.Value.getProduction());
+            }
         }
 
         private void finishBuilding()
         {
-            // Check buildings queue
-            // If something is done; yay
+            Logger.c("queue: " + buildingsQueue.Count);
+            if(buildingsQueue.Count > 0)
+            {
+                BuildingQueueItem queueItem = buildingsQueue.Peek();
+                Logger.c("item: " + queueItem.toBuild.ToString() + " " + GameTime.time + "/" + queueItem.end);
+                if (GameTime.time >= queueItem.end)
+                {
+                    Logger.c("Built! " + queueItem.toBuild.ToString());
+                    buildings[queueItem.toBuild].upgrade();
+                    buildingsQueue.Dequeue();
+                }
+            }
+            else
+            {
+                Logger.c("Queue empty! Building town hall");
+                build(BuildingType.TOWN_HALL);
+            }
         }
 
         private void finishRecruiting()
@@ -79,8 +100,11 @@ namespace Plevian.Villages
             if (!resources.canAfford(neededResources))
                 throw new Exceptions.ExceptionNotEnoughResources();
 
+            resources -= neededResources;
+
             LocalTime buildTime = building.getConstructionTimeForNextLevel();
             LocalTime finishTime = GameTime.add(buildTime);
+            buildingsQueue.Enqueue(new BuildingQueueItem(finishTime, buildingType));
         }
     }
 }
