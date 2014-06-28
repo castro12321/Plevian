@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plevian.Buildings;
 
 namespace Plevian.Village
 {
     class Village
     {
-        private Dictionary<Buildings.BuildingType, Buildings.Building> buildings = new Dictionary<Buildings.BuildingType, Buildings.Building>();
+        private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
         public Resources.Resources resources { get; private set; }
-        
+
         public Village()
         {
+            resources = new Resources.Resources(999, 999, 999, 999);
+        }
+
+        public void setBuildings(Dictionary<BuildingType, Building> buildings)
+        {
+            this.buildings = buildings;
         }
 
         public void addResources(Resources.Resources add)
@@ -25,30 +32,54 @@ namespace Plevian.Village
         {
             resources = resources - take;
         }
-        
-        public void collectProduction()
+
+        /// <summary>
+        /// Village tick called every second
+        /// </summary>
+        public void tick()
         {
-            foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> building in buildings)
+            collectProduction();
+            finishBuilding();
+            finishRecruiting();
+        }
+
+        private void collectProduction()
+        {
+            foreach (KeyValuePair<BuildingType, Building> building in buildings)
                 addResources(building.Value.getProduction());
         }
 
-        public bool isBuilt(Buildings.BuildingType type)
+        private void finishBuilding()
+        {
+            // Check buildings queue
+            // If something is done; yay
+        }
+
+        private void finishRecruiting()
+        {
+            // Check recruiting queue
+            // If something is done; yay
+        }
+
+        public bool isBuilt(BuildingType type)
         {
             return buildings[type].isBuilt();
         }
 
-        public void build(Buildings.BuildingType buildingType)
+        /// <summary>
+        /// Builds (or upgrades) building in the village
+        /// </summary>
+        /// <param name="buildingType"></param>
+        public void build(BuildingType buildingType)
         {
-            if (isBuilt(buildingType))
-                return;
+            Building building = buildings[buildingType];
 
+            Resources.Resources neededResources = building.getPriceForNextLevel();
+            if (!resources.canAfford(neededResources))
+                throw new Exceptions.NotEnoughResourcesException();
 
-        }
-
-        public void upgrade(Buildings.BuildingType buildingType)
-        {
-         //   if(!isBuilt(buildingType))
-
+            LocalTime buildTime = building.getConstructionTimeForNextLevel();
+            LocalTime finishTime = GameTime.add(buildTime);
         }
     }
 }
