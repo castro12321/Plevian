@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Plevian.Map;
+using Plevian.Debug;
 
 namespace Plevian
 {
@@ -25,6 +26,9 @@ namespace Plevian
             Village.Village village = new Village.Village();
             village.collectProduction();
 
+            NativeMethods.AllocConsole();
+            Console.WriteLine("Debug Console");
+          
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
