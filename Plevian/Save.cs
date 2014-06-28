@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Plevian
 {
-    class Save
+    public class Save
     {
         private readonly String path;
 

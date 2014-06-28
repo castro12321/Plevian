@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Plevian
 {
-    class GameTime
+    public class GameTime
     {
         private static DateTime epoch = new DateTime(1970, 1, 1);
         private ulong systemTime = 0;
-        public LocalTime gameTime { get; private set; }
+        public static LocalTime gameTime { get; private set; }
 
         public GameTime(LocalTime gameTime)
         {
@@ -18,12 +18,13 @@ namespace Plevian
             systemTime = currentTimeSeconds();
         }
 
-        public void updateTime()
+        public ulong updateTime()
         {
             ulong currentSystemTime = currentTimeSeconds();
             ulong datediff = currentSystemTime - systemTime;
             systemTime = currentSystemTime;
             gameTime.addSeconds(datediff);
+            return datediff;
         }
 
         public ulong currentTimeSeconds()

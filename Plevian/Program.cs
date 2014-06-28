@@ -8,7 +8,7 @@ using Plevian.Map;
 
 namespace Plevian
 {
-    static class Program
+    public static class Program
     {
         /// <summary>
         /// The main entry point for the application.

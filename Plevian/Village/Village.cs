@@ -30,11 +30,33 @@ namespace Plevian.Village
         {
             resources = resources - take;
         }
+
+        /// <summary>
+        /// Village tick called every second
+        /// </summary>
+        public void tick()
+        {
+            collectProduction();
+            finishBuilding();
+            finishRecruiting();
+        }
         
-        public void collectProduction()
+        private void collectProduction()
         {
             foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> building in buildings)
                 addResources(building.Value.getProduction());
+        }
+
+        private void finishBuilding()
+        {
+            // Check buildings queue
+            // If something is done; yay
+        }
+
+        private void finishRecruiting()
+        {
+            // Check recruiting queue
+            // If something is done; yay
         }
 
         public bool isBuilt(Buildings.BuildingType type)
@@ -42,18 +64,20 @@ namespace Plevian.Village
             return buildings[type].isBuilt();
         }
 
+        /// <summary>
+        /// Builds (or upgrades) building in the village
+        /// </summary>
+        /// <param name="buildingType"></param>
         public void build(Buildings.BuildingType buildingType)
         {
-            if (isBuilt(buildingType))
-                return;
+            Buildings.Building building = buildings[buildingType];
 
+            Resources.Resources neededResources = building.getPriceForNextLevel();
+            if (!resources.canAfford(neededResources))
+                throw new Exceptions.NotEnoughResourcesException();
 
-        }
-
-        public void upgrade(Buildings.BuildingType buildingType)
-        {
-            if(!isBuilt(buildingType))
-
+            LocalTime buildTime = building.getConstructionTimeForNextLevel();
+            LocalTime finishTime = GameTime.add(buildTime);
         }
     }
 }

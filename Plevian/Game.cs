@@ -18,11 +18,15 @@ namespace Plevian
         public Game(Save save)
         {
             // initialize from save
+            gameTime = save.getGameTime();
         }
 
+        private Village.Village village = new Village.Village();
         public void tick()
         {
-            gameTime.updateTime();
+            ulong timediff = gameTime.updateTime();
+            while(timediff --> 0)
+                village.tick();
         }
     }
 }
