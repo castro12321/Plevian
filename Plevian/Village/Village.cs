@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plevian.Buildings;
 
 namespace Plevian.Village
 {
     class Village
     {
-        private Dictionary<Buildings.BuildingType, Buildings.Building> buildings = Buildings.Building.getEmptyBuildingsList();
+        private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
         public Resources.Resources resources { get; private set; }
         
         public Village()
         {
+            resources = new Resources.Resources(999, 999, 999, 999);
         }
 
-        public void setBuildings(Dictionary<Buildings.BuildingType, Buildings.Building> buildings)
+        public void setBuildings(Dictionary<BuildingType, Building> buildings)
         {
             this.buildings = buildings;
         }
@@ -43,7 +45,7 @@ namespace Plevian.Village
         
         private void collectProduction()
         {
-            foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> building in buildings)
+            foreach (KeyValuePair<BuildingType, Building> building in buildings)
                 addResources(building.Value.getProduction());
         }
 
@@ -59,7 +61,7 @@ namespace Plevian.Village
             // If something is done; yay
         }
 
-        public bool isBuilt(Buildings.BuildingType type)
+        public bool isBuilt(BuildingType type)
         {
             return buildings[type].isBuilt();
         }
@@ -68,9 +70,9 @@ namespace Plevian.Village
         /// Builds (or upgrades) building in the village
         /// </summary>
         /// <param name="buildingType"></param>
-        public void build(Buildings.BuildingType buildingType)
+        public void build(BuildingType buildingType)
         {
-            Buildings.Building building = buildings[buildingType];
+            Building building = buildings[buildingType];
 
             Resources.Resources neededResources = building.getPriceForNextLevel();
             if (!resources.canAfford(neededResources))
