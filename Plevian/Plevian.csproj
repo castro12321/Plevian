@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Battle.cs" />
     <Compile Include="Buildings\Building.cs" />
+    <Compile Include="Buildings\BuildingQueueItem.cs" />
     <Compile Include="Buildings\BuildingType.cs" />
     <Compile Include="Buildings\TownHall.cs" />
     <Compile Include="Debugging\Console.cs" />
