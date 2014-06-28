@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Plevian.Map
+namespace Plevian.Maps
 {
     /// <summary>
     /// Provides naive and slow map reading

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plevian.Villages;
 
 namespace Plevian
 {
@@ -21,7 +22,7 @@ namespace Plevian
             gameTime = save.getGameTime();
         }
 
-        private Village.Village village = new Village.Village();
+        private Village village = new Village();
         public void tick()
         {
             ulong timediff = gameTime.updateTime();

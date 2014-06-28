@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Plevian.Resources;
+using Plevian.Resource;
 
 namespace Plevian.Units
 {
@@ -22,8 +22,8 @@ namespace Plevian.Units
         public static readonly int movementSpeed = 25;
         public static readonly int lootCapacity = 50;
 
-        public static readonly Resources.Resources recruitCost = new Iron(100) + new Food(50) + new Wood(25);
-        public static readonly Resources.Resources upkeepCost = new Iron(1) + new Food(5);
+        public static readonly Resources recruitCost = new Iron(100) + new Food(50) + new Wood(25);
+        public static readonly Resources upkeepCost = new Iron(1) + new Food(5);
 
         public static readonly UnitType unitType = UnitType.KNIGHT;
 
@@ -37,8 +37,8 @@ namespace Plevian.Units
 
         public override int getLootCapacity() { return lootCapacity; }
 
-        public override Resources.Resources getRecruitCost() { return recruitCost; }
-        public override Resources.Resources getUpkeepCost() { return upkeepCost; }
+        public override Resources getRecruitCost() { return recruitCost; }
+        public override Resources getUpkeepCost() { return upkeepCost; }
 
         public override UnitType getUnitType() { return unitType; }
     }

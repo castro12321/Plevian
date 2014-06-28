@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plevian.Resources
+namespace Plevian.Resource
 {
-    public class Iron : Resources
+    public class Stone : Resources
     {
-        public Iron(int iron)
-            : base(0, 0, iron, 0)
+        public Stone(int stone)
+            : base(0, 0, 0, stone)
         {
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plevian.Resource;
 
 namespace Plevian.Buildings
 {
@@ -13,8 +14,8 @@ namespace Plevian.Buildings
 
         public abstract String getDisplayName();
         public abstract LocalTime getConstructionTimeFor(int level);
-        public abstract Resources.Resources getPriceFor(int level);
-        public abstract Resources.Resources getProduction();
+        public abstract Resources getPriceFor(int level);
+        public abstract Resources getProduction();
         public abstract int getMaxLevel();
 
         public Building(BuildingType type)
@@ -30,7 +31,7 @@ namespace Plevian.Buildings
         /// <summary>
         /// </summary>
         /// <returns>Price for current level</returns>
-        public Resources.Resources getPrice()
+        public Resources getPrice()
         {
             return getPriceFor(level);
         }
@@ -38,7 +39,7 @@ namespace Plevian.Buildings
         /// <summary>
         /// </summary>
         /// <returns>Price for next level</returns>
-        public Resources.Resources getPriceForNextLevel()
+        public Resources getPriceForNextLevel()
         {
             return getPriceFor(level + 1);
         }
