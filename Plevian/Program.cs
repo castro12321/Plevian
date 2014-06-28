@@ -9,7 +9,7 @@ using Plevian.Debug;
 
 namespace Plevian
 {
-    static class Program
+    public static class Program
     {
         /// <summary>
         /// The main entry point for the application.
@@ -23,8 +23,9 @@ namespace Plevian
             new Map.MapFileWriter().save(map, save);
              */
 
-            Village.Village village = new Village.Village();
-            village.collectProduction();
+            Game game = new Game();
+            while (true)
+                game.tick();
 
             NativeMethods.AllocConsole();
             Console.WriteLine("Debug Console");

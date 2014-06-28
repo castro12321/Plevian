@@ -48,6 +48,9 @@
     <Compile Include="Buildings\BuildingType.cs" />
     <Compile Include="Buildings\TownHall.cs" />
     <Compile Include="Debug\Console.cs" />
+    <Compile Include="Exceptions\Exceptions.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="GameTime.cs" />
     <Compile Include="LocalTime.cs" />
     <Compile Include="Map\Location.cs" />
     <Compile Include="Map\Map.cs" />
