@@ -67,7 +67,6 @@ namespace Plevian.Resources
 
         public static Resources operator *(Resources lh, float rh)
         {
-            
             int wood  = (int)(lh.wood * rh);
             int food = (int)(lh.food * rh);
             int iron = (int)(lh.iron * rh);

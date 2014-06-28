@@ -7,25 +7,25 @@ using Plevian.Resources;
 
 namespace Plevian.Units
 {
-    class Knigth : Unit
+    class Archer : Unit
     {
-        public Knigth()
+        public Archer()
         {
         }
 
-        public static readonly int attackStrength = 20;
+        public static readonly int attackStrength = 35;
 
-        public static readonly int defenseOnInfantry = 50;
-        public static readonly int defenseOnCavalry = 5;
-        public static readonly int defenseOnArchers = 10;
+        public static readonly int defenseOnInfantry = 5;
+        public static readonly int defenseOnCavalry = 10;
+        public static readonly int defenseOnArchers = 20;
 
         public static readonly int movementSpeed = 25;
-        public static readonly int lootCapacity = 50;
+        public static readonly int lootCapacity = 20;
 
-        public static readonly Resources.Resources recruitCost = new Iron(100) + new Food(50) + new Wood(25);
-        public static readonly Resources.Resources upkeepCost = new Iron(1) + new Food(5);
+        public static readonly Resources.Resources recruitCost = new Food(40) + new Wood(100);
+        public static readonly Resources.Resources upkeepCost = new Wood(1) + new Food(5);
 
-        public static readonly UnitType unitType = UnitType.KNIGHT;
+        public static readonly UnitType unitType = UnitType.ARCHER;
 
         public override int getAttackStrength() { return attackStrength; }
 

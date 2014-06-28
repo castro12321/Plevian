@@ -47,7 +47,7 @@ namespace Plevian.Village
 
         public void upgrade(Buildings.BuildingType buildingType)
         {
-            if(!isBuilt(buildingType))
+         //   if(!isBuilt(buildingType))
 
         }
     }

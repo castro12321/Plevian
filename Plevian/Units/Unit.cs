@@ -7,21 +7,23 @@ using Plevian.Resources;
 
 namespace Plevian.Units
 {
-    class Unit
+    abstract class Unit
     {
-        public virtual int getAttackStrength();
+        public int quanity;
 
-        public virtual int getDefenseOnInfantry();
-        public virtual int getDefenseOnCavalry();
-        public virtual int getDefenseOnArchers();
+        public abstract int getAttackStrength();
 
-        public virtual int GetMovementSpeed();
+        public abstract int getDefenseOnInfantry();
+        public abstract int getDefenseOnCavalry();
+        public abstract int getDefenseOnArchers();
 
-        public virtual int getLootCapacity();
+        public abstract int GetMovementSpeed();
 
-        public virtual Resources.Resources getRecruitCost();
-        public virtual Resources.Resources getUpkeepCost();
+        public abstract int getLootCapacity();
 
-        public virtual UnitType getUnitType();
+        public abstract Resources.Resources getRecruitCost();
+        public abstract Resources.Resources getUpkeepCost();
+
+        public abstract UnitType getUnitType();
     }
 }
