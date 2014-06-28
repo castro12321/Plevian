@@ -8,12 +8,17 @@ namespace Plevian.Village
 {
     class Village
     {
-        private Dictionary<Buildings.BuildingType, Buildings.Building> buildings = new Dictionary<Buildings.BuildingType, Buildings.Building>();
+        private Dictionary<Buildings.BuildingType, Buildings.Building> buildings = Buildings.Building.getEmptyBuildingsList();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
         public Resources.Resources resources { get; private set; }
         
         public Village()
         {
+        }
+
+        public void setBuildings(Dictionary<Buildings.BuildingType, Buildings.Building> buildings)
+        {
+            this.buildings = buildings;
         }
 
         public void addResources(Resources.Resources add)

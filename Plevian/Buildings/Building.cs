@@ -57,5 +57,12 @@ namespace Plevian.Buildings
         {
             return level > 0;
         }
+
+        public static Dictionary<BuildingType, Building> getEmptyBuildingsList()
+        {
+            Dictionary<BuildingType, Building> buildings = new Dictionary<BuildingType, Building>();
+            buildings.Add(BuildingType.TOWN_HALL, new TownHall());
+            return buildings;
+        }
     }
 }
