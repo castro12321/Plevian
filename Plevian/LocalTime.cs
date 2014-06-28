@@ -23,14 +23,34 @@ namespace Plevian
             this.seconds = seconds;
         }
 
+        public void addSeconds(ulong seconds)
+        {
+            this.seconds += seconds;
+        }
+
         public static LocalTime operator +(LocalTime lh, LocalTime rh)
         {
             return new LocalTime(lh.seconds + rh.seconds);
         }
-
-        public void addSeconds(ulong seconds)
+        
+        public static bool operator > (LocalTime lh, LocalTime rh)
         {
-            this.seconds += seconds;
+            return lh.seconds > rh.seconds;
+        }
+
+        public static bool operator >= (LocalTime lh, LocalTime rh)
+        {
+            return lh.seconds >= rh.seconds;
+        }
+        
+        public static bool operator <(LocalTime lh, LocalTime rh)
+        {
+            return lh.seconds < rh.seconds;
+        }
+
+        public static bool operator <=(LocalTime lh, LocalTime rh)
+        {
+            return lh.seconds <= rh.seconds;
         }
     }
 }
