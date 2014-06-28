@@ -23,12 +23,14 @@ namespace Plevian
             new Map.MapFileWriter().save(map, save);
              */
 
+            NativeMethods.AllocConsole();
+            Console.WriteLine("Debug Console");
+
             Game game = new Game();
             while (true)
                 game.tick();
 
-            NativeMethods.AllocConsole();
-            Console.WriteLine("Debug Console");
+            
           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
