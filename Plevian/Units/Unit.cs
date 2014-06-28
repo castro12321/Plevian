@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Plevian.Resources;
+using Plevian.Resource;
 
 namespace Plevian.Units
 {
@@ -21,8 +21,8 @@ namespace Plevian.Units
 
         public abstract int getLootCapacity();
 
-        public abstract Resources.Resources getRecruitCost();
-        public abstract Resources.Resources getUpkeepCost();
+        public abstract Resources getRecruitCost();
+        public abstract Resources getUpkeepCost();
 
         public abstract UnitType getUnitType();
     }

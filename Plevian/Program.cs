@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using Plevian.Map;
+using Plevian.Maps;
 using Plevian.Debug;
 
 namespace Plevian

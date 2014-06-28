@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plevian.Resource;
 
 namespace Plevian.Buildings
 {
@@ -18,9 +19,9 @@ namespace Plevian.Buildings
             return "Ratusz";
         }
 
-        public override Resources.Resources getProduction()
+        public override Resources getProduction()
         {
-            return new Resources.Resources();
+            return new Resources();
         }
 
         public override int getMaxLevel()
@@ -28,15 +29,15 @@ namespace Plevian.Buildings
             return 5;
         }
 
-        public override Resources.Resources getPriceFor(int level)
+        public override Resources getPriceFor(int level)
         {
             switch(level)
             {
-                case 1: return new Resources.Wood(150)  + new Resources.Stone(50);
-                case 2: return new Resources.Wood(300)  + new Resources.Stone(100);
-                case 3: return new Resources.Wood(1000) + new Resources.Stone(300);
-                case 4: return new Resources.Wood(2500) + new Resources.Stone(750)  + new Resources.Iron(300);
-                case 5: return new Resources.Wood(5000) + new Resources.Stone(2000) + new Resources.Iron(1000);
+                case 1: return new Wood(150)  + new Stone(50);
+                case 2: return new Wood(300)  + new Stone(100);
+                case 3: return new Wood(1000) + new Stone(300);
+                case 4: return new Wood(2500) + new Stone(750)  + new Iron(300);
+                case 5: return new Wood(5000) + new Stone(2000) + new Iron(1000);
             }
             throw new KeyNotFoundException("Level not found");
         }

@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plevian.Buildings;
+using Plevian.Resource;
 
-namespace Plevian.Village
+namespace Plevian.Villages
 {
     class Village
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
-        public Resources.Resources resources { get; private set; }
+        public Resources resources { get; private set; }
 
         public Village()
         {
-            resources = new Resources.Resources(999, 999, 999, 999);
+            resources = new Resources(999, 999, 999, 999);
         }
 
         public void setBuildings(Dictionary<BuildingType, Building> buildings)
@@ -23,12 +24,12 @@ namespace Plevian.Village
             this.buildings = buildings;
         }
 
-        public void addResources(Resources.Resources add)
+        public void addResources(Resources add)
         {
             resources = resources + add;
         }
 
-        public void takeResources(Resources.Resources take)
+        public void takeResources(Resources take)
         {
             resources = resources - take;
         }
@@ -74,9 +75,9 @@ namespace Plevian.Village
         {
             Building building = buildings[buildingType];
 
-            Resources.Resources neededResources = building.getPriceForNextLevel();
+            Resources neededResources = building.getPriceForNextLevel();
             if (!resources.canAfford(neededResources))
-                throw new Exceptions.NotEnoughResourcesException();
+                throw new Exceptions.ExceptionNotEnoughResources();
 
             LocalTime buildTime = building.getConstructionTimeForNextLevel();
             LocalTime finishTime = GameTime.add(buildTime);
