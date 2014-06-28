@@ -8,13 +8,13 @@ namespace Plevian.Debugging
 {
     class Logger
     {
-        private static const bool c = true;
+        private static bool cas = true;
         /// <summary>
         /// Logger for castro
         /// </summary>
         public static void c(String msg)
         {
-            if (c)
+            if (cas)
                 Console.WriteLine(msg);
         }
     }
