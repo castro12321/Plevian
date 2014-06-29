@@ -11,7 +11,9 @@ namespace Plevian.Units
         public readonly UnitType unitType;
         public readonly LocalTime end;
         public readonly int remainingQuanity;
-        //recruit time for invidual unit.
+        /// <summary>
+        /// recruit time for invidual unit.
+        /// </summary>
         public readonly float recruitTime;
         /// <summary>
         /// Time on unit now being recruted. It indicates how much time left for it's recruit

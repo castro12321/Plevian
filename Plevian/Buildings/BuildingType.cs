@@ -10,6 +10,8 @@ namespace Plevian.Buildings
     {
         FARM = 1,
         TOWN_HALL,
-        MINE
+        MINE,
+        BARRACKS,
+        STABLE
     };
 }
