@@ -84,9 +84,35 @@ namespace Plevian.Resource
             return lh * (float)rh;
         }
 
+        public static bool operator == (Resources lh, Resources rh)
+        {
+            return lh.food == rh.food
+                && lh.wood == rh.wood
+                && lh.iron == rh.iron
+                && lh.stone == rh.stone;
+        }
+
+        public static bool operator != (Resources lh, Resources rh)
+        {
+            return lh.food != rh.food
+                || lh.wood != rh.wood
+                || lh.iron != rh.iron
+                || lh.stone != rh.stone;
+        }
+
         public override string ToString()
         {
             return "F: " + food + " W:" + wood + " S:" + stone + " I: " + iron;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is Resources)
+            {
+                Resources other = (Resources)obj;
+                return this == other;
+            }
+            return false;
         }
     }
 }
