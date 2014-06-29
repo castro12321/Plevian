@@ -15,6 +15,7 @@ namespace Plevian.Villages
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
         private Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
+        private List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
         public Resources resources { get; private set; }
 
         public Village()
@@ -108,9 +109,15 @@ namespace Plevian.Villages
             buildingsQueue.Enqueue(new BuildingQueueItem(finishTime, buildingType));
         }
 
-        public void recruit(UnitType unitType, int quanity)
+        /// <summary>
+        /// Recruit units in city
+        /// </summary>
+        /// <param name="unitType">Type of unit to recruit</param>
+        /// <param name="quanity">Quanity of units to recruit</param>
+        /// <param name="recruitTime">Recruit time for invidual unit</param>
+        public void recruit(UnitType unitType, int quanity, float recruitTime)
         {
-
+           
         }
     }
 }

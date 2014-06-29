@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Units
 {
-    class RecruitQueue
+    class RecruitQueueItem
     {
         public readonly UnitType unitType;
         public readonly LocalTime end;
@@ -18,7 +18,7 @@ namespace Plevian.Units
         /// </summary>
         public float timeCurrent;
 
-        public RecruitQueue(UnitType type, int quanity, int recruitTime)
+        public RecruitQueueItem(UnitType type, int quanity, int recruitTime)
         {
             unitType = type;
             remainingQuanity = quanity;

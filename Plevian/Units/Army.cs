@@ -94,14 +94,16 @@ namespace Plevian.Units
             return true;
         }
 
-        public void listArmy()
+        public string toString()
         {
-            Console.WriteLine("Army listing :");
+            string str = "";
+            str = "Army listing :\n";
             foreach (var pair in units)
             {
                 string name = Enum.GetName(typeof(UnitType), pair.Key);
-                Console.WriteLine(name + " - " + pair.Value.quanity);
+                str += name + " - " + pair.Value.quanity + "\n";
             }
+            return str;
         }
 
 
