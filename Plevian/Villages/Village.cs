@@ -16,6 +16,7 @@ namespace Plevian.Villages
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
         private Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         private List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
+        private GameTime recruitTimeEnd = GameTime.now;
         public Resources resources { get; private set; }
 
         public Village()
@@ -81,8 +82,39 @@ namespace Plevian.Villages
 
         private void finishRecruiting()
         {
-            // Check recruiting queue
-            // If something is done; yay
+            if (recruitQueue.Count == 0) return;
+            float second = 1f;
+            RecruitQueueItem queue = recruitQueue[0];
+
+            if (queue.timeCurrent > 1f)
+            {
+                queue.timeCurrent -= 1;
+                queue.remainingQuanity -= 1;
+            }
+            else
+            {
+                while (second > 0f && recruitQueue.Count > 0)
+                {
+                    while (second >= queue.timeCurrent && queue.remainingQuanity > 0)
+                    {
+                        second -= queue.timeCurrent;
+                        //add builded soldier
+                        queue.timeCurrent = queue.recruitTime;
+                        queue.remainingQuanity--;
+                    }
+                    if (queue.remainingQuanity > 0)
+                    {
+                        queue.timeCurrent -= second;
+                        second = 0f;
+                    }
+                    else
+                    {
+                        recruitQueue.RemoveAt(0);
+                        if (recruitQueue.Count == 0) return;
+                        queue = recruitQueue[0];
+                    }
+                }
+            }
         }
 
         public bool isBuilt(BuildingType type)
@@ -112,12 +144,15 @@ namespace Plevian.Villages
         /// <summary>
         /// Recruit units in city
         /// </summary>
-        /// <param name="unitType">Type of unit to recruit</param>
+        /// <param name="unitType">unit to recruit</param>
         /// <param name="quanity">Quanity of units to recruit</param>
         /// <param name="recruitTime">Recruit time for invidual unit</param>
-        public void recruit(UnitType unitType, int quanity, float recruitTime)
+        public void recruit(Unit unit, int quanity, float recruitTime)
         {
-           
+            if (recruitQueue.Count == 0) recruitTimeEnd = GameTime.now;
+            RecruitQueueItem newQueue = new RecruitQueueItem(unit, quanity, recruitTime);
+            recruitTimeEnd += newQueue.end;
+            recruitQueue.Add(newQueue);
         }
     }
 }

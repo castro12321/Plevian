@@ -8,9 +8,9 @@ namespace Plevian.Units
 {
     class RecruitQueueItem
     {
-        public readonly UnitType unitType;
-        public readonly LocalTime end;
-        public readonly int remainingQuanity;
+        public readonly Unit unit;
+        public readonly Seconds end;
+        public int remainingQuanity;
         /// <summary>
         /// recruit time for invidual unit.
         /// </summary>
@@ -20,13 +20,13 @@ namespace Plevian.Units
         /// </summary>
         public float timeCurrent;
 
-        public RecruitQueueItem(UnitType type, int quanity, int recruitTime)
+        public RecruitQueueItem(Unit unit, int quanity, float recruitTime)
         {
-            unitType = type;
+            this.unit = unit;
             remainingQuanity = quanity;
             this.recruitTime = recruitTime;
             timeCurrent = recruitTime;
-            end = new LocalTime((ulong)(quanity * recruitTime));
+            end = new Seconds((int)(quanity * recruitTime));
         }
     }
 }
