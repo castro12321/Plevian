@@ -10,7 +10,7 @@ using Plevian.Units;
 
 namespace Plevian.Villages
 {
-    class Village
+    public class Village
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
@@ -147,10 +147,10 @@ namespace Plevian.Villages
         /// <param name="unitType">unit to recruit</param>
         /// <param name="quanity">Quanity of units to recruit</param>
         /// <param name="recruitTime">Recruit time for invidual unit</param>
-        public void recruit(Unit unit, int quanity)
+        public void recruit(Unit unit)
         {
             if (recruitQueue.Count == 0) recruitTimeEnd = GameTime.now;
-            RecruitQueueItem newQueue = new RecruitQueueItem(unit, quanity);
+            RecruitQueueItem newQueue = new RecruitQueueItem(unit);
             recruitTimeEnd += newQueue.end;
             recruitQueue.Add(newQueue);
         }

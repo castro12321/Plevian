@@ -7,7 +7,7 @@ using Plevian.Exceptions;
 
 namespace Plevian.Units
 {
-    class Army
+    public class Army
     {
         private Dictionary<UnitType, Unit> units = new Dictionary<UnitType, Unit>();
         

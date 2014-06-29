@@ -7,7 +7,7 @@ using Plevian.Resource;
 
 namespace Plevian.Units
 {
-    abstract class Unit
+    public abstract class Unit
     {
         public int quanity;
 

@@ -7,7 +7,7 @@ using Plevian.Resource;
 
 namespace Plevian.Units
 {
-    class Archer : Unit
+    public class Archer : Unit
     {
         public Archer(int quanity = 0)
             : base(quanity)
