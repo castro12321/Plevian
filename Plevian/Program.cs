@@ -7,6 +7,9 @@ using System.IO;
 using Plevian.Maps;
 using Plevian.Debugging;
 using Plevian.Units;
+using SFML.Window;
+using SFML.Graphics;
+using SFML.Audio;
 namespace Plevian
 {
     public static class Program
@@ -25,7 +28,7 @@ namespace Plevian
             NativeMethods.AllocConsole();
             Console.WriteLine("Debug Console");
 
-            armyDebug();
+            initializeSFML();
 
             Game game = new Game();
             while (true)
@@ -38,20 +41,72 @@ namespace Plevian
             Application.Run(new Form1());
         }
 
-        private static void armyDebug()
+        private static void initializeSFML()
         {
-            Army test = new Army();
-            test += new Archer(50);
-            test += new Knight(25);
-            
+            // Create the main window
+            RenderWindow app = new RenderWindow(new VideoMode(1024, 768), "SFML Works!");
+            app.Closed += new EventHandler(OnClose);
 
-            Army second = new Army();
-            second += new Archer(50);
-            second += new Knight(20);
+            Color windowColor = new Color(0, 192, 255);
+
+            // Start the game loop
+            while (app.IsOpen())
+            {
+                // Process events
+                app.DispatchEvents();
+
+                // Clear screen
+                app.Clear(windowColor);
+
+                // Update the window
+                app.Display();
+            } //End game loop
 
 
-            test -= second;
-            Logger.s(test.toString());
+            return;
+            // initialize the form
+            System.Windows.Forms.Form form = new System.Windows.Forms.Form(); // create our form
+            form.Size = new System.Drawing.Size(600, 600); // set form size to 600 width & 600 height
+            form.Show(); // show our form
+            DrawingSurface rendersurface = new DrawingSurface(); // our control for SFML to draw on
+            rendersurface.Size = new System.Drawing.Size(400, 400); // set our SFML surface control size to be 500 width & 500 height
+            form.Controls.Add(rendersurface); // add the SFML surface control to our form
+            rendersurface.Location = new System.Drawing.Point(100, 100); // center our control on the form
+
+            // initialize sfml
+            SFML.Graphics.RenderWindow renderwindow = new SFML.Graphics.RenderWindow(rendersurface.Handle); // creates our SFML RenderWindow on our surface control
+
+            // drawing loop
+            while (form.Visible) // loop while the window is open
+            {
+                System.Windows.Forms.Application.DoEvents(); // handle form events
+                renderwindow.DispatchEvents(); // handle SFML events - NOTE this is still required when SFML is hosted in another window
+                renderwindow.Clear(SFML.Graphics.Color.Yellow); // clear our SFML RenderWindow
+                renderwindow.Display(); // display what SFML has drawn to the screen
+            }
+        }
+
+        static void OnClose(object sender, EventArgs e)
+        {
+            // Close the window when OnClose event is received
+            RenderWindow window = (RenderWindow)sender;
+            window.Close();
+        }
+ 
+
+
+        private class DrawingSurface : System.Windows.Forms.Control
+        {
+            protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
+            {
+                // don't call base.OnPaint(e) to prevent forground painting
+                // base.OnPaint(e);
+            }
+            protected override void OnPaintBackground(System.Windows.Forms.PaintEventArgs pevent)
+            {
+                // don't call base.OnPaintBackground(e) to prevent background painting
+                //base.OnPaintBackground(pevent);
+            }
         }
     }
 }

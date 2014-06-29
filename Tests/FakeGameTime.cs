@@ -16,7 +16,7 @@ namespace Tests
 
         public void addFakeTime(int seconds)
         {
-            now += new Seconds(seconds);
+            //now += new Seconds(seconds);
         }
     }
 }
