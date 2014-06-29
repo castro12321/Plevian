@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FakeGameTime.cs" />
     <Compile Include="Integration\TestSavingGame.cs" />
     <Compile Include="Integration\TestLoadingGame.cs" />
     <Compile Include="Unit\TestResources.cs" />

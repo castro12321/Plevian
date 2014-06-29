@@ -11,17 +11,9 @@ namespace Plevian
     /// </summary>
     public class GameTime
     {
-        private static ulong lastSystemTime;
-        private static int gameTime;
+        public static GameTime now { get; protected set; }
         private int time;
-        public static GameTime now
-        {
-            get
-            {
-                return new GameTime(gameTime);
-            }
-        }
-
+        
         protected GameTime(int time)
         {
             this.time = time;
@@ -29,32 +21,39 @@ namespace Plevian
 
         public static void init(int time)
         {
-            GameTime.gameTime = time;
-            lastSystemTime = SystemTime.now;
+            GameTime.now = new Seconds(time);
+            update();
         }
 
         public override string ToString()
         {
             return time.ToString();
         }
-
-        /// <summary>
-        /// </summary>
-        /// <returns>Diff in seconds</returns>
+        
         public static ulong update()
         {
-            ulong systemTime = SystemTime.now;
-            ulong datediff = systemTime - lastSystemTime;
-            gameTime += (int)datediff;
-            lastSystemTime = systemTime;
+            ulong datediff = SystemTime.update();
+            GameTime.now.time += (int)datediff;
             return datediff;
         }
         
         private static class SystemTime
         {
             private static DateTime epoch = new DateTime(1970, 1, 1);
+            private static ulong lastSystemTime = SystemTime.now;
 
-            public static ulong now
+            /// <summary>
+            /// </summary>
+            /// <returns>Diff in seconds since last call</returns>
+            public static ulong update()
+            {
+                ulong systemTime = SystemTime.now;
+                ulong datediff = systemTime - lastSystemTime;
+                lastSystemTime = systemTime;
+                return datediff;
+            }
+
+            private static ulong now
             {
                 get
                 {
