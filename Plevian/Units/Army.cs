@@ -94,6 +94,46 @@ namespace Plevian.Units
             return true;
         }
 
+        public int getAttackStrength()
+        {
+            int attackStrength = 0;
+            foreach (var pair in units)
+            {
+                attackStrength += pair.Value.getAttackStrength();
+            }
+            return attackStrength;
+        }
+
+        public int getDefenseInfantry()
+        {
+            int defenseInfantry = 0;
+            foreach (var pair in units)
+            {
+                defenseInfantry += pair.Value.getDefenseOnInfantry();
+            }
+            return defenseInfantry;
+        }
+
+        public int getDefenseCavalry()
+        {
+            int defenseCavalry = 0;
+            foreach (var pair in units)
+            {
+                defenseCavalry += pair.Value.getDefenseOnCavalry();
+            }
+            return defenseCavalry;
+        }
+
+        public int getDefenseArchers()
+        {
+            int defenseArchers = 0;
+            foreach (var pair in units)
+            {
+                defenseArchers += pair.Value.getDefenseOnArchers();
+            }
+            return defenseArchers;
+        }
+
         public bool contain(UnitType unitType)
         {
             return units.ContainsKey(unitType);
@@ -116,8 +156,5 @@ namespace Plevian.Units
             }
             return str;
         }
-
-
-
     }
 }
