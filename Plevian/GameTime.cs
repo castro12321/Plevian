@@ -13,7 +13,8 @@ namespace Plevian
     {
         private static ulong lastSystemTime;
         private static int gameTime;
-        private int time;
+
+        protected int time;
         public static GameTime now
         {
             get
@@ -49,7 +50,12 @@ namespace Plevian
             lastSystemTime = systemTime;
             return datediff;
         }
-        
+
+        public Seconds diffrence(GameTime other)
+        {
+            return new Seconds(Math.Abs(time - other.time));
+        }
+
         private static class SystemTime
         {
             private static DateTime epoch = new DateTime(1970, 1, 1);
@@ -67,6 +73,12 @@ namespace Plevian
         public static GameTime operator +(GameTime lh, GameTime rh)
         {
             return new GameTime(lh.time + rh.time);
+        }
+
+        public static Seconds operator -(GameTime lh, GameTime rh)
+        {
+            if (lh < rh) throw new Exception("Subtracting bigger time from lesser time");
+            return new Seconds(lh.time - rh.time);
         }
 
         public static bool operator >(GameTime lh, GameTime rh)
