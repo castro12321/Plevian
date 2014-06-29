@@ -15,19 +15,19 @@ namespace Plevian
         public GameTime(LocalTime gameTime)
         {
             GameTime.time = gameTime;
-            systemTime = currentTimeSeconds();
+            systemTime = currentSystemTimeSeconds();
         }
 
         public ulong updateTime()
         {
-            ulong currentSystemTime = currentTimeSeconds();
+            ulong currentSystemTime = currentSystemTimeSeconds();
             ulong datediff = currentSystemTime - systemTime;
             systemTime = currentSystemTime;
             time.addSeconds(datediff);
             return datediff;
         }
 
-        private ulong currentTimeSeconds()
+        private ulong currentSystemTimeSeconds()
         {
             DateTime currentTime = DateTime.UtcNow;
             return (ulong)((currentTime - epoch).TotalSeconds);

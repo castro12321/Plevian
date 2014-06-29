@@ -53,6 +53,16 @@ namespace Plevian
             return lh.seconds <= rh.seconds;
         }
 
+        public static bool operator ==(LocalTime lh, LocalTime rh)
+        {
+            return lh.seconds == rh.seconds;
+        }
+
+        public static bool operator !=(LocalTime lh, LocalTime rh)
+        {
+            return lh.seconds != rh.seconds;
+        }
+
         public override string ToString()
         {
             return seconds.ToString();
