@@ -35,7 +35,7 @@ namespace Tests.Unit
             System.Threading.Thread.Sleep((seconds) * 1000);
             GameTime.update();
             
-            Assert.IsTrue(testVillage.army.get(UnitType.ARCHER).quanity == 25);
+            Assert.IsTrue(testVillage.army.get(UnitType.ARCHER).quanity == 25); 
             Assert.IsTrue(testVillage.army.get(UnitType.KNIGHT).quanity == 100);
             Assert.IsTrue(testVillage.army.get(UnitType.WARRIOR).quanity == 50);
         }
