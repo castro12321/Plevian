@@ -27,8 +27,9 @@ namespace Plevian
             this.time = time;
         }
 
-        public static void init(ulong time)
+        public static void init(int time)
         {
+            GameTime.gameTime = time;
             lastSystemTime = SystemTime.now;
         }
 
