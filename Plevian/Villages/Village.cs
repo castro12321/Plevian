@@ -64,8 +64,8 @@ namespace Plevian.Villages
             if(buildingsQueue.Count > 0)
             {
                 BuildingQueueItem queueItem = buildingsQueue.Peek();
-                Logger.c("item: " + queueItem.toBuild.ToString() + " " + GameTime.time + "/" + queueItem.end);
-                if (GameTime.time >= queueItem.end)
+                Logger.c("item: " + queueItem.toBuild.ToString() + " " + GameTime.now + "/" + queueItem.end);
+                if (GameTime.now >= queueItem.end)
                 {
                     Logger.c("Built! " + queueItem.toBuild.ToString());
                     buildings[queueItem.toBuild].upgrade();
@@ -104,8 +104,8 @@ namespace Plevian.Villages
 
             resources -= neededResources;
 
-            LocalTime buildTime = building.getConstructionTimeForNextLevel();
-            LocalTime finishTime = GameTime.add(buildTime);
+            GameTime buildTime = building.getConstructionTimeForNextLevel();
+            GameTime finishTime = GameTime.now + buildTime;
             buildingsQueue.Enqueue(new BuildingQueueItem(finishTime, buildingType));
         }
 

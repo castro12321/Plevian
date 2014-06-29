@@ -13,7 +13,7 @@ namespace Plevian.Buildings
         public int level { get; private set; }
 
         public abstract String getDisplayName();
-        public abstract LocalTime getConstructionTimeFor(int level);
+        public abstract GameTime getConstructionTimeFor(int level);
         public abstract Resources getPriceFor(int level);
         public abstract Resources getProductionFor(int level);
         public abstract int getMaxLevel();
@@ -49,12 +49,12 @@ namespace Plevian.Buildings
             return getPriceFor(level + 1);
         }
 
-        public LocalTime getConstructionTime()
+        public GameTime getConstructionTime()
         {
             return getConstructionTimeFor(level);
         }
 
-        public LocalTime getConstructionTimeForNextLevel()
+        public GameTime getConstructionTimeForNextLevel()
         {
             return getConstructionTimeFor(level+1);
         }

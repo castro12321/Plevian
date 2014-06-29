@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Maps
 {
-    class Location
+    public class Location
     {
         public readonly int x, y;
 

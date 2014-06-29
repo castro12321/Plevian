@@ -6,36 +6,107 @@ using System.Threading.Tasks;
 
 namespace Plevian
 {
+    /// <summary>
+    /// Represents virtual seconds since game start
+    /// </summary>
     public class GameTime
     {
-        private static DateTime epoch = new DateTime(1970, 1, 1);
-        private ulong systemTime = 0;
-        public static LocalTime time { get; private set; }
-
-        public GameTime(LocalTime gameTime)
+        private static ulong lastSystemTime;
+        private static int gameTime;
+        private int time;
+        public static GameTime now
         {
-            GameTime.time = gameTime;
-            systemTime = currentTimeSeconds();
+            get
+            {
+                return new GameTime(gameTime);
+            }
         }
 
-        public ulong updateTime()
+        protected GameTime(int time)
         {
-            ulong currentSystemTime = currentTimeSeconds();
-            ulong datediff = currentSystemTime - systemTime;
-            systemTime = currentSystemTime;
-            time.addSeconds(datediff);
+            this.time = time;
+        }
+
+        public static void init(int time)
+        {
+            GameTime.gameTime = time;
+            lastSystemTime = SystemTime.now;
+        }
+
+        public override string ToString()
+        {
+            return time.ToString();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>Diff in seconds</returns>
+        public static ulong update()
+        {
+            ulong systemTime = SystemTime.now;
+            ulong datediff = systemTime - lastSystemTime;
+            gameTime += (int)datediff;
+            lastSystemTime = systemTime;
             return datediff;
         }
-
-        private ulong currentTimeSeconds()
+        
+        private static class SystemTime
         {
-            DateTime currentTime = DateTime.UtcNow;
-            return (ulong)((currentTime - epoch).TotalSeconds);
+            private static DateTime epoch = new DateTime(1970, 1, 1);
+
+            public static ulong now
+            {
+                get
+                {
+                    DateTime currentTime = DateTime.UtcNow;
+                    return (ulong)((currentTime - epoch).TotalSeconds);
+                }
+            }
         }
 
-        public static LocalTime add(LocalTime time)
+        public static GameTime operator +(GameTime lh, GameTime rh)
         {
-            return GameTime.time + time;
+            return new GameTime(lh.time + rh.time);
+        }
+
+        public static bool operator >(GameTime lh, GameTime rh)
+        {
+            return lh.time > rh.time;
+        }
+
+        public static bool operator >=(GameTime lh, GameTime rh)
+        {
+            return lh.time >= rh.time;
+        }
+
+        public static bool operator <(GameTime lh, GameTime rh)
+        {
+            return lh.time < rh.time;
+        }
+
+        public static bool operator <=(GameTime lh, GameTime rh)
+        {
+            return lh.time <= rh.time;
+        }
+
+        public static bool operator ==(GameTime lh, GameTime rh)
+        {
+            return lh.time == rh.time;
+        }
+
+        public static bool operator !=(GameTime lh, GameTime rh)
+        {
+            return lh.time != rh.time;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is GameTime)
+            {
+                GameTime other = (GameTime)obj;
+                return time.Equals(other.time);
+            }
+            return false;
         }
     }
 }
