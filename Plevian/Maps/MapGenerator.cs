@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Maps
 {
-    class MapGenerator
+    public class MapGenerator
     {
         public MapGenerator()
         {

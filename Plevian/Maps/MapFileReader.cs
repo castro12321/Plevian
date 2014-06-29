@@ -10,7 +10,7 @@ namespace Plevian.Maps
     /// <summary>
     /// Provides naive and slow map reading
     /// </summary>
-    class MapFileReader
+    public class MapFileReader
     {
         public Map read(Save save)
         {
