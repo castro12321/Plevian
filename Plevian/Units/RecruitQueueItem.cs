@@ -14,17 +14,16 @@ namespace Plevian.Units
         /// <summary>
         /// recruit time for invidual unit.
         /// </summary>
-        public readonly float recruitTime;
+        public readonly float recruitTime { get { return unit.getRecruitTime(); } }
         /// <summary>
         /// Time on unit now being recruted. It indicates how much time left for it's recruit
         /// </summary>
         public float timeCurrent;
 
-        public RecruitQueueItem(Unit unit, int quanity, float recruitTime)
+        public RecruitQueueItem(Unit unit, int quanity)
         {
             this.unit = unit;
             remainingQuanity = quanity;
-            this.recruitTime = recruitTime;
             timeCurrent = recruitTime;
             end = new Seconds((int)(quanity * recruitTime));
         }

@@ -147,10 +147,10 @@ namespace Plevian.Villages
         /// <param name="unitType">unit to recruit</param>
         /// <param name="quanity">Quanity of units to recruit</param>
         /// <param name="recruitTime">Recruit time for invidual unit</param>
-        public void recruit(Unit unit, int quanity, float recruitTime)
+        public void recruit(Unit unit, int quanity)
         {
             if (recruitQueue.Count == 0) recruitTimeEnd = GameTime.now;
-            RecruitQueueItem newQueue = new RecruitQueueItem(unit, quanity, recruitTime);
+            RecruitQueueItem newQueue = new RecruitQueueItem(unit, quanity);
             recruitTimeEnd += newQueue.end;
             recruitQueue.Add(newQueue);
         }
