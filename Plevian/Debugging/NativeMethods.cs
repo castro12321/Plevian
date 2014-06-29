@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+///It is being used for Console handling.
 namespace Plevian.Debugging
 {
     internal static class NativeMethods

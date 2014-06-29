@@ -8,8 +8,8 @@ namespace Plevian.Debugging
 {
     class Logger
     {
-        private static bool cas = true;
-        private static bool shot = false;
+        private static bool cas = false;
+        private static bool shot = true;
         /// <summary>
         /// Logger for castro
         /// </summary>
