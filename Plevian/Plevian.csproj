@@ -49,7 +49,7 @@
     <Compile Include="Buildings\BuildingQueueItem.cs" />
     <Compile Include="Buildings\BuildingType.cs" />
     <Compile Include="Buildings\TownHall.cs" />
-    <Compile Include="Debugging\Console.cs" />
+    <Compile Include="Debugging\NativeMethods.cs" />
     <Compile Include="Debugging\Logger.cs" />
     <Compile Include="Exceptions\ArmyExceptions.cs" />
     <Compile Include="Exceptions\BuildingExceptions.cs" />

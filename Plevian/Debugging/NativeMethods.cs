@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Plevian.Debug
+namespace Plevian.Debugging
 {
     internal static class NativeMethods
     {
