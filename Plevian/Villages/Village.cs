@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Plevian.Buildings;
 using Plevian.Resource;
 using Plevian.Debugging;
+using Plevian.Units;
 
 namespace Plevian.Villages
 {
@@ -105,6 +106,11 @@ namespace Plevian.Villages
             LocalTime buildTime = building.getConstructionTimeForNextLevel();
             LocalTime finishTime = GameTime.add(buildTime);
             buildingsQueue.Enqueue(new BuildingQueueItem(finishTime, buildingType));
+        }
+
+        public void recruit(UnitType unitType, int quanity)
+        {
+
         }
     }
 }
