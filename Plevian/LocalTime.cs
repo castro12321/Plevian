@@ -8,9 +8,6 @@ namespace Plevian
 {
     public class LocalTime
     {
-        /// <summary>
-        /// Represents virtual seconds since game start
-        /// </summary>
         public ulong seconds { get; private set; }
 
         public LocalTime(ulong hours, ulong minutes, ulong seconds)
