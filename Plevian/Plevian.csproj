@@ -54,6 +54,7 @@
     <Compile Include="Exceptions\ArmyExceptions.cs" />
     <Compile Include="Exceptions\BuildingExceptions.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Seconds.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Maps\Location.cs" />
     <Compile Include="Maps\Map.cs" />
