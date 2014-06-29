@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Plevian;
 
 namespace Tests.Unit
@@ -32,7 +31,7 @@ namespace Tests.Unit
 
             // assert
             Assert.IsTrue(diff == 1 || diff == 2); // Most likely one second passed. But if there were 0.999 millis, then we may catch 2 seconds instead of one
-            Assert.IsTrue(GameTime.now == new Seconds(1) || GameTime.now == new Seconds(20));
+            Assert.IsTrue(GameTime.now == new Seconds(1) || GameTime.now == new Seconds(2));
         }
 
         [TestMethod]
