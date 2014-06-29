@@ -23,6 +23,8 @@ namespace Plevian.Units
         public static readonly int movementSpeed = 25;
         public static readonly int lootCapacity = 20;
 
+        public static readonly float recruitTime = 10f;
+
         public static readonly Resources recruitCost = new Food(40) + new Wood(100);
         public static readonly Resources upkeepCost = new Wood(1) + new Food(5);
 
@@ -39,6 +41,7 @@ namespace Plevian.Units
         public override int getLootCapacity() { return lootCapacity; }
 
         public override Resources getRecruitCost() { return recruitCost; }
+        public override float getRecruitTime() { return recruitTime; }
         public override Resources getUpkeepCost() { return upkeepCost; }
 
         public override UnitType getUnitType() { return unitType; }

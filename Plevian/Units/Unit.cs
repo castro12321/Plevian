@@ -24,12 +24,12 @@ namespace Plevian.Units
         public abstract int getDefenseOnArchers();
 
         public abstract int GetMovementSpeed();
-
         public abstract int getLootCapacity();
 
         public abstract Resources getRecruitCost();
+        public abstract float getRecruitTime();
         public abstract Resources getUpkeepCost();
-
+        
         public abstract UnitType getUnitType();
     }
 }
