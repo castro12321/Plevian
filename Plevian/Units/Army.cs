@@ -94,6 +94,17 @@ namespace Plevian.Units
             return true;
         }
 
+        public bool contain(UnitType unitType)
+        {
+            return units.ContainsKey(unitType);
+        }
+
+        public Unit get(UnitType unitType)
+        {
+            if (contain(unitType) == false) throw new Exception("Army doesn't contain selected unit!!!");
+            return units[unitType];
+        }
+
         public string toString()
         {
             string str = "";

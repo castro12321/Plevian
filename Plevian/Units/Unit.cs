@@ -31,5 +31,7 @@ namespace Plevian.Units
         public abstract Resources getUpkeepCost();
         
         public abstract UnitType getUnitType();
+
+        public abstract Unit clone();
     }
 }

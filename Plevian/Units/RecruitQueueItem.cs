@@ -10,22 +10,22 @@ namespace Plevian.Units
     {
         public readonly Unit unit;
         public readonly Seconds end;
-        public int remainingQuanity;
+        public int remainingQuanity { get { return unit.quanity; } set { unit.quanity = value; } }
         /// <summary>
         /// recruit time for invidual unit.
         /// </summary>
-        public readonly float recruitTime { get { return unit.getRecruitTime(); } }
+        public float recruitTime { get { return unit.getRecruitTime(); } }
         /// <summary>
         /// Time on unit now being recruted. It indicates how much time left for it's recruit
         /// </summary>
         public float timeCurrent;
 
-        public RecruitQueueItem(Unit unit, int quanity)
+        public RecruitQueueItem(Unit unit)
         {
             this.unit = unit;
-            remainingQuanity = quanity;
+            remainingQuanity = unit.quanity ;
             timeCurrent = recruitTime;
-            end = new Seconds((int)(quanity * recruitTime));
+            end = new Seconds((int)(unit.quanity * recruitTime));
         }
     }
 }

@@ -30,6 +30,11 @@ namespace Plevian.Units
 
         public static readonly UnitType unitType = UnitType.ARCHER;
 
+        public override Unit clone()
+        {
+            return new Archer(quanity);
+        }
+
         public override int getAttackStrength() { return attackStrength; }
 
         public override int getDefenseOnInfantry() { return defenseOnInfantry; }

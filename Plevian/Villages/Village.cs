@@ -16,12 +16,15 @@ namespace Plevian.Villages
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
         private Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         private List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
-        private GameTime recruitTimeEnd = GameTime.now;
+        public GameTime recruitTimeEnd { get; private set; }
+        public Army army { get; private set; }
         public Resources resources { get; private set; }
 
         public Village()
         {
             resources = new Resources(999, 999, 999, 999);
+            recruitTimeEnd = GameTime.now;
+            army = new Army();
         }
 
         public void setBuildings(Dictionary<BuildingType, Building> buildings)
@@ -98,7 +101,16 @@ namespace Plevian.Villages
                     while (second >= queue.timeCurrent && queue.remainingQuanity > 0)
                     {
                         second -= queue.timeCurrent;
-                        //add builded soldier
+
+                        if (army.contain(queue.unit.getUnitType()))
+                            army.get(queue.unit.getUnitType()).quanity++;
+                        else
+                        {
+                            Unit clone = queue.unit.clone();
+                            clone.quanity = 1;
+                            army += clone;
+                        }
+
                         queue.timeCurrent = queue.recruitTime;
                         queue.remainingQuanity--;
                     }
