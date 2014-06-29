@@ -79,6 +79,7 @@
     <Compile Include="Units\Archer.cs" />
     <Compile Include="Units\Army.cs" />
     <Compile Include="Units\Knight.cs" />
+    <Compile Include="Units\RecruitQueueItem.cs" />
     <Compile Include="Units\Unit.cs" />
     <Compile Include="Units\UnitType.cs" />
     <Compile Include="Units\Warrior.cs" />

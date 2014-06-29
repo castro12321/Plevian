@@ -52,7 +52,7 @@ namespace Plevian
 
 
             test -= second;
-            test.listArmy();
+            Console.WriteLine(test.toString());
         }
     }
 }
