@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Plevian.Maps;
-using Plevian.Debug;
+using Plevian.Debugging;
 using Plevian.Units;
-
 namespace Plevian
 {
     public static class Program
@@ -52,7 +51,7 @@ namespace Plevian
 
 
             test -= second;
-            test.listArmy();
+            Logger.s(test.toString());
         }
     }
 }

@@ -6,19 +6,25 @@ using System.Threading.Tasks;
 using Plevian.Buildings;
 using Plevian.Resource;
 using Plevian.Debugging;
+using Plevian.Units;
 
 namespace Plevian.Villages
 {
-    class Village
+    public class Village
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
         private Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
+        private List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
+        public GameTime recruitTimeEnd { get; private set; }
+        public Army army { get; private set; }
         public Resources resources { get; private set; }
 
         public Village()
         {
             resources = new Resources(999, 999, 999, 999);
+            recruitTimeEnd = GameTime.now;
+            army = new Army();
         }
 
         public void setBuildings(Dictionary<BuildingType, Building> buildings)
@@ -79,8 +85,48 @@ namespace Plevian.Villages
 
         private void finishRecruiting()
         {
-            // Check recruiting queue
-            // If something is done; yay
+            if (recruitQueue.Count == 0) return;
+            float second = 1f;
+            RecruitQueueItem queue = recruitQueue[0];
+
+            if (queue.timeCurrent > 1f)
+            {
+                queue.timeCurrent -= 1;
+                queue.remainingQuanity -= 1;
+            }
+            else
+            {
+                while (second > 0f && recruitQueue.Count > 0)
+                {
+                    while (second >= queue.timeCurrent && queue.remainingQuanity > 0)
+                    {
+                        second -= queue.timeCurrent;
+
+                        if (army.contain(queue.unit.getUnitType()))
+                            army.get(queue.unit.getUnitType()).quanity++;
+                        else
+                        {
+                            Unit clone = queue.unit.clone();
+                            clone.quanity = 1;
+                            army += clone;
+                        }
+
+                        queue.timeCurrent = queue.recruitTime;
+                        queue.remainingQuanity--;
+                    }
+                    if (queue.remainingQuanity > 0)
+                    {
+                        queue.timeCurrent -= second;
+                        second = 0f;
+                    }
+                    else
+                    {
+                        recruitQueue.RemoveAt(0);
+                        if (recruitQueue.Count == 0) return;
+                        queue = recruitQueue[0];
+                    }
+                }
+            }
         }
 
         public bool isBuilt(BuildingType type)
@@ -105,6 +151,20 @@ namespace Plevian.Villages
             GameTime buildTime = building.getConstructionTimeForNextLevel();
             GameTime finishTime = GameTime.now + buildTime;
             buildingsQueue.Enqueue(new BuildingQueueItem(finishTime, buildingType));
+        }
+
+        /// <summary>
+        /// Recruit units in city
+        /// </summary>
+        /// <param name="unitType">unit to recruit</param>
+        /// <param name="quanity">Quanity of units to recruit</param>
+        /// <param name="recruitTime">Recruit time for invidual unit</param>
+        public void recruit(Unit unit)
+        {
+            if (recruitQueue.Count == 0) recruitTimeEnd = GameTime.now;
+            RecruitQueueItem newQueue = new RecruitQueueItem(unit);
+            recruitTimeEnd += newQueue.end;
+            recruitQueue.Add(newQueue);
         }
     }
 }

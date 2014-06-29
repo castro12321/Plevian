@@ -7,7 +7,7 @@ using Plevian.Exceptions;
 
 namespace Plevian.Units
 {
-    class Army
+    public class Army
     {
         private Dictionary<UnitType, Unit> units = new Dictionary<UnitType, Unit>();
         
@@ -94,14 +94,27 @@ namespace Plevian.Units
             return true;
         }
 
-        public void listArmy()
+        public bool contain(UnitType unitType)
         {
-            Console.WriteLine("Army listing :");
+            return units.ContainsKey(unitType);
+        }
+
+        public Unit get(UnitType unitType)
+        {
+            if (contain(unitType) == false) throw new Exception("Army doesn't contain selected unit!!!");
+            return units[unitType];
+        }
+
+        public string toString()
+        {
+            string str = "";
+            str = "Army listing :\n";
             foreach (var pair in units)
             {
                 string name = Enum.GetName(typeof(UnitType), pair.Key);
-                Console.WriteLine(name + " - " + pair.Value.quanity);
+                str += name + " - " + pair.Value.quanity + "\n";
             }
+            return str;
         }
 
 
