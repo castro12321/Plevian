@@ -32,7 +32,7 @@ namespace Plevian.Battles
 
 
             throw new NotImplementedException("makeBattle() not implemented yet");
-            return new Report();
+            //return new Report();
         }
         
 
