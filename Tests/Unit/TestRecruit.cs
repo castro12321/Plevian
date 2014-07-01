@@ -11,11 +11,13 @@ using Plevian.Properties;
 namespace Tests.Unit
 {
     [TestClass]
-    public class TestRecruit
+    public class TestRecruit : TestWithTime
     {
         [TestMethod]
         public void testRecruit()
         {
+            fakeTime(0);
+
             Archer archer = new Archer(25);
             Game game = new Game();
             Village testVillage = new Village();
@@ -32,7 +34,7 @@ namespace Tests.Unit
                 wait.seconds--;
                 testVillage.tick();
             }
-            System.Threading.Thread.Sleep((seconds) * 1000);
+            addFakeTime(seconds);
             GameTime.update();
             
             Assert.IsTrue(testVillage.army.get(UnitType.ARCHER).quanity == 25); 

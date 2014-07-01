@@ -56,6 +56,7 @@
     <Compile Include="Unit\TestRecruit.cs" />
     <Compile Include="Unit\TestResources.cs" />
     <Compile Include="Unit\TestTime.cs" />
+    <Compile Include="TestWithTime.cs" />
     <Compile Include="Unit\TestMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
