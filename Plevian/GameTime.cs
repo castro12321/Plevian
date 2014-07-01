@@ -12,14 +12,14 @@ namespace Plevian
     public class GameTime
     {
         private static ulong lastSystemTime;
-        private static int gameTime;
+        private static GameTime gameTime;
 
         protected int time;
         public static GameTime now
         {
             get
             {
-                return new GameTime(gameTime);
+                return gameTime;
             }
         }
 
@@ -29,6 +29,11 @@ namespace Plevian
         }
 
         public static void init(int time)
+        {
+            init(new Seconds(time));
+        }
+
+        public static void init(GameTime time)
         {
             GameTime.gameTime = time;
             lastSystemTime = SystemTime.now;
@@ -46,7 +51,7 @@ namespace Plevian
         {
             ulong systemTime = SystemTime.now;
             ulong datediff = systemTime - lastSystemTime;
-            gameTime += (int)datediff;
+            gameTime.time += (int)datediff;
             lastSystemTime = systemTime;
             return datediff;
         }
