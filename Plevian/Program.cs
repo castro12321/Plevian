@@ -34,8 +34,6 @@ namespace Plevian
             while (true)
                 game.tick();
 
-            
-          
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
@@ -64,6 +62,7 @@ namespace Plevian
 
 
             return;
+            
             // initialize the form
             System.Windows.Forms.Form form = new System.Windows.Forms.Form(); // create our form
             form.Size = new System.Drawing.Size(600, 600); // set form size to 600 width & 600 height
@@ -92,8 +91,6 @@ namespace Plevian
             RenderWindow window = (RenderWindow)sender;
             window.Close();
         }
- 
-
 
         private class DrawingSurface : System.Windows.Forms.Control
         {
