@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plevian
+namespace Plevian.Battles
 {
-    class Battle
+    public enum BattleState
     {
-
-
+        AttackerVictory = 1,
+        DefenderVictory,
+        Draw,
+        Error
     }
 }

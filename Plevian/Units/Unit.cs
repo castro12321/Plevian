@@ -17,6 +17,8 @@ namespace Plevian.Units
         }
 
 
+
+#region abstract functions
         public abstract int getAttackStrength();
 
         public abstract int getDefenseOnInfantry();
@@ -31,7 +33,9 @@ namespace Plevian.Units
         public abstract Resources getUpkeepCost();
         
         public abstract UnitType getUnitType();
+        public abstract UnitClass getUnitClass();
 
         public abstract Unit clone();
+#endregion
     }
 }

@@ -94,6 +94,46 @@ namespace Plevian.Units
             return true;
         }
 
+        public int getAttackStrength()
+        {
+            int attackStrength = 0;
+            foreach (var pair in units)
+            {
+                attackStrength += pair.Value.getAttackStrength();
+            }
+            return attackStrength;
+        }
+
+        public int getDefenseInfantry()
+        {
+            int defenseInfantry = 0;
+            foreach (var pair in units)
+            {
+                defenseInfantry += pair.Value.getDefenseOnInfantry();
+            }
+            return defenseInfantry;
+        }
+
+        public int getDefenseCavalry()
+        {
+            int defenseCavalry = 0;
+            foreach (var pair in units)
+            {
+                defenseCavalry += pair.Value.getDefenseOnCavalry();
+            }
+            return defenseCavalry;
+        }
+
+        public int getDefenseArchers()
+        {
+            int defenseArchers = 0;
+            foreach (var pair in units)
+            {
+                defenseArchers += pair.Value.getDefenseOnArchers();
+            }
+            return defenseArchers;
+        }
+
         public bool contain(UnitType unitType)
         {
             return units.ContainsKey(unitType);
@@ -103,6 +143,30 @@ namespace Plevian.Units
         {
             if (contain(unitType) == false) throw new Exception("Army doesn't contain selected unit!!!");
             return units[unitType];
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>returns number of units in whole army</returns>
+        public int size()
+        {
+            int size = 0;
+            foreach (var pair in units)
+                size += pair.Value.quanity;
+            return size;
+        }
+
+        public readonly Dictionary<UnitType, Unit> getUnits()
+        {
+            return units;
+        }
+
+        public int getUnitClassCount(UnitClass unitClass)
+        {
+            int size = 0;
+            foreach (var pair in units)
+                if (pair.Value.getUnitClass() == unitClass) size += pair.Value.quanity;
+            return size;
         }
 
         public string toString()
@@ -117,7 +181,6 @@ namespace Plevian.Units
             return str;
         }
 
-
-
+        
     }
 }

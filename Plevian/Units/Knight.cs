@@ -29,7 +29,10 @@ namespace Plevian.Units
         public static readonly Resources upkeepCost = new Iron(1) + new Food(5);
 
         public static readonly UnitType unitType = UnitType.KNIGHT;
+        public static readonly UnitClass unitClass = UnitClass.INFANTRY;
 
+
+#region overrided functions
         public override Unit clone()
         {
             return new Knight(quanity);
@@ -50,5 +53,7 @@ namespace Plevian.Units
         public override Resources getUpkeepCost() { return upkeepCost; }
 
         public override UnitType getUnitType() { return unitType; }
+        public override UnitClass getUnitClass() { return unitClass; }
+#endregion
     }
 }
