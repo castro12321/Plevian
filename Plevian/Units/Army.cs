@@ -145,6 +145,30 @@ namespace Plevian.Units
             return units[unitType];
         }
 
+        /// <summary>
+        /// </summary>
+        /// <returns>returns number of units in whole army</returns>
+        public int size()
+        {
+            int size = 0;
+            foreach (var pair in units)
+                size += pair.Value.quanity;
+            return size;
+        }
+
+        public readonly Dictionary<UnitType, Unit> getUnits()
+        {
+            return units;
+        }
+
+        public int getUnitClassCount(UnitClass unitClass)
+        {
+            int size = 0;
+            foreach (var pair in units)
+                if (pair.Value.getUnitClass() == unitClass) size += pair.Value.quanity;
+            return size;
+        }
+
         public string toString()
         {
             string str = "";
@@ -156,5 +180,7 @@ namespace Plevian.Units
             }
             return str;
         }
+
+        
     }
 }

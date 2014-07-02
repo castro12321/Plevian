@@ -13,8 +13,18 @@ namespace Plevian.Battles
                                   attackerLosses, defenderLosses;
         float attackerLuck;
         float defenderDefense;
-
-        public Report(Dictionary<UnitType, int> atA, Dictionary<UnitType, int> defA, Dictionary<UnitType, int> atL, Dictionary<UnitType, int> defL, float luck, float defense)
+        BattleState battleResult;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="atA">Attacking army</param>
+        /// <param name="defA">Defending army</param>
+        /// <param name="atL">Attacker's losses</param>
+        /// <param name="defL">Defender's losses</param>
+        /// <param name="luck">luck</param>
+        /// <param name="defense">defense</param>
+        /// <param name="result">result</param>
+        public Report(Dictionary<UnitType, int> atA, Dictionary<UnitType, int> defA, Dictionary<UnitType, int> atL, Dictionary<UnitType, int> defL, float luck, float defense, BattleState result)
         {
             attackerArmy = atA;
             defenderArmy = defA;
@@ -23,6 +33,7 @@ namespace Plevian.Battles
 
             attackerLuck = luck;
             defenderDefense = defense;
+            battleResult = result;
         }
 
         public string toString()
