@@ -30,6 +30,8 @@ namespace Plevian.Units
 
         public static readonly UnitType unitType = UnitType.KNIGHT;
 
+
+#region overrided functions
         public override Unit clone()
         {
             return new Knight(quanity);
@@ -50,5 +52,6 @@ namespace Plevian.Units
         public override Resources getUpkeepCost() { return upkeepCost; }
 
         public override UnitType getUnitType() { return unitType; }
+#endregion
     }
 }

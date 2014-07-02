@@ -30,6 +30,7 @@ namespace Plevian.Units
 
         public static readonly UnitType unitType = UnitType.WARRIOR;
 
+#region overrided functions
         public override Unit clone()
         {
             return new Warrior(quanity);
@@ -49,6 +50,7 @@ namespace Plevian.Units
         public override float getRecruitTime() { return recruitTime; }
         public override Resources getUpkeepCost() { return upkeepCost; }
 
-        public override UnitType getUnitType() { return unitType; }
+        public override UnitType getUnitType() { return unitType; } 
+#endregion
     }
 }
