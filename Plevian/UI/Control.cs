@@ -14,7 +14,6 @@ namespace Plevian.UI
         protected Control father = null;
         protected ControlState state;
 
-
         public Control(UiPosition position)
         {
             this.position = position;
@@ -26,22 +25,22 @@ namespace Plevian.UI
             
         }
 
-        public readonly UiPosition getRelativePosition()
+        public UiPosition getRelativePosition()
         {
-            return position;
+            return new UiPosition(position);
         }
 
-        public readonly UiPosition getPosition()
+        public UiPosition getPosition()
         {
 
             if(father == null)
-            return position;
+            return new UiPosition(position);
             return father.getRelativePosition() + position;
         }
 
-        public readonly UISize getSize()
+        public UISize getSize()
         {
-            return size;
+            return new UISize(size);
         }
 
         public void addChildren(Control child)

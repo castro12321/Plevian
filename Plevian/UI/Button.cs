@@ -7,11 +7,14 @@ using SFML.Graphics;
 
 namespace Plevian.UI
 {
-    public class Button : Control
+    public class Button //: Control
     {
         Sprite none,
             hover,
             clicked;
+
+
+
 
        
         

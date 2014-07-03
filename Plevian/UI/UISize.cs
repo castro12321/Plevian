@@ -15,5 +15,11 @@ namespace Plevian.UI
             this.width = width;
             this.height = height;
         }
+
+        public UISize(UISize other)
+        {
+            this.width = other.width;
+            this.height = other.height;
+        }
     }
 }
