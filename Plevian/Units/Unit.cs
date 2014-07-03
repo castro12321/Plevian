@@ -16,7 +16,10 @@ namespace Plevian.Units
             this.quanity = quanity;
         }
 
-
+        public Resources getWholeUnitCost()
+        {
+            return getRecruitCost() * quanity;
+        }
 
 #region abstract functions
         public abstract int getAttackStrength();
@@ -29,6 +32,7 @@ namespace Plevian.Units
         public abstract int getLootCapacity();
 
         public abstract Resources getRecruitCost();
+
         public abstract float getRecruitTime();
         public abstract Resources getUpkeepCost();
         

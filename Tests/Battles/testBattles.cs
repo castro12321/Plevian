@@ -21,7 +21,7 @@ namespace Tests.Battles
 
             defender += new Warrior(25);
 
-            Battle battle = new Battle(attacker, defender, 0f, 0f);
+            Battle battle = new Battle(attacker, defender, 1f, 0f, 0);
             Report report = battle.makeBattle();
 
             Assert.IsTrue(report.battleResult == BattleState.AttackerVictory);
@@ -32,7 +32,7 @@ namespace Tests.Battles
 
             defender += new Knight(300);
 
-            battle = new Battle(attacker, defender, 0f, 0f);
+            battle = new Battle(attacker, defender, 1f, 0f, 0);
             report = battle.makeBattle();
 
             Assert.IsTrue(report.defenderArmy[UnitType.KNIGHT] == 300);

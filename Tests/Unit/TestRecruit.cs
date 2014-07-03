@@ -8,6 +8,8 @@ using Plevian.Units;
 using Plevian;
 using Plevian.Villages;
 using Plevian.Properties;
+using Plevian.Resource;
+
 namespace Tests.Unit
 {
     [TestClass]
@@ -18,9 +20,12 @@ namespace Tests.Unit
         {
             fakeTime(0);
 
+  
+
             Archer archer = new Archer(25);
             Game game = new Game();
             Village testVillage = new Village();
+            testVillage.addResources(new Resources(10000, 10000, 10000, 10000));
             testVillage.recruit(archer);
             testVillage.recruit(new Knight(100));
             testVillage.recruit(new Warrior(50));

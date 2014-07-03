@@ -161,7 +161,10 @@ namespace Plevian.Villages
         /// <param name="recruitTime">Recruit time for invidual unit</param>
         public void recruit(Unit unit)
         {
+            if (unit.getWholeUnitCost() > resources)
+                throw new Exception("Not enough resources");
             if (recruitQueue.Count == 0) recruitTimeEnd = GameTime.now;
+            resources -= unit.getWholeUnitCost();
             RecruitQueueItem newQueue = new RecruitQueueItem(unit);
             recruitTimeEnd += newQueue.end;
             recruitQueue.Add(newQueue);

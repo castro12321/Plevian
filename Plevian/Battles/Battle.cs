@@ -10,7 +10,8 @@ namespace Plevian.Battles
     public class Battle
     {
         Army attacker, defender;
-        private float attackerLuck, defenderDefense;
+        private float attackerLuck, defenderPercentageDefense;
+        private int defenderBaseDefense;
         Dictionary<UnitType, int> attArmy = new Dictionary<UnitType, int>();
         Dictionary<UnitType, int> defArmy = new Dictionary<UnitType,int>();
         Dictionary<UnitType, int> attLosses = new Dictionary<UnitType,int>();
@@ -23,12 +24,13 @@ namespace Plevian.Battles
 
         BattleState battleState = BattleState.Draw;
 
-        public Battle(Army attacker, Army defender, float luck, float defense)
+        public Battle(Army attacker, Army defender, float luck, float percentageDefense, int baseDefense)
         {
             this.attacker = attacker;
             this.defender = defender;
             attackerLuck = luck;
-            defenderDefense = defense;
+            defenderPercentageDefense = percentageDefense;
+            defenderBaseDefense = baseDefense;
 
             listUnits();
         }
@@ -86,7 +88,7 @@ namespace Plevian.Battles
             }
             
             battleState = chooseWinner();
-            return new Report(attArmy, defArmy, attLosses, defLosses, attackerLuck, defenderDefense, battleState);
+            return new Report(attArmy, defArmy, attLosses, defLosses, attackerLuck, defenderPercentageDefense, battleState);
         }
 
         private void listUnits()
@@ -117,9 +119,12 @@ namespace Plevian.Battles
         private void getBasicParams()
         {
             attackStrength = attacker.getAttackStrength();
-            defenseInf = defender.getDefenseInfantry();
-            defenseCav = defender.getDefenseCavalry();
-            defenseArch = defender.getDefenseArchers();
+            attackStrength = (int)((float)attackStrength * attackerLuck);
+
+
+            defenseInf = (int)(((float)defender.getDefenseInfantry() + defenderBaseDefense ) * (1f + defenderPercentageDefense));
+            defenseCav = (int)(((float)defender.getDefenseInfantry() + defenderBaseDefense) * (1f + defenderPercentageDefense));
+            defenseArch = (int)(((float)defender.getDefenseInfantry() + defenderBaseDefense) * (1f + defenderPercentageDefense));
 
             attSize = attacker.size();
             attInf = attacker.getUnitClassCount(UnitClass.INFANTRY);
