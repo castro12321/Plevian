@@ -7,12 +7,14 @@ using Plevian.Units;
 
 namespace Plevian.Battles
 {
-    class Battle
+    public class Battle
     {
         Army attacker, defender;
         private float attackerLuck, defenderDefense;
-        Dictionary<UnitType, int> attArmy, defArmy;
-        Dictionary<UnitType, int> attLosses, defLosses;
+        Dictionary<UnitType, int> attArmy = new Dictionary<UnitType, int>();
+        Dictionary<UnitType, int> defArmy = new Dictionary<UnitType,int>();
+        Dictionary<UnitType, int> attLosses = new Dictionary<UnitType,int>();
+        Dictionary<UnitType, int> defLosses = new Dictionary<UnitType,int>();
 
         int attackStrength, defenseInf, defenseCav, defenseArch;
         int attSize, attInf, attCav, attArch;
@@ -46,27 +48,40 @@ namespace Plevian.Battles
             if (attackStrength > overallDefense)
             {
                 //defender is losing everything
+                foreach (var pair in defender.getUnits())
+                {
+                    defLosses.Add(pair.Key, pair.Value.quanity);
+                }
                 defender.getUnits().Clear();
 
                 float attackerLosses = 1.0f - (float)(attackStrength - overallDefense) / (float)overallDefense;
-                foreach (var pair in attacker.getUnits())
+                if (attackerLosses > 0f)
                 {
-                    float losses = (float)pair.Value.quanity / (float)attSize * attackerLosses;
-                    attLosses.Add(pair.Key, (int)(pair.Value.quanity * losses));
-                    pair.Value.quanity -= (int)(pair.Value.quanity * losses);
-
+                    foreach (var pair in attacker.getUnits())
+                    {
+                        float losses = (float)pair.Value.quanity / (float)attSize * attackerLosses;
+                        attLosses.Add(pair.Key, (int)(pair.Value.quanity * losses));
+                        pair.Value.quanity -= (int)(pair.Value.quanity * losses);
+                    }
                 }
             }
             else
             {
+                foreach (var pair in attacker.getUnits())
+                {
+                    attLosses.Add(pair.Key, pair.Value.quanity);
+                }
                 attacker.getUnits().Clear();
 
                 float defenderLosses = 1.0f - (float)(overallDefense - attackStrength) / (float)attackStrength;
-                foreach (var pair in defender.getUnits())
+                if (defenderLosses > 0)
                 {
-                    float losses = (float)pair.Value.quanity / (float)defSize * defenderLosses;
-                    defLosses.Add(pair.Key, (int)(pair.Value.quanity * losses));
-                    pair.Value.quanity -= (int)(pair.Value.quanity * losses);
+                    foreach (var pair in defender.getUnits())
+                    {
+                        float losses = (float)pair.Value.quanity / (float)defSize * defenderLosses;
+                        defLosses.Add(pair.Key, (int)(pair.Value.quanity * losses));
+                        pair.Value.quanity -= (int)(pair.Value.quanity * losses);
+                    }
                 }
             }
             
@@ -119,13 +134,13 @@ namespace Plevian.Battles
 
         private void getPercentages()
         {
-            infP = (float)(attInf / attSize);
-            archP = (float)(attArch / attSize);
-            cavP = (float)(attCav / attSize);
+            infP = ((float)attInf / (float)attSize);
+            archP = ((float)attArch / (float)attSize);
+            cavP = ((float)attCav / (float)attSize);
 
-            defenseInf = (int)(defenseInf * infP);
-            defenseCav = (int)(defenseCav * cavP);
-            defenseArch = (int)(defenseArch * archP);
+            defenseInf = (int)((float)defenseInf * infP);
+            defenseCav = (int)((float)defenseCav * cavP);
+            defenseArch = (int)((float)defenseArch * archP);
         }
 
     }

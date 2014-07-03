@@ -99,7 +99,7 @@ namespace Plevian.Units
             int attackStrength = 0;
             foreach (var pair in units)
             {
-                attackStrength += pair.Value.getAttackStrength();
+                attackStrength += pair.Value.getAttackStrength() * pair.Value.quanity;
             }
             return attackStrength;
         }
@@ -109,7 +109,7 @@ namespace Plevian.Units
             int defenseInfantry = 0;
             foreach (var pair in units)
             {
-                defenseInfantry += pair.Value.getDefenseOnInfantry();
+                defenseInfantry += pair.Value.getDefenseOnInfantry() * pair.Value.quanity;
             }
             return defenseInfantry;
         }
@@ -119,7 +119,7 @@ namespace Plevian.Units
             int defenseCavalry = 0;
             foreach (var pair in units)
             {
-                defenseCavalry += pair.Value.getDefenseOnCavalry();
+                defenseCavalry += pair.Value.getDefenseOnCavalry() * pair.Value.quanity;
             }
             return defenseCavalry;
         }
@@ -129,7 +129,7 @@ namespace Plevian.Units
             int defenseArchers = 0;
             foreach (var pair in units)
             {
-                defenseArchers += pair.Value.getDefenseOnArchers();
+                defenseArchers += pair.Value.getDefenseOnArchers() * pair.Value.quanity;
             }
             return defenseArchers;
         }
@@ -156,7 +156,7 @@ namespace Plevian.Units
             return size;
         }
 
-        public readonly Dictionary<UnitType, Unit> getUnits()
+        public Dictionary<UnitType, Unit> getUnits()
         {
             return units;
         }

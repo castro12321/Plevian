@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Plevian.UI
 {
-    public enum ButtonState
+    public enum ControlState
     {
-        None = 1,
-        Hover,
-        Clicked
+        NONE = 1,
+        HOVERED,
+        CLICKED,
+        PUSHED
     }
 }

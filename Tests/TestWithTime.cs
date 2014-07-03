@@ -10,7 +10,7 @@ namespace Tests.Unit
         protected void fakeTime(int time)
         {
             this.time = new FakeGameTime(time);
-            GameTime.init(this.time);
+            GameTime.init(time);
         }
 
         protected void addFakeTime(int time)

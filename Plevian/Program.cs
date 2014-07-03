@@ -10,6 +10,8 @@ using Plevian.Units;
 using SFML.Window;
 using SFML.Graphics;
 using SFML.Audio;
+using Plevian.Utils;
+
 namespace Plevian
 {
     public static class Program
@@ -47,14 +49,34 @@ namespace Plevian
 
             Color windowColor = new Color(0, 192, 255);
 
+            RectangleShape shape = new RectangleShape(new Vector2f(250, 50));
+            shape.Position = new Vector2f(100, 100);
+            Color outColor = Color.White;
+            Color inColor = Color.Green;
+
             // Start the game loop
             while (app.IsOpen())
             {
                 // Process events
                 app.DispatchEvents();
-
                 // Clear screen
                 app.Clear(windowColor);
+
+                int mouseX = Mouse.GetPosition(app).X;
+                int mouseY = Mouse.GetPosition(app).Y;
+
+                Console.WriteLine(mouseX + ", " + mouseY);
+
+                shape.FillColor = outColor;
+                if (Functions.Collision(mouseX, 100, mouseY, 100, 2, 250, 2, 50))
+                {
+                    shape.FillColor = inColor;
+                }
+
+                app.Draw(shape);
+
+                
+                
 
                 // Update the window
                 app.Display();

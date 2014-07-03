@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.UI
 {
-    class UiPosition
+    public class UiPosition
     {
         int x, y;
 
@@ -14,6 +14,23 @@ namespace Plevian.UI
         {
             this.x = x;
             this.y = y;
+        }
+
+        /// <summary>
+        /// Creates copy of object
+        /// </summary>
+        /// <param name="other">Object to copy</param>
+        public UiPosition(UiPosition other)
+        {
+            this.x = other.x;
+            this.y = other.y;
+        }
+
+
+        public static UiPosition operator +(UiPosition rh, UiPosition lh)
+        {
+            return new UiPosition(rh.x + rh.x,
+                                  lh.y + rh.y);
         }
     }
 }

@@ -7,13 +7,13 @@ using Plevian.Units;
 
 namespace Plevian.Battles
 {
-    class Report
+    public class Report
     {
-        Dictionary<UnitType, int> attackerArmy, defenderArmy,
+        public readonly Dictionary<UnitType, int> attackerArmy, defenderArmy,
                                   attackerLosses, defenderLosses;
-        float attackerLuck;
-        float defenderDefense;
-        BattleState battleResult;
+        public readonly float attackerLuck;
+        public readonly float defenderDefense;
+        public readonly BattleState battleResult;
         /// <summary>
         /// 
         /// </summary>
