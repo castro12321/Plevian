@@ -15,5 +15,12 @@ namespace Plevian.UI
             this.x = x;
             this.y = y;
         }
+
+
+        public static UiPosition operator +(UiPosition rh, UiPosition lh)
+        {
+            return new UiPosition(rh.x + rh.x,
+                                  lh.y + rh.y);
+        }
     }
 }

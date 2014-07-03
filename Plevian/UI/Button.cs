@@ -7,9 +7,8 @@ using SFML.Graphics;
 
 namespace Plevian.UI
 {
-    public class Button
+    public class Button : Control
     {
-        protected ButtonState state;
         Sprite none,
             hover,
             clicked;
