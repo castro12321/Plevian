@@ -42,15 +42,15 @@ namespace Plevian.Buildings
             throw new KeyNotFoundException("Level not found");
         }
 
-        public override LocalTime getConstructionTimeFor(int level)
+        public override GameTime getConstructionTimeFor(int level)
         {
             switch (level)
             {
-                case 1: return new LocalTime(15);
-                case 2: return new LocalTime(30);
-                case 3: return new LocalTime(60);
-                case 4: return new LocalTime(120);
-                case 5: return new LocalTime(240);
+                case 1: return new Seconds(15);
+                case 2: return new Seconds(30);
+                case 3: return new Seconds(60);
+                case 4: return new Seconds(120);
+                case 5: return new Seconds(240);
             }
             throw new KeyNotFoundException("Level not found");
         }
