@@ -30,10 +30,10 @@ namespace Plevian
             Console.WriteLine("Debug Console");
             
             // Load the game
-            initializeSFML();
+            //initializeSFML();
 
             Game game = new Game();
-            while (true)
+            //while (true)
                 game.tick();
 
             // Load GUI
