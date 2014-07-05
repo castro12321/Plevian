@@ -23,6 +23,7 @@ namespace Plevian
     /// </summary>
     public partial class MainWindow : System.Windows.Window
     {
+        private static bool running = true;
         private static Random random = new Random();
         private RenderWindow renderwindow;
         private Game game;
@@ -45,6 +46,9 @@ namespace Plevian
             host.Child = surface;
 
             sfml_map.Children.Add(host);
+
+            // Listen to some events
+            Closed += new EventHandler(OnClose);
         }
 
         byte oldR = 128;
@@ -52,7 +56,7 @@ namespace Plevian
         byte oldB = 128;
         public void run()
         {
-            while (true)
+            while (running)
             {
                 System.Threading.Thread.Sleep(10); // Some fake lag (if needed)
 
@@ -64,21 +68,18 @@ namespace Plevian
                 game.tick();
 
                 // Render
-                byte newR = (byte)random.Next(oldR - 3, oldR + 4);
-                byte newG = (byte)random.Next(oldG - 3, oldG + 4);
-                byte newB = (byte)random.Next(oldB - 3, oldB + 4);
-                oldR = newR;
-                oldG = newG;
-                oldB = newB;
+                oldR = (byte)random.Next(oldR - 3, oldR + 4);
+                oldG = (byte)random.Next(oldG - 3, oldG + 4);
+                oldB = (byte)random.Next(oldB - 3, oldB + 4);
                 //Logger.c("new color: " + newR + " " + newG + " " + newB);
-                Color newColor = new Color(newR, newG, newB);
+                Color newColor = new Color(oldR, oldG, oldB);
 
                 renderwindow.Clear(newColor); // clear our SFML RenderWindow
                 renderwindow.Display(); // display what SFML has drawn to the screen
             }
         }
 
-
+        /*
         private static void initializeSFML()
         {
             // Create the main window
@@ -107,25 +108,18 @@ namespace Plevian
 
                 shape.FillColor = outColor;
                 if (Functions.Collision(mouseX, 100, mouseY, 100, 2, 250, 2, 50))
-                {
                     shape.FillColor = inColor;
-                }
 
                 app.Draw(shape);
 
-                
-                
-
-                // Update the window
                 app.Display();
             } //End game loop
         }
+        */
 
         static void OnClose(object sender, EventArgs e)
         {
-            // Close the window when OnClose event is received
-            RenderWindow window = (RenderWindow)sender;
-            window.Close();
+            running = false;
         }
 
         private class DrawingSurface : System.Windows.Forms.Control
