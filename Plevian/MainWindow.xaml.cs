@@ -23,14 +23,14 @@ namespace Plevian
     {
         public MainWindow()
         {
+            InitializeComponent();
+            
             // Alloc debug console
             NativeMethods.AllocConsole();
             Console.WriteLine("Debug Console");
-
+            
             // Load the game
             initializeSFML();
-
-            InitializeComponent();
 
             Game game = new Game();
             while (true)
@@ -40,8 +40,6 @@ namespace Plevian
             
             
             // Link SFML to GUI and game
-
-        
         }
 
 

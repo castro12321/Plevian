@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Plevian.Entry</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -69,6 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="Game.cs" />
     <Compile Include="GameTime.cs" />
+    <Compile Include="Entry.cs" />
     <Compile Include="Resource\Food.cs" />
     <Compile Include="Resource\Iron.cs" />
     <Compile Include="Resource\Resources.cs" />
