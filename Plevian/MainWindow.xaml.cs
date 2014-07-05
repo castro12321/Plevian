@@ -70,7 +70,7 @@ namespace Plevian
                 oldR = newR;
                 oldG = newG;
                 oldB = newB;
-                Logger.c("new color: " + newR + " " + newG + " " + newB);
+                //Logger.c("new color: " + newR + " " + newG + " " + newB);
                 Color newColor = new Color(newR, newG, newB);
 
                 renderwindow.Clear(newColor); // clear our SFML RenderWindow
