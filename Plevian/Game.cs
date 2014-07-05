@@ -13,7 +13,7 @@ namespace Plevian
 
         public Game()
         {
-            gameTime = new GameTime(new LocalTime(0));
+            GameTime.init(0);
         }
 
         public Game(Save save)
@@ -25,8 +25,7 @@ namespace Plevian
         private Village village = new Village();
         public void tick()
         {
-            System.Threading.Thread.Sleep(250);
-            ulong timediff = gameTime.updateTime();
+            ulong timediff = GameTime.update();
             while (timediff --> 0)
             {
                 village.tick();

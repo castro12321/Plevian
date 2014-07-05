@@ -6,5 +6,6 @@ using System.Threading.Tasks;
 
 namespace Plevian.Exceptions
 {
-    public class ExceptionNotEnoughUnits : System.Exception { }
+    public class ExceptionArmy : System.Exception { }
+    public class ExceptionNotEnoughUnits : ExceptionArmy { }
 }

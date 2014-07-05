@@ -9,6 +9,7 @@ namespace Plevian.Debugging
     class Logger
     {
         private static bool cas = true;
+        private static bool shot = true;
         /// <summary>
         /// Logger for castro
         /// </summary>
@@ -16,6 +17,12 @@ namespace Plevian.Debugging
         {
             if (cas)
                 Console.WriteLine(msg);
+        }
+
+        public static void s(String msg)
+        {
+            if (!shot) return;
+            Console.WriteLine(msg);
         }
     }
 }

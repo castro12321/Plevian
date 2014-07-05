@@ -7,7 +7,7 @@ using Plevian.Exceptions;
 
 namespace Plevian.Units
 {
-    class Army
+    public class Army
     {
         private Dictionary<UnitType, Unit> units = new Dictionary<UnitType, Unit>();
         
@@ -94,17 +94,93 @@ namespace Plevian.Units
             return true;
         }
 
-        public void listArmy()
+        public int getAttackStrength()
         {
-            Console.WriteLine("Army listing :");
+            int attackStrength = 0;
+            foreach (var pair in units)
+            {
+                attackStrength += pair.Value.getAttackStrength() * pair.Value.quanity;
+            }
+            return attackStrength;
+        }
+
+        public int getDefenseInfantry()
+        {
+            int defenseInfantry = 0;
+            foreach (var pair in units)
+            {
+                defenseInfantry += pair.Value.getDefenseOnInfantry() * pair.Value.quanity;
+            }
+            return defenseInfantry;
+        }
+
+        public int getDefenseCavalry()
+        {
+            int defenseCavalry = 0;
+            foreach (var pair in units)
+            {
+                defenseCavalry += pair.Value.getDefenseOnCavalry() * pair.Value.quanity;
+            }
+            return defenseCavalry;
+        }
+
+        public int getDefenseArchers()
+        {
+            int defenseArchers = 0;
+            foreach (var pair in units)
+            {
+                defenseArchers += pair.Value.getDefenseOnArchers() * pair.Value.quanity;
+            }
+            return defenseArchers;
+        }
+
+        public bool contain(UnitType unitType)
+        {
+            return units.ContainsKey(unitType);
+        }
+
+        public Unit get(UnitType unitType)
+        {
+            if (contain(unitType) == false) throw new Exception("Army doesn't contain selected unit!!!");
+            return units[unitType];
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>returns number of units in whole army</returns>
+        public int size()
+        {
+            int size = 0;
+            foreach (var pair in units)
+                size += pair.Value.quanity;
+            return size;
+        }
+
+        public Dictionary<UnitType, Unit> getUnits()
+        {
+            return units;
+        }
+
+        public int getUnitClassCount(UnitClass unitClass)
+        {
+            int size = 0;
+            foreach (var pair in units)
+                if (pair.Value.getUnitClass() == unitClass) size += pair.Value.quanity;
+            return size;
+        }
+
+        public string toString()
+        {
+            string str = "";
+            str = "Army listing :\n";
             foreach (var pair in units)
             {
                 string name = Enum.GetName(typeof(UnitType), pair.Key);
-                Console.WriteLine(name + " - " + pair.Value.quanity);
+                str += name + " - " + pair.Value.quanity + "\n";
             }
+            return str;
         }
 
-
-
+        
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Maps
 {
-    class Map
+    public class Map
     {
         public readonly int sizeX, sizeY;
         private TerrainType[,] fields;

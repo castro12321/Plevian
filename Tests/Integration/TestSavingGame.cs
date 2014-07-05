@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plevian
+namespace Tests.Integration
 {
-    class Battle
+    class TestSavingGame
     {
-
-
     }
 }

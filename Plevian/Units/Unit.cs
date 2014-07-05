@@ -7,7 +7,7 @@ using Plevian.Resource;
 
 namespace Plevian.Units
 {
-    abstract class Unit
+    public abstract class Unit
     {
         public int quanity;
 
@@ -16,7 +16,12 @@ namespace Plevian.Units
             this.quanity = quanity;
         }
 
+        public Resources getWholeUnitCost()
+        {
+            return getRecruitCost() * quanity;
+        }
 
+#region abstract functions
         public abstract int getAttackStrength();
 
         public abstract int getDefenseOnInfantry();
@@ -24,12 +29,17 @@ namespace Plevian.Units
         public abstract int getDefenseOnArchers();
 
         public abstract int GetMovementSpeed();
-
         public abstract int getLootCapacity();
 
         public abstract Resources getRecruitCost();
-        public abstract Resources getUpkeepCost();
 
+        public abstract float getRecruitTime();
+        public abstract Resources getUpkeepCost();
+        
         public abstract UnitType getUnitType();
+        public abstract UnitClass getUnitClass();
+
+        public abstract Unit clone();
+#endregion
     }
 }

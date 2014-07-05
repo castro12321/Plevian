@@ -7,7 +7,7 @@ using Plevian.Resource;
 
 namespace Plevian.Units
 {
-    class Knight : Unit
+    public class Knight : Unit
     {
         public Knight(int quanity = 0)
             : base(quanity)
@@ -23,10 +23,20 @@ namespace Plevian.Units
         public static readonly int movementSpeed = 25;
         public static readonly int lootCapacity = 50;
 
+        public static readonly float recruitTime = 0.1f;
+
         public static readonly Resources recruitCost = new Iron(100) + new Food(50) + new Wood(25);
         public static readonly Resources upkeepCost = new Iron(1) + new Food(5);
 
         public static readonly UnitType unitType = UnitType.KNIGHT;
+        public static readonly UnitClass unitClass = UnitClass.INFANTRY;
+
+
+#region overrided functions
+        public override Unit clone()
+        {
+            return new Knight(quanity);
+        }
 
         public override int getAttackStrength() { return attackStrength; }
 
@@ -39,8 +49,11 @@ namespace Plevian.Units
         public override int getLootCapacity() { return lootCapacity; }
 
         public override Resources getRecruitCost() { return recruitCost; }
+        public override float getRecruitTime() { return recruitTime; }
         public override Resources getUpkeepCost() { return upkeepCost; }
 
         public override UnitType getUnitType() { return unitType; }
+        public override UnitClass getUnitClass() { return unitClass; }
+#endregion
     }
 }

@@ -8,11 +8,11 @@ namespace Plevian.Buildings
 {
     public class BuildingQueueItem
     {
-        public readonly LocalTime end;
+        public readonly GameTime end;
         public readonly BuildingType toBuild;
         // for units add int amount;
 
-        public BuildingQueueItem(LocalTime end, BuildingType toBuild)
+        public BuildingQueueItem(GameTime end, BuildingType toBuild)
         {
             this.end = end;
             this.toBuild = toBuild;

@@ -10,7 +10,7 @@ namespace Plevian.Maps
     /// <summary>
     /// Provides naive and slow map saving
     /// </summary>
-    class MapFileWriter
+    public class MapFileWriter
     {
         public void save(Map map, Save save)
         {
