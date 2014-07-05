@@ -14,6 +14,7 @@ using Plevian.Debugging;
 using SFML.Graphics;
 using SFML.Window;
 using Plevian.Utils;
+using System.Windows.Forms.Integration;
 
 namespace Plevian
 {
@@ -22,63 +23,61 @@ namespace Plevian
     /// </summary>
     public partial class MainWindow : System.Windows.Window
     {
+        private static Random random = new Random();
+        private RenderWindow renderwindow;
+        private Game game;
+
         public MainWindow()
         {
+            // Create window
             InitializeComponent();
-            
-            // Alloc debug console
-            NativeMethods.AllocConsole();
-            Console.WriteLine("Debug Console");
-            
-            // Load the game
-            //initializeSFML();
 
-            Game game = new Game();
-            //while (true)
-                game.tick();
-        }
+            // Initialize game
+            game = new Game();
 
-        public void addSFML()
-        {
+            // Add SFML
             DrawingSurface surface = new DrawingSurface();
             surface.Size = new System.Drawing.Size(400, 400);
             surface.Location = new System.Drawing.Point(100, 100);
+            renderwindow = new RenderWindow(surface.Handle);
 
-            System.Windows.Forms.Integration.WindowsFormsHost host = new System.Windows.Forms.Integration.WindowsFormsHost();
+            WindowsFormsHost host = new WindowsFormsHost();
             host.Child = surface;
 
             sfml_map.Children.Add(host);
+        }
 
-            // initialize sfml
-            SFML.Graphics.RenderWindow renderwindow = new SFML.Graphics.RenderWindow(surface.Handle); // creates our SFML RenderWindow on our surface control
-
-            Random random = new Random();
-
-            byte oldR = 128;
-            byte oldG = 128;
-            byte oldB = 128;
-
-            // drawing loop
-            while (true) // loop while the window is open
+        byte oldR = 128;
+        byte oldG = 128;
+        byte oldB = 128;
+        public void run()
+        {
+            while (true)
             {
+                System.Threading.Thread.Sleep(10); // Some fake lag (if needed)
+
+                // Process events
                 System.Windows.Forms.Application.DoEvents(); // handle form events
                 renderwindow.DispatchEvents(); // handle SFML events - NOTE this is still required when SFML is hosted in another window
 
-                byte newR = (byte)random.Next(oldR - 2, oldR + 3);
-                byte newG = (byte)random.Next(oldG - 2, oldG + 3);
-                byte newB = (byte)random.Next(oldB - 2, oldB + 3);
+                // Do the logic
+                game.tick();
+
+                // Render
+                byte newR = (byte)random.Next(oldR - 3, oldR + 4);
+                byte newG = (byte)random.Next(oldG - 3, oldG + 4);
+                byte newB = (byte)random.Next(oldB - 3, oldB + 4);
                 oldR = newR;
                 oldG = newG;
                 oldB = newB;
                 Logger.c("new color: " + newR + " " + newG + " " + newB);
                 Color newColor = new Color(newR, newG, newB);
-                for (int i = 0; i < 1000 * 1000; ++i)
-                    ;
 
                 renderwindow.Clear(newColor); // clear our SFML RenderWindow
                 renderwindow.Display(); // display what SFML has drawn to the screen
             }
         }
+
 
         private static void initializeSFML()
         {
