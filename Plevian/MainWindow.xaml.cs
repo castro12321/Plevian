@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Navigation;
@@ -35,13 +36,49 @@ namespace Plevian
             Game game = new Game();
             //while (true)
                 game.tick();
-
-            // Load GUI
-            
-            
-            // Link SFML to GUI and game
         }
 
+        public void addSFML()
+        {
+            DrawingSurface surface = new DrawingSurface();
+            surface.Size = new System.Drawing.Size(400, 400);
+            surface.Location = new System.Drawing.Point(100, 100);
+
+            System.Windows.Forms.Integration.WindowsFormsHost host = new System.Windows.Forms.Integration.WindowsFormsHost();
+            host.Child = surface;
+
+            sfml_map.Children.Add(host);
+
+            // initialize sfml
+            SFML.Graphics.RenderWindow renderwindow = new SFML.Graphics.RenderWindow(surface.Handle); // creates our SFML RenderWindow on our surface control
+
+            Random random = new Random();
+
+            byte oldR = 128;
+            byte oldG = 128;
+            byte oldB = 128;
+
+            // drawing loop
+            while (true) // loop while the window is open
+            {
+                System.Windows.Forms.Application.DoEvents(); // handle form events
+                renderwindow.DispatchEvents(); // handle SFML events - NOTE this is still required when SFML is hosted in another window
+
+                byte newR = (byte)random.Next(oldR - 2, oldR + 3);
+                byte newG = (byte)random.Next(oldG - 2, oldG + 3);
+                byte newB = (byte)random.Next(oldB - 2, oldB + 3);
+                oldR = newR;
+                oldG = newG;
+                oldB = newB;
+                Logger.c("new color: " + newR + " " + newG + " " + newB);
+                Color newColor = new Color(newR, newG, newB);
+                for (int i = 0; i < 1000 * 1000; ++i)
+                    ;
+
+                renderwindow.Clear(newColor); // clear our SFML RenderWindow
+                renderwindow.Display(); // display what SFML has drawn to the screen
+            }
+        }
 
         private static void initializeSFML()
         {
@@ -83,30 +120,6 @@ namespace Plevian
                 // Update the window
                 app.Display();
             } //End game loop
-
-
-            return;
-            
-            // initialize the form
-            System.Windows.Forms.Form form = new System.Windows.Forms.Form(); // create our form
-            form.Size = new System.Drawing.Size(600, 600); // set form size to 600 width & 600 height
-            form.Show(); // show our form
-            DrawingSurface rendersurface = new DrawingSurface(); // our control for SFML to draw on
-            rendersurface.Size = new System.Drawing.Size(400, 400); // set our SFML surface control size to be 500 width & 500 height
-            form.Controls.Add(rendersurface); // add the SFML surface control to our form
-            rendersurface.Location = new System.Drawing.Point(100, 100); // center our control on the form
-
-            // initialize sfml
-            SFML.Graphics.RenderWindow renderwindow = new SFML.Graphics.RenderWindow(rendersurface.Handle); // creates our SFML RenderWindow on our surface control
-
-            // drawing loop
-            while (form.Visible) // loop while the window is open
-            {
-                System.Windows.Forms.Application.DoEvents(); // handle form events
-                renderwindow.DispatchEvents(); // handle SFML events - NOTE this is still required when SFML is hosted in another window
-                renderwindow.Clear(SFML.Graphics.Color.Yellow); // clear our SFML RenderWindow
-                renderwindow.Display(); // display what SFML has drawn to the screen
-            }
         }
 
         static void OnClose(object sender, EventArgs e)

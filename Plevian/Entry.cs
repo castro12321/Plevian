@@ -11,8 +11,18 @@ namespace Plevian
         [STAThread]
         public static void Main(string[] args)
         {
-            // Your initialization code
-            App.Main();
+            //App.Main();
+            
+            //Plevian.App app = new Plevian.App();
+            //app.InitializeComponent();
+            //app.Run();
+
+            MainWindow main = new MainWindow();
+            main.InitializeComponent();
+            main.Show();
+
+            main.addSFML();
+
             Plevian.Debugging.Logger.c("hello entry");
         }
     }
