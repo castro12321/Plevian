@@ -9,7 +9,7 @@ namespace Plevian.Units
     class RecruitQueueItem
     {
         public readonly Unit unit;
-        public readonly Seconds end;
+        public readonly Seconds duration;
         public int remainingQuanity { get { return unit.quanity; } set { unit.quanity = value; } }
         /// <summary>
         /// recruit time for invidual unit.
@@ -25,7 +25,7 @@ namespace Plevian.Units
             this.unit = unit;
             remainingQuanity = unit.quanity ;
             timeCurrent = recruitTime;
-            end = new Seconds((int)(unit.quanity * recruitTime));
+            duration = new Seconds((int)(unit.quanity * recruitTime));
         }
     }
 }
