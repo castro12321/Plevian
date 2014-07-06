@@ -5,16 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
-using SFML.Graphics;
 
 namespace Plevian.Graphics
 {
     class VillageRenderer : System.Windows.Forms.Control
     {
         private readonly RenderWindow renderer;
+        private readonly Game game;
 
-        public VillageRenderer()
+        public VillageRenderer(Game game)
         {
+            this.game = game;
             Size = new System.Drawing.Size(400, 400);
             Location = new System.Drawing.Point(100, 100);
             renderer = new RenderWindow(Handle);

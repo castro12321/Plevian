@@ -5,18 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
-using SFML.Graphics;
+using Plevian.Maps;
 
 namespace Plevian.Graphics
 {
     class MapRenderer : System.Windows.Forms.Control
     {
         private readonly RenderWindow renderer;
+        private readonly Map map;
 
-        public MapRenderer()
+        public MapRenderer(Map map)
         {
+            this.map = map;
             Size = new System.Drawing.Size(400, 400);
-            Location = new System.Drawing.Point(100, 100);
+            //Location = new System.Drawing.Point(100, 100);
             renderer = new RenderWindow(Handle);
         }
 
@@ -27,8 +29,31 @@ namespace Plevian.Graphics
 
         public void render()
         {
-            renderer.Clear(randomColor());
-            renderer.Display();
+            //renderer.Clear(randomColor());
+
+            for (int i = 0; i < map.sizeX; ++i)
+                for (int j = 0; j < map.sizeY; ++j)
+                {
+                    TerrainType type = map.typeAt(new Location(i, j));
+                    Shape tile = getShapeFor(type);
+                    tile.Position = new SFML.Window.Vector2f(i*28, j*28);
+                    renderer.Draw(tile);
+                }
+
+           renderer.Display();
+        }
+
+        private Shape shape = new CircleShape(14, 6);
+        private Shape getShapeFor(TerrainType type)
+        {
+            switch(type)
+            {
+                case TerrainType.LAKES: shape.FillColor = Color.Blue; break;
+                case TerrainType.MOUNTAINS: shape.FillColor = Color.White; break;
+                case TerrainType.PLAINS: shape.FillColor = Color.Green; break;
+                case TerrainType.VILLAGE: shape.FillColor = Color.Red; break;
+            }
+            return shape;
         }
 
         private static Random random = new Random();

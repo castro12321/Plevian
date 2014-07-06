@@ -39,9 +39,10 @@ namespace Plevian
             game = new Game();
 
             // Add SFML
-            mapRenderer = new MapRenderer();
+            mapRenderer = new MapRenderer(game.map);
             sfml_map.Child = mapRenderer;
-            villageRender = new VillageRenderer();
+
+            villageRender = new VillageRenderer(game);
             sfml_village.Child = villageRender;
 
             // Listen to some events
