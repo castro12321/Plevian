@@ -122,9 +122,9 @@ namespace Plevian.Battles
             attackStrength = (int)((float)attackStrength * attackerLuck);
 
 
-            defenseInf = (int)(((float)defender.getDefenseInfantry() + defenderBaseDefense ) * (1f + defenderPercentageDefense));
-            defenseCav = (int)(((float)defender.getDefenseInfantry() + defenderBaseDefense) * (1f + defenderPercentageDefense));
-            defenseArch = (int)(((float)defender.getDefenseInfantry() + defenderBaseDefense) * (1f + defenderPercentageDefense));
+            defenseInf = (int)(((float)defender.getDefenseInfantry() + defenderBaseDefense ) * (defenderPercentageDefense));
+            defenseCav = (int)(((float)defender.getDefenseInfantry() + defenderBaseDefense) * (defenderPercentageDefense));
+            defenseArch = (int)(((float)defender.getDefenseInfantry() + defenderBaseDefense) * (defenderPercentageDefense));
 
             attSize = attacker.size();
             attInf = attacker.getUnitClassCount(UnitClass.INFANTRY);
