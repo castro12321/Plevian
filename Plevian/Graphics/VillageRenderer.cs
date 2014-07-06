@@ -33,9 +33,9 @@ namespace Plevian.Graphics
         }
 
         private static Random random = new Random();
-        byte oldR = 128;
-        byte oldG = 128;
-        byte oldB = 128;
+        byte oldR = 192;
+        byte oldG = 192;
+        byte oldB = 192;
         private Color randomColor()
         {
             oldR = (byte)random.Next(oldR - 2, oldR + 3);

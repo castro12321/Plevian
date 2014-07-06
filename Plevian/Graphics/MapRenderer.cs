@@ -29,7 +29,7 @@ namespace Plevian.Graphics
 
         public void render()
         {
-            //renderer.Clear(randomColor());
+            renderer.Clear(randomColor());
 
             for (int i = 0; i < map.sizeX; ++i)
                 for (int j = 0; j < map.sizeY; ++j)
@@ -57,9 +57,9 @@ namespace Plevian.Graphics
         }
 
         private static Random random = new Random();
-        byte oldR = 128;
-        byte oldG = 128;
-        byte oldB = 128;
+        byte oldR = 64;
+        byte oldG = 64;
+        byte oldB = 64;
         private Color randomColor()
         {
             oldR = (byte)random.Next(oldR - 2, oldR + 3);
