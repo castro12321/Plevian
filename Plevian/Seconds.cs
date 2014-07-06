@@ -14,5 +14,6 @@ namespace Plevian
             : base(seconds)
         {
         }
+
     }
 }

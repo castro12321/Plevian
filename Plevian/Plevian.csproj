@@ -74,6 +74,8 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Entry.cs" />
+    <Compile Include="Orders\Order.cs" />
+    <Compile Include="Orders\OrderType.cs" />
     <Compile Include="Resource\Food.cs" />
     <Compile Include="Resource\Iron.cs" />
     <Compile Include="Resource\Resources.cs" />
