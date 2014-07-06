@@ -75,6 +75,12 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Entry.cs" />
+    <Compile Include="Graphics\MapRenderer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Graphics\VillageRenderer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Resource\Food.cs" />
     <Compile Include="Resource\Iron.cs" />
     <Compile Include="Resource\Resources.cs" />
