@@ -38,23 +38,19 @@ namespace Plevian
             game = new Game();
 
             // Add SFML (map)
-            DrawingSurface surface = new DrawingSurface();
-            surface.Size = new System.Drawing.Size(400, 400);
-            surface.Location = new System.Drawing.Point(100, 100);
-            mapRender = new RenderWindow(surface.Handle);
-            WindowsFormsHost host = new WindowsFormsHost();
-            host.Child = surface;
-            sfml_map.Children.Add(host);
-
+            DrawingSurface mapSurface = new DrawingSurface();
+            mapSurface.Size = new System.Drawing.Size(400, 400);
+            mapSurface.Location = new System.Drawing.Point(100, 100);
+            mapRender = new RenderWindow(mapSurface.Handle);
+            sfml_map.Child = mapSurface;
+            
             // Add SFML (village)
-            surface = new DrawingSurface();
-            surface.Size = new System.Drawing.Size(400, 400);
-            surface.Location = new System.Drawing.Point(100, 100);
-            villageRender = new RenderWindow(surface.Handle);
-            host = new WindowsFormsHost();
-            host.Child = surface;
-            sfml_village.Children.Add(host);
-
+            DrawingSurface villageSurface = new DrawingSurface();
+            villageSurface.Size = new System.Drawing.Size(400, 400);
+            villageSurface.Location = new System.Drawing.Point(100, 100);
+            villageRender = new RenderWindow(villageSurface.Handle);
+            sfml_village.Child = villageSurface;
+             
             // Listen to some events
             Closed += new EventHandler(OnClose);
         }
@@ -79,9 +75,10 @@ namespace Plevian
 
                 // Process events
                 System.Windows.Forms.Application.DoEvents(); // handle form events
+
                 // handle SFML events - NOTE this is still required when SFML is hosted in another window
-                mapRender.DispatchEvents();
-                villageRender.DispatchEvents();
+                //mapRender.DispatchEvents();
+                //villageRender.DispatchEvents();
 
                 // Do the logic
                 game.tick();
@@ -150,13 +147,6 @@ namespace Plevian
                 //base.OnPaintBackground(pevent);
             }
         }
-
-
-
-
-
-
-
 
     }
 }

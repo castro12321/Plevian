@@ -7,15 +7,16 @@
             <TabControl HorizontalAlignment="Left" Height="570" VerticalAlignment="Top" Width="792">
                 <TabItem Header="Mapa">
                     <Grid Background="#FFE5E5E5">
-                        <Grid x:Name="sfml_map" HorizontalAlignment="Left" Height="538" VerticalAlignment="Top" Width="782"/>
+                        <WindowsFormsHost Height="400" HorizontalAlignment="Left" Margin="10,10,0,0" Name="sfml_map" VerticalAlignment="Top" Width="600"/>
                         <Label Content="Coords:" HorizontalAlignment="Left" Margin="622,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.08,0.313"/>
                         <Label Content="x: 0 y: 0" HorizontalAlignment="Left" Margin="672,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="100"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Wioska">
                     <Grid Background="#FFE5E5E5">
-                        <Grid Background="#FF0000" x:Name="sfml_village" HorizontalAlignment="Left" Height="538" VerticalAlignment="Top" Width="782"/>
-                        <Button Content="Coś tu kiedyś będzie" HorizontalAlignment="Left" Margin="347,210,0,0" VerticalAlignment="Top"/>
+                        <WindowsFormsHost Height="400" HorizontalAlignment="Left" Margin="10,10,0,0" Name="sfml_village" VerticalAlignment="Top" Width="600"/>
+                        <Button Content="Coś tu kiedyś będzie" HorizontalAlignment="Left" Margin="622,176,0,0" VerticalAlignment="Top"/>
+                        <Button Content="Kolejny button test" HorizontalAlignment="Left" Margin="661,242,0,0" VerticalAlignment="Top" Width="75"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Wiadomości">
