@@ -15,6 +15,7 @@ using SFML.Graphics;
 using SFML.Window;
 using Plevian.Utils;
 using System.Windows.Forms.Integration;
+using Plevian.Graphics;
 
 namespace Plevian
 {
@@ -25,7 +26,8 @@ namespace Plevian
     {
         private static bool running = true;
         private static Random random = new Random();
-        private RenderWindow renderwindow;
+        private MapRenderer mapRenderer;
+        private VillageRenderer villageRender;
         private Game game;
 
         public MainWindow()
@@ -37,15 +39,11 @@ namespace Plevian
             game = new Game();
 
             // Add SFML
-            DrawingSurface surface = new DrawingSurface();
-            surface.Size = new System.Drawing.Size(400, 400);
-            surface.Location = new System.Drawing.Point(100, 100);
-            renderwindow = new RenderWindow(surface.Handle);
+            mapRenderer = new MapRenderer(game.map);
+            sfml_map.Child = mapRenderer;
 
-            WindowsFormsHost host = new WindowsFormsHost();
-            host.Child = surface;
-
-            sfml_map.Children.Add(host);
+            villageRender = new VillageRenderer(game);
+            sfml_village.Child = villageRender;
 
             // Listen to some events
             Closed += new EventHandler(OnClose);
@@ -54,6 +52,15 @@ namespace Plevian
         byte oldR = 128;
         byte oldG = 128;
         byte oldB = 128;
+        private Color randomColor()
+        {
+            oldR = (byte)random.Next(oldR - 2, oldR + 3);
+            oldG = (byte)random.Next(oldG - 2, oldG + 3);
+            oldB = (byte)random.Next(oldB - 2, oldB + 3);
+            return new Color(oldR, oldG, oldB);
+        }
+
+        
         public void run()
         {
             while (running)
@@ -62,20 +69,15 @@ namespace Plevian
 
                 // Process events
                 System.Windows.Forms.Application.DoEvents(); // handle form events
-                renderwindow.DispatchEvents(); // handle SFML events - NOTE this is still required when SFML is hosted in another window
+                mapRenderer.handleEvents();
+                villageRender.handleEvents();
 
                 // Do the logic
                 game.tick();
 
                 // Render
-                oldR = (byte)random.Next(oldR - 3, oldR + 4);
-                oldG = (byte)random.Next(oldG - 3, oldG + 4);
-                oldB = (byte)random.Next(oldB - 3, oldB + 4);
-                //Logger.c("new color: " + newR + " " + newG + " " + newB);
-                Color newColor = new Color(oldR, oldG, oldB);
-
-                renderwindow.Clear(newColor); // clear our SFML RenderWindow
-                renderwindow.Display(); // display what SFML has drawn to the screen
+                mapRenderer.render();
+                villageRender.render();
             }
         }
 
@@ -121,27 +123,5 @@ namespace Plevian
         {
             running = false;
         }
-
-        private class DrawingSurface : System.Windows.Forms.Control
-        {
-            protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
-            {
-                // don't call base.OnPaint(e) to prevent forground painting
-                // base.OnPaint(e);
-            }
-            protected override void OnPaintBackground(System.Windows.Forms.PaintEventArgs pevent)
-            {
-                // don't call base.OnPaintBackground(e) to prevent background painting
-                //base.OnPaintBackground(pevent);
-            }
-        }
-
-
-
-
-
-
-
-
     }
 }
