@@ -8,23 +8,24 @@ namespace Plevian.Orders
 {
     public class Order
     {
-        public static Seconds timePerTile = new Seconds(10);
-
         Location origin;
         Location destination;
         Seconds duration;
         GameTime endTime;
 
-        public Order(Location origin, Location destination)
+        public Order(Location origin, Location destination, float timePerTile)
         {
             this.origin = origin;
             this.destination = destination;
 
             float distance = origin.distance(destination);
-            duration = new Seconds((int) ( (float)timePerTile.seconds * distance));
+            duration = new Seconds((int) (timePerTile * distance));
             endTime = GameTime.now + duration;
           
         }
+
+
+        public abstract onEnd(
 
 
     }
