@@ -50,35 +50,35 @@ namespace Plevian.Villages
             collectProduction();
             finishBuilding();
             finishRecruiting();
-            Logger.c("village " + resources);
+            Logger.village("village resources " + resources);
         }
 
         private void collectProduction()
         {
             foreach (KeyValuePair<BuildingType, Building> building in buildings)
             {
-                Logger.c(building.Value.getDisplayName() + " produces " + building.Value.getProduction());
+                Logger.village(building.Value.getDisplayName() + " produces " + building.Value.getProduction());
                 addResources(building.Value.getProduction());
             }
         }
 
         private void finishBuilding()
         {
-            Logger.c("queue: " + buildingsQueue.Count);
+            Logger.village("queue: " + buildingsQueue.Count);
             if(buildingsQueue.Count > 0)
             {
                 BuildingQueueItem queueItem = buildingsQueue.Peek();
-                Logger.c("item: " + queueItem.toBuild.ToString() + " " + GameTime.now + "/" + queueItem.end);
+                Logger.village("item: " + queueItem.toBuild.ToString() + " " + GameTime.now + "/" + queueItem.end);
                 if (GameTime.now >= queueItem.end)
                 {
-                    Logger.c("Built! " + queueItem.toBuild.ToString());
+                    Logger.village("Built! " + queueItem.toBuild.ToString());
                     buildings[queueItem.toBuild].upgrade();
                     buildingsQueue.Dequeue();
                 }
             }
             else
             {
-                Logger.c("Queue empty! Building town hall");
+                Logger.village("Queue empty! Building town hall");
                 build(BuildingType.TOWN_HALL);
             }
         }

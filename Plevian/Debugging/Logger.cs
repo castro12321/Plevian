@@ -10,6 +10,7 @@ namespace Plevian.Debugging
     {
         private static bool cas = true;
         private static bool shot = true;
+        private static bool logVillage = false;
         /// <summary>
         /// Logger for castro
         /// </summary>
@@ -23,6 +24,12 @@ namespace Plevian.Debugging
         {
             if (!shot) return;
             Console.WriteLine(msg);
+        }
+
+        public static void village(String msg)
+        {
+            if (logVillage)
+                Console.WriteLine(msg);
         }
     }
 }
