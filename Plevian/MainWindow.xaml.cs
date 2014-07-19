@@ -15,7 +15,7 @@ using SFML.Graphics;
 using SFML.Window;
 using Plevian.Utils;
 using System.Windows.Forms.Integration;
-using Plevian.Graphics;
+using Plevian.Maps;
 
 namespace Plevian
 {
@@ -26,7 +26,7 @@ namespace Plevian
     {
         private static bool running = true;
         private static Random random = new Random();
-        private MapRenderer mapRenderer;
+        private MapView mapView;
         private VillageRenderer villageRender;
         private Game game;
 
@@ -39,15 +39,17 @@ namespace Plevian
             game = new Game();
 
             // Add SFML
-            mapRenderer = new MapRenderer(game.map);
-            sfml_map.Child = mapRenderer;
-            PreviewKeyDown += sfml_map_KeyDown;
+            mapView = new MapView(game.map);
+            sfml_map.Child = mapView;
 
             villageRender = new VillageRenderer(game);
             sfml_village.Child = villageRender;
 
             // Listen to some events
             Closed += new EventHandler(OnClose);
+            PreviewKeyDown += sfml_map_KeyDown;
+
+            MapListener mapListener = new MapListener(mapView);
         }
 
         void sfml_map_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -76,14 +78,14 @@ namespace Plevian
 
                 // Process events
                 System.Windows.Forms.Application.DoEvents(); // handle form events
-                mapRenderer.handleEvents();
+                mapView.handleEvents();
                 villageRender.handleEvents();
 
                 // Do the logic
                 game.tick();
 
                 // Render
-                mapRenderer.render();
+                mapView.render();
                 villageRender.render();
             }
         }

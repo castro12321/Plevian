@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
 
-namespace Plevian.Graphics
+namespace Plevian.Maps
 {
     class VillageRenderer : System.Windows.Forms.Control
     {

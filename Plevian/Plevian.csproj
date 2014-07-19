@@ -75,12 +75,14 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Entry.cs" />
-    <Compile Include="Graphics\MapRenderer.cs">
+    <Compile Include="Maps\MapListener.cs" />
+    <Compile Include="Maps\MapView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Graphics\VillageRenderer.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Maps\Tile.cs" />
     <Compile Include="Resource\Food.cs" />
     <Compile Include="Resource\Iron.cs" />
     <Compile Include="Resource\Resources.cs" />
@@ -158,8 +160,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,10 +7,11 @@ using Plevian.Buildings;
 using Plevian.Resource;
 using Plevian.Debugging;
 using Plevian.Units;
+using Plevian.Maps;
 
 namespace Plevian.Villages
 {
-    public class Village
+    public class Village : Tile
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
@@ -20,7 +21,8 @@ namespace Plevian.Villages
         public Army army { get; private set; }
         public Resources resources { get; private set; }
 
-        public Village()
+        public Village(Location location)
+            : base(location, TerrainType.VILLAGE)
         {
             resources = new Resources(999, 999, 999, 999);
             recruitTimeEnd = GameTime.now;
