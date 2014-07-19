@@ -41,12 +41,19 @@ namespace Plevian
             // Add SFML
             mapRenderer = new MapRenderer(game.map);
             sfml_map.Child = mapRenderer;
+            PreviewKeyDown += sfml_map_KeyDown;
 
             villageRender = new VillageRenderer(game);
             sfml_village.Child = villageRender;
 
             // Listen to some events
             Closed += new EventHandler(OnClose);
+        }
+
+        void sfml_map_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            //Logger.c("Pressed12");
+            Logger.c("Pressed " + e.Key);
         }
 
         byte oldR = 128;

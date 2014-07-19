@@ -20,6 +20,13 @@ namespace Plevian.Graphics
             Size = new System.Drawing.Size(400, 400);
             //Location = new System.Drawing.Point(100, 100);
             renderer = new RenderWindow(Handle);
+
+            MouseMove += MapRenderer_MouseMove;
+        }
+
+        void MapRenderer_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            Plevian.Debugging.Logger.c("MOVE! " + e.X + " " + e.Y);
         }
 
         public void handleEvents()
