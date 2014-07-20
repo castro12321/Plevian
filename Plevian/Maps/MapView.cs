@@ -48,7 +48,7 @@ namespace Plevian.Maps
             int clickedY = e.Y;
             Location clickedPixelLocation = new Location(clickedX, clickedY);
             Location clickedTileLocation = PixelToTile(clickedPixelLocation);
-            TerrainType clickedTile = map.typeAt(clickedTileLocation);
+            Tile clickedTile = map.typeAt(clickedTileLocation);
 
             EventHandler<TileClickedEventArgs> handler = PlevianTileClickedEvent;
             if (handler != null)
@@ -84,7 +84,7 @@ namespace Plevian.Maps
             for (int i = 0; i < map.sizeX; ++i)
                 for (int j = 0; j < map.sizeY; ++j)
                 {
-                    TerrainType type = map.typeAt(new Location(i, j));
+                    TerrainType type = map.typeAt(new Location(i, j)).type;
                     Shape tile = getShapeFor(type);
                     tile.Position = new SFML.Window.Vector2f(i * tileSizeInPixels, j * tileSizeInPixels);
                     renderer.Draw(tile);

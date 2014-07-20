@@ -9,12 +9,12 @@ namespace Plevian.Maps
     public class TileClickedEventArgs
     {
         public Location clickedTileLocation { get; private set; }
-        public TerrainType clicked { get; private set; }
+        public Tile clickedTile { get; private set; }
 
-        public TileClickedEventArgs(Location clickedTileLocation, TerrainType clicked)
+        public TileClickedEventArgs(Location clickedTileLocation, Tile clicked)
         {
             this.clickedTileLocation = clickedTileLocation;
-            this.clicked = clicked;
+            this.clickedTile = clicked;
         }
     }
 

@@ -53,12 +53,14 @@ namespace Plevian.Maps
 
         void mapView_PlevianTileClickedEvent(object sender, TileClickedEventArgs e)
         {
-            Logger.c("event click at " + e.clicked + " " + e.clickedTileLocation.x + " " + e.clickedTileLocation.y);
+            Logger.c("event click at " + e.clickedTile.type + " " + e.clickedTileLocation.x + " " + e.clickedTileLocation.y);
+            
         }
 
         void mapView_PlevianMouseMovedEvent(object sender, MouseMovedEventArgs e)
         {
             Plevian.Debugging.Logger.c("event move to " + e.mouseLocation.x + " " + e.mouseLocation.y);
+            coords.Content = "X:" + e.mouseLocation.x + " Y:" + e.mouseLocation.y;
         }
     }
 }

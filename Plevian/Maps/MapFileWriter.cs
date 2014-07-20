@@ -20,12 +20,12 @@ namespace Plevian.Maps
             fs.WriteByte((byte)map.sizeY);
             fs.WriteByte((byte)'\n');
 
-            TerrainType[,] fields = map.getMap();
+            Tile[,] fields = map.getMap();
             for (int row = 0; row < map.sizeY; ++row)
             {
                 for (int col = 0; col < map.sizeX; ++col)
                 {
-                    TerrainType type = fields[col, row];
+                    TerrainType type = fields[col, row].type;
                     fs.WriteByte((byte)type);
                 }
                 fs.WriteByte((byte)'\n');

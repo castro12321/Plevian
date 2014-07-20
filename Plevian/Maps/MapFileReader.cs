@@ -36,7 +36,7 @@ namespace Plevian.Maps
                 {
                     TerrainType tType = (TerrainType)type;
                     Location location = new Location(x, y);
-                    map.place(location, tType);
+                    map.place(location, new Tile(location, tType));
                 }
             }
 

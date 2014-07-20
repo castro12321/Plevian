@@ -22,11 +22,12 @@ namespace Plevian.Maps
             foreach (TerrainType terType in (TerrainType[])Enum.GetValues(typeof(TerrainType)))
             {
                 if (terType == TerrainType.PLAINS) continue;
+                //if (terType == TerrainType.VILLAGE) continue; // They are loaded later when loading villages
 
                 for(int i = 0;i < 10;++i)
                 {
                     Location loc = new Location(rand.Next(x), rand.Next(y));
-                    map.place(loc, terType);
+                    map.place(loc, new Tile(loc, terType));
                 }
             }
             return map;
