@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Plevian.Villages.VillageTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <Grid Background="#FFE5E5E5">
+        <WindowsFormsHost Height="400" HorizontalAlignment="Left" Margin="10,10,0,0" Name="sfml_village" VerticalAlignment="Top" Width="600"/>
+        <Button Content="Coś tu kiedyś będzie" HorizontalAlignment="Left" Margin="622,176,0,0" VerticalAlignment="Top"/>
+        <Button Content="Kolejny button test" HorizontalAlignment="Left" Margin="661,242,0,0" VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</UserControl>
