@@ -22,20 +22,27 @@ namespace Plevian.Maps
     public partial class MapTab : UserControl
     {
         private MapView mapView;
+        private Map map;
 
         public MapTab(Map map)
         {
             InitializeComponent();
+            this.map = map;
 
-            mapView = new MapView(map);
-            sfml_map.Child = mapView;
-
-            mapView.PlevianMouseMovedEvent += mapView_PlevianMouseMovedEvent;
-            mapView.PlevianTileClickedEvent += mapView_PlevianTileClickedEvent;
+            
         }
         
         public void handleEvents()
         {
+            if(mapView == null)
+            {
+                mapView = new MapView(map, sfml_map);
+                sfml_map.Child = mapView;
+
+                mapView.PlevianMouseMovedEvent += mapView_PlevianMouseMovedEvent;
+                mapView.PlevianTileClickedEvent += mapView_PlevianTileClickedEvent;
+            }
+
             mapView.handleEvents();
         }
 

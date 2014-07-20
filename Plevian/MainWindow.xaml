@@ -2,20 +2,18 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:map="clr-namespace:Plevian.Maps"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow">
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="570" VerticalAlignment="Top" Width="792">
-            <TabControl HorizontalAlignment="Left" Height="570" VerticalAlignment="Top" Width="792">
-                <TabItem Name="mapTabItem" Header="Mapa">
-                    <!-- Moved to custom control. Created in constructor -->
-                </TabItem>
-                <TabItem Name="villageTabItem" Header="Wioska">
-                    <!-- Moved to custom control. Created in constructor -->
-                </TabItem>
-                <TabItem Name="reportsTabItem" Header="Wiadomości">
-                    <!-- Moved to custom control. Created in constructor -->
-                </TabItem>
-            </TabControl>
-        </Grid>
+        <TabControl Background="Green" Padding="0">
+            <TabItem Name="mapTabItem" Header="Mapa">
+                <!-- Moved to custom control. Created in constructor -->
+            </TabItem>
+            <TabItem Name="villageTabItem" Header="Wioska">
+                <!-- Moved to custom control. Created in constructor -->
+            </TabItem>
+            <TabItem Name="reportsTabItem" Header="Wiadomości">
+                <!-- Moved to custom control. Created in constructor -->
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

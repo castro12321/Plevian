@@ -11,9 +11,8 @@ namespace Plevian.Debugging
         private static bool cas = true;
         private static bool shot = true;
         private static bool logVillage = false;
-        /// <summary>
-        /// Logger for castro
-        /// </summary>
+        private static bool logGraphics = false;
+
         public static void c(String msg)
         {
             if (cas)
@@ -29,6 +28,12 @@ namespace Plevian.Debugging
         public static void village(String msg)
         {
             if (logVillage)
+                Console.WriteLine(msg);
+        }
+
+        public static void graphics(String msg)
+        {
+            if (logGraphics)
                 Console.WriteLine(msg);
         }
     }

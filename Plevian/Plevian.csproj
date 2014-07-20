@@ -75,12 +75,14 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Entry.cs" />
+    <Compile Include="Maps\Events.cs" />
     <Compile Include="Maps\MapTab.xaml.cs">
       <DependentUpon>MapTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Maps\MapView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Util\Utils.cs" />
     <Compile Include="Villages\VillageRenderer.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -92,7 +94,7 @@
     <Compile Include="Resource\Wood.cs" />
     <Compile Include="Save.cs" />
     <Compile Include="Seconds.cs" />
-    <Compile Include="TerrainType.cs" />
+    <Compile Include="Maps\TerrainType.cs" />
     <Compile Include="Units\Archer.cs" />
     <Compile Include="Units\Army.cs" />
     <Compile Include="Units\Knight.cs" />
@@ -101,7 +103,7 @@
     <Compile Include="Units\UnitClass.cs" />
     <Compile Include="Units\UnitType.cs" />
     <Compile Include="Units\Warrior.cs" />
-    <Compile Include="Utils\Functions.cs" />
+    <Compile Include="Util\Functions.cs" />
     <Compile Include="Villages\Village.cs" />
     <Compile Include="Villages\VillageTab.xaml.cs">
       <DependentUpon>VillageTab.xaml</DependentUpon>

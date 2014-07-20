@@ -81,7 +81,7 @@ namespace Plevian.Villages
             else
             {
                 Logger.village("Queue empty! Building town hall");
-                build(BuildingType.TOWN_HALL);
+                //build(BuildingType.TOWN_HALL);
             }
         }
 

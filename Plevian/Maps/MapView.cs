@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
 using Plevian.Maps;
 using Plevian.Debugging;
+using Plevian.Util;
 
 namespace Plevian.Maps
 {
@@ -17,21 +18,28 @@ namespace Plevian.Maps
     {
         private const int tileSizeInPixels = 28;
 
-        private readonly RenderWindow renderer;
+        private RenderWindow renderer;
         private readonly Map map;
 
         public event EventHandler<TileClickedEventArgs> PlevianTileClickedEvent;
         public event EventHandler<MouseMovedEventArgs>  PlevianMouseMovedEvent;
 
-        public MapView(Map map)
+        public MapView(Map map, System.Windows.Forms.Integration.WindowsFormsHost host)
         {
             this.map = map;
-            Size = new System.Drawing.Size(600, 400);
-            //Location = new System.Drawing.Point(100, 100);
-            renderer = new RenderWindow(Handle);
+            
+            renderer = new RenderWindow(Handle); // Only to avoid nulls. Will be recreated in next control resize (which is sent automatically when the window initializes)
 
             MouseMove  += MapRenderer_MouseMove;
             MouseClick += MapRenderer_MouseClick;
+            Resize += MapView_Resize;
+        }
+
+        void MapView_Resize(object sender, EventArgs e)
+        {
+            Logger.graphics("Resized MapView, new size: " + Size.Width + " " + Size.Height);
+            renderer.Dispose();
+            renderer = new RenderWindow(Handle);
         }
 
         void MapRenderer_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -71,7 +79,7 @@ namespace Plevian.Maps
 
         public void render()
         {
-            renderer.Clear(randomColor());
+            renderer.Clear(Utils.smoothSFMLColor());
 
             for (int i = 0; i < map.sizeX; ++i)
                 for (int j = 0; j < map.sizeY; ++j)
@@ -98,18 +106,6 @@ namespace Plevian.Maps
             return shape;
         }
 
-        private static Random random = new Random();
-        byte oldR = 64;
-        byte oldG = 64;
-        byte oldB = 64;
-        private Color randomColor()
-        {
-            oldR = (byte)random.Next(oldR - 2, oldR + 3);
-            oldG = (byte)random.Next(oldG - 2, oldG + 3);
-            oldB = (byte)random.Next(oldB - 2, oldB + 3);
-            return new Color(oldR, oldG, oldB);
-        }
-
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
             // don't call base.OnPaint(e) to prevent forground painting
@@ -119,28 +115,6 @@ namespace Plevian.Maps
         {
             // don't call base.OnPaintBackground(e) to prevent background painting
             //base.OnPaintBackground(pevent);
-        }
-    }
-
-    public class TileClickedEventArgs
-    {
-        public Location clickedTileLocation { get; private set; }
-        public TerrainType clicked { get; private set; }
-
-        public TileClickedEventArgs(Location clickedTileLocation, TerrainType clicked)
-        {
-            this.clickedTileLocation = clickedTileLocation;
-            this.clicked = clicked;
-        }
-    }
-
-    public class MouseMovedEventArgs
-    {
-        public Location mouseLocation { get; private set; }
-
-        public MouseMovedEventArgs(Location mouseLocation)
-        {
-            this.mouseLocation = mouseLocation;
         }
     }
 }

@@ -1,22 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Forms;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Plevian.Debugging;
-using SFML.Graphics;
-using SFML.Window;
-using Plevian.Utils;
-using System.Windows.Forms.Integration;
+﻿using Plevian.Debugging;
 using Plevian.Maps;
 using Plevian.Villages;
+using System;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Plevian
 {
@@ -54,19 +41,7 @@ namespace Plevian
             Logger.c("Pressed " + e.Key);
         }
 
-        byte oldR = 128;
-        byte oldG = 128;
-        byte oldB = 128;
-        private Color randomColor()
-        {
-            oldR = (byte)random.Next(oldR - 2, oldR + 3);
-            oldG = (byte)random.Next(oldG - 2, oldG + 3);
-            oldB = (byte)random.Next(oldB - 2, oldB + 3);
-            return new Color(oldR, oldG, oldB);
-        }
-
-        
-        public void run()
+      public void run()
         {
             while (running)
             {
