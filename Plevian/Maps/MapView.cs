@@ -13,7 +13,7 @@ namespace Plevian.Maps
     // TODO: <MapRenderer>
     // - Wyswietlac informacje o tile po najechaniu (nie po kliknieciu) jako tooltip
     // - Po kliknieciu otwierac okienko powiazane z danym tilem
-    public class MapView : System.Windows.Forms.Control
+    public class MapView : System.Windows.Forms.UserControl
     {
         private const int tileSizeInPixels = 28;
 

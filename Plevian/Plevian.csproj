@@ -75,11 +75,13 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Entry.cs" />
-    <Compile Include="Maps\MapListener.cs" />
-    <Compile Include="Maps\MapView.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Maps\MapTab.xaml.cs">
+      <DependentUpon>MapTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Graphics\VillageRenderer.cs">
+    <Compile Include="Maps\MapView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Villages\VillageRenderer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Maps\Tile.cs" />
@@ -101,6 +103,9 @@
     <Compile Include="Units\Warrior.cs" />
     <Compile Include="Utils\Functions.cs" />
     <Compile Include="Villages\Village.cs" />
+    <Compile Include="Villages\VillageTab.xaml.cs">
+      <DependentUpon>VillageTab.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -127,6 +132,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Maps\MapTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Villages\VillageTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Maps\Location.cs" />
