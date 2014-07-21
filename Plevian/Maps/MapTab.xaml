@@ -7,17 +7,15 @@
 
     <DockPanel Background="GreenYellow">
         <StackPanel DockPanel.Dock="Right" Orientation="Vertical" MinWidth="300" MinHeight="500">
-            <StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <Label Content="Coords:"/>
                 <Label Name="coords"/>
             </StackPanel>
             
-            <StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <Label Content="Owner:"/>
                 <Label Name="owner"/>
             </StackPanel>
-            
-            
             
         </StackPanel>
         <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_map" Background="Purple" Margin="9,9,9,9" MinWidth="500" MinHeight="500"/>

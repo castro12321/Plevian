@@ -53,8 +53,12 @@ namespace Plevian.Maps
 
         void mapView_PlevianTileClickedEvent(object sender, TileClickedEventArgs e)
         {
-            Logger.c("event click at " + e.clickedTile.type + " " + e.clickedTileLocation.x + " " + e.clickedTileLocation.y);
-            
+            Tile tile = e.clickedTile;
+            Logger.c("event click at " + tile.type + " " + tile.location.x + " " + tile.location.y);
+            if (tile.type == TerrainType.VILLAGE)
+                owner.Content = "Player";
+            else
+                owner.Content = "Nature";
         }
 
         void mapView_PlevianMouseMovedEvent(object sender, MouseMovedEventArgs e)
