@@ -17,6 +17,8 @@
                 <Label Name="owner"/>
             </StackPanel>
             
+            <Button IsEnabled="False" Content="click me"/>
+
         </StackPanel>
         <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_map" Background="Purple" Margin="9,9,9,9" MinWidth="500" MinHeight="500"/>
     </DockPanel>
