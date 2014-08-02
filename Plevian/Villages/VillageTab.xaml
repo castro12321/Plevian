@@ -5,8 +5,73 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
     <Grid Background="#FFE5E5E5">
-        <WindowsFormsHost Height="400" HorizontalAlignment="Left" Margin="10,10,0,0" Name="sfml_village" VerticalAlignment="Top" Width="600"/>
-        <Button Content="Coś tu kiedyś będzie" HorizontalAlignment="Left" Margin="622,176,0,0" VerticalAlignment="Top"/>
-        <Button Content="Kolejny button test" HorizontalAlignment="Left" Margin="661,242,0,0" VerticalAlignment="Top" Width="75"/>
+        
+        <DockPanel Background="GreenYellow">
+            <ScrollViewer DockPanel.Dock="Right" MinWidth="300" MinHeight="500">
+                <StackPanel Orientation="Vertical">
+                    <!-- Resources -->
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Income:" FontWeight="ExtraBold"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Food: " MinWidth="100"/>
+                            <Label Name="food"      MinWidth="35" Content="1337"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Wood: " MinWidth="100"/>
+                            <Label Name="wood"      MinWidth="35" Content="1338"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Iron: " MinWidth="100"/>
+                            <Label Name="iron"      MinWidth="35" Content="1339"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Stone: " MinWidth="100"/>
+                            <Label Name="stone"      MinWidth="35" Content="1340"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Military -->
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Military:" FontWeight="ExtraBold"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Warriors: " MinWidth="100"/>
+                            <Label Name="warriors"      MinWidth="35" Content="42"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Archers: " MinWidth="100"/>
+                            <Label Name="archers"      MinWidth="35" Content="43"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Knights: " MinWidth="100"/>
+                            <Label Name="knights"      MinWidth="35" Content="44"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Buildings -->
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Buildings:" FontWeight="ExtraBold"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Farm: " MinWidth="100"/>
+                            <Label Name="farmLevel" MinWidth="35" Content="3"/>
+                            <Button Content="Upgrade" Name="farmUpgrade"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Town hall: " MinWidth="100"/>
+                            <Label Name="TownHallLevel"  MinWidth="35" Content="4"/>
+                            <Button Content="Upgrade" Name="townHallUpgrade"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Mine: " MinWidth="100"/>
+                            <Label Name="MineLevel" MinWidth="35" Content="5"/>
+                            <Button Content="Upgrade" Name="MineUpgrade"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                </StackPanel>
+            </ScrollViewer>
+                
+            <!-- Village image -->
+            <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_village" Background="Purple" Margin="9,9,9,9" MinWidth="500" MinHeight="500"/>
+        </DockPanel>
     </Grid>
 </UserControl>
