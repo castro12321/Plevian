@@ -1,4 +1,6 @@
-﻿using SFML.Graphics;
+﻿using Plevian.Debugging;
+using Plevian.Util;
+using SFML.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,18 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
 
-namespace Plevian.Graphics
+namespace Plevian.Maps
 {
-    class VillageRenderer : System.Windows.Forms.Control
+    class VillageView : System.Windows.Forms.Control
     {
-        private readonly RenderWindow renderer;
+        private RenderWindow renderer;
         private readonly Game game;
 
-        public VillageRenderer(Game game)
+        public VillageView(Game game)
         {
             this.game = game;
             Size = new System.Drawing.Size(400, 400);
             Location = new System.Drawing.Point(100, 100);
+
+            renderer = new RenderWindow(Handle); // Only to avoid nulls. Will be recreated in next control resize (which is sent automatically when the window initializes)
+
+            Resize += VillageView_Resize;
+        }
+
+        void VillageView_Resize(object sender, EventArgs e)
+        {
+            Logger.graphics("Resized MapView, new size: " + Size.Width + " " + Size.Height);
+            renderer.Dispose();
             renderer = new RenderWindow(Handle);
         }
 
@@ -28,20 +40,8 @@ namespace Plevian.Graphics
 
         public void render()
         {
-            renderer.Clear(randomColor());
+            renderer.Clear(Utils.smoothSFMLColor());
             renderer.Display();
-        }
-
-        private static Random random = new Random();
-        byte oldR = 192;
-        byte oldG = 192;
-        byte oldB = 192;
-        private Color randomColor()
-        {
-            oldR = (byte)random.Next(oldR - 2, oldR + 3);
-            oldG = (byte)random.Next(oldG - 2, oldG + 3);
-            oldB = (byte)random.Next(oldB - 2, oldB + 3);
-            return new Color(oldR, oldG, oldB);
         }
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)

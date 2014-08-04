@@ -29,7 +29,7 @@ namespace Plevian
             map = new MapFileReader().read(save);
         }
 
-        private Village village = new Village();
+        private Village village = new Village(null);
         public void tick()
         {
             ulong timediff = GameTime.update();

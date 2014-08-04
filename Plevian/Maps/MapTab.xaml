@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Plevian.Maps.MapTab"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d">
+
+    <DockPanel Background="GreenYellow">
+        <StackPanel DockPanel.Dock="Right" Orientation="Vertical" MinWidth="300" MinHeight="500">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Coords:"/>
+                <Label Name="coords"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Owner:"/>
+                <Label Name="owner"/>
+            </StackPanel>
+            
+            <Button IsEnabled="False" Content="click me"/>
+
+        </StackPanel>
+        <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_map" Background="Purple" Margin="9,9,9,9" MinWidth="500" MinHeight="500"/>
+    </DockPanel>
+</UserControl>

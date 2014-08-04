@@ -7,7 +7,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Plevian.Units;
 using Plevian;
 using Plevian.Villages;
-using Plevian.Properties;
 using Plevian.Resource;
 
 namespace Tests.Unit
@@ -24,7 +23,7 @@ namespace Tests.Unit
 
             Archer archer = new Archer(25);
             Game game = new Game();
-            Village testVillage = new Village();
+            Village testVillage = new Village(null);
             testVillage.addResources(new Resources(10000, 10000, 10000, 10000));
             testVillage.recruit(archer);
             testVillage.recruit(new Knight(100));

@@ -81,10 +81,18 @@
     <Compile Include="Orders\SupportOrder.cs" />
     <Compile Include="Graphics\MapRenderer.cs">
       <SubType>Component</SubType>
+    <Compile Include="Maps\Events.cs" />
+    <Compile Include="Maps\MapTab.xaml.cs">
+      <DependentUpon>MapTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Graphics\VillageRenderer.cs">
+    <Compile Include="Maps\MapView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Util\Utils.cs" />
+    <Compile Include="Villages\VillageRenderer.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Maps\Tile.cs" />
     <Compile Include="Resource\Food.cs" />
     <Compile Include="Resource\Iron.cs" />
     <Compile Include="Resource\Resources.cs" />
@@ -92,7 +100,7 @@
     <Compile Include="Resource\Wood.cs" />
     <Compile Include="Save.cs" />
     <Compile Include="Seconds.cs" />
-    <Compile Include="TerrainType.cs" />
+    <Compile Include="Maps\TerrainType.cs" />
     <Compile Include="Units\Archer.cs" />
     <Compile Include="Units\Army.cs" />
     <Compile Include="Units\Knight.cs" />
@@ -101,8 +109,11 @@
     <Compile Include="Units\UnitClass.cs" />
     <Compile Include="Units\UnitType.cs" />
     <Compile Include="Units\Warrior.cs" />
-    <Compile Include="Utils\Functions.cs" />
+    <Compile Include="Util\Functions.cs" />
     <Compile Include="Villages\Village.cs" />
+    <Compile Include="Villages\VillageTab.xaml.cs">
+      <DependentUpon>VillageTab.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -129,6 +140,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Maps\MapTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Villages\VillageTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Maps\Location.cs" />
@@ -162,8 +181,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

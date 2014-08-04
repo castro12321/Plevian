@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plevian.Utils
+namespace Plevian.Util
 {
     public class Functions
     {
