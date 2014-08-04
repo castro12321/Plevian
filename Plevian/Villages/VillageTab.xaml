@@ -14,19 +14,19 @@
                         <Label Content="Income:" FontWeight="ExtraBold"/>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Food: " MinWidth="100"/>
-                            <Label Name="food"      MinWidth="35" Content="1337"/>
+                            <Label Content="1337"   MinWidth="35" Name="food"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Wood: " MinWidth="100"/>
-                            <Label Name="wood"      MinWidth="35" Content="1338"/>
+                            <Label Content="1338"   MinWidth="35" Name="wood"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Iron: " MinWidth="100"/>
-                            <Label Name="iron"      MinWidth="35" Content="1339"/>
+                            <Label Content="1339"   MinWidth="35" Name="iron"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Stone: " MinWidth="100"/>
-                            <Label Name="stone"      MinWidth="35" Content="1340"/>
+                            <Label Content="1340"    MinWidth="35" Name="stone"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -35,15 +35,15 @@
                         <Label Content="Military:" FontWeight="ExtraBold"/>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Warriors: " MinWidth="100"/>
-                            <Label Name="warriors"      MinWidth="35" Content="42"/>
+                            <Label Content="42"         MinWidth="35" Name="warriors"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Archers: " MinWidth="100"/>
-                            <Label Name="archers"      MinWidth="35" Content="43"/>
+                            <Label Content="43"        MinWidth="35" Name="archers"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Knights: " MinWidth="100"/>
-                            <Label Name="knights"      MinWidth="35" Content="44"/>
+                            <Label Content="44"        MinWidth="35" Name="knights"/>
                         </StackPanel>
                     </StackPanel>
                     
@@ -51,18 +51,18 @@
                     <StackPanel Orientation="Vertical">
                         <Label Content="Buildings:" FontWeight="ExtraBold"/>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Farm: " MinWidth="100"/>
-                            <Label Name="farmLevel" MinWidth="35" Content="3"/>
+                            <Label  Content="Farm: " MinWidth="100"/>
+                            <Label  Content="3"      MinWidth="35" Name="farmLevel"/>
                             <Button Content="Upgrade" Name="farmUpgrade"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Town hall: " MinWidth="100"/>
-                            <Label Name="TownHallLevel"  MinWidth="35" Content="4"/>
+                            <Label  Content="Town hall: " MinWidth="100"/>
+                            <Label  Content="4"           MinWidth="35" Name="TownHallLevel"/>
                             <Button Content="Upgrade" Name="townHallUpgrade"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Mine: " MinWidth="100"/>
-                            <Label Name="MineLevel" MinWidth="35" Content="5"/>
+                            <Label  Content="Mine: " MinWidth="100"/>
+                            <Label  Content="5"      MinWidth="35" Name="MineLevel"/>
                             <Button Content="Upgrade" Name="MineUpgrade"/>
                         </StackPanel>
                     </StackPanel>
