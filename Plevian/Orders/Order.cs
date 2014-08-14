@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plevian.Maps;
+using Plevian.Units;
 namespace Plevian.Orders
 {
     public class Order
@@ -12,11 +13,15 @@ namespace Plevian.Orders
         Location destination;
         Seconds duration;
         GameTime endTime;
+        Army army;
 
-        public Order(Location origin, Location destination, float timePerTile)
+
+
+        public Order(Location origin, Location destination, float timePerTile, Army army)
         {
             this.origin = origin;
             this.destination = destination;
+            this.army = army;
 
             float distance = origin.distance(destination);
             duration = new Seconds((int) (timePerTile * distance));
@@ -25,7 +30,7 @@ namespace Plevian.Orders
         }
 
 
-        public abstract onEnd(
+        public abstract onEnd();
 
 
     }

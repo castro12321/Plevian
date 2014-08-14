@@ -45,6 +45,7 @@
     <Reference Include="sfmlnet-graphics-2, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>dependencies\SFML\lib\x32\sfmlnet-graphics-2.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="sfmlnet-window-2, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -75,12 +76,6 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Entry.cs" />
-    <Compile Include="Orders\AttackOrder.cs" />
-    <Compile Include="Orders\Order.cs" />
-    <Compile Include="Orders\OrderType.cs" />
-    <Compile Include="Orders\SupportOrder.cs" />
-    <Compile Include="Graphics\MapRenderer.cs">
-      <SubType>Component</SubType>
     <Compile Include="Maps\Events.cs" />
     <Compile Include="Maps\MapTab.xaml.cs">
       <DependentUpon>MapTab.xaml</DependentUpon>
