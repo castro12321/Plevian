@@ -8,7 +8,14 @@ namespace Plevian.Maps
 {
     public class Map
     {
-        public readonly int sizeX, sizeY;
+        /// <summary>
+        /// Number of tiles in single row
+        /// </summary>
+        public readonly int sizeX;
+        /// <summary>
+        /// Number of tiles in single column
+        /// </summary>
+        public readonly int sizeY;
         private Tile[,] fields;
 
         public Map(int x, int y)

@@ -4,7 +4,7 @@
         xmlns:map="clr-namespace:Plevian.Maps"
         Title="MainWindow">
     <Grid>
-        <TabControl Background="Green" Padding="0">
+        <TabControl Name="MainWindowTabs" Background="Green" Padding="0">
             <TabItem Name="mapTabItem" Header="Mapa">
                 <!-- Moved to custom control. Created in constructor -->
             </TabItem>

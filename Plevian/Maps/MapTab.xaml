@@ -16,8 +16,13 @@
                 <Label Content="Owner:"/>
                 <Label Name="owner"/>
             </StackPanel>
-            
-            <Button IsEnabled="False" Content="click me"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Terrain Type:"/>
+                <Label Name="type"/>
+            </StackPanel>
+
+            <Button Name="EnterVillageButton" IsEnabled="False" Content="Enter Village" Click="enterVillageClick"/>
 
         </StackPanel>
         <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_map" Background="Purple" Margin="9,9,9,9" MinWidth="500" MinHeight="500"/>

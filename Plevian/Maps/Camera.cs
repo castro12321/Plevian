@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,6 +59,11 @@ namespace Plevian.Maps
             checkCameraBonds();
         }
 
+        public void moveCameraBy(Location loc)
+        {
+            moveCameraBy(loc.x, loc.y);
+        }
+
         public void checkCameraBonds()
         {
             if (centerX < 0) centerX = 0;
@@ -89,9 +95,24 @@ namespace Plevian.Maps
             return y - (int)this.y;
         }
 
+        public float TranslateX(float x)
+        {
+            return x - this.x;
+        }
+
+        public float translateY(float y)
+        {
+            return y - this.y;
+        }
+
         public Location translate(Location location)
         {
             return new Location(TranslateX(location.x), translateY(location.y));
+        }
+
+        public Vector2f translate( Vector2f vector )
+        {
+            return new Vector2f(TranslateX(vector.X), translateY(vector.Y));
         }
 
     }
