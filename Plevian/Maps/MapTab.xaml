@@ -18,6 +18,11 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
+                <Label Content="VilageName:"/>
+                <Label Name="villageName" Content="TBD"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
                 <Label Content="Terrain Type:"/>
                 <Label Name="type"/>
             </StackPanel>
