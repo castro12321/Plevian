@@ -9,6 +9,8 @@ namespace Plevian.Units
     public class RecruitQueueItem
     {
         public readonly Unit unit;
+        public readonly GameTime startRecruiting;
+        public readonly GameTime endRecruiting;
         public readonly Seconds duration;
         public int remainingQuanity { get { return unit.quanity; } set { unit.quanity = value; } }
         /// <summary>
@@ -20,12 +22,14 @@ namespace Plevian.Units
         /// </summary>
         public float timeCurrent;
 
-        public RecruitQueueItem(Unit unit)
+        public RecruitQueueItem(Unit unit, GameTime startRecruiting)
         {
             this.unit = unit;
-            remainingQuanity = unit.quanity ;
+            this.startRecruiting = startRecruiting;
+            remainingQuanity = unit.quanity;
             timeCurrent = recruitTime;
             duration = new Seconds((int)(unit.quanity * recruitTime));
+            this.endRecruiting = startRecruiting + duration;
         }
     }
 }

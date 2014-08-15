@@ -175,7 +175,7 @@ namespace Plevian.Villages
             if (recruitQueue.Count == 0)
                 recruitTimeEnd = GameTime.now;
             resources -= unit.getWholeUnitCost();
-            RecruitQueueItem newQueue = new RecruitQueueItem(unit);
+            RecruitQueueItem newQueue = new RecruitQueueItem(unit, recruitTimeEnd.copy());
             recruitTimeEnd += newQueue.duration;
             recruitQueue.Add(newQueue);
         }

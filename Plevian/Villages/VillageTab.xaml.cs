@@ -88,6 +88,32 @@ namespace Plevian.Villages
             label.Content = "";
         }
 
+        private void setRecruitProgress(Label label, UnitType type)
+        {
+            foreach (RecruitQueueItem queueItem in village.recruitQueue)
+            {
+                if (queueItem.unit.getUnitType() == type)
+                {
+                    /**/
+                    Seconds left = GameTime.now.diffrence(queueItem.endRecruiting);
+                    int minutes = left.seconds / 60;
+                    int seconds = left.seconds % 60;
+                    label.Content = minutes + ":" + seconds;
+                    /*/
+                    Seconds current = GameTime.now.diffrence(queueItem.start);
+                    Seconds end     = queueItem.start.diffrence(queueItem.end);
+
+                    double currentD = Convert.ToDouble(current.seconds);
+                    double endD = Convert.ToDouble(end.seconds);
+                    double progress = Math.Round((currentD / endD) * 100d, 2);
+                    label.Content = progress + "%";
+                    /**/
+                    return;
+                }
+            }
+            label.Content = "";
+        }
+
         public void render()
         {
             ResourcesFood.Content  = village.resources.food;
@@ -98,6 +124,10 @@ namespace Plevian.Villages
             setUnitCount(ResourcesWarriors, UnitType.WARRIOR);
             setUnitCount(ResourcesArchers, UnitType.ARCHER);
             setUnitCount(ResourcesKnights, UnitType.KNIGHT);
+
+            setRecruitProgress(RecruitWarriorProgress, UnitType.WARRIOR);
+            setRecruitProgress(RecruitArcherProgress, UnitType.ARCHER);
+            setRecruitProgress(RecruitKnightProgress, UnitType.KNIGHT);
 
             setBuildingLevel(LevelBarracks, BuildingType.BARRACKS);
             setBuildingLevel(LevelStable  , BuildingType.STABLE);
