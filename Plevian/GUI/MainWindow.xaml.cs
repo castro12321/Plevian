@@ -4,6 +4,7 @@ using Plevian.Villages;
 using System;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Plevian.GUI;
 
 namespace Plevian
 {
@@ -19,6 +20,8 @@ namespace Plevian
         private MapTab mapTab;
         private VillageTab villageTab;
 
+        private static MainWindow instance;
+
         public MainWindow()
         {
             // Initialize game
@@ -33,6 +36,8 @@ namespace Plevian
             // Listen to some events
             Closed += new EventHandler(OnClose);
             PreviewKeyDown += KeyDownHandler;
+
+            instance = this;
         }
 
         void KeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)
@@ -64,6 +69,29 @@ namespace Plevian
         static void OnClose(object sender, EventArgs e)
         {
             running = false;
+        }
+
+        public static MainWindow getInstance()
+        {
+            return instance;
+        }
+
+        public static void changeTab(TabType type, TabChangeArgs args)
+        {
+            TabControl tabs = getInstance().MainWindowTabs;
+            switch(type)
+            {
+                case TabType.MAP :
+                    {
+                        tabs.SelectedItem = getInstance().mapTabItem;
+                        break;
+                    }
+                case TabType.VILLAGE :
+                    {
+                        tabs.SelectedItem = getInstance().villageTabItem;
+                        break;
+                    }
+            }
         }
     }
 }
