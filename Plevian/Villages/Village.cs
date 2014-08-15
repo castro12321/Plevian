@@ -18,6 +18,7 @@ namespace Plevian.Villages
         private Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         private List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
+        public GameTime buildTimeEnd { get; private set; }
         public Army army { get; private set; }
         public Resources resources { get; private set; }
 
@@ -26,6 +27,7 @@ namespace Plevian.Villages
         {
             resources = new Resources(999, 999, 999, 999);
             recruitTimeEnd = GameTime.now;
+            buildTimeEnd = GameTime.now;
             army = new Army();
         }
 
@@ -148,6 +150,8 @@ namespace Plevian.Villages
         public void build(BuildingType buildingType)
         {
             Building building = buildings[buildingType];
+            if (buildingsQueue.Count == 0)
+                buildTimeEnd = GameTime.now;
 
             Resources neededResources = building.getPriceForNextLevel();
             if (!resources.canAfford(neededResources))
@@ -156,8 +160,8 @@ namespace Plevian.Villages
             resources -= neededResources;
 
             GameTime buildTime = building.getConstructionTimeForNextLevel();
-            GameTime finishTime = GameTime.now + buildTime;
-            buildingsQueue.Enqueue(new BuildingQueueItem(finishTime, buildingType));
+            buildTimeEnd += buildTime;
+            buildingsQueue.Enqueue(new BuildingQueueItem(buildTimeEnd, buildingType));
         }
 
         /// <summary>
