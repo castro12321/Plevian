@@ -72,5 +72,27 @@ namespace Plevian.Maps
                    (location.y >= y && location.x <= y + height);
         }
 
+        public void changeSize(int newWidth, int newHeight)
+        {
+            this.width = newWidth;
+            this.height = newHeight;
+            checkCameraBonds();
+        }
+
+        public int TranslateX(int x)
+        {
+            return x - (int)this.x;
+        }
+
+        public int translateY(int y)
+        {
+            return y - (int)this.y;
+        }
+
+        public Location translate(Location location)
+        {
+            return new Location(TranslateX(location.x), translateY(location.y));
+        }
+
     }
 }
