@@ -27,4 +27,15 @@ namespace Plevian.Maps
             this.mouseLocation = mouseLocation;
         }
     }
+
+    public class MapDraggedEventArgs
+    {
+        public Location mousePreviousLocation { get; private set; }
+        public Location mouseCurrentLocation  { get; private set; }
+        public MapDraggedEventArgs(Location mousePreviousLocation, Location mouseCurrentLocation)
+        {
+            this.mousePreviousLocation = mousePreviousLocation;
+            this.mouseCurrentLocation = mouseCurrentLocation;
+        }
+    }
 }
