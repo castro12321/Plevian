@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Units
 {
-    class RecruitQueueItem
+    public class RecruitQueueItem
     {
         public readonly Unit unit;
         public readonly Seconds duration;

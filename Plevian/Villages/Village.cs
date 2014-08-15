@@ -15,8 +15,8 @@ namespace Plevian.Villages
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         //private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
-        private Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
-        private List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
+        public Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
+        public List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
         public Army army { get; private set; }
         public Resources resources { get; private set; }
@@ -82,11 +82,6 @@ namespace Plevian.Villages
                     buildings[queueItem.toBuild].upgrade();
                     buildingsQueue.Dequeue();
                 }
-            }
-            else
-            {
-                Logger.village("Queue empty! Building town hall");
-                build(BuildingType.TOWN_HALL);
             }
         }
 
@@ -156,8 +151,9 @@ namespace Plevian.Villages
             resources -= neededResources;
 
             GameTime buildTime = building.getConstructionTimeForNextLevel();
-            GameTime finishTime = GameTime.now + buildTime;
-            buildingsQueue.Enqueue(new BuildingQueueItem(finishTime, buildingType));
+            GameTime startTime = GameTime.now;
+            GameTime finishTime = startTime + buildTime;
+            buildingsQueue.Enqueue(new BuildingQueueItem(startTime, finishTime, buildingType));
         }
 
         /// <summary>

@@ -13,10 +13,15 @@ namespace Plevian
         public readonly GameTime gameTime;
         public readonly Map map;
 
+        // TODO: delete it. This is test village
+        // Change it to foreach village on map --> village.tick
+        public Village village;
+
         public Game()
         {
             GameTime.init(0);
             map = new MapGenerator().Generate(60, 60);
+            village = new Village(null);
         }
 
         /// <summary>
@@ -29,9 +34,6 @@ namespace Plevian
             map = new MapFileReader().read(save);
         }
 
-        // TODO: delete it. This is test village
-        // Change it to foreach village on map --> village.tick
-        public Village village = new Village(null);
         public void tick()
         {
             ulong timediff = GameTime.update();

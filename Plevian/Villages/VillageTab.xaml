@@ -37,16 +37,19 @@
                             <Label  Content="Warriors: " MinWidth="100"/>
                             <Label  Content="?"          MinWidth="45" Name="ResourcesWarriors"/>
                             <Button Content="Recruit"    MinWidth="60" Name="RecruitWarrior" Click="RecruitWarrior_Click"/>
+                            <Label  Content="?%"         MinWidth="40" Name="RecruitWarriorProgress"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Archers: " MinWidth="100"/>
                             <Label  Content="?"         MinWidth="45" Name="ResourcesArchers"/>
                             <Button Content="Recruit"   MinWidth="60" Name="RecruitArcher" Click="RecruitArcher_Click"/>
+                            <Label  Content="?%"        MinWidth="40" Name="RecruitArcherProgress"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Knights: " MinWidth="100"/>
                             <Label  Content="?"         MinWidth="45" Name="ResourcesKnights"/>
                             <Button Content="Recruit"   MinWidth="60" Name="RecruitKnight" Click="RecruitKnight_Click"/>
+                            <Label  Content="?%"        MinWidth="40" Name="RecruitKnightProgress"/>
                         </StackPanel>
                     </StackPanel>
                     
@@ -55,18 +58,21 @@
                         <Label Content="Buildings:" FontWeight="ExtraBold"/>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Barracks: "  MinWidth="100"/>
-                            <Label  Content="?"       MinWidth="45" Name="LevelBarracks"/>
-                            <Button Content="Upgrade" MinWidth="60" Name="UpgradeBarracks" Click="UpgradeBarracks_Click"/>
+                            <Label  Content="?"           MinWidth="45" Name="LevelBarracks"/>
+                            <Button Content="Upgrade"     MinWidth="60" Name="UpgradeBarracks" Click="UpgradeBarracks_Click"/>
+                            <Label  Content="?%"          MinWidth="40" Name="UpgradeBarracksProgress"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Town hall: " MinWidth="100"/>
                             <Label  Content="?"           MinWidth="45" Name="LevelTownHall"/>
                             <Button Content="Upgrade"     MinWidth="60" Name="UpgradeTownHall" Click="UpgradeTownHall_Click"/>
+                            <Label  Content="?%"          MinWidth="40" Name="UpgradeTownHallProgress"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Stable: "  MinWidth="100"/>
-                            <Label  Content="?"       MinWidth="45" Name="LevelStable"/>
-                            <Button Content="Upgrade" MinWidth="60" Name="UpgradeStable" Click="UpgradeStable_Click"/>
+                            <Label  Content="?"         MinWidth="45" Name="LevelStable"/>
+                            <Button Content="Upgrade"   MinWidth="60" Name="UpgradeStable" Click="UpgradeStable_Click"/>
+                            <Label  Content="?%"        MinWidth="40" Name="UpgradeStableProgress"/>
                         </StackPanel>
                     </StackPanel>
                     

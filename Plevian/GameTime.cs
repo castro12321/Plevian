@@ -19,7 +19,8 @@ namespace Plevian
         {
             get
             {
-                return gameTime;
+                //return gameTime;
+                return new GameTime(gameTime.time);
             }
         }
 

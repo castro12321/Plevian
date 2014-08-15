@@ -1,4 +1,7 @@
-﻿using Plevian.Maps;
+﻿using Plevian.Buildings;
+using Plevian.Debugging;
+using Plevian.Maps;
+using Plevian.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +42,7 @@ namespace Plevian.Villages
             villageView.handleEvents();
         }
 
-        private void setUnitCount(Label label, Units.UnitType type)
+        private void setUnitCount(Label label, UnitType type)
         {
             try
             {
@@ -51,7 +54,7 @@ namespace Plevian.Villages
             }
         }
 
-        private void setBuildingLevel(Label label, Buildings.BuildingType type)
+        private void setBuildingLevel(Label label, BuildingType type)
         {
             if (village.isBuilt(type))
                 LevelBarracks.Content = village.getBuilding(type).level;
@@ -59,29 +62,50 @@ namespace Plevian.Villages
                 label.Content = "0";
         }
 
+        private void setBuildingProgress(Label label, BuildingType type)
+        {
+            foreach(BuildingQueueItem queueItem in village.buildingsQueue)
+            {
+                if (queueItem.toBuild == type)
+                {
+                    /**/
+                    Seconds left = GameTime.now.diffrence(queueItem.end);
+                    int minutes = left.seconds / 60;
+                    int seconds = left.seconds % 60;
+                    label.Content = minutes + ":" + seconds;
+                    /*/
+                    Seconds current = GameTime.now.diffrence(queueItem.start);
+                    Seconds end     = queueItem.start.diffrence(queueItem.end);
+
+                    double currentD = Convert.ToDouble(current.seconds);
+                    double endD = Convert.ToDouble(end.seconds);
+                    double progress = Math.Round((currentD / endD) * 100d, 2);
+                    label.Content = progress + "%";
+                    /**/
+                    return;
+                }
+            }
+            label.Content = "";
+        }
+
         public void render()
         {
-            // Update GUI
             ResourcesFood.Content  = village.resources.food;
             ResourcesWood.Content  = village.resources.wood;
             ResourcesIron.Content  = village.resources.iron;
             ResourcesStone.Content = village.resources.stone;
 
-            setUnitCount(ResourcesWarriors, Units.UnitType.WARRIOR);
-            setUnitCount(ResourcesArchers, Units.UnitType.ARCHER);
-            setUnitCount(ResourcesKnights, Units.UnitType.KNIGHT);
-            //ResourcesWarriors.Content = village.army.get(Units.UnitType.WARRIOR).quanity;
-            //ResourcesArchers.Content  = village.army.get(Units.UnitType.ARCHER).quanity;
-            //ResourcesKnights.Content  = village.army.get(Units.UnitType.KNIGHT).quanity;
+            setUnitCount(ResourcesWarriors, UnitType.WARRIOR);
+            setUnitCount(ResourcesArchers, UnitType.ARCHER);
+            setUnitCount(ResourcesKnights, UnitType.KNIGHT);
 
-            setBuildingLevel(LevelBarracks, Buildings.BuildingType.BARRACKS);
-            setBuildingLevel(LevelStable  , Buildings.BuildingType.STABLE);
-            setBuildingLevel(LevelTownHall, Buildings.BuildingType.TOWN_HALL);
-            //LevelFarm.Content     = village.getBuilding(Buildings.BuildingType.FARM).level;
-            //LevelMine.Content     = village.getBuilding(Buildings.BuildingType.MINE).level;
-            //LevelTownHall.Content = village.getBuilding(Buildings.BuildingType.TOWN_HALL).level;
+            setBuildingLevel(LevelBarracks, BuildingType.BARRACKS);
+            setBuildingLevel(LevelStable  , BuildingType.STABLE);
+            setBuildingLevel(LevelTownHall, BuildingType.TOWN_HALL);
 
-            //ResourcesFood.Content = village.army.
+            setBuildingProgress(UpgradeBarracksProgress, BuildingType.BARRACKS);
+            setBuildingProgress(UpgradeBarracksProgress, BuildingType.STABLE);
+            setBuildingProgress(UpgradeBarracksProgress, BuildingType.TOWN_HALL);
 
             // Render SFML
             villageView.render();
