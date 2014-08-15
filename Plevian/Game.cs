@@ -16,7 +16,7 @@ namespace Plevian
         public Game()
         {
             GameTime.init(0);
-            map = new MapGenerator().Generate(10, 10);
+            map = new MapGenerator().Generate(60, 60);
         }
 
         /// <summary>
