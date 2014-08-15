@@ -68,20 +68,10 @@ namespace Plevian.Villages
             {
                 if (queueItem.toBuild == type)
                 {
-                    /**/
                     Seconds left = GameTime.now.diffrence(queueItem.end);
                     int minutes = left.seconds / 60;
                     int seconds = left.seconds % 60;
                     label.Content = minutes + ":" + seconds;
-                    /*/
-                    Seconds current = GameTime.now.diffrence(queueItem.start);
-                    Seconds end     = queueItem.start.diffrence(queueItem.end);
-
-                    double currentD = Convert.ToDouble(current.seconds);
-                    double endD = Convert.ToDouble(end.seconds);
-                    double progress = Math.Round((currentD / endD) * 100d, 2);
-                    label.Content = progress + "%";
-                    /**/
                     return;
                 }
             }
@@ -94,20 +84,10 @@ namespace Plevian.Villages
             {
                 if (queueItem.unit.getUnitType() == type)
                 {
-                    /**/
                     Seconds left = GameTime.now.diffrence(queueItem.endRecruiting);
                     int minutes = left.seconds / 60;
                     int seconds = left.seconds % 60;
                     label.Content = minutes + ":" + seconds;
-                    /*/
-                    Seconds current = GameTime.now.diffrence(queueItem.start);
-                    Seconds end     = queueItem.start.diffrence(queueItem.end);
-
-                    double currentD = Convert.ToDouble(current.seconds);
-                    double endD = Convert.ToDouble(end.seconds);
-                    double progress = Math.Round((currentD / endD) * 100d, 2);
-                    label.Content = progress + "%";
-                    /**/
                     return;
                 }
             }
