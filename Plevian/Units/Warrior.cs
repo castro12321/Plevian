@@ -23,7 +23,7 @@ namespace Plevian.Units
         public static readonly int movementSpeed = 28;
         public static readonly int lootCapacity = 75;
 
-        public static readonly float recruitTime = 0.2f;
+        public static readonly float recruitTime = 5.2f;
 
         public static readonly Resources recruitCost = new Food(50) + new Wood(50);
         public static readonly Resources upkeepCost = new Food(5);
