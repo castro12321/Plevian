@@ -57,7 +57,7 @@ namespace Plevian.Villages
         private void setBuildingLevel(Label label, BuildingType type)
         {
             if (village.isBuilt(type))
-                LevelBarracks.Content = village.getBuilding(type).level;
+                label.Content = village.getBuilding(type).level;
             else
                 label.Content = "0";
         }
