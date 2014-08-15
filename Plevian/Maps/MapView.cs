@@ -150,6 +150,7 @@ namespace Plevian.Maps
                         dragHandler(this, new MapDraggedEventArgs(previousMouseLocation, mouseLocationPixels));
 
                     Location diffrence = mouseLocationPixels - previousMouseLocation;
+                    diffrence = diffrence.invert();
                     camera.moveCameraBy(diffrence);
 
                 }

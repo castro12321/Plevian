@@ -21,6 +21,11 @@ namespace Plevian.Maps
             return (float)Math.Sqrt(Math.Pow(other.x - x, 2) + Math.Pow(other.y - y, 2));
         }
 
+        public Location invert()
+        {
+            return new Location(-x, -y);
+        }
+
         public static Location operator - (Location lh, Location rh)
         {
             int x = lh.x - rh.x;
