@@ -20,13 +20,13 @@ namespace Plevian.Maps
                 for (int _y = 0; _y < y; ++_y)
                 {
                     Location loc = new Location(_x, _y);
-                    place(loc, new Tile(loc, TerrainType.PLAINS));
+                    place(new Tile(loc, TerrainType.PLAINS));
                 }
         }
 
-        public void place(Location where, Tile tile)
+        public void place(Tile tile)
         {
-            fields[where.x, where.y] = tile;
+            fields[tile.location.x, tile.location.y] = tile;
         }
 
         public Tile typeAt(Location where)

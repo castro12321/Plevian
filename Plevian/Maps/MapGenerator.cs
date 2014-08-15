@@ -27,7 +27,7 @@ namespace Plevian.Maps
                 for(int i = 0;i < 10;++i)
                 {
                     Location loc = new Location(rand.Next(x), rand.Next(y));
-                    map.place(loc, new Tile(loc, terType));
+                    map.place(new Tile(loc, terType));
                 }
             }
             return map;
