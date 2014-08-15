@@ -141,7 +141,7 @@ namespace Plevian.Units
 
         public Unit get(UnitType unitType)
         {
-            if (contain(unitType) == false) throw new Exception("Army doesn't contain selected unit!!!");
+            if (contain(unitType) == false) throw new KeyNotFoundException("Army doesn't contain selected unit!!!");
             return units[unitType];
         }
 

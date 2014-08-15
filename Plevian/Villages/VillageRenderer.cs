@@ -1,5 +1,6 @@
 ﻿using Plevian.Debugging;
 using Plevian.Util;
+using Plevian.Villages;
 using SFML.Graphics;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,10 @@ namespace Plevian.Maps
     class VillageView : System.Windows.Forms.Control
     {
         private RenderWindow renderer;
-        private readonly Game game;
+        public Village village { get; set; }
 
         public VillageView(Game game)
         {
-            this.game = game;
             Size = new System.Drawing.Size(400, 400);
             Location = new System.Drawing.Point(100, 100);
 

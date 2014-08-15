@@ -10,7 +10,7 @@ namespace Plevian.Debugging
     {
         private static bool cas = true;
         private static bool shot = true;
-        private static bool logVillage = false;
+        private static bool logVillage = true;
         private static bool logGraphics = false;
 
         public static void c(String msg)

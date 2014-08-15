@@ -29,7 +29,9 @@ namespace Plevian
             map = new MapFileReader().read(save);
         }
 
-        private Village village = new Village(null);
+        // TODO: delete it. This is test village
+        // Change it to foreach village on map --> village.tick
+        public Village village = new Village(null);
         public void tick()
         {
             ulong timediff = GameTime.update();

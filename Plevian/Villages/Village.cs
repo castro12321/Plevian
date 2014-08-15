@@ -14,7 +14,7 @@ namespace Plevian.Villages
     public class Village : Tile
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
-        private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
+        //private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
         private Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         private List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
@@ -32,6 +32,11 @@ namespace Plevian.Villages
         public void setBuildings(Dictionary<BuildingType, Building> buildings)
         {
             this.buildings = buildings;
+        }
+
+        public Building getBuilding(BuildingType type)
+        {
+            return buildings[type];
         }
 
         public void addResources(Resources add)
@@ -81,7 +86,7 @@ namespace Plevian.Villages
             else
             {
                 Logger.village("Queue empty! Building town hall");
-                //build(BuildingType.TOWN_HALL);
+                build(BuildingType.TOWN_HALL);
             }
         }
 
@@ -165,7 +170,8 @@ namespace Plevian.Villages
         {
             if (unit.getWholeUnitCost() > resources)
                 throw new Exception("Not enough resources");
-            if (recruitQueue.Count == 0) recruitTimeEnd = GameTime.now;
+            if (recruitQueue.Count == 0)
+                recruitTimeEnd = GameTime.now;
             resources -= unit.getWholeUnitCost();
             RecruitQueueItem newQueue = new RecruitQueueItem(unit);
             recruitTimeEnd += newQueue.duration;
