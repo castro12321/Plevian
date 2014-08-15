@@ -133,6 +133,12 @@ namespace Plevian.Maps
             if (movedHandler != null)
                 movedHandler(this, new MouseMovedEventArgs(mouseLocationTile));
 
+            if (MouseButtons != MouseButtons.Left)
+            {
+                mouseDrag = false;
+                mouseLeftClicked = false;
+            }
+
             if (mouseLeftClicked)
             {
                 if (mouseDrag == false)
