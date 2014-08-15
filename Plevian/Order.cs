@@ -7,7 +7,7 @@ using Plevian.Maps;
 using Plevian.Units;
 namespace Plevian.Orders
 {
-    public abstract class Order
+    public class Order
     {
         Location origin;
         Location destination;
@@ -30,9 +30,8 @@ namespace Plevian.Orders
         }
 
 
-        public abstract void onEnd();
+        public abstract onEnd();
 
 
     }
 }
-
