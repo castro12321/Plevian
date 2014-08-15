@@ -18,6 +18,7 @@ namespace Plevian.Villages
         public Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         public List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
+        public GameTime buildTimeEnd { get; private set; }
         public Army army { get; private set; }
         public Resources resources { get; private set; }
 
@@ -26,6 +27,7 @@ namespace Plevian.Villages
         {
             resources = new Resources(999, 999, 999, 999);
             recruitTimeEnd = GameTime.now;
+            buildTimeEnd = GameTime.now;
             army = new Army();
         }
 
@@ -143,6 +145,8 @@ namespace Plevian.Villages
         public void build(BuildingType buildingType)
         {
             Building building = buildings[buildingType];
+            if (buildingsQueue.Count == 0)
+                buildTimeEnd = GameTime.now;
 
             Resources neededResources = building.getPriceForNextLevel();
             if (!resources.canAfford(neededResources))
@@ -151,9 +155,10 @@ namespace Plevian.Villages
             resources -= neededResources;
 
             GameTime buildTime = building.getConstructionTimeForNextLevel();
-            GameTime startTime = GameTime.now;
-            GameTime finishTime = startTime + buildTime;
-            buildingsQueue.Enqueue(new BuildingQueueItem(startTime, finishTime, buildingType));
+
+            GameTime startTime = buildTimeEnd.copy();
+            buildTimeEnd += buildTime;
+            buildingsQueue.Enqueue(new BuildingQueueItem(startTime, buildTimeEnd.copy(), buildingType));
         }
 
         /// <summary>
@@ -164,7 +169,8 @@ namespace Plevian.Villages
         /// <param name="recruitTime">Recruit time for invidual unit</param>
         public void recruit(Unit unit)
         {
-            if (unit.getWholeUnitCost() > resources)
+            Resources neededResources = unit.getWholeUnitCost();
+            if (!resources.canAfford(neededResources))
                 throw new Exception("Not enough resources");
             if (recruitQueue.Count == 0)
                 recruitTimeEnd = GameTime.now;

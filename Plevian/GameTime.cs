@@ -45,6 +45,11 @@ namespace Plevian
             return time.ToString();
         }
 
+        public GameTime copy()
+        {
+            return new GameTime(time);
+        }
+
         /// <summary>
         /// </summary>
         /// <returns>Diff in seconds</returns>

@@ -104,8 +104,8 @@ namespace Plevian.Villages
             setBuildingLevel(LevelTownHall, BuildingType.TOWN_HALL);
 
             setBuildingProgress(UpgradeBarracksProgress, BuildingType.BARRACKS);
-            setBuildingProgress(UpgradeBarracksProgress, BuildingType.STABLE);
-            setBuildingProgress(UpgradeBarracksProgress, BuildingType.TOWN_HALL);
+            setBuildingProgress(UpgradeStableProgress, BuildingType.STABLE);
+            setBuildingProgress(UpgradeTownHallProgress, BuildingType.TOWN_HALL);
 
             // Render SFML
             villageView.render();
