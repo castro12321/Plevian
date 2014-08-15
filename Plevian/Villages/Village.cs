@@ -96,7 +96,6 @@ namespace Plevian.Villages
             if (queue.timeCurrent > 1f)
             {
                 queue.timeCurrent -= 1;
-                queue.remainingQuanity -= 1;
             }
             else
             {
