@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Plevian.Debugging
 {
-    class Logger
+    public class Logger
     {
-        private static bool cas = true;
+        private static bool cas = false;
         private static bool shot = true;
-        private static bool logVillage = true;
+        private static bool logVillage = false;
         private static bool logGraphics = false;
 
         public static void c(String msg)
