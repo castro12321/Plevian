@@ -26,7 +26,20 @@ namespace Plevian.Villages
     {
         private VillageView villageView;
         /// <summary>Currently active village</summary>
-        public Village village { get; set; }
+        private Village activeVillage;
+        public Village Village
+        {
+            get
+            {
+                return activeVillage;
+            }
+
+            set
+            {
+                activeVillage = value;
+                villageView.village = value;
+            }
+        }
 
         public VillageTab(Game game)
         {
@@ -46,7 +59,7 @@ namespace Plevian.Villages
         {
             try
             {
-                label.Content = village.army.get(type).quanity;
+                label.Content = Village.army.get(type).quanity;
             }
             catch(KeyNotFoundException ex)
             {
@@ -56,15 +69,15 @@ namespace Plevian.Villages
 
         private void setBuildingLevel(Label label, BuildingType type)
         {
-            if (village.isBuilt(type))
-                label.Content = village.getBuilding(type).level;
+            if (Village.isBuilt(type))
+                label.Content = Village.getBuilding(type).level;
             else
                 label.Content = "0";
         }
 
         private void setBuildingProgress(Label label, BuildingType type)
         {
-            foreach(BuildingQueueItem queueItem in village.buildingsQueue)
+            foreach (BuildingQueueItem queueItem in Village.buildingsQueue)
             {
                 if (queueItem.toBuild == type)
                 {
@@ -80,7 +93,7 @@ namespace Plevian.Villages
 
         private void setRecruitProgress(Label label, UnitType type)
         {
-            foreach (RecruitQueueItem queueItem in village.recruitQueue)
+            foreach (RecruitQueueItem queueItem in Village.recruitQueue)
             {
                 if (queueItem.unit.getUnitType() == type)
                 {
@@ -96,12 +109,12 @@ namespace Plevian.Villages
 
         public void render()
         {
-            coords.Content = "X:" + village.location.x + " Y:" + village.location.y;
+            coords.Content = "X:" + Village.location.x + " Y:" + Village.location.y;
 
-            ResourcesFood.Content  = village.resources.food;
-            ResourcesWood.Content  = village.resources.wood;
-            ResourcesIron.Content  = village.resources.iron;
-            ResourcesStone.Content = village.resources.stone;
+            ResourcesFood.Content  = Village.resources.food;
+            ResourcesWood.Content  = Village.resources.wood;
+            ResourcesIron.Content  = Village.resources.iron;
+            ResourcesStone.Content = Village.resources.stone;
 
             setUnitCount(ResourcesWarriors, UnitType.WARRIOR);
             setUnitCount(ResourcesArchers, UnitType.ARCHER);
@@ -127,38 +140,38 @@ namespace Plevian.Villages
 
         private void RecruitWarrior_Click(object sender, RoutedEventArgs e)
         {
-            village.recruit(new Warrior(1));
+            Village.recruit(new Warrior(1));
         }
 
         private void RecruitArcher_Click(object sender, RoutedEventArgs e)
         {
-            village.recruit(new Archer(1));
+            Village.recruit(new Archer(1));
         }
 
         private void RecruitKnight_Click(object sender, RoutedEventArgs e)
         {
-            village.recruit(new Knight(1));
+            Village.recruit(new Knight(1));
         }
 
         private void RecruitSettler_Click(object sender, RoutedEventArgs e)
         {
-            village.recruit(new Settler(1));
+            Village.recruit(new Settler(1));
         }
 
 
         private void UpgradeBarracks_Click(object sender, RoutedEventArgs e)
         {
-            village.build(BuildingType.BARRACKS);
+            Village.build(BuildingType.BARRACKS);
         }
 
         private void UpgradeTownHall_Click(object sender, RoutedEventArgs e)
         {
-            village.build(BuildingType.TOWN_HALL);
+            Village.build(BuildingType.TOWN_HALL);
         }
 
         private void UpgradeStable_Click(object sender, RoutedEventArgs e)
         {
-            village.build(BuildingType.STABLE);
+            Village.build(BuildingType.STABLE);
         }
     }
 }

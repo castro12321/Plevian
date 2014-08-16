@@ -1,5 +1,6 @@
 ﻿using Plevian.Debugging;
 using Plevian.GUI;
+using Plevian.Villages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,13 +62,16 @@ namespace Plevian.Maps
             Logger.s("event click at " + tile.type + " " + tile.location.x + " " + tile.location.y);
             if (tile.type == TerrainType.VILLAGE)
             {
-                owner.Content = "Player";
+                Village village = tile as Village;
+                owner.Content = village.Owner.name;
                 EnterVillageButton.IsEnabled = true;
+                EnterVillageButton.DataContext = tile;
             }
             else
             {
                 owner.Content = "Nature";
                 EnterVillageButton.IsEnabled = false;
+                EnterVillageButton.DataContext = null;
             }
 
             type.Content = Enum.GetName(typeof(TerrainType), tile.type);
@@ -84,7 +88,9 @@ namespace Plevian.Maps
            
             if(EnterVillageButton.IsEnabled)
             {
-                MainWindow.changeTab(TabType.VILLAGE, new EnterVillageArgs(null));
+                Button button = sender as Button;
+                Village entered = button.DataContext as Village;
+                MainWindow.SwitchToVillage(entered);
             }
         }
     }

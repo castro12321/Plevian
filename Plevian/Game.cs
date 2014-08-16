@@ -26,26 +26,41 @@ namespace Plevian
         {
             GameTime.init(0);
             map = new MapGenerator().Generate(60, 60);
-            player = new Player("Magnus", SFML.Graphics.Color.Cyan);
 
-            Tile capitalTile = map.FindEmptyTile();
-            Village capital = new Village(capitalTile.location);
-            map.place(capital);
-            player.addVillage(capital);
+            player = new Player("Magnus", SFML.Graphics.Color.Cyan);
+            Tile village1Tile = map.FindEmptyTile();
+            Tile village2Tile = map.FindEmptyTile();
+            Tile village3Tile = map.FindEmptyTile();
+            Village village1 = new Village(village1Tile.location, player);
+            Village village2 = new Village(village2Tile.location, player);
+            Village village3 = new Village(village3Tile.location, player);
+            map.place(village1);
+            map.place(village2);
+            map.place(village3);
+            player.addVillage(village1);
+            player.addVillage(village2);
+            player.addVillage(village3);
 
             enemy = new Player("Hitler", SFML.Graphics.Color.Red);
-            Village berlin = new Village(new Location(50, 50));
+            Tile berlinTile    = map.FindEmptyTile();
+            Tile frankfurtTile = map.FindEmptyTile();
+            Tile hamburgTile   = map.FindEmptyTile();
+            Village berlin     = new Village(berlinTile.location, enemy);
+            Village frankfurt  = new Village(frankfurtTile.location, enemy);
+            Village hamburger  = new Village(hamburgTile.location, enemy);
             map.place(berlin);
+            map.place(frankfurt);
+            map.place(hamburger);
             player.addVillage(berlin);
+            player.addVillage(frankfurt);
+            player.addVillage(hamburger);
 
             Army army = new Army();
             army += new Knight(100);
 
-            order = new AttackOrder(capital, berlin, 0.1f, army);
-            capital.addUnit(new Knight(1000));
-            capital.addOrder(order);
-
-            
+            order = new AttackOrder(village1, berlin, 0.1f, army);
+            village1.addUnit(new Knight(1000));
+            village1.addOrder(order);
         }
 
         /// <summary>

@@ -32,7 +32,7 @@ namespace Plevian
 
             mapTabItem.Content = (mapTab = new MapTab(game.map));
             villageTabItem.Content = (villageTab = new VillageTab(game));
-            villageTab.village = game.player.Capital;
+            villageTab.Village = game.player.Capital;
            
             // Listen to some events
             Closed += new EventHandler(OnClose);
@@ -77,7 +77,13 @@ namespace Plevian
             return instance;
         }
 
-        public static void changeTab(TabType type, TabChangeArgs args)
+        public static void SwitchToVillage(Village to)
+        {
+            getInstance().villageTab.Village = to;
+            changeTab(TabType.VILLAGE);
+        }
+
+        public static void changeTab(TabType type)
         {
             TabControl tabs = getInstance().MainWindowTabs;
             switch(type)

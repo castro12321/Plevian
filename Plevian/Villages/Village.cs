@@ -24,11 +24,25 @@ namespace Plevian.Villages
         public Army army { get; private set; }
         public Resources resources { get; private set; }
         private Player owner;
+        public Player Owner
+        {
+            get
+            {
+                return owner;
+            }
+
+            set
+            {
+                owner = value;
+                // TODO: do sth?
+            }
+        }
 
 
-        public Village(Location location)
+        public Village(Location location, Player owner)
             : base(location, TerrainType.VILLAGE)
         {
+            Owner = owner;
             resources = new Resources(999, 999, 999, 999);
             recruitTimeEnd = GameTime.now;
             buildTimeEnd = GameTime.now;
@@ -224,17 +238,6 @@ namespace Plevian.Villages
                 army += unit;
             }
 
-        }
-
-        public void setOwner(Player player)
-        {
-            owner = player;
-            //Todo: Do something?
-        }
-
-        public Player getOwner(Player player)
-        {
-            return owner;
         }
     }
 }
