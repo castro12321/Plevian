@@ -1,0 +1,8 @@
+﻿<Window x:Class="Plevian.Battles.AttackWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AttackWindow" Height="300" Width="300" Closed="onWindowClose">
+    <StackPanel Margin="5,2">
+        <StackPanel Height="100"/>
+    </StackPanel>
+</Window>

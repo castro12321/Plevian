@@ -8,6 +8,7 @@ using Plevian.Maps;
 using Plevian.Players;
 using Plevian.Units;
 using Plevian.Orders;
+using SFML.Graphics;
 
 namespace Plevian
 {
@@ -27,7 +28,7 @@ namespace Plevian
             GameTime.init(0);
             map = new MapGenerator().Generate(30, 30);
 
-            player = new Player("Magnus", SFML.Graphics.Color.Cyan);
+            player = new Player("Magnus", new Color(255,106,0));
             Tile village1Tile = map.FindEmptyTile();
             Tile village2Tile = map.FindEmptyTile();
             Tile village3Tile = map.FindEmptyTile();

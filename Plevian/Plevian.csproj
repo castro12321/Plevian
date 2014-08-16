@@ -73,6 +73,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Battles\AttackWindow.xaml.cs">
+      <DependentUpon>AttackWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Entry.cs" />
@@ -118,6 +121,10 @@
     <Compile Include="Villages\VillageTab.xaml.cs">
       <DependentUpon>VillageTab.xaml</DependentUpon>
     </Compile>
+    <Page Include="Battles\AttackWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

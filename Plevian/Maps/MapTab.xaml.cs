@@ -1,4 +1,5 @@
-﻿using Plevian.Debugging;
+﻿using Plevian.Battles;
+using Plevian.Debugging;
 using Plevian.GUI;
 using Plevian.Villages;
 using System;
@@ -62,6 +63,7 @@ namespace Plevian.Maps
             Logger.s("event click at " + tile.type + " " + tile.location.x + " " + tile.location.y);
 
             EnterVillageButton.IsEnabled = false;
+            AttackVillageButton.IsEnabled = false;
             if (tile.type == TerrainType.VILLAGE)
             {
                 Village village = tile as Village;
@@ -70,6 +72,10 @@ namespace Plevian.Maps
                 {
                     EnterVillageButton.IsEnabled = true;
                     EnterVillageButton.DataContext = tile;
+                } else
+                {
+                    AttackVillageButton.IsEnabled = true;
+                    AttackVillageButton.DataContext = tile;
                 }
 
             }
@@ -94,6 +100,13 @@ namespace Plevian.Maps
                 Village entered = button.DataContext as Village;
                 MainWindow.SwitchToVillage(entered);
             }
+        }
+
+        private void attackVillageClick(object sender, RoutedEventArgs e)
+        {
+            AttackWindow window = new AttackWindow();
+            window.Show();
+            MainWindow.getInstance().IsEnabled = false;
         }
     }
 }

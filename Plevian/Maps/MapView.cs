@@ -10,6 +10,7 @@ using Plevian.Maps;
 using Plevian.Debugging;
 using Plevian.Util;
 using SFML.Window;
+using Plevian.Villages;
 
 namespace Plevian.Maps
 {
@@ -96,7 +97,7 @@ namespace Plevian.Maps
                 if (mouseLeftClicked && !mouseDrag)
                 {
                     Location clickedTileLocation = PixelToTile(mouseLocationPixels);
-                    Tile clickedTile = map.typeAt(clickedTileLocation);
+                    Tile clickedTile = map.tileAt(clickedTileLocation);
 
                     EventHandler<TileClickedEventArgs> handler = PlevianTileClickedEvent;
                     if (handler != null)
@@ -190,23 +191,33 @@ namespace Plevian.Maps
                     int y = i + startY;
                     if (x < 0 || x >= map.sizeX) continue;
                     if (y < 0 || y >= map.sizeY) continue;
-                    TerrainType type = map.typeAt(new Location(x, y)).type;
-                    Shape tile = getShapeFor(type);
-                    tile.Position = camera.translate(new Vector2f(x * tileSizeInPixels, y * tileSizeInPixels));
-                    renderer.Draw(tile);
+                    Tile tile = map.tileAt(new Location(x, y));
+                    Shape tileShape = getShapeFor(tile);
+                    tileShape.Position = camera.translate(new Vector2f(x * tileSizeInPixels, y * tileSizeInPixels));
+                    renderer.Draw(tileShape);
                 }
            renderer.Display();
         }
 
         private Shape shape = new RectangleShape(new SFML.Window.Vector2f(tileSizeInPixels, tileSizeInPixels));
-        private Shape getShapeFor(TerrainType type)
+        private Shape getShapeFor(Tile tile)
         {
+            TerrainType type = tile.type;
             switch(type)
             {
                 case TerrainType.LAKES: shape.FillColor = Color.Blue; break;
                 case TerrainType.MOUNTAINS: shape.FillColor = Color.White; break;
                 case TerrainType.PLAINS: shape.FillColor = Color.Green; break;
-                case TerrainType.VILLAGE: shape.FillColor = Color.Red; break;
+                case TerrainType.VILLAGE:
+                    {
+                        shape.FillColor = Color.Red;
+                        if (tile is Village)
+                        {
+                            Village village = tile as Village;
+                            shape.FillColor = village.Owner.color;
+                        }
+                        break;
+                    }
             }
             return shape;
         }

@@ -36,10 +36,12 @@ namespace Plevian.Maps
             fields[tile.location.x, tile.location.y] = tile;
         }
 
-        public Tile typeAt(Location where)
+        public Tile tileAt(Location where)
         {
             return fields[where.x, where.y];
         }
+
+
 
         public Tile[,] getMap()
         {
@@ -50,7 +52,7 @@ namespace Plevian.Maps
         public Tile FindEmptyTile()
         {
             Location randomLocation = new Location(random.Next(sizeX), random.Next(sizeY));
-            Tile randomTile = typeAt(randomLocation);
+            Tile randomTile = tileAt(randomLocation);
             if (randomTile.type == TerrainType.PLAINS)
                 return randomTile;
             return FindEmptyTile();
