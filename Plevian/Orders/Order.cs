@@ -23,19 +23,19 @@ namespace Plevian.Orders
         protected float timePerTile;
 
 
-        public Order(Tile origin, Tile destination, float timePerTile, Army army)
+        public Order(Tile origin, Tile destination, Army army)
         {
             this.origin = origin;
             this.destination = destination;
             this.army = army;
-            this.timePerTile = timePerTile;
+            this.timePerTile = army.getMovementSpeed();
             this.completed = false;
             this.isGoingBack = false;
 
             float distance = origin.location.distance(destination.location);
-            duration = new Seconds((int) (timePerTile * distance));
+            duration = new Seconds((int)(timePerTile * distance));
             endTime = GameTime.now + duration;
-          
+
         }
 
         public override string ToString()

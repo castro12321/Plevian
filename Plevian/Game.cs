@@ -57,17 +57,12 @@ namespace Plevian
             enemy.addVillage(hamburger);
             addPlayer(enemy);
 
-            Army army = new Army();
-            army += new Knight(100);
-
-            AttackOrder order = new AttackOrder(village1, berlin, 0.1f, army);
             village1.addUnit(new Knight(1000));
             village2.addUnit(new Knight(200));
             village2.addUnit(new Archer(500));
             village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
             village3.recruit(new Warrior(1000));
-            village1.addOrder(order);
-            berlin.addUnit(new Knight(500));
+            berlin.addUnit(new Knight(100));
         }
 
         /// <summary>

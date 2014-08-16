@@ -17,7 +17,7 @@ namespace Plevian.Orders
         Resources loot = new Resources();
 
         public AttackOrder(Tile origin, Tile destination, float timePerTile, Army army)
-            : base(origin, destination, timePerTile, army)
+            : base(origin, destination, army)
         {
 
         }

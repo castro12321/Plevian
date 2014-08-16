@@ -20,7 +20,7 @@ namespace Plevian.Units
         public static readonly int defenseOnCavalry = 1;
         public static readonly int defenseOnArchers = 1;
 
-        public static readonly int movementSpeed = 15;
+        public static readonly int movementSpeed = 3;
         public static readonly int lootCapacity = 50;
 
         public static readonly float recruitTime = 30.3f;

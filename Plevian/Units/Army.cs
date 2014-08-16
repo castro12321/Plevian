@@ -134,6 +134,18 @@ namespace Plevian.Units
             return defenseArchers;
         }
 
+        public float getMovementSpeed()
+        {
+            float slowest = 0f;
+            foreach(var pair in units)
+            {
+                float speed = (float)pair.Value.GetMovementSpeed();
+                if (speed > slowest)
+                    slowest = speed;
+            }
+            return slowest;
+        }
+
         public bool contain(UnitType unitType)
         {
             return units.ContainsKey(unitType);
