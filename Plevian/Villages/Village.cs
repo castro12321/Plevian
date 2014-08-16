@@ -123,6 +123,7 @@ namespace Plevian.Villages
         private void finishRecruiting()
         {
             if (recruitQueue.Count == 0) return;
+            // TODO: don't assume the tick is 1 second; use GameTime diff
             float second = 1f;
             RecruitQueueItem queue = recruitQueue[0];
 
