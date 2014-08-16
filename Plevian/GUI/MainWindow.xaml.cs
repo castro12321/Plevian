@@ -40,7 +40,7 @@ namespace Plevian
             villageTab.Village = Game.player.Capital;
            
             // Initialize messages tab
-            messagesTabItem.Content = (messagesTab = new MessagesTab(game.player));
+            messagesTabItem.Content = (messagesTab = new MessagesTab(Game.player));
 
             // Listen to some events
             Closed += new EventHandler(OnClose);
