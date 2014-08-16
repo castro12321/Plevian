@@ -20,9 +20,11 @@ namespace Plevian.Messages
             DataGridRow selected = DataGridExtensions.GetSelectedRow(messages);
             DataGridCell topicCell = DataGridExtensions.GetCell(messages, selected, 1);
             Message message = selected.DataContext as Message;
-            ToolTip tooltip = new ToolTip { Content = message.message };
-            topicCell.ToolTip = tooltip;
-            tooltip.IsOpen = true;
+
+            MessageWindow window = new MessageWindow(message);
+            window.Show();
+            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
+            MainWindow.getInstance().IsEnabled = false;
         }
     }
 

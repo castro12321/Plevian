@@ -95,6 +95,9 @@
     <Compile Include="Maps\MapView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Messages\MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Messages\Message.cs" />
     <Compile Include="Messages\MessagesTab.xaml.cs">
       <DependentUpon>MessagesTab.xaml</DependentUpon>
@@ -172,6 +175,10 @@
     <Page Include="Maps\MapTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Messages\MessageWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Messages\MessagesTab.xaml">
       <Generator>MSBuild:Compile</Generator>
