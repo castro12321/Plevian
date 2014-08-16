@@ -17,5 +17,10 @@ namespace Tests.Unit
         {
             this.time.addFakeTime(time);
         }
+
+        protected int getFakeTime()
+        {
+            return time.diffrence(new Seconds(0)).seconds;
+        }
     }
 }
