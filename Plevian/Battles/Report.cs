@@ -62,7 +62,7 @@ namespace Plevian.Battles
                     losses = defenderLosses[type];
                 int startQuanity = pair.Value;
                 int endQuanity = pair.Value - losses;
-                _return += type + " >> " + startQuanity + " - " + losses + " = " + endQuanity;
+                _return += type + " >> " + startQuanity + " - " + losses + " = " + endQuanity + "\n";
             }
 
             return _return;

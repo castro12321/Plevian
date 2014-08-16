@@ -9,6 +9,8 @@ using Plevian;
 using Plevian.Villages;
 using Plevian.Resource;
 using Plevian.Debugging;
+using Plevian.Players;
+using SFML.Graphics;
 
 namespace Tests.Unit
 {
@@ -29,7 +31,7 @@ namespace Tests.Unit
 
             Archer archer = new Archer(ARCH_QUANITY);
             Game game = new Game(); 
-            Village testVillage = new Village(null);
+            Village testVillage = new Village(null, new Player("", Color.Blue));
             testVillage.addResources(new Resources(1000000, 1000000, 1000000, 1000000));
             testVillage.recruit(archer);
             testVillage.recruit(new Knight(KNIG_QUANITY));

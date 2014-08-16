@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Plevian.Battles;
 using Plevian.Units;
+using Plevian.Debugging;
 namespace Tests.Battles
 {
     [TestClass]
@@ -14,6 +15,8 @@ namespace Tests.Battles
         [TestMethod]
         public void tastBattleSystem()
         {
+            Logger.turnOff();
+
             Army attacker = new Army(), defender = new Army();
 
             attacker += new Knight(100);
@@ -37,6 +40,26 @@ namespace Tests.Battles
 
             Assert.IsTrue(report.defenderArmy[UnitType.KNIGHT] == 300);
             Assert.IsTrue(report.battleResult == BattleState.DefenderVictory);
+        }
+
+        [TestMethod]
+        public void testBattleReport()
+        {
+            Logger.turnOff();
+
+            Army attacker = new Army(), defender = new Army();
+
+            attacker += new Knight(500);
+            attacker += new Archer(250);
+            attacker += new Warrior(100);
+
+            defender += new Warrior(1000);
+            defender += new Archer(100);
+
+            Battle battle = new Battle(attacker, defender, 1f, 1f, 0);
+
+            Logger.log(battle.makeBattle().ToString());
+            //Assert.IsTrue(false);
         }
 
 
