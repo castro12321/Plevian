@@ -42,6 +42,7 @@ namespace Plevian.GUI
                 e.Handled = true;
 
             base.OnPreviewTextInput(e);
+
         }
 
         private void maxQuanityEnter(object sender, MouseEventArgs e)
@@ -61,6 +62,22 @@ namespace Plevian.GUI
             if(e.MouseDevice.LeftButton == MouseButtonState.Pressed)
             {
                 UnitQuanity.Text = maxQuanity.ToString();
+            }
+        }
+
+        private void onInputChange(object sender, TextChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            string content = txtBox.Text;
+            int quanity = 0;
+            bool result = Int32.TryParse(content, out quanity);
+            if (result == false || quanity > maxQuanity)
+            {
+                txtBox.Background = Brushes.Red;
+            }
+            else
+            {
+                txtBox.Background = Brushes.White;
             }
         }
     }
