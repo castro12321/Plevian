@@ -45,8 +45,15 @@ namespace Plevian.Orders
                     Report afterReport = battle.makeBattle();
                     
                     //Todo -> send report to some kind of message system.
-                    gatherLoot();
-                    turnBack();
+
+                    if (afterReport.battleResult == BattleState.AttackerVictory)
+                    {
+                        gatherLoot();
+                        turnBack();
+                    } else
+                    {
+                        completed = true;
+                    }
                     
                 }
             }
