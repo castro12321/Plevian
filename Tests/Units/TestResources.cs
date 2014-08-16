@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Plevian.Resource;
 
-namespace Tests.Unit
+namespace Tests.Units
 {
     [TestClass]
     public class TestResources

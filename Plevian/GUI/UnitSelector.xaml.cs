@@ -23,13 +23,53 @@ namespace Plevian.GUI
     public partial class UnitSelector : UserControl
     {
         public UnitType type;
-        int maxQuanity = 0;
+        private int _maxQuanity = 0;
+#region attributes
+        public int maxQuanity
+        {
+            get
+            {
+                return _maxQuanity;
+            }
+            set
+            {
+                _maxQuanity = value;
+                UnitMaxQuanity.Content = "(" + maxQuanity + ")";
+                quanityChanged();
+            }
+
+        }
+
+        
+        public int quanity
+        {
+            get
+            {
+                if(checkCorrectness())
+                {
+                    return Int32.Parse(UnitQuanity.Text);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            set
+            {
+                UnitQuanity.Text = value.ToString();
+                quanityChanged();
+            }
+
+
+        }
+#endregion
+
         public UnitSelector(string unitName, int maxQuanity, UnitType type)
         {
             InitializeComponent();
             UnitName.Content = unitName;
             this.type = type;
-            updateMaxQuanity(maxQuanity);
+            this.maxQuanity = maxQuanity;
         }
 
         private void onPreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -42,13 +82,6 @@ namespace Plevian.GUI
 
             base.OnPreviewTextInput(e);
 
-        }
-
-        public void updateMaxQuanity(int quanity)
-        {
-            this.maxQuanity = quanity;
-            UnitMaxQuanity.Content = "(" + maxQuanity + ")";
-            quanityChanged(UnitQuanity);
         }
 
         private void maxQuanityEnter(object sender, MouseEventArgs e)
@@ -73,23 +106,36 @@ namespace Plevian.GUI
 
         private void onInputChange(object sender, TextChangedEventArgs e)
         {
-            TextBox txtBox = sender as TextBox;
-            quanityChanged(txtBox);
+            quanityChanged();
         }
 
-        private void quanityChanged(TextBox txtBox)
+        private void quanityChanged()
         {
-            string content = txtBox.Text;
+            if (checkCorrectness())
+            {
+                UnitQuanity.Background = Brushes.White;
+            }
+            else
+            {
+                UnitQuanity.Background = Brushes.Red;
+            }
+        }
+
+        public bool checkCorrectness()
+        {
+            string content = UnitQuanity.Text;
             int quanity = 0;
             bool result = Int32.TryParse(content, out quanity);
             if (result == false || quanity > maxQuanity)
             {
-                txtBox.Background = Brushes.Red;
+                return false;
             }
             else
             {
-                txtBox.Background = Brushes.White;
+                return true;
             }
         }
     }
+
+    
 }

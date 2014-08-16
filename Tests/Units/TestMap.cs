@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Plevian;
 using Plevian.Maps;
 
-namespace Tests.Unit
+namespace Tests.Units
 {
     [TestClass]
     public class TestMap

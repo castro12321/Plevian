@@ -69,11 +69,12 @@
     <Compile Include="Integration\TestLoadingGame.cs" />
     <Compile Include="Players\PlayerTests.cs" />
     <Compile Include="Players\VillageHandling.cs" />
-    <Compile Include="Unit\TestRecruit.cs" />
-    <Compile Include="Unit\TestResources.cs" />
-    <Compile Include="Unit\TestTime.cs" />
+    <Compile Include="Units\testFactory.cs" />
+    <Compile Include="Units\TestRecruit.cs" />
+    <Compile Include="Units\TestResources.cs" />
+    <Compile Include="Units\TestTime.cs" />
     <Compile Include="TestWithTime.cs" />
-    <Compile Include="Unit\TestMap.cs" />
+    <Compile Include="Units\TestMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

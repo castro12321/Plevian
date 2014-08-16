@@ -1,4 +1,6 @@
-﻿using Plevian.Players;
+﻿using Plevian.Maps;
+using Plevian.Orders;
+using Plevian.Players;
 using Plevian.Units;
 using Plevian.Villages;
 using System;
@@ -25,12 +27,14 @@ namespace Plevian.GUI
     {
         VillageRecord selectedRecord = null;
         Village selectedVillage = null;
+        Tile tileToAttack = null;
         Player player;
         DispatcherTimer timer = new DispatcherTimer();
 
-        public AttackWindow(Player player)
+        public AttackWindow(Player player, Tile tileToAttack)
         {
             this.player = player;
+            this.tileToAttack = tileToAttack;
 
             InitializeComponent();
             fillAttackWindow();
@@ -105,7 +109,7 @@ namespace Plevian.GUI
                     UnitSelector selector = UnitPanel.Children[i] as UnitSelector;
                     if(selector.type == pair.Key)
                     {
-                        selector.updateMaxQuanity(pair.Value.quanity);
+                        selector.maxQuanity = pair.Value.quanity;
                         break;
                     }
                 }
@@ -117,6 +121,43 @@ namespace Plevian.GUI
             MainWindow.getInstance().IsEnabled = true;
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(MainWindow.getInstance());
             timer.Stop();
+        }
+       
+
+        private void sendArmy(object sender, RoutedEventArgs e)
+        {
+            //DESTROY MOTHERFUCKER
+            if(checkCorrectness())
+            {
+                Army army = new Army();
+                foreach(Object obj in UnitPanel.Children)
+                {
+                    UnitSelector selector = obj as UnitSelector;
+                    if (selector.quanity == 0) continue;
+                    UnitType type = selector.type;
+                    int quanity = selector.quanity;
+                    army += UnitFactory.createUnit(type, quanity);
+                }
+                Tile origin = selectedVillage;
+                AttackOrder order = new AttackOrder(origin, tileToAttack, 0.1f, army);
+                selectedVillage.addOrder(order);
+                this.Close();
+            }
+
+            
+        }
+
+        private bool checkCorrectness()
+        {
+            if(selectedVillage == null)
+                return false;
+            foreach(Object obj in UnitPanel.Children)
+            {
+                UnitSelector selector = obj as UnitSelector;
+                if (selector.checkCorrectness() == false)
+                    return false;
+            }
+            return true;
         }
     }
 }

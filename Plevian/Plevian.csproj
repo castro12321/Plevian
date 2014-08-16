@@ -105,6 +105,7 @@
     <Compile Include="Orders\SupportOrder.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Units\Settler.cs" />
+    <Compile Include="Units\UnitFactory.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="Villages\VillageRenderer.cs">
       <SubType>Component</SubType>

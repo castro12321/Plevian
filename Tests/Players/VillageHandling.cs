@@ -4,7 +4,6 @@ using Plevian.Players;
 using Plevian.Villages;
 using SFML.Graphics;
 using System;
-using Tests.Unit;
 
 namespace Tests.Players
 {

@@ -104,7 +104,7 @@ namespace Plevian.Maps
 
         private void attackVillageClick(object sender, RoutedEventArgs e)
         {
-            AttackWindow window = new AttackWindow(Game.player);
+            AttackWindow window = new AttackWindow(Game.player, clickedTile);
             window.Show();
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
             MainWindow.getInstance().IsEnabled = false;

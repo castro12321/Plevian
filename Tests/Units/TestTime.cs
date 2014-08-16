@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Plevian;
 
-namespace Tests.Unit
+namespace Tests.Units
 {
     [TestClass]
     public class TestTime : TestWithTime

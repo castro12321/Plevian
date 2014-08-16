@@ -12,7 +12,7 @@ using Plevian.Debugging;
 using Plevian.Players;
 using SFML.Graphics;
 
-namespace Tests.Unit
+namespace Tests.Units
 {
     [TestClass]
     public class TestRecruit : TestWithTime
