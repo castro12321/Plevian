@@ -11,6 +11,11 @@
                 <StackPanel Orientation="Vertical">
                     <!-- Resources -->
                     <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Coords:"/>
+                            <Label Name="coords"/>
+                        </StackPanel>
+
                         <Label Content="Income:" FontWeight="ExtraBold"/>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Food: " MinWidth="100"/>

@@ -15,7 +15,21 @@ namespace Plevian.Players
 
         private List<Village> villages = new List<Village>();
 
-        public Village Capital { get { return villages[0]; } }
+        public Village Capital
+        {
+            get
+            {
+                return villages[0];
+            }
+        }
+
+        public IReadOnlyCollection<Village> Villages
+        {
+            get
+            {
+                return villages.AsReadOnly();
+            }
+        }
 
         public Player(string name, Color color)
         {

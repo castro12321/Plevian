@@ -96,6 +96,8 @@ namespace Plevian.Villages
 
         public void render()
         {
+            coords.Content = "X:" + village.location.x + " Y:" + village.location.y;
+
             ResourcesFood.Content  = village.resources.food;
             ResourcesWood.Content  = village.resources.wood;
             ResourcesIron.Content  = village.resources.iron;
