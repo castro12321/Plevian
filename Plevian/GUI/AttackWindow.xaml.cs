@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Plevian.GUI
 {
@@ -23,23 +24,42 @@ namespace Plevian.GUI
     public partial class AttackWindow : Window
     {
         VillageRecord selectedRecord = null;
+        Village selectedVillage = null;
         Player player;
+        DispatcherTimer timer = new DispatcherTimer();
+
         public AttackWindow(Player player)
         {
             this.player = player;
 
             InitializeComponent();
             fillAttackWindow();
+            initTimer();
+          
         }
 
         private void fillAttackWindow()
         {
             fillVillages(player);
-            
+        }
+
+        private void initTimer()
+        {
+            timer.Tick += new EventHandler(tick);
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Start();
+        }
+
+        private void tick(object sender, EventArgs e)
+        {
+            if(selectedRecord != null)
+                updateUnits(selectedRecord.village);
         }
 
         private void fillVillages(Player player)
         {
+            VillagePanel.Children.Clear();
+
             foreach(Village village in player.Villages)
             {
                 VillageRecord record = new VillageRecord(village);
@@ -47,6 +67,9 @@ namespace Plevian.GUI
 
                 record.onRecordClick += new VillageRecord.RecordClickedHandler(onRecordClick);
             }
+
+            if(selectedRecord != null)
+                selectedRecord.select();
         }
 
         private void onRecordClick(VillageRecord record)
@@ -56,18 +79,36 @@ namespace Plevian.GUI
             selectedRecord = record;
             selectedRecord.select();
 
-            Village village = selectedRecord.village;
-            fillUnits(village);
+            selectedVillage = selectedRecord.village;
+            fillUnits(selectedVillage);
+            updateUnits(selectedVillage);
         }
 
         private void fillUnits(Village village)
         {
             UnitPanel.Children.Clear();
-            foreach (var pair in village.army.getUnits())
+
+            foreach (UnitType unitType in (UnitType[])Enum.GetValues(typeof(UnitType)))
             {
-                UnitType unitType = pair.Key;
-                UnitSelector selector = new UnitSelector(Enum.GetName(typeof(UnitType), unitType), 100, unitType);
+                UnitSelector selector = new UnitSelector(Enum.GetName(typeof(UnitType), unitType), 0, unitType);
                 UnitPanel.Children.Add(selector);
+            }
+        }
+
+        private void updateUnits(Village village)
+        {
+            Army army = village.army;
+            foreach (var pair in army.getUnits())
+            {
+                for(int i = 0;i < UnitPanel.Children.Count;++i)
+                {
+                    UnitSelector selector = UnitPanel.Children[i] as UnitSelector;
+                    if(selector.type == pair.Key)
+                    {
+                        selector.updateMaxQuanity(pair.Value.quanity);
+                        break;
+                    }
+                }
             }
         }
 
@@ -75,6 +116,7 @@ namespace Plevian.GUI
         {
             MainWindow.getInstance().IsEnabled = true;
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(MainWindow.getInstance());
+            timer.Stop();
         }
     }
 }

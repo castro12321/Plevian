@@ -22,15 +22,14 @@ namespace Plevian.GUI
     /// </summary>
     public partial class UnitSelector : UserControl
     {
-        UnitType type;
+        public UnitType type;
         int maxQuanity = 0;
         public UnitSelector(string unitName, int maxQuanity, UnitType type)
         {
             InitializeComponent();
             UnitName.Content = unitName;
-            UnitMaxQuanity.Content = "(" + maxQuanity + ")";
             this.type = type;
-            this.maxQuanity = maxQuanity;
+            updateMaxQuanity(maxQuanity);
         }
 
         private void onPreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -43,6 +42,13 @@ namespace Plevian.GUI
 
             base.OnPreviewTextInput(e);
 
+        }
+
+        public void updateMaxQuanity(int quanity)
+        {
+            this.maxQuanity = quanity;
+            UnitMaxQuanity.Content = "(" + maxQuanity + ")";
+            quanityChanged(UnitQuanity);
         }
 
         private void maxQuanityEnter(object sender, MouseEventArgs e)
@@ -68,6 +74,11 @@ namespace Plevian.GUI
         private void onInputChange(object sender, TextChangedEventArgs e)
         {
             TextBox txtBox = sender as TextBox;
+            quanityChanged(txtBox);
+        }
+
+        private void quanityChanged(TextBox txtBox)
+        {
             string content = txtBox.Text;
             int quanity = 0;
             bool result = Int32.TryParse(content, out quanity);
