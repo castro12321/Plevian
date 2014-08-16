@@ -15,17 +15,17 @@ namespace Plevian
     {
         /// <summary>The main human-player that is playing the game right now</summary>
         public readonly Player player;
-        public readonly Player enemy;
+        public readonly List<Player> players = new List<Player>();
         public readonly GameTime gameTime;
         public readonly Map map;
-        AttackOrder order;
+
         /// <summary>
         /// Initializes brand new game
         /// </summary>
         public Game()
         {
             GameTime.init(0);
-            map = new MapGenerator().Generate(60, 60);
+            map = new MapGenerator().Generate(30, 30);
 
             player = new Player("Magnus", SFML.Graphics.Color.Cyan);
             Tile village1Tile = map.FindEmptyTile();
@@ -40,8 +40,9 @@ namespace Plevian
             player.addVillage(village1);
             player.addVillage(village2);
             player.addVillage(village3);
+            addPlayer(player);
 
-            enemy = new Player("Hitler", SFML.Graphics.Color.Red);
+            Player enemy = new Player("Hitler", SFML.Graphics.Color.Red);
             Tile berlinTile    = map.FindEmptyTile();
             Tile frankfurtTile = map.FindEmptyTile();
             Tile hamburgTile   = map.FindEmptyTile();
@@ -51,14 +52,15 @@ namespace Plevian
             map.place(berlin);
             map.place(frankfurt);
             map.place(hamburger);
-            player.addVillage(berlin);
-            player.addVillage(frankfurt);
-            player.addVillage(hamburger);
+            enemy.addVillage(berlin);
+            enemy.addVillage(frankfurt);
+            enemy.addVillage(hamburger);
+            addPlayer(enemy);
 
             Army army = new Army();
             army += new Knight(100);
 
-            order = new AttackOrder(village1, berlin, 0.1f, army);
+            AttackOrder order = new AttackOrder(village1, berlin, 0.1f, army);
             village1.addUnit(new Knight(1000));
             village1.addOrder(order);
             berlin.addUnit(new Archer(350));
@@ -79,8 +81,15 @@ namespace Plevian
             ulong timediff = GameTime.update();
             while (timediff --> 0)
             {
-                player.Capital.tick();
+                foreach (Player player in players)
+                    foreach (Village village in player.Villages)
+                        village.tick();
             }
+        }
+
+        public void addPlayer(Player player)
+        {
+            players.Add(player);
         }
     }
 }
