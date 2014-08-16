@@ -11,7 +11,7 @@
             <TabItem Name="villageTabItem" Header="Wioska">
                 <!-- Moved to custom control. Created in constructor -->
             </TabItem>
-            <TabItem Name="reportsTabItem" Header="Wiadomości">
+            <TabItem Name="messagesTabItem" Header="Wiadomości">
                 <!-- Moved to custom control. Created in constructor -->
             </TabItem>
         </TabControl>

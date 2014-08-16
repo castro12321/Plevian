@@ -5,6 +5,7 @@ using System;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Plevian.GUI;
+using Plevian.Messages;
 
 namespace Plevian
 {
@@ -19,6 +20,7 @@ namespace Plevian
 
         private MapTab mapTab;
         private VillageTab villageTab;
+        private MessagesTab messagesTab;
 
         private static MainWindow instance;
 
@@ -30,10 +32,16 @@ namespace Plevian
             // Initialize GUI
             InitializeComponent();
 
+            // Initialize map tab
             mapTabItem.Content = (mapTab = new MapTab(game));
+
+            // Initialize village tab
             villageTabItem.Content = (villageTab = new VillageTab(game));
             villageTab.Village = game.player.Capital;
            
+            // Initialize messages tab
+            messagesTabItem.Content = (messagesTab = new MessagesTab(game.player));
+
             // Listen to some events
             Closed += new EventHandler(OnClose);
             PreviewKeyDown += KeyDownHandler;

@@ -86,6 +86,10 @@
     <Compile Include="Maps\MapView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Messages\Message.cs" />
+    <Compile Include="Messages\MessagesTab.xaml.cs">
+      <DependentUpon>MessagesTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Orders\AttackOrder.cs" />
     <Compile Include="Orders\Order.cs" />
     <Compile Include="Orders\OrderType.cs" />
@@ -147,6 +151,10 @@
     <Page Include="Maps\MapTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Messages\MessagesTab.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Villages\VillageTab.xaml">
       <SubType>Designer</SubType>
