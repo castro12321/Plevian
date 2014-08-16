@@ -21,14 +21,6 @@ namespace Tests.Players
         }
 
         [TestMethod]
-        public void PlayerCreating()
-        {
-            player = new Player("Test", Color.Blue);
-            Assert.IsTrue(player.color.ToString() == Color.Blue.ToString());
-            Assert.IsTrue(player.name == "Test");
-        }
-
-        [TestMethod]
         public void AddFevVillages()
         {
             player = new Player("Test", Color.Red);
