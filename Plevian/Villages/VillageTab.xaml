@@ -51,6 +51,12 @@
                             <Button Content="Recruit"   MinWidth="60" Name="RecruitKnight" Click="RecruitKnight_Click"/>
                             <Label  Content="?%"        MinWidth="40" Name="RecruitKnightProgress"/>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label  Content="Settlers: " MinWidth="100"/>
+                            <Label  Content="?"          MinWidth="45" Name="ResourcesSettlers"/>
+                            <Button Content="Recruit"    MinWidth="60" Name="RecruitSettler" Click="RecruitSettler_Click"/>
+                            <Label  Content="?%"         MinWidth="40" Name="RecruitSettlerProgress"/>
+                        </StackPanel>
                     </StackPanel>
                     
                     <!-- Buildings -->

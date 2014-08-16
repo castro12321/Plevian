@@ -104,10 +104,12 @@ namespace Plevian.Villages
             setUnitCount(ResourcesWarriors, UnitType.WARRIOR);
             setUnitCount(ResourcesArchers, UnitType.ARCHER);
             setUnitCount(ResourcesKnights, UnitType.KNIGHT);
+            setUnitCount(ResourcesSettlers, UnitType.SETTLER);
 
             setRecruitProgress(RecruitWarriorProgress, UnitType.WARRIOR);
             setRecruitProgress(RecruitArcherProgress, UnitType.ARCHER);
             setRecruitProgress(RecruitKnightProgress, UnitType.KNIGHT);
+            setRecruitProgress(RecruitSettlerProgress, UnitType.SETTLER);
 
             setBuildingLevel(LevelBarracks, BuildingType.BARRACKS);
             setBuildingLevel(LevelStable  , BuildingType.STABLE);
@@ -123,33 +125,38 @@ namespace Plevian.Villages
 
         private void RecruitWarrior_Click(object sender, RoutedEventArgs e)
         {
-            village.recruit(new Units.Warrior(1));
+            village.recruit(new Warrior(1));
         }
 
         private void RecruitArcher_Click(object sender, RoutedEventArgs e)
         {
-            village.recruit(new Units.Archer(1));
+            village.recruit(new Archer(1));
         }
 
         private void RecruitKnight_Click(object sender, RoutedEventArgs e)
         {
-            village.recruit(new Units.Knight(1));
+            village.recruit(new Knight(1));
+        }
+
+        private void RecruitSettler_Click(object sender, RoutedEventArgs e)
+        {
+            village.recruit(new Settler(1));
         }
 
 
         private void UpgradeBarracks_Click(object sender, RoutedEventArgs e)
         {
-            village.build(Buildings.BuildingType.BARRACKS);
+            village.build(BuildingType.BARRACKS);
         }
 
         private void UpgradeTownHall_Click(object sender, RoutedEventArgs e)
         {
-            village.build(Buildings.BuildingType.TOWN_HALL);
+            village.build(BuildingType.TOWN_HALL);
         }
 
         private void UpgradeStable_Click(object sender, RoutedEventArgs e)
         {
-            village.build(Buildings.BuildingType.STABLE);
+            village.build(BuildingType.STABLE);
         }
     }
 }
