@@ -11,5 +11,6 @@ namespace Plevian.Units
         WARRIOR = 1,
         ARCHER,
         KNIGHT,
+        SETTLER,
     };
 }
