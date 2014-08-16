@@ -61,6 +61,7 @@ namespace Plevian
             order = new AttackOrder(village1, berlin, 0.1f, army);
             village1.addUnit(new Knight(1000));
             village1.addOrder(order);
+            berlin.addUnit(new Archer(350));
         }
 
         /// <summary>

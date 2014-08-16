@@ -36,16 +36,36 @@ namespace Plevian.Battles
             battleResult = result;
         }
 
-        public string toString()
+        public override string ToString()
         {
-            string stringAttacker = "Attacker\n";
+            string _return = "Luck " + (int)(attackerLuck * 100) + "%\n";
+            _return += "Attacker\n";
             foreach(var pair in attackerArmy)
             {
                 UnitType type = pair.Key;
-
-                //int startQuanity = pair.Value.
+                string unitName = Enum.GetName(typeof(UnitType), type);
+                int losses = 0;
+                if(attackerLosses.ContainsKey(type))
+                    losses = attackerLosses[type];
+                int startQuanity = pair.Value;
+                int endQuanity = pair.Value - losses;
+                _return += type + " >> " + startQuanity + " - " + losses + " = " + endQuanity + "\n";
             }
-            return "Not implemented";
+
+            _return += "Defender\n";
+            foreach (var pair in defenderArmy)
+            {
+                UnitType type = pair.Key;
+                string unitName = Enum.GetName(typeof(UnitType), type);
+                int losses = 0;
+                if (defenderLosses.ContainsKey(type))
+                    losses = defenderLosses[type];
+                int startQuanity = pair.Value;
+                int endQuanity = pair.Value - losses;
+                _return += type + " >> " + startQuanity + " - " + losses + " = " + endQuanity;
+            }
+
+            return _return;
         }
 
 

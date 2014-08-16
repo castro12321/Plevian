@@ -33,6 +33,7 @@ namespace Plevian.Orders
                 village.addResources(loot);
                 completed = true;
                 Logger.s("AttackOrder completed!");
+                
             }
             else
             {
@@ -45,7 +46,7 @@ namespace Plevian.Orders
                     Report afterReport = battle.makeBattle();
                     
                     //Todo -> send report to some kind of message system.
-
+                    Logger.s(afterReport.ToString());
                     if (afterReport.battleResult == BattleState.AttackerVictory)
                     {
                         gatherLoot();
