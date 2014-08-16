@@ -24,21 +24,21 @@ namespace Plevian.Maps
     public partial class MapTab : UserControl
     {
         private MapView mapView;
-        private Map map;
+        private Game game;
         private int currentX = 0, currentY = 0;
         private Tile clickedTile = null;
 
-        public MapTab(Map map)
+        public MapTab(Game game)
         {
             InitializeComponent();
-            this.map = map;
+            this.game = game;
         }
         
         public void handleEvents()
         {
             if(mapView == null)
             {
-                mapView = new MapView(map, sfml_map);
+                mapView = new MapView(game.map, sfml_map);
                 sfml_map.Child = mapView;
 
                 mapView.PlevianMouseMovedEvent += mapView_PlevianMouseMovedEvent;
@@ -60,19 +60,21 @@ namespace Plevian.Maps
             currentX = tile.location.x;
             currentY = tile.location.y;
             Logger.s("event click at " + tile.type + " " + tile.location.x + " " + tile.location.y);
+
+            EnterVillageButton.IsEnabled = false;
             if (tile.type == TerrainType.VILLAGE)
             {
                 Village village = tile as Village;
                 owner.Content = village.Owner.name;
-                EnterVillageButton.IsEnabled = true;
-                EnterVillageButton.DataContext = tile;
+                if (village.Owner == game.player)
+                {
+                    EnterVillageButton.IsEnabled = true;
+                    EnterVillageButton.DataContext = tile;
+                }
+
             }
             else
-            {
                 owner.Content = "Nature";
-                EnterVillageButton.IsEnabled = false;
-                EnterVillageButton.DataContext = null;
-            }
 
             type.Content = Enum.GetName(typeof(TerrainType), tile.type);
         }

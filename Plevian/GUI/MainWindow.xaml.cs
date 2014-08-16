@@ -30,7 +30,7 @@ namespace Plevian
             // Initialize GUI
             InitializeComponent();
 
-            mapTabItem.Content = (mapTab = new MapTab(game.map));
+            mapTabItem.Content = (mapTab = new MapTab(game));
             villageTabItem.Content = (villageTab = new VillageTab(game));
             villageTab.Village = game.player.Capital;
            
