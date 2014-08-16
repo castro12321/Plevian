@@ -32,7 +32,7 @@ namespace Plevian
 
             mapTabItem.Content = (mapTab = new MapTab(game.map));
             villageTabItem.Content = (villageTab = new VillageTab(game));
-            villageTab.village = game.village; // TODO: Temporary test village; delete later
+            villageTab.village = game.player.Capital;
            
             // Listen to some events
             Closed += new EventHandler(OnClose);
