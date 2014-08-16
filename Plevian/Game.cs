@@ -5,23 +5,30 @@ using System.Text;
 using System.Threading.Tasks;
 using Plevian.Villages;
 using Plevian.Maps;
+using Plevian.Players;
 
 namespace Plevian
 {
     public class Game
     {
+        /// <summary>The main human-player that is playing the game right now</summary>
+        public readonly Player player;
         public readonly GameTime gameTime;
         public readonly Map map;
 
-        // TODO: delete it. This is test village
-        // Change it to foreach village on map --> village.tick
-        public Village village;
-
+        /// <summary>
+        /// Initializes brand new game
+        /// </summary>
         public Game()
         {
             GameTime.init(0);
             map = new MapGenerator().Generate(60, 60);
-            village = new Village(null);
+            player = new Player("Magnus", SFML.Graphics.Color.Blue);
+
+            Tile capitalTile = map.FindEmptyTile();
+            Village capital = new Village(capitalTile.location);
+            map.place(capital);
+            player.addVillage(capital);
         }
 
         /// <summary>
@@ -39,7 +46,7 @@ namespace Plevian
             ulong timediff = GameTime.update();
             while (timediff --> 0)
             {
-                village.tick();
+                player.Capital.tick();
             }
         }
     }

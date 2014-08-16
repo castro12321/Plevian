@@ -45,5 +45,15 @@ namespace Plevian.Maps
         {
             return fields;
         }
+
+        private static Random random = new Random();
+        public Tile FindEmptyTile()
+        {
+            Location randomLocation = new Location(random.Next(sizeX), random.Next(sizeY));
+            Tile randomTile = typeAt(randomLocation);
+            if (randomTile.type == TerrainType.PLAINS)
+                return randomTile;
+            return FindEmptyTile();
+        }
     }
 }

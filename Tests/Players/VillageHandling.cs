@@ -31,7 +31,6 @@ namespace Tests.Players
         [TestMethod]
         public void AddFevVillages()
         {
-            fakeTime(0);
             player = new Player("Test", Color.Red);
             Village vil1 = new Village(null);
             Village vil2 = new Village(null);
@@ -50,7 +49,7 @@ namespace Tests.Players
             {
                 player.removeVillage(vil1);
             }
-            catch (Exception e)
+            catch  (Exception)
             {
                 working_throw = true;
             }
