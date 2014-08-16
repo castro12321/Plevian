@@ -180,7 +180,5 @@ namespace Plevian.Units
             }
             return str;
         }
-
-        
     }
 }

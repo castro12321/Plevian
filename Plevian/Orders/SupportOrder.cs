@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Orders
 {
+    /*
     class SupportOrder : Order
     {
 
@@ -21,5 +22,5 @@ namespace Plevian.Orders
         {
             throw new NotImplementedException();
         }
-    }
+    }*/
 }

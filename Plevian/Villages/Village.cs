@@ -9,13 +9,14 @@ using Plevian.Debugging;
 using Plevian.Units;
 using Plevian.Maps;
 using Plevian.Players;
+using Plevian.Orders;
 
 namespace Plevian.Villages
 {
     public class Village : Tile
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
-        //private Dictionary<Units.UnitType, int> units = new Dictionary<Units.UnitType, int>();
+        private List<Order> orders = new List<Order>();
         public Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         public List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
@@ -23,6 +24,7 @@ namespace Plevian.Villages
         public Army army { get; private set; }
         public Resources resources { get; private set; }
         private Player owner;
+
 
         public Village(Location location)
             : base(location, TerrainType.VILLAGE)
@@ -59,9 +61,24 @@ namespace Plevian.Villages
         public void tick()
         {
             collectProduction();
+            OrdersTick();
             finishBuilding();
             finishRecruiting();
             Logger.village("village resources " + resources);
+        }
+        private void OrdersTick()
+        {
+            for(int i = 0;i < orders.Count; ++i)
+            {
+                Order order = orders[i];
+                if(order.completed)
+                {
+                    orders.RemoveAt(i);
+                    continue;
+                }
+
+                order.tick();
+            }
         }
 
         private void collectProduction()
@@ -178,6 +195,35 @@ namespace Plevian.Villages
             RecruitQueueItem newQueue = new RecruitQueueItem(unit, recruitTimeEnd.copy());
             recruitTimeEnd += newQueue.duration;
             recruitQueue.Add(newQueue);
+        }
+
+        public void addOrder(Order order)
+        {
+            if (army.canDivide(order.army))
+            {
+                orders.Add(order);
+                army -= order.army;
+            }
+            else
+            {
+                throw new Exception("Army not big enough!");
+            }
+        }
+
+        public void addArmy(Army army)
+        {
+            this.army += army;
+        }
+
+        public void addUnit(Unit unit)
+        {
+            if (army.contain(unit.getUnitType()))
+                army.get(unit.getUnitType()).quanity++;
+            else
+            {
+                army += unit;
+            }
+
         }
 
         public void setOwner(Player player)

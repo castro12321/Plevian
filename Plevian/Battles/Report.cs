@@ -38,6 +38,13 @@ namespace Plevian.Battles
 
         public string toString()
         {
+            string stringAttacker = "Attacker\n";
+            foreach(var pair in attackerArmy)
+            {
+                UnitType type = pair.Key;
+
+                //int startQuanity = pair.Value.
+            }
             return "Not implemented";
         }
 

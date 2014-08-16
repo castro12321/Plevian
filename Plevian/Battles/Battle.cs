@@ -23,7 +23,14 @@ namespace Plevian.Battles
         float infP, archP, cavP;
 
         BattleState battleState = BattleState.Draw;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="defender"></param>
+        /// <param name="luck">1f - normal luck, 0f- Attacker can't attack</param>
+        /// <param name="percentageDefense">1f - normal defense, 0f- defender can't defend</param>
+        /// <param name="baseDefense">0f - min Value</param>
         public Battle(Army attacker, Army defender, float luck, float percentageDefense, int baseDefense)
         {
             this.attacker = attacker;

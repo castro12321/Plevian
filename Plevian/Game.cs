@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Plevian.Villages;
 using Plevian.Maps;
 using Plevian.Players;
+using Plevian.Units;
+using Plevian.Orders;
 
 namespace Plevian
 {
@@ -13,9 +15,10 @@ namespace Plevian
     {
         /// <summary>The main human-player that is playing the game right now</summary>
         public readonly Player player;
+        public readonly Player enemy;
         public readonly GameTime gameTime;
         public readonly Map map;
-
+        AttackOrder order;
         /// <summary>
         /// Initializes brand new game
         /// </summary>
@@ -23,12 +26,26 @@ namespace Plevian
         {
             GameTime.init(0);
             map = new MapGenerator().Generate(60, 60);
-            player = new Player("Magnus", SFML.Graphics.Color.Blue);
+            player = new Player("Magnus", SFML.Graphics.Color.Cyan);
 
             Tile capitalTile = map.FindEmptyTile();
             Village capital = new Village(capitalTile.location);
             map.place(capital);
             player.addVillage(capital);
+
+            enemy = new Player("Hitler", SFML.Graphics.Color.Red);
+            Village berlin = new Village(new Location(50, 50));
+            map.place(berlin);
+            player.addVillage(berlin);
+
+            Army army = new Army();
+            army += new Knight(100);
+
+            order = new AttackOrder(capital, berlin, 0.1f, army);
+            capital.addUnit(new Knight(1000));
+            capital.addOrder(order);
+
+            
         }
 
         /// <summary>
