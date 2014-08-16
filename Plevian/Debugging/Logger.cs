@@ -36,5 +36,18 @@ namespace Plevian.Debugging
             if (logGraphics)
                 Console.WriteLine(msg);
         }
+
+        /// <summary>
+        /// Always output a debug message
+        /// </summary>
+        public static void log(string msg)
+        {
+            Console.WriteLine(msg);
+        }
+
+        public static void turnOff()
+        {
+            cas = shot = logVillage = logGraphics = false;
+        }
     }
 }
