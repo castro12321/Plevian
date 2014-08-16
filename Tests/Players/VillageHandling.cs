@@ -32,8 +32,8 @@ namespace Tests.Players
         public void AddFevVillages()
         {
             player = new Player("Test", Color.Red);
-            Village vil1 = new Village(null);
-            Village vil2 = new Village(null);
+            vil1 = new Village(null);
+            vil2 = new Village(null);
             player.addVillage(vil1);
             player.addVillage(vil2);
         }
