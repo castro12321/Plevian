@@ -1,7 +1,10 @@
 ﻿using Plevian.Debugging;
 using Plevian.Players;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace Plevian.Messages
@@ -11,8 +14,39 @@ namespace Plevian.Messages
         public MessagesTab(Player recipient)
         {
             InitializeComponent();
+
+            addColumn("Sender");
+            addColumn("Topic");
+            addColumn("Date");
+
+            FrameworkElementFactory factory = new FrameworkElementFactory(typeof(Button));
+            factory.SetValue(Button.ContentProperty, "Delete");
+            factory.AddHandler(Button.ClickEvent, new RoutedEventHandler(ButtonDelete_Click));
+            addColumn("Button", factory);
+
+            //messages.AutoGenerateColumns = false;
+            //messages.IsReadOnly = true;
             messages.ItemsSource = recipient.messages;
-            messages.IsReadOnly = true;
+        }
+
+        private void addColumn(String name)
+        {
+            addColumn(name, new FrameworkElementFactory(typeof(DataGridElement)));
+        }
+
+        private void addColumn(String name, FrameworkElementFactory factory)
+        {
+            DataGridTemplateColumn dgtColumn = new DataGridTemplateColumn();
+            dgtColumn.Header = name;
+
+            DataTemplate dTemplate = new DataTemplate();
+            FrameworkElementFactory element = factory;
+            element.SetBinding(DataGridElement.DataContextProperty, new Binding(name));
+
+            dTemplate.VisualTree = element;
+            dgtColumn.CellTemplate = dTemplate;
+
+            messages.Columns.Add(dgtColumn);
         }
 
         private void messages_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -25,6 +59,12 @@ namespace Plevian.Messages
             window.Show();
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
             MainWindow.getInstance().IsEnabled = false;
+        }
+
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Button clicked = sender as Button;
+            Logger.log("clicked " + clicked + "; on " + clicked.DataContext);
         }
     }
 

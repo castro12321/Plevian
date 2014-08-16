@@ -10,17 +10,23 @@ namespace Plevian.Messages
 {
     public class Message
     {
-        public String Sender {get; set;}
-        public String Topic { get; set; }
+        public Label Sender {get; set;}
+        public Label Topic { get; set; }
         public readonly String message;
-        public DateTime Date { get; set; }
+        public Label Date { get; set; }
 
         public Message(String sender, String topic, String message, DateTime date)
         {
-            this.Sender = sender;
-            this.Topic = topic;
+            this.Sender = new Label();
+            this.Sender.Content = sender;
+
+            this.Topic = new Label();
+            this.Topic.Content = topic;
+
             this.message = message;
-            this.Date = date;
+
+            this.Date = new Label();
+            this.Date.Content = date;
         }
     }
 }
