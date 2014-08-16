@@ -8,6 +8,7 @@ using Plevian.Resource;
 using Plevian.Debugging;
 using Plevian.Units;
 using Plevian.Maps;
+using Plevian.Players;
 
 namespace Plevian.Villages
 {
@@ -21,6 +22,7 @@ namespace Plevian.Villages
         public GameTime buildTimeEnd { get; private set; }
         public Army army { get; private set; }
         public Resources resources { get; private set; }
+        private Player owner;
 
         public Village(Location location)
             : base(location, TerrainType.VILLAGE)
@@ -163,9 +165,6 @@ namespace Plevian.Villages
         /// <summary>
         /// Recruit units in city
         /// </summary>
-        /// <param name="unitType">unit to recruit</param>
-        /// <param name="quanity">Quanity of units to recruit</param>
-        /// <param name="recruitTime">Recruit time for invidual unit</param>
         public void recruit(Unit unit)
         {
             Resources neededResources = unit.getWholeUnitCost();
@@ -177,6 +176,17 @@ namespace Plevian.Villages
             RecruitQueueItem newQueue = new RecruitQueueItem(unit, recruitTimeEnd.copy());
             recruitTimeEnd += newQueue.duration;
             recruitQueue.Add(newQueue);
+        }
+
+        public void setOwner(Player player)
+        {
+            owner = player;
+            //Todo: Do something?
+        }
+
+        public Player getOwner(Player player)
+        {
+            return owner;
         }
     }
 }
