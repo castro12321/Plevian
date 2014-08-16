@@ -31,7 +31,7 @@ namespace Tests.Unit
             GameTime now = GameTime.now;
 
             Seconds wait = testVillage.recruitTimeEnd - now;
-            wait.seconds++;
+            wait.seconds+= 2;
             int seconds = wait.seconds;
             while (wait.seconds > 0)
             {
