@@ -22,20 +22,22 @@ namespace Plevian.GUI
     public partial class VillageRecord : UserControl
     {
         public delegate void RecordClickedHandler(VillageRecord record);
-        public RecordClickedHandler onRecordClick; 
+        public RecordClickedHandler onRecordClick;
+        public Village village;
 
-        public VillageRecord(string villageName, Village village)
+        public VillageRecord(Village village)
         {
             InitializeComponent();
-            this.VillageName.Content = villageName;
-            this.VillageName.DataContext = village;
+            this.VillageName.Content = village.name;
+            this.village = village;
         }
 
         private void onMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.MouseDevice.LeftButton == MouseButtonState.Pressed)
             {
-                onRecordClick(this);
+                if(onRecordClick != null)
+                    onRecordClick(this);
             }
         }
 

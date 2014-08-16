@@ -1,5 +1,6 @@
 ﻿using Plevian.Players;
 using Plevian.Units;
+using Plevian.Villages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,29 +23,29 @@ namespace Plevian.GUI
     public partial class AttackWindow : Window
     {
         VillageRecord selectedRecord = null;
-        public AttackWindow()
+        Player player;
+        public AttackWindow(Player player)
         {
+            this.player = player;
+
             InitializeComponent();
             fillAttackWindow();
         }
 
         private void fillAttackWindow()
         {
-            Player player;
-            fillVillages();
-            fillUnits();
+            fillVillages(player);
             
         }
 
-        private void fillVillages()
+        private void fillVillages(Player player)
         {
-            for (int i = 0; i < 50; ++i)
+            foreach(Village village in player.Villages)
             {
-                VillageRecord record = new VillageRecord(i.ToString(), null);
-                record.onRecordClick += new VillageRecord.RecordClickedHandler(onRecordClick);
-
+                VillageRecord record = new VillageRecord(village);
                 VillagePanel.Children.Add(record);
 
+                record.onRecordClick += new VillageRecord.RecordClickedHandler(onRecordClick);
             }
         }
 
@@ -54,12 +55,17 @@ namespace Plevian.GUI
                 selectedRecord.unSelect();
             selectedRecord = record;
             selectedRecord.select();
+
+            Village village = selectedRecord.village;
+            fillUnits(village);
         }
 
-        private void fillUnits()
+        private void fillUnits(Village village)
         {
-            foreach (UnitType unitType in (UnitType[])Enum.GetValues(typeof(UnitType)))
+            UnitPanel.Children.Clear();
+            foreach (var pair in village.army.getUnits())
             {
+                UnitType unitType = pair.Key;
                 UnitSelector selector = new UnitSelector(Enum.GetName(typeof(UnitType), unitType), 100, unitType);
                 UnitPanel.Children.Add(selector);
             }

@@ -68,7 +68,7 @@ namespace Plevian.Maps
             {
                 Village village = tile as Village;
                 owner.Content = village.Owner.name;
-                if (village.Owner == game.player)
+                if (village.Owner == Game.player)
                 {
                     EnterVillageButton.IsEnabled = true;
                     EnterVillageButton.DataContext = tile;
@@ -104,7 +104,7 @@ namespace Plevian.Maps
 
         private void attackVillageClick(object sender, RoutedEventArgs e)
         {
-            AttackWindow window = new AttackWindow();
+            AttackWindow window = new AttackWindow(Game.player);
             window.Show();
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
             MainWindow.getInstance().IsEnabled = false;
