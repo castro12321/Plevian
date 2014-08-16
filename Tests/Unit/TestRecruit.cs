@@ -30,8 +30,8 @@ namespace Tests.Unit
 
 
             Archer archer = new Archer(ARCH_QUANITY);
-            Game game = new Game(); 
-            Village testVillage = new Village(null, new Player("", Color.Blue));
+            Game game = new Game();
+            Village testVillage = new Village(null, new Player("", Color.Blue), "test");
             testVillage.addResources(new Resources(1000000, 1000000, 1000000, 1000000));
             testVillage.recruit(archer);
             testVillage.recruit(new Knight(KNIG_QUANITY));

@@ -37,7 +37,7 @@ namespace Plevian
 
             // Initialize village tab
             villageTabItem.Content = (villageTab = new VillageTab(game));
-            villageTab.Village = game.player.Capital;
+            villageTab.Village = Game.player.Capital;
            
             // Initialize messages tab
             messagesTabItem.Content = (messagesTab = new MessagesTab(game.player));

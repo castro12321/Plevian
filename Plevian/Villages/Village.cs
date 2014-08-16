@@ -23,7 +23,9 @@ namespace Plevian.Villages
         public GameTime buildTimeEnd { get; private set; }
         public Army army { get; private set; }
         public Resources resources { get; private set; }
+        public string name { get; private set; }
         private Player owner;
+
         public Player Owner
         {
             get
@@ -39,13 +41,14 @@ namespace Plevian.Villages
         }
 
 
-        public Village(Location location, Player owner)
+        public Village(Location location, Player owner, string name )
             : base(location, TerrainType.VILLAGE)
         {
             Owner = owner;
             resources = new Resources(999, 999, 999, 999);
             recruitTimeEnd = GameTime.now;
             buildTimeEnd = GameTime.now;
+            this.name = name;
             army = new Army();
         }
 
