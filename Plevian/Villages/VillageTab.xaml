@@ -16,6 +16,11 @@
                             <Label Name="coords"/>
                         </StackPanel>
 
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Village Name:"/>
+                            <Label Name="VillageName"/>
+                        </StackPanel>
+                        
                         <Label Content="Income:" FontWeight="ExtraBold"/>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Food: " MinWidth="100"/>

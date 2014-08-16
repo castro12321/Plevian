@@ -38,6 +38,7 @@ namespace Plevian.Villages
             {
                 activeVillage = value;
                 villageView.village = value;
+                VillageName.Content = value.name;
             }
         }
 

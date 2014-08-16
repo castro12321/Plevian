@@ -68,6 +68,7 @@ namespace Plevian.Maps
             {
                 Village village = tile as Village;
                 owner.Content = village.Owner.name;
+                villageName.Content = village.name;
                 if (village.Owner == Game.player)
                 {
                     EnterVillageButton.IsEnabled = true;
