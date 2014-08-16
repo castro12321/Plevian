@@ -18,7 +18,7 @@ namespace Plevian
         public readonly List<Player> players = new List<Player>();
         public readonly GameTime gameTime;
         public readonly Map map;
-        AttackOrder order;
+
         /// <summary>
         /// Initializes brand new game
         /// </summary>
@@ -60,7 +60,7 @@ namespace Plevian
             Army army = new Army();
             army += new Knight(100);
 
-            order = new AttackOrder(village1, berlin, 0.1f, army);
+            AttackOrder order = new AttackOrder(village1, berlin, 0.1f, army);
             village1.addUnit(new Knight(1000));
             village1.addOrder(order);
         }
