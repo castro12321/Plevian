@@ -27,7 +27,7 @@ namespace Tests.Unit
             // assert
             for (int x = 0; x < mapSizeX; ++x)
                 for (int y = 0; y < mapSizeY; ++y)
-                    Assert.AreEqual(expectedTerrain, map.typeAt(new Location(x, y)).type);
+                    Assert.AreEqual(expectedTerrain, map.tileAt(new Location(x, y)).type);
         }
 
         [TestMethod]
@@ -45,13 +45,13 @@ namespace Tests.Unit
             map.place(new Tile(new Location(1, 3), TerrainType.MOUNTAINS));
 
             // assert
-            Assert.AreEqual(TerrainType.LAKES, map.typeAt(new Location(0, 0)).type);
-            Assert.AreEqual(TerrainType.LAKES, map.typeAt(new Location(2, 1)).type);
-            Assert.AreEqual(TerrainType.LAKES, map.typeAt(new Location(3, 3)).type);
-            Assert.AreEqual(TerrainType.PLAINS, map.typeAt(new Location(1, 0)).type);
-            Assert.AreEqual(TerrainType.MOUNTAINS, map.typeAt(new Location(1, 1)).type);
-            Assert.AreEqual(TerrainType.VILLAGE, map.typeAt(new Location(1, 2)).type);
-            Assert.AreEqual(TerrainType.MOUNTAINS, map.typeAt(new Location(1, 3)).type);
+            Assert.AreEqual(TerrainType.LAKES, map.tileAt(new Location(0, 0)).type);
+            Assert.AreEqual(TerrainType.LAKES, map.tileAt(new Location(2, 1)).type);
+            Assert.AreEqual(TerrainType.LAKES, map.tileAt(new Location(3, 3)).type);
+            Assert.AreEqual(TerrainType.PLAINS, map.tileAt(new Location(1, 0)).type);
+            Assert.AreEqual(TerrainType.MOUNTAINS, map.tileAt(new Location(1, 1)).type);
+            Assert.AreEqual(TerrainType.VILLAGE, map.tileAt(new Location(1, 2)).type);
+            Assert.AreEqual(TerrainType.MOUNTAINS, map.tileAt(new Location(1, 3)).type);
         }
     }
 }

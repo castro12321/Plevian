@@ -106,6 +106,7 @@ namespace Plevian.Maps
         {
             AttackWindow window = new AttackWindow();
             window.Show();
+            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
             MainWindow.getInstance().IsEnabled = false;
         }
     }
