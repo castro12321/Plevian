@@ -31,7 +31,7 @@ namespace Plevian.Players
         public void removeVillage(Village village)
         {
             if (!villages.Contains(village))
-                throw new Exception("Removing not existing village");
+               throw new Exception("Removing not existing village");
 
             villages.Remove(village);
         }

@@ -36,6 +36,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="sfmlnet-audio-2, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Plevian\dependencies\SFML\lib\x32\sfmlnet-audio-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-graphics-2, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Plevian\dependencies\SFML\lib\x32\sfmlnet-graphics-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-window-2, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Plevian\dependencies\SFML\lib\x32\sfmlnet-window-2.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -55,6 +67,8 @@
     <Compile Include="FakeGameTime.cs" />
     <Compile Include="Integration\TestSavingGame.cs" />
     <Compile Include="Integration\TestLoadingGame.cs" />
+    <Compile Include="Players\PlayerTests.cs" />
+    <Compile Include="Players\VillageHandling.cs" />
     <Compile Include="Unit\TestRecruit.cs" />
     <Compile Include="Unit\TestResources.cs" />
     <Compile Include="Unit\TestTime.cs" />
@@ -68,7 +82,9 @@
       <Name>Plevian</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
