@@ -10,6 +10,7 @@ namespace Plevian.Units
     {
         INFANTRY = 1,
         ARCHER,
-        CAVALRY
+        CAVALRY,
+        SUPPORT
     }
 }
