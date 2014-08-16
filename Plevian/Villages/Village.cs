@@ -171,6 +171,8 @@ namespace Plevian.Villages
             Resources neededResources = unit.getWholeUnitCost();
             if (!resources.canAfford(neededResources))
                 throw new Exception("Not enough resources");
+            if (unit.quanity == 0)
+                return;
             if (recruitQueue.Count == 0)
                 recruitTimeEnd = GameTime.now;
             resources -= unit.getWholeUnitCost();

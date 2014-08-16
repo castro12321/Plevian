@@ -22,9 +22,9 @@ namespace Tests.Unit
 
             
 
-            const int ARCH_QUANITY = 25;
-            const int KNIG_QUANITY = 100;
-            const int WARR_QUANITY = 50;
+            const int ARCH_QUANITY = 500;
+            const int KNIG_QUANITY = 500;
+            const int WARR_QUANITY = 500;
 
 
             Archer archer = new Archer(ARCH_QUANITY);
@@ -37,7 +37,7 @@ namespace Tests.Unit
             GameTime now = GameTime.now;
 
             Seconds wait = testVillage.recruitTimeEnd - now;
-            wait.seconds += 1;
+            wait.seconds += 2;
             int seconds = wait.seconds;
             while (wait.seconds > 0)
             {
@@ -53,9 +53,12 @@ namespace Tests.Unit
             GameTime.update();
             int czas = getFakeTime();
             Logger.s("Fake time = " + czas);
-            Assert.IsTrue(testVillage.army.get(UnitType.ARCHER).quanity == ARCH_QUANITY);
-            Assert.IsTrue(testVillage.army.get(UnitType.KNIGHT).quanity == KNIG_QUANITY);
-            Assert.IsTrue(testVillage.army.get(UnitType.WARRIOR).quanity == WARR_QUANITY);
+            if(ARCH_QUANITY > 0)
+                 Assert.IsTrue(testVillage.army.get(UnitType.ARCHER).quanity == ARCH_QUANITY);
+            if(KNIG_QUANITY > 0)
+                 Assert.IsTrue(testVillage.army.get(UnitType.KNIGHT).quanity == KNIG_QUANITY);
+            if(WARR_QUANITY > 0)
+                Assert.IsTrue(testVillage.army.get(UnitType.WARRIOR).quanity == WARR_QUANITY);
         }
     }
 }
