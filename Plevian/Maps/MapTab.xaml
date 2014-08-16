@@ -17,9 +17,9 @@
                 <Label Name="owner"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Name="VillageNameStackPanel" Orientation="Horizontal">
                 <Label Content="VilageName:"/>
-                <Label Name="villageName" Content="TBD"/>
+                <Label Name="VillageName" Content="TBD"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">

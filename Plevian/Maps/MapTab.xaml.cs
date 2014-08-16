@@ -61,14 +61,17 @@ namespace Plevian.Maps
             currentX = tile.location.x;
             currentY = tile.location.y;
             Logger.s("event click at " + tile.type + " " + tile.location.x + " " + tile.location.y);
+            VillageName.Content = "";
 
             EnterVillageButton.IsEnabled = false;
             AttackVillageButton.IsEnabled = false;
+            
             if (tile.type == TerrainType.VILLAGE)
             {
                 Village village = tile as Village;
                 owner.Content = village.Owner.name;
-                villageName.Content = village.name;
+                VillageName.Content = village.name;
+                VillageNameStackPanel.Visibility = System.Windows.Visibility.Visible;
                 if (village.Owner == Game.player)
                 {
                     EnterVillageButton.IsEnabled = true;
@@ -81,7 +84,10 @@ namespace Plevian.Maps
 
             }
             else
+            { 
                 owner.Content = "Nature";
+                VillageNameStackPanel.Visibility = System.Windows.Visibility.Collapsed;
+            }
 
             type.Content = Enum.GetName(typeof(TerrainType), tile.type);
         }
