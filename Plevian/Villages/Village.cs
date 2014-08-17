@@ -243,5 +243,14 @@ namespace Plevian.Villages
             }
 
         }
+
+        public void turnBackAllOrders()
+        {
+            foreach(Order order in orders)
+            {
+                if (order.isGoingBack == false)
+                    order.turnBack();
+            }
+        }
     }
 }

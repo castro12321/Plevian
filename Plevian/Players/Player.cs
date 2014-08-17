@@ -41,6 +41,15 @@ namespace Plevian.Players
             SendMessage(new Message("Hitler", "Message to you", "I'll kill you", DateTime.Now));
         }
 
+        public void CaptureVillage(Village village)
+        {
+            if(village.Owner != null)
+                village.Owner.removeVillage(village);
+            village.Owner = this;
+            village.turnBackAllOrders();
+            addVillage(village);
+        }
+
         public void addVillage(Village village)
         {
             villages.Add(village);

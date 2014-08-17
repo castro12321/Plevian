@@ -63,6 +63,13 @@ namespace Plevian
             village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
             village3.recruit(new Warrior(1000));
             berlin.addUnit(new Knight(100));
+
+
+            village1.addUnit(new Knight(9999999));
+            Army uber = new Army();
+            uber += new Knight(10000);
+            CaptureOrder order = new CaptureOrder(village1, berlin, uber);
+            village1.addOrder(order);
         }
 
         /// <summary>

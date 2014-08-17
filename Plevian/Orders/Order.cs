@@ -16,6 +16,7 @@ namespace Plevian.Orders
         /// </summary>
         public bool completed { get; protected set; }
         public bool isGoingBack { get; protected set; }
+        public OrderType type { get; protected set; }
 
         protected Tile origin;
         protected Tile destination;
@@ -26,7 +27,7 @@ namespace Plevian.Orders
         protected float timePerTile;
 
 
-        public Order(Tile origin, Tile destination, Army army)
+        public Order(Tile origin, Tile destination, Army army, OrderType type)
         {
             this.origin = origin;
             this.destination = destination;
@@ -34,6 +35,7 @@ namespace Plevian.Orders
             this.timePerTile = army.getMovementSpeed() / 10;
             this.completed = false;
             this.isGoingBack = false;
+            this.type = type;
 
             float distance = origin.location.distance(destination.location);
             duration = new Seconds((int)(timePerTile * distance));
