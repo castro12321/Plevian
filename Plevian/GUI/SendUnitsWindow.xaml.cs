@@ -139,7 +139,7 @@ namespace Plevian.GUI
                     army += UnitFactory.createUnit(type, quanity);
                 }
                 Tile origin = selectedVillage;
-                AttackOrder order = new AttackOrder(origin, tileToAttack, 0.1f, army);
+                AttackOrder order = new AttackOrder(origin, tileToAttack, army);
                 selectedVillage.addOrder(order);
                 this.Close();
             }

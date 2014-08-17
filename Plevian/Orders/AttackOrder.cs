@@ -17,8 +17,8 @@ namespace Plevian.Orders
     {
         Resources loot = new Resources();
 
-        public AttackOrder(Tile origin, Tile destination, float timePerTile, Army army)
-            : base(origin, destination, army)
+        public AttackOrder(Tile origin, Tile destination, Army army)
+            : base(origin, destination, army, OrderType.ATTACK)
         {
 
         }
@@ -38,28 +38,67 @@ namespace Plevian.Orders
             }
             else
             {
-                if (destination is Village)
+                if (destination is Village && origin is Village)
                 {
                     Village village = destination as Village;
-                    Army defendingArmy = village.army;
-
-                    Battle battle = new Battle(army, defendingArmy, getLuck(), getDefense(), getBaseDefense());
-                    Report afterReport = battle.makeBattle();
+                    Village attVillage = origin as Village;
+                    if(village.Owner == attVillage.Owner)
+                    {
+                        if(onFriendlyVillageContact())
+                        {
+                            turnBack();
+                            return;
+                        }
+                    }
+                    Report afterReport = makeBattle();
 
                     if (afterReport.battleResult == BattleState.AttackerVictory)
                     {
-                        gatherLoot(village);
-                        afterReport.loot = loot;
-                        turnBack();
+                        onFightWin(afterReport);
+                        
                     } else
                     {
-                        completed = true;
+                        onFightLose(afterReport);
                     }
 
                     Game.player.SendMessage(new Message("Battle report : " + village.name, "Report", afterReport.ToString(), DateTime.Now));
-                    
+                }
+                else
+                {
+                    throw new Exception("Destination != Village OR origin != Village in attackOrder");
                 }
             }
+        }
+
+        protected virtual Report makeBattle()
+        {
+            Village village = destination as Village;
+            Army defendingArmy = village.army;
+
+            Battle battle = new Battle(army, defendingArmy, getLuck(), getDefense(), getBaseDefense());
+            return battle.makeBattle();
+        }
+
+        protected virtual void onFightWin(Report report)
+        {
+            
+            gatherLoot(destination as Village);
+            report.loot = loot;
+            turnBack();
+        }
+
+        protected virtual void onFightLose(Report report)
+        {
+            completed = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Return true if you want to turn back your army on friendly village encounter</returns>
+        protected virtual bool onFriendlyVillageContact()
+        {
+            return true;
         }
 
         private int getBaseDefense()

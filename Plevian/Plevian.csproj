@@ -104,6 +104,7 @@
       <DependentUpon>MessagesTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Orders\AttackOrder.cs" />
+    <Compile Include="Orders\CaptureOrder.cs" />
     <Compile Include="Orders\Order.cs" />
     <Compile Include="Orders\OrderType.cs" />
     <Compile Include="Orders\SupportOrder.cs" />

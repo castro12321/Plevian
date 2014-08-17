@@ -63,6 +63,7 @@ namespace Plevian
             village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
             village3.recruit(new Warrior(1000));
             berlin.addUnit(new Knight(100));
+
         }
 
         /// <summary>
@@ -81,8 +82,8 @@ namespace Plevian
             while (timediff --> 0)
             {
                 foreach (Player player in players)
-                    foreach (Village village in player.Villages)
-                        village.tick();
+                    for (int i = 0; i < player.Villages.Count; ++i )
+                        player.Villages.ElementAt(i).tick();
             }
         }
 
