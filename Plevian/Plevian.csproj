@@ -108,6 +108,7 @@
     <Compile Include="Orders\OrderType.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
     <Compile Include="Players\Player.cs" />
+    <Compile Include="Units\Duke.cs" />
     <Compile Include="Units\Settler.cs" />
     <Compile Include="Units\UnitFactory.cs" />
     <Compile Include="Util\Utils.cs" />
