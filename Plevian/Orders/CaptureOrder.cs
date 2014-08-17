@@ -15,17 +15,27 @@ namespace Plevian.Orders
         public CaptureOrder(Tile origin, Tile destination, Army army)
             : base(origin, destination, army)
         {
+            if (!army.contain(UnitType.DUKE))
+                throw new Exception("CaptureOrder without duke!");
             this.type = OrderType.CAPTURE;
         }
 
         protected override void onFightWin(Battles.Report report)
         {
-            Village village = destination as Village;
-            Village attVillage = destination as Village;
-            Player attacker = attVillage.Owner;
-            attacker.CaptureVillage(village);
-            completed = true;
-            village.addArmy(army);
+            if (army.contain(UnitType.DUKE))
+            {
+                Village village = destination as Village;
+                Village attVillage = origin as Village;
+                Player attacker = attVillage.Owner;
+                attacker.CaptureVillage(village);
+                completed = true;
+                village.addArmy(army);
+                report.villageCaptured = true;
+            }
+            else
+            {
+                base.onFightWin(report);
+            }
         }
     }
 }

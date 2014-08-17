@@ -16,6 +16,7 @@ namespace Plevian.Battles
         public readonly float defenderPercentageDefense;
         public readonly BattleState battleResult;
         public Resources loot;
+        public bool villageCaptured = false;
         /// <summary>
         /// 
         /// </summary>
@@ -67,10 +68,15 @@ namespace Plevian.Battles
                 _return += type + " >> " + startQuanity + " - " + losses + " = " + endQuanity + "\n";
             }
 
-            if(!loot.Equals(null))
+            if( !Object.ReferenceEquals(loot,null) && villageCaptured == false)
             {
                 _return += "\nLoot : \n";
                 _return += loot.ToString();
+            }
+
+            if(villageCaptured)
+            {
+                _return += "\nVillage has been captured\n";
             }
 
             return _return;
