@@ -25,6 +25,7 @@ namespace Plevian.Messages
         {
             InitializeComponent();
             messageBlock.Text = message.message;
+            this.Title = message.Topic.Content.ToString();
         }
 
         
