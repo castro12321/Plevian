@@ -109,7 +109,7 @@ namespace Plevian.Maps
             }
         }
 
-        private void attackVillageClick(object sender, RoutedEventArgs e)
+        private void OnSendUnitsClick(object sender, RoutedEventArgs e)
         {
             AttackWindow window = new AttackWindow(Game.player, clickedTile);
             window.Show();
