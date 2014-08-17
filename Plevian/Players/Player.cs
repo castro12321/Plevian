@@ -37,7 +37,7 @@ namespace Plevian.Players
             this.color = color;
 
             SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
-            SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14")));
+            SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
             SendMessage(new Message("Hitler", "Message to you", "I'll kill you", DateTime.Now));
         }
 
