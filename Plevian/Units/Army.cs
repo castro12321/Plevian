@@ -186,7 +186,7 @@ namespace Plevian.Units
             int capacity = 0;
             foreach(var pair in units)
             {
-                capacity += pair.Value.getLootCapacity();
+                capacity += pair.Value.getLootCapacity() * pair.Value.quanity;
             }
             return capacity;
         }

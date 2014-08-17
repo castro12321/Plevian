@@ -50,8 +50,7 @@ namespace Plevian.Orders
                     if (afterReport.battleResult == BattleState.AttackerVictory)
                     {
                         gatherLoot(village);
-                        Logger.s("Loot  : ");
-                        Logger.s(loot.ToString());
+                        afterReport.loot = loot;
                         turnBack();
                     } else
                     {

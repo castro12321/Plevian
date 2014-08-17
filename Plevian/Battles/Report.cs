@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plevian.Units;
+using Plevian.Resource;
 
 namespace Plevian.Battles
 {
@@ -14,6 +15,7 @@ namespace Plevian.Battles
         public readonly float attackerLuck;
         public readonly float defenderPercentageDefense;
         public readonly BattleState battleResult;
+        public Resources loot;
         /// <summary>
         /// 
         /// </summary>
@@ -39,7 +41,7 @@ namespace Plevian.Battles
         public override string ToString()
         {
             string _return = "Luck " + (int)(attackerLuck * 100) + "%\n";
-            _return += "Attacker\n";
+            _return += "\nAttacker\n";
             foreach(var pair in attackerArmy)
             {
                 UnitType type = pair.Key;
@@ -52,7 +54,7 @@ namespace Plevian.Battles
                 _return += type + " >> " + startQuanity + " - " + losses + " = " + endQuanity + "\n";
             }
 
-            _return += "Defender\n";
+            _return += "\nDefender\n";
             foreach (var pair in defenderArmy)
             {
                 UnitType type = pair.Key;
@@ -63,6 +65,12 @@ namespace Plevian.Battles
                 int startQuanity = pair.Value;
                 int endQuanity = pair.Value - losses;
                 _return += type + " >> " + startQuanity + " - " + losses + " = " + endQuanity + "\n";
+            }
+
+            if(!loot.Equals(null))
+            {
+                _return += "\nLoot : \n";
+                _return += loot.ToString();
             }
 
             return _return;
