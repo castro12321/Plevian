@@ -64,7 +64,7 @@ namespace Plevian.Maps
             VillageName.Content = "";
 
             EnterVillageButton.IsEnabled = false;
-            AttackVillageButton.IsEnabled = false;
+            SendUnitsButton.IsEnabled = false;
             
             if (tile.type == TerrainType.VILLAGE)
             {
@@ -78,8 +78,8 @@ namespace Plevian.Maps
                     EnterVillageButton.DataContext = tile;
                 } else
                 {
-                    AttackVillageButton.IsEnabled = true;
-                    AttackVillageButton.DataContext = tile;
+                    SendUnitsButton.IsEnabled = true;
+                    SendUnitsButton.DataContext = tile;
                 }
 
             }
@@ -111,7 +111,7 @@ namespace Plevian.Maps
 
         private void OnSendUnitsClick(object sender, RoutedEventArgs e)
         {
-            AttackWindow window = new AttackWindow(Game.player, clickedTile);
+            SendUnitsWindow window = new SendUnitsWindow(Game.player, clickedTile);
             window.Show();
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
             MainWindow.getInstance().IsEnabled = false;
