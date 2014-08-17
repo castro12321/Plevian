@@ -3,9 +3,7 @@ using Plevian.Villages;
 using SFML.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Plevian.Players
 {
@@ -15,7 +13,7 @@ namespace Plevian.Players
         public readonly Color color;
 
         private List<Village> villages = new List<Village>();
-        public List<Message> messages = new List<Message>();
+        public ObservableCollection<Message> messages = new ObservableCollection<Message>();
 
         public Village Capital
         {
@@ -59,6 +57,11 @@ namespace Plevian.Players
         public void SendMessage(Message message)
         {
             messages.Add(message);
+        }
+
+        public void DeleteMessage(Message message)
+        {
+            messages.Remove(message);
         }
     }
 }
