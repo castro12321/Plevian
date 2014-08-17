@@ -43,10 +43,9 @@ namespace Plevian.Orders
                     Village village = destination as Village;
                     Army defendingArmy = village.army;
 
-                    Battle battle = new Battle(army, defendingArmy, 1f, 1f, 0);
+                    Battle battle = new Battle(army, defendingArmy, getLuck(), getDefense(), getBaseDefense());
                     Report afterReport = battle.makeBattle();
-                    
-                    //Todo -> send report to some kind of message system.
+
                     if (afterReport.battleResult == BattleState.AttackerVictory)
                     {
                         gatherLoot(village);
@@ -61,6 +60,21 @@ namespace Plevian.Orders
                     
                 }
             }
+        }
+
+        private int getBaseDefense()
+        {
+            return 0;
+        }
+
+        private float getDefense()
+        {
+            return 1f;
+        }
+
+        private float getLuck()
+        {
+            return 1f;
         }
 
         private void gatherLoot(Village village)
@@ -78,10 +92,10 @@ namespace Plevian.Orders
             if (ironP > biggest) biggest = ironP;
             if (foodP > biggest) biggest = foodP;
 
-            int wood = (int)(villageResources.wood * woodP);
-            int stone = (int)(villageResources.stone * woodP);
-            int iron = (int)(villageResources.iron * woodP);
-            int food = (int)(villageResources.food * woodP);
+            int wood = (int)(capacity * woodP);
+            int stone = (int)(capacity * woodP);
+            int iron = (int)(capacity * woodP);
+            int food = (int)(capacity * woodP);
 
 
             villageResources -= (new Wood(wood) + new Stone(stone) + new Iron(iron) + new Food(food));
@@ -89,46 +103,49 @@ namespace Plevian.Orders
             if(wood+stone+iron+food != capacity)
             {
                 int more = (capacity - (wood + stone + iron + food));
-                if(biggest == woodP)
+                if(biggest == woodP && villageResources.wood > 0)
                 {
                     wood += more;
                     villageResources -= new Wood(more);
-                    if(villageResources.wood < 0)
-                    {
-                        wood += villageResources.wood;
-                        villageResources -= new Wood(villageResources.wood);
-                    }
                 }
-                else if(biggest == stoneP)
+                else if (biggest == stoneP && villageResources.stone > 0)
                 {
                     stone += more;
                     villageResources -= new Stone(more);
-                    if(villageResources.stone < 0)
-                    {
-                        stone += villageResources.stone;
-                        villageResources -= new Stone(villageResources.stone);
-                    }
                 }
-                else if(biggest == ironP)
+                else if (biggest == ironP && villageResources.iron > 0)
                 {
                     iron += more;
                     villageResources -= new Iron(more);
-                    if(villageResources.iron < 0)
-                    {
-                        iron += villageResources.iron;
-                        villageResources -= new Iron(villageResources.iron);
-                    }
+
                 }
-                else if(biggest == foodP)
+                else if (biggest == foodP && villageResources.food > 0)
                 {
                     food += more;
                     villageResources -= new Wood(more);
-                    if(villageResources.food < 0)
-                    {
-                        food += villageResources.food;
-                        villageResources -= new Food(villageResources.food);
-                    }
+
                 }
+            }
+
+            if (villageResources.wood < 0)
+            {
+                wood += villageResources.wood;
+                villageResources -= new Wood(villageResources.wood);
+            }
+            if (villageResources.stone < 0)
+            {
+                stone += villageResources.stone;
+                villageResources -= new Stone(villageResources.stone);
+            }
+            if (villageResources.iron < 0)
+            {
+                iron += villageResources.iron;
+                villageResources -= new Iron(villageResources.iron);
+            }
+            if (villageResources.food < 0)
+            {
+                food += villageResources.food;
+                villageResources -= new Food(villageResources.food);
             }
 
             loot = new Wood(wood) + new Stone(stone) + new Iron(iron) + new Food(food);
