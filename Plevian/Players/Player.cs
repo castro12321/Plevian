@@ -68,6 +68,11 @@ namespace Plevian.Players
             messages.Add(message);
         }
 
+        public void SendMessage(String sender, String title, String content)
+        {
+            SendMessage(new Message(sender, title, content, DateTime.Now));
+        }
+
         public void DeleteMessage(Message message)
         {
             messages.Remove(message);

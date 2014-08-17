@@ -16,6 +16,7 @@ namespace Plevian
     {
         /// <summary>The main human-player that is playing the game right now</summary>
         public static readonly Player player  = new Player("Magnus", new Color(255, 106, 0));
+        public static Game game;
         public readonly List<Player> players = new List<Player>();
         public readonly GameTime gameTime;
         public readonly Map map;
@@ -25,6 +26,7 @@ namespace Plevian
         /// </summary>
         public Game()
         {
+            Game.game = this;
             GameTime.init(0);
             map = new MapGenerator().Generate(30, 30);
 

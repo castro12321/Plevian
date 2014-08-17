@@ -107,6 +107,7 @@
     <Compile Include="Orders\CaptureOrder.cs" />
     <Compile Include="Orders\Order.cs" />
     <Compile Include="Orders\OrderType.cs" />
+    <Compile Include="Orders\CreateVillage.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Units\Duke.cs" />

@@ -66,7 +66,13 @@ namespace Plevian.Maps
             EnterVillageButton.IsEnabled = false;
             SendUnitsButton.IsEnabled = false;
             
-            if (tile.type == TerrainType.VILLAGE)
+            if(tile.type == TerrainType.PLAINS || tile.type == TerrainType.VILLAGE)
+            {
+                SendUnitsButton.IsEnabled = true;
+                SendUnitsButton.DataContext = tile;
+            }
+
+            if(tile.type == TerrainType.VILLAGE)
             {
                 Village village = tile as Village;
                 owner.Content = village.Owner.name;
@@ -76,18 +82,14 @@ namespace Plevian.Maps
                 {
                     EnterVillageButton.IsEnabled = true;
                     EnterVillageButton.DataContext = tile;
-                } else
-                {
-                    SendUnitsButton.IsEnabled = true;
-                    SendUnitsButton.DataContext = tile;
                 }
-
             }
             else
-            { 
+            {
                 owner.Content = "Nature";
                 VillageNameStackPanel.Visibility = System.Windows.Visibility.Collapsed;
             }
+            
 
             type.Content = Enum.GetName(typeof(TerrainType), tile.type);
         }

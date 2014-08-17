@@ -139,7 +139,22 @@ namespace Plevian.GUI
                     army += UnitFactory.createUnit(type, quanity);
                 }
                 Tile origin = selectedVillage;
-                AttackOrder order = new AttackOrder(origin, tileToAttack, army);
+
+                Order order = null;
+                if (lootOrderItem.IsSelected)
+                    order = new AttackOrder(origin, tileToAttack, army);
+                else if (supportOrderItem.IsSelected)
+                    throw new NotSupportedException("Support orders not supported");
+                else if (takeOverOrderItem.IsSelected)
+                {
+                    if (tileToAttack.type == TerrainType.VILLAGE)
+                        order = new CaptureOrder(origin, tileToAttack, army);
+                    else
+                        order = new CreateVillage(origin, tileToAttack, army);
+                }
+                else
+                    throw new KeyNotFoundException("Cannot recognize selected order type");
+
                 selectedVillage.addOrder(order);
                 this.Close();
             }
