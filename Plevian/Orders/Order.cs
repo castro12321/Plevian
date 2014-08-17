@@ -11,6 +11,9 @@ namespace Plevian.Orders
     public abstract class Order
     {
         public Army army { get; protected set; }
+        /// <summary>
+        /// After setting it to true order will be deleted from orders list in village
+        /// </summary>
         public bool completed { get; protected set; }
         public bool isGoingBack { get; protected set; }
 
