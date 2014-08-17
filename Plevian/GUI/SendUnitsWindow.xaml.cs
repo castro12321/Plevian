@@ -23,7 +23,7 @@ namespace Plevian.GUI
     /// <summary>
     /// Interaction logic for AttackWindow.xaml
     /// </summary>
-    public partial class AttackWindow : Window
+    public partial class SendUnitsWindow : Window
     {
         VillageRecord selectedRecord = null;
         Village selectedVillage = null;
@@ -31,7 +31,7 @@ namespace Plevian.GUI
         Player player;
         DispatcherTimer timer = new DispatcherTimer();
 
-        public AttackWindow(Player player, Tile tileToAttack)
+        public SendUnitsWindow(Player player, Tile tileToAttack)
         {
             this.player = player;
             this.tileToAttack = tileToAttack;
