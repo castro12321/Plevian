@@ -47,6 +47,8 @@ namespace Plevian.Orders
             */
 
             Game.player.SendMessage("System", "Created village", newVillage.name + " created at " + newVillage.location);
+
+            completed = true;
         }
     }
 }
