@@ -236,7 +236,7 @@ namespace Plevian.Villages
         public void addUnit(Unit unit)
         {
             if (army.contain(unit.getUnitType()))
-                army.get(unit.getUnitType()).quanity++;
+                army.get(unit.getUnitType()).quanity+= unit.quanity;
             else
             {
                 army += unit;
