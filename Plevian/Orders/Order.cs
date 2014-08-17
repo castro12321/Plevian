@@ -28,7 +28,7 @@ namespace Plevian.Orders
             this.origin = origin;
             this.destination = destination;
             this.army = army;
-            this.timePerTile = army.getMovementSpeed();
+            this.timePerTile = army.getMovementSpeed() / 10;
             this.completed = false;
             this.isGoingBack = false;
 

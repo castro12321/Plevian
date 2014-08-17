@@ -114,5 +114,14 @@ namespace Plevian.Resource
             }
             return false;
         }
+
+        /// <summary>
+        /// Sums all resources
+        /// </summary>
+        /// <returns>Return food+iron+wood+stone</returns>
+        public int sumResources()
+        {
+            return food + iron + wood + stone;
+        }
     }
 }

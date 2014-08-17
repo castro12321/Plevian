@@ -181,6 +181,16 @@ namespace Plevian.Units
             return size;
         }
 
+        public int getLootCapacity()
+        {
+            int capacity = 0;
+            foreach(var pair in units)
+            {
+                capacity += pair.Value.getLootCapacity();
+            }
+            return capacity;
+        }
+
         public string toString()
         {
             string str = "";

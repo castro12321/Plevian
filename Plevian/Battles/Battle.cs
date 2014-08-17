@@ -73,6 +73,7 @@ namespace Plevian.Battles
                         pair.Value.quanity -= (int)(pair.Value.quanity * losses);
                     }
                 }
+
             }
             else
             {
