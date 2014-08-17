@@ -16,13 +16,13 @@
             <StackPanel Name="UnitPanel" />
         </ScrollViewer>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <ComboBox Name="order">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,7,0,5">
+            <ComboBox Name="order" SelectedIndex="0" Margin="0,0,25,0">
                 <ComboBoxItem Name="loot">Grabież</ComboBoxItem>
                 <ComboBoxItem Name="support">Wsparcie</ComboBoxItem>
                 <ComboBoxItem Name="takeOver">Zajmij</ComboBoxItem>
             </ComboBox>
-            <Button Grid.Row="2" x:Name="SendButton" Content="Send!!!" VerticalContentAlignment="Center" Margin="0,5,0,2" Padding="10,1,11,1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="sendArmy" />
+            <Button Grid.Row="2" x:Name="SendButton" Content="Send!!!" VerticalContentAlignment="Center" Padding="10,1,11,1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="sendArmy" />
         </StackPanel>
     </Grid>
  

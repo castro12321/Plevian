@@ -7,6 +7,14 @@ using System.Windows.Media;
 using Plevian.GUI;
 using Plevian.Messages;
 
+// TODO: Plevian main TODO board
+// Known issues:
+// - Skok w przyszlosc; Przykład:
+//      - W game ticku, gracz A robi tick swoich wiosek; Wywolano tick dla wioski A
+//      - Nastepnie podczas ticku dla gracza B wywolano tick wioski B, ktora zajela wioske A
+//      - W tym momencie, do listy wiosek gracza B, dodano wioske A, przez co pod koniec petli tick dla wioski A wywola sie drugi raz
+//      - Ergo wioska A zrobila tick w przyszlosc!
+
 namespace Plevian
 {
     /// <summary>
