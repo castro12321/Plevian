@@ -20,6 +20,8 @@ namespace Plevian.Units
                     return new Warrior(quanity);
                 case UnitType.SETTLER :
                     return new Settler(quanity);
+                case UnitType.DUKE :
+                    return new Duke(quanity);
             }
 
             throw new Exception("Wrong unit specified in UnitFactory");

@@ -60,6 +60,7 @@ namespace Plevian
             village1.addUnit(new Knight(1000));
             village2.addUnit(new Knight(200));
             village2.addUnit(new Archer(500));
+            village1.addUnit(new Duke(100));
             village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
             village3.recruit(new Warrior(1000));
             berlin.addUnit(new Knight(100));
