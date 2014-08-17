@@ -11,10 +11,13 @@ namespace Plevian.Messages
 {
     public partial class MessagesTab : UserControl
     {
+        private readonly Player recipient;
+        
         public MessagesTab(Player recipient)
         {
-            InitializeComponent();
+            this.recipient = recipient;
 
+            InitializeComponent();
             addColumn("Sender");
             addColumn("Topic");
             addColumn("Date");
@@ -52,19 +55,29 @@ namespace Plevian.Messages
         private void messages_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             DataGridRow selected = DataGridExtensions.GetSelectedRow(messages);
-            DataGridCell topicCell = DataGridExtensions.GetCell(messages, selected, 1);
-            Message message = selected.DataContext as Message;
-
-            MessageWindow window = new MessageWindow(message);
-            window.Show();
-            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
-            MainWindow.getInstance().IsEnabled = false;
+            if (selected != null)
+            {
+                DataGridCell topicCell = DataGridExtensions.GetCell(messages, selected, 1);
+                Message message = selected.DataContext as Message;
+                
+                MessageWindow window = new MessageWindow(message);
+                window.Show();
+                System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
+                MainWindow.getInstance().IsEnabled = false;
+            }
         }
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            Button clicked = sender as Button;
-            Logger.log("clicked " + clicked + "; on " + clicked.DataContext);
+            DataGridRow row = DataGridExtensions.GetSelectedRow(messages);
+            Message message = row.DataContext as Message;
+            Logger.log("Message: " + message + "; " + message.Topic);
+            DeleteMessage(message);
+        }
+
+        private void DeleteMessage(Message message)
+        {
+            recipient.DeleteMessage(message);
         }
     }
 

@@ -11,7 +11,7 @@
             MinHeight="500"
             IsReadOnly="True"
             AutoGenerateColumns="false"
-            MouseDown="messages_MouseDown">
+            MouseDoubleClick="messages_MouseDown">
             
         </DataGrid>
     </Grid>
