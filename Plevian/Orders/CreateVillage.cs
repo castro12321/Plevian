@@ -45,6 +45,8 @@ namespace Plevian.Orders
             army -= settler;
             newVillage.addArmy(army);
             */
+
+            Game.player.SendMessage("System", "Created village", newVillage.name + " created at " + newVillage.location);
         }
     }
 }
