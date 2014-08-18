@@ -252,5 +252,10 @@ namespace Plevian.Villages
                     order.turnBack();
             }
         }
+
+        public override string ToString()
+        {
+            return name;
+        }
     }
 }
