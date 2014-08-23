@@ -34,11 +34,12 @@ namespace Plevian
 
         public MainWindow()
         {
-            // Initialize game
-            game = new Game();
-
+            instance = this;
             // Initialize GUI
             InitializeComponent();
+
+            // Initialize game
+            game = new Game();
 
             // Initialize map tab
             mapTabItem.Content = (mapTab = new MapTab(game));
@@ -54,7 +55,7 @@ namespace Plevian
             Closed += new EventHandler(OnClose);
             PreviewKeyDown += KeyDownHandler;
 
-            instance = this;
+           
         }
 
         void KeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)

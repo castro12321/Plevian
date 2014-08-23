@@ -8,6 +8,7 @@ using Plevian.Units;
 using Plevian.Debugging;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Plevian.Villages;
 namespace Plevian.Orders
 {
     public abstract class Order : INotifyPropertyChanged
@@ -18,8 +19,9 @@ namespace Plevian.Orders
         /// </summary>
         public bool completed { get; protected set; }
         public bool isGoingBack { get; protected set; }
-        public OrderType type { get; protected set; }
+        
 
+        private OrderType _type;
         protected Tile origin;
         protected Tile _destination;
         protected Seconds duration;
@@ -33,10 +35,10 @@ namespace Plevian.Orders
             this.origin = origin;
             Destination = destination;
             this.army = army;
-            this.timePerTile = army.getMovementSpeed() / 10;
+            this.timePerTile = army.getMovementSpeed();
             this.completed = false;
             this.isGoingBack = false;
-            this.type = type;
+            this.Type = type;
 
             float distance = origin.location.distance(destination.location);
             duration = new Seconds((int)(timePerTile * distance));
@@ -116,6 +118,19 @@ namespace Plevian.Orders
             get
             {
                 return _destination;
+            }
+        }
+
+        public OrderType Type 
+        {
+            get
+            {
+                return _type;
+            }
+            protected set
+            {
+                _type = value;
+                NotifyPropertyChanged();
             }
         }
 

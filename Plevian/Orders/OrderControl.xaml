@@ -4,13 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ns="clr-namespace:Plevian.Orders"
+             xmlns:sec="clr-namespace:Plevian"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ns:TileToStringConverter x:Key="converter" />
+        <ns:OrderTypeToStringConverter x:Key="orderConverter" />
+        <sec:SecondsToStringConverter x:Key="durationConverter" />
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal" >
         <Label Name="Destination" Content="{Binding Destination, Converter={StaticResource converter}}" />
-        <Label Name="Duration" Content="{Binding Duration}"  />
+        <Label Name="Duration" Content="{Binding Duration, Converter={StaticResource durationConverter}}"  />
+        <Label Name="OrderType" Content="{Binding ., Converter={StaticResource orderConverter}}" />
     </StackPanel>
 </UserControl>

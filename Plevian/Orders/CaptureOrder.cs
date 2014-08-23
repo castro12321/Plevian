@@ -17,7 +17,7 @@ namespace Plevian.Orders
         {
             if (!army.contain(UnitType.DUKE))
                 throw new Exception("CaptureOrder without duke!");
-            this.type = OrderType.CAPTURE;
+            this.Type = OrderType.CAPTURE;
         }
 
         protected override void onFightWin(Battles.Report report)

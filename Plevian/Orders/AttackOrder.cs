@@ -72,7 +72,7 @@ namespace Plevian.Orders
 
         protected virtual Report makeBattle()
         {
-            Village village = destination as Village;
+            Village village = Destination as Village;
             Army defendingArmy = village.army;
 
             Battle battle = new Battle(army, defendingArmy, getLuck(), getDefense(), getBaseDefense());
@@ -81,8 +81,8 @@ namespace Plevian.Orders
 
         protected virtual void onFightWin(Report report)
         {
-            
-            gatherLoot(destination as Village);
+
+            gatherLoot(Destination as Village);
             report.loot = loot;
             turnBack();
         }

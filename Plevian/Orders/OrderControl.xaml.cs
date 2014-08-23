@@ -43,6 +43,28 @@ namespace Plevian.Orders
         }
     }
 
+    public class OrderTypeToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType,
+        object parameter, CultureInfo culture)
+        {
+            if (!(value is Order))
+                return "/ERROR/";
+            // Do the conversion from bool to visibility
+            Order order = value as Order;
+            if (order.isGoingBack)
+                return "Going back";
+            OrderType type = order.Type;
+            return Enum.GetName(typeof(OrderType), type);
+        }
+
+        public object ConvertBack(object value, Type targetType,
+         object parameter, CultureInfo culture)
+        {
+            return null; //NO CONVERSION
+        }
+    }
+
 
     /// <summary>
     /// Interaction logic for OrderControl.xaml
@@ -52,6 +74,11 @@ namespace Plevian.Orders
         public OrderControl(Order order)
         {
             this.DataContext = order;
+            InitializeComponent();
+        }
+
+        public OrderControl()
+        {
             InitializeComponent();
         }
     }
