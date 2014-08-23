@@ -78,5 +78,10 @@ namespace Plevian.Players
         {
             messages.Remove(message);
         }
+
+        public override string ToString()
+        {
+            return name;
+        }
     }
 }

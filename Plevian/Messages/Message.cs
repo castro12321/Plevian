@@ -28,5 +28,10 @@ namespace Plevian.Messages
             this.Date = new Label();
             this.Date.Content = date;
         }
+
+        public override string ToString()
+        {
+            return Topic.Content.ToString();
+        }
     }
 }

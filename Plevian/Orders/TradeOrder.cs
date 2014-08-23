@@ -46,16 +46,16 @@ namespace Plevian.Orders
         {
             if (isGoingBack == true)
             {
-                if (!(destination is Village))
+                if (!(Destination is Village))
                     throw new Exception("Army returned to tile which is not Village!");
-                Village village = destination as Village;
+                Village village = Destination as Village;
                 village.addArmy(army);
                 completed = true;
-                Game.player.SendMessage("System", "Trader returned", "Trader returned to the village " + destination);
+                Game.player.SendMessage("System", "Trader returned", "Trader returned to the village " + Destination);
             }
             else
             {
-                Village destinationVillage = destination as Village;
+                Village destinationVillage = Destination as Village;
                 if (sentResources != null)
                     destinationVillage.addResources(sentResources);
                 if (sentArmy != null)

@@ -3,47 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ord="clr-namespace:Plevian.Orders"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <ord:OrderControl x:Key="OrderControl" />
+    </UserControl.Resources>
+    
     <Grid Background="#FFE5E5E5">
         
         <DockPanel Background="GreenYellow">
             <ScrollViewer DockPanel.Dock="Right" MinWidth="300" MinHeight="500">
                 <StackPanel Orientation="Vertical">
                     <!-- Resources -->
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Coords:"/>
-                            <Label Name="coords"/>
-                        </StackPanel>
+                    <Expander Header="Village Info" IsExpanded="True" >
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Coords:"/>
+                                <Label Name="coords"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Village Name:"/>
-                            <Label Name="VillageName"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Village Name:"/>
+                                <Label Name="VillageName"/>
+                            </StackPanel>
+
+                            <Label Content="Income:" FontWeight="ExtraBold"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <Label Content="Food: " MinWidth="100"/>
+                                <Label Content="?"      MinWidth="45" Name="ResourcesFood"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Wood: " MinWidth="100"/>
+                                <Label Content="?"      MinWidth="45" Name="ResourcesWood"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Iron: " MinWidth="100"/>
+                                <Label Content="?"      MinWidth="45" Name="ResourcesIron"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Stone: " MinWidth="100"/>
+                                <Label Content="?"       MinWidth="45" Name="ResourcesStone"/>
+                            </StackPanel>
                         </StackPanel>
-                        
-                        <Label Content="Income:" FontWeight="ExtraBold"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Food: " MinWidth="100"/>
-                            <Label Content="?"      MinWidth="45" Name="ResourcesFood"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Wood: " MinWidth="100"/>
-                            <Label Content="?"      MinWidth="45" Name="ResourcesWood"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Iron: " MinWidth="100"/>
-                            <Label Content="?"      MinWidth="45" Name="ResourcesIron"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Stone: " MinWidth="100"/>
-                            <Label Content="?"       MinWidth="45" Name="ResourcesStone"/>
-                        </StackPanel>
-                    </StackPanel>
+                    </Expander>
 
                     <!-- Military -->
-                    <StackPanel Orientation="Vertical">
-                        <Label Content="Military:" FontWeight="ExtraBold"/>
-                        <StackPanel Orientation="Horizontal">
+                    <Expander Header="Military:" Margin="0,5,0,0">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
                             <Label  Content="Warriors: " MinWidth="100"/>
                             <Label  Content="?"          MinWidth="45" Name="ResourcesWarriors"/>
                             <Button Content="Recruit"    MinWidth="60" Name="RecruitWarrior" Click="RecruitWarrior_Click"/>
@@ -74,10 +81,10 @@
                             <Label  Content="?%"         MinWidth="40" Name="RecruitTraderProgress"/>
                         </StackPanel>
                     </StackPanel>
-                    
+                    </Expander>
                     <!-- Buildings -->
-                    <StackPanel Orientation="Vertical">
-                        <Label Content="Buildings:" FontWeight="ExtraBold"/>
+                    <Expander Header="Buildings:" Margin="0,5,0,0">
+                        <StackPanel Name="BuildingsPanel" Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Barracks: "  MinWidth="100"/>
                             <Label  Content="?"           MinWidth="45" Name="LevelBarracks"/>
@@ -90,12 +97,34 @@
                             <Button Content="Upgrade"     MinWidth="60" Name="UpgradeTownHall" Click="UpgradeTownHall_Click"/>
                             <Label  Content="?%"          MinWidth="40" Name="UpgradeTownHallProgress"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label  Content="Stable: "  MinWidth="100"/>
-                            <Label  Content="?"         MinWidth="45" Name="LevelStable"/>
-                            <Button Content="Upgrade"   MinWidth="60" Name="UpgradeStable" Click="UpgradeStable_Click"/>
-                            <Label  Content="?%"        MinWidth="40" Name="UpgradeStableProgress"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label  Content="Stable: "  MinWidth="100"/>
+                                <Label  Content="?"         MinWidth="45" Name="LevelStable"/>
+                                <Button Content="Upgrade"   MinWidth="60" Name="UpgradeStable" Click="UpgradeStable_Click"/>
+                                <Label  Content="?%"        MinWidth="40" Name="UpgradeStableProgress"/>
+                            </StackPanel>
                         </StackPanel>
+                    </Expander>
+                    
+                    <Expander Header="Orders">
+                        <ItemsControl Name="OrdersItemControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            
+                            <ItemsControl.ItemTemplate >
+                                <DataTemplate>
+                                    <ord:OrderControl/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            
+                        </ItemsControl>
+                    </Expander>
+                    <StackPanel Name="OrdersStackPanel">
+                        
+                        
                     </StackPanel>
                     
                 </StackPanel>

@@ -4,7 +4,11 @@
         xmlns:map="clr-namespace:Plevian.Maps"
         Title="MainWindow">
     <Grid>
-        <TabControl Name="MainWindowTabs" Background="Green" Padding="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <TabControl Name="MainWindowTabs" Background="Green" Padding="0" Grid.Row="0">
             <TabItem Name="mapTabItem" Header="Mapa">
                 <!-- Moved to custom control. Created in constructor -->
             </TabItem>
@@ -15,5 +19,11 @@
                 <!-- Moved to custom control. Created in constructor -->
             </TabItem>
         </TabControl>
+
+        <StatusBar Grid.Row="2">
+            <TextBlock Name="statusText" Text=""></TextBlock>
+        </StatusBar>
     </Grid>
+    
+    
 </Window>

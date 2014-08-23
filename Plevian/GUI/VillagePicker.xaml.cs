@@ -51,13 +51,20 @@ namespace Plevian.GUI
             //villages.ItemsSource = null;
             villages.ItemsSource = player.villages;
             //villages.Items.Refresh();
+            SelectionChanged(player.villages[0]);
         }
 
         private void villages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CurrentlySelectedVillage = e.AddedItems[0] as Village;
             if(e.AddedItems.Count > 0)
-                SelectedVillage(sender, new SelectedVillageEvent(CurrentlySelectedVillage));
+                SelectionChanged(e.AddedItems[0] as Village);
+        }
+
+        public void SelectionChanged(Village selected)
+        {
+            CurrentlySelectedVillage = selected;
+            if(SelectedVillage != null)
+                SelectedVillage(this, new SelectedVillageEvent(CurrentlySelectedVillage));
         }
     }
 }

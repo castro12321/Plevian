@@ -39,6 +39,8 @@ namespace Plevian.Villages
                 activeVillage = value;
                 villageView.village = value;
                 VillageName.Content = value.name;
+                OrdersItemControl.ItemsSource = value.orders;
+                MainWindow.getInstance().statusText.Text = value.name;
             }
         }
 
@@ -62,7 +64,7 @@ namespace Plevian.Villages
             {
                 label.Content = Village.army.get(type).quanity;
             }
-            catch(KeyNotFoundException ex)
+            catch(KeyNotFoundException)
             {
                 label.Content = "0";
             }

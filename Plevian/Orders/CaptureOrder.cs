@@ -17,14 +17,14 @@ namespace Plevian.Orders
         {
             if (!army.contain(UnitType.DUKE))
                 throw new Exception("CaptureOrder without duke!");
-            this.type = OrderType.CAPTURE;
+            this.Type = OrderType.CAPTURE;
         }
 
         protected override void onFightWin(Battles.Report report)
         {
             if (army.contain(UnitType.DUKE))
             {
-                Village village = destination as Village;
+                Village village = Destination as Village;
                 Village attVillage = origin as Village;
                 Player attacker = attVillage.Owner;
                 attacker.CaptureVillage(village);

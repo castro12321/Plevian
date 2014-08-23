@@ -16,7 +16,7 @@ namespace Plevian.Villages
     public class Village : Tile
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
-        private List<Order> orders = new List<Order>();
+        public List<Order> orders = new List<Order>();
         public Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         public List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
