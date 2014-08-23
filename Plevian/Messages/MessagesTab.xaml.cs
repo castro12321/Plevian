@@ -1,4 +1,5 @@
 ﻿using Plevian.Debugging;
+using Plevian.GUI;
 using Plevian.Players;
 using System;
 using System.Windows;
@@ -61,9 +62,7 @@ namespace Plevian.Messages
                 Message message = selected.DataContext as Message;
                 
                 MessageWindow window = new MessageWindow(message);
-                window.Show();
-                System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
-                MainWindow.getInstance().IsEnabled = false;
+                WindowMgr.Show(window);
             }
         }
 

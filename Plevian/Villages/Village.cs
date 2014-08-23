@@ -22,7 +22,7 @@ namespace Plevian.Villages
         public GameTime recruitTimeEnd { get; private set; }
         public GameTime buildTimeEnd { get; private set; }
         public Army army { get; private set; }
-        public Resources resources { get; private set; }
+        public readonly Resources resources;
         public string name { get; private set; }
         private Player owner;
 
@@ -64,12 +64,12 @@ namespace Plevian.Villages
 
         public void addResources(Resources add)
         {
-            resources += add;
+            resources.Add(add);
         }
 
         public void takeResources(Resources take)
         {
-            resources -= take;
+            resources.Substract(take);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Plevian.Villages
             if (!resources.canAfford(neededResources))
                 throw new Exceptions.ExceptionNotEnoughResources();
 
-            resources -= neededResources;
+            takeResources(neededResources);
 
             GameTime buildTime = building.getConstructionTimeForNextLevel();
 
@@ -209,7 +209,7 @@ namespace Plevian.Villages
                 return;
             if (recruitQueue.Count == 0)
                 recruitTimeEnd = GameTime.now;
-            resources -= unit.getWholeUnitCost();
+            takeResources(unit.getWholeUnitCost());
             RecruitQueueItem newQueue = new RecruitQueueItem(unit, recruitTimeEnd.copy());
             recruitTimeEnd += newQueue.duration;
             recruitQueue.Add(newQueue);

@@ -9,6 +9,7 @@ using Plevian.Players;
 using Plevian.Units;
 using Plevian.Orders;
 using SFML.Graphics;
+using Plevian.Buildings;
 
 namespace Plevian
 {
@@ -63,6 +64,7 @@ namespace Plevian
             village1.addUnit(new Knight(1000));
             village2.addUnit(new Knight(200));
             village2.addUnit(new Archer(500));
+            village1.build(BuildingType.TOWN_HALL);
             village1.addUnit(new Duke(100));
             village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
             village3.recruit(new Warrior(1000));

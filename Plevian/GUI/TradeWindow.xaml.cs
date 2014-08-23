@@ -55,12 +55,6 @@ namespace Plevian.GUI
             maxStone.DataContext = selected.resources;
         }
 
-        private void onWindowClose(object sender, EventArgs e)
-        {
-            MainWindow.getInstance().IsEnabled = true;
-            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(MainWindow.getInstance());
-        }
-
         private void maxFood_Click(object sender, RoutedEventArgs e)
         {
             foodToSend.Text = villagePicker.CurrentlySelectedVillage.resources.food.ToString();

@@ -73,6 +73,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Buildings\LumberMill.cs" />
+    <Compile Include="Buildings\Farm.cs" />
+    <Compile Include="Buildings\Mine.cs" />
     <Compile Include="GUI\TradeWindow.xaml.cs">
       <DependentUpon>TradeWindow.xaml</DependentUpon>
     </Compile>
@@ -93,6 +96,7 @@
     <Compile Include="Entry.cs" />
     <Compile Include="GUI\TabChangeArgs.cs" />
     <Compile Include="GUI\TabType.cs" />
+    <Compile Include="GUI\WindowMgr.cs" />
     <Compile Include="Maps\Camera.cs" />
     <Compile Include="Maps\Events.cs" />
     <Compile Include="Maps\MapTab.xaml.cs">

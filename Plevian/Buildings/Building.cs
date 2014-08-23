@@ -70,6 +70,9 @@ namespace Plevian.Buildings
             buildings.Add(BuildingType.BARRACKS, new Barracks());
             buildings.Add(BuildingType.STABLE, new Stable());
             buildings.Add(BuildingType.TOWN_HALL, new TownHall());
+            buildings.Add(BuildingType.FARM, new Farm());
+            buildings.Add(BuildingType.LUMBER_MILL, new LumberMill());
+            buildings.Add(BuildingType.MINE, new Mine());
             return buildings;
         }
     }
