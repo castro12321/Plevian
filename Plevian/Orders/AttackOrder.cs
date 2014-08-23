@@ -27,9 +27,9 @@ namespace Plevian.Orders
         {
             if (isGoingBack == true)
             {
-                if (!(destination is Village))
+                if (!(Destination is Village))
                     throw new Exception("Army returned to tile which is not Village!");
-                Village village = destination as Village;
+                Village village = Destination as Village;
                 village.addArmy(army);
                 village.addResources(loot);
                 completed = true;
@@ -38,9 +38,9 @@ namespace Plevian.Orders
             }
             else
             {
-                if (destination is Village && origin is Village)
+                if (Destination is Village && origin is Village)
                 {
-                    Village village = destination as Village;
+                    Village village = Destination as Village;
                     Village attVillage = origin as Village;
                     if(village.Owner == attVillage.Owner)
                     {
@@ -72,7 +72,7 @@ namespace Plevian.Orders
 
         protected virtual Report makeBattle()
         {
-            Village village = destination as Village;
+            Village village = Destination as Village;
             Army defendingArmy = village.army;
 
             Battle battle = new Battle(army, defendingArmy, getLuck(), getDefense(), getBaseDefense());
@@ -81,8 +81,8 @@ namespace Plevian.Orders
 
         protected virtual void onFightWin(Report report)
         {
-            
-            gatherLoot(destination as Village);
+
+            gatherLoot(Destination as Village);
             report.loot = loot;
             turnBack();
         }

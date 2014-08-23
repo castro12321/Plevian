@@ -10,13 +10,14 @@ using Plevian.Units;
 using Plevian.Maps;
 using Plevian.Players;
 using Plevian.Orders;
+using System.Collections.ObjectModel;
 
 namespace Plevian.Villages
 {
     public class Village : Tile
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
-        private List<Order> orders = new List<Order>();
+        public ObservableCollection<Order> orders = new ObservableCollection<Order>();
         public Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         public List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
@@ -256,6 +257,11 @@ namespace Plevian.Villages
         public override string ToString()
         {
             return name;
+        }
+
+        public void test()
+        {
+            name += "A";
         }
     }
 }
