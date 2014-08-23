@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Battles\testBattles.cs" />
     <Compile Include="FakeGameTime.cs" />
+    <Compile Include="Integration\Orders.cs" />
     <Compile Include="Integration\TestSavingGame.cs" />
     <Compile Include="Integration\TestLoadingGame.cs" />
     <Compile Include="Players\PlayerTests.cs" />

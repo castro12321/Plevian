@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Orders
 {
-    class TradeOrder : Order
+    public class TradeOrder : Order
     {
         public readonly Resources sentResources;
         public readonly Army sentArmy;

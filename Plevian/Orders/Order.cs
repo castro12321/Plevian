@@ -61,8 +61,6 @@ namespace Plevian.Orders
             }
             if (Duration.seconds <= 0)
                 onEnd();
-            
-            
         }
 
         public void turnBack()

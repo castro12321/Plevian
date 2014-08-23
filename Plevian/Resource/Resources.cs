@@ -162,5 +162,10 @@ namespace Plevian.Resource
         {
             return food + iron + wood + stone;
         }
+
+        public void Clear()
+        {
+            food = wood = iron = stone = 0;
+        }
     }
 }
