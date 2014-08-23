@@ -45,7 +45,7 @@ namespace Plevian
             return time.ToString();
         }
 
-        public GameTime copy()
+        public virtual GameTime copy()
         {
             return new GameTime(time);
         }
@@ -114,7 +114,9 @@ namespace Plevian
 
         public static bool operator ==(GameTime lh, GameTime rh)
         {
-            return lh.time == rh.time;
+            if ((object)lh == (object)rh) return true;
+            if ((object)lh == null || (object)rh == null) return false;
+            return lh.Equals(rh.time);
         }
 
         public static bool operator !=(GameTime lh, GameTime rh)

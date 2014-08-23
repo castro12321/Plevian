@@ -190,5 +190,15 @@ namespace Plevian.Orders
             loot = new Wood(wood) + new Stone(stone) + new Iron(iron) + new Food(food);
         }
 
+        public override string getTooltipText()
+        {
+            string tooltip =  base.getTooltipText();
+            if(isGoingBack)
+            {
+                tooltip += "\n" + loot.ToString();
+            }
+            return tooltip;
+        }
+
     }
 }

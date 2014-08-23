@@ -17,8 +17,7 @@ namespace Plevian.Orders
         /// <summary>
         /// After setting it to true order will be deleted from orders list in village
         /// </summary>
-        public bool completed { get; protected set; }
-        public bool isGoingBack { get; protected set; }
+        
         
 
         private OrderType _type;
@@ -26,6 +25,8 @@ namespace Plevian.Orders
         protected Tile _destination;
         protected Seconds duration;
         protected GameTime endTime;
+        private bool _completed;
+        private bool _isGoingBack;
         protected float timePerTile;
 
 
@@ -68,8 +69,7 @@ namespace Plevian.Orders
         {
             isGoingBack = true;
 
-            float distance = origin.location.distance(Destination.location);
-            Seconds newDuration = new Seconds((int)(timePerTile * distance));
+            Seconds newDuration = OverallTime.copy() as Seconds;
             newDuration.seconds -= duration.seconds;
             duration = newDuration;
 
@@ -78,6 +78,21 @@ namespace Plevian.Orders
             Tile temp = Destination;
             Destination = origin;
             origin = temp;
+        }
+
+        public virtual String getTooltipText()
+        {
+            int sum = 0;
+            string tooltip = "";
+            foreach (var pair in army.getUnits())
+            {
+                string unitName = Enum.GetName(typeof(UnitType), pair.Key);
+                tooltip += "\n" + pair.Value.ToString();
+                sum += pair.Value.quanity;
+            }
+
+            tooltip = "Units : " + sum + tooltip;
+            return tooltip;
         }
 
 
@@ -129,6 +144,46 @@ namespace Plevian.Orders
             protected set
             {
                 _type = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+
+        private Seconds _OverallTime;
+        public Seconds OverallTime
+        {
+            get
+            {
+                if(_OverallTime == null)
+                {
+                    float distance = origin.location.distance(Destination.location);
+                    _OverallTime = new Seconds((int)(timePerTile * distance));
+                }
+                return _OverallTime;
+            }
+        }
+
+        public bool completed
+        {
+            get
+            {
+                return _completed;
+            }
+                protected set
+            {
+                _completed = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public bool isGoingBack 
+        {
+            get
+            {
+                return _isGoingBack;
+            }
+            protected set
+            {
+                _isGoingBack = value;
                 NotifyPropertyChanged();
             }
         }

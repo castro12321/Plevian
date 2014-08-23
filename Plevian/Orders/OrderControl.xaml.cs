@@ -44,7 +44,25 @@ namespace Plevian.Orders
         }
     }
 
-    public class OrderTypeToStringConverter : IValueConverter
+    public class OrderTypeToStringConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            OrderType type = (OrderType)values[0];
+            bool isGoingBack = (bool)values[1];
+            if (isGoingBack)
+                return "Returning";
+            else
+                return Enum.GetName(typeof(OrderType), type);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException("Not supported conversion");
+        }
+    }
+
+    public class progressBarConverter : IValueConverter
     {
         public object Convert(object value, Type targetType,
         object parameter, CultureInfo culture)
@@ -53,10 +71,11 @@ namespace Plevian.Orders
                 return "/ERROR/";
             // Do the conversion from bool to visibility
             Order order = value as Order;
-            if (order.isGoingBack)
-                return "Going back";
-            OrderType type = order.Type;
-            return Enum.GetName(typeof(OrderType), type);
+            int remaining = order.Duration.seconds;
+            int overall = order.OverallTime.seconds;
+
+            int progress = ((overall - remaining)*100) / overall;
+            return progress;
         }
 
         public object ConvertBack(object value, Type targetType,
@@ -65,6 +84,23 @@ namespace Plevian.Orders
             return null; //NO CONVERSION
         }
     }
+
+    public class progressBarMultiConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            double duration = (values[0] as Seconds).seconds;
+            double overall = (values[1] as Seconds).seconds;
+            double returnValue = ((overall - duration) * 100.0) / overall;
+            return returnValue;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException("Not supported conversion");
+        }
+    }
+    
 
 
     /// <summary>
@@ -88,17 +124,7 @@ namespace Plevian.Orders
             if (this.DataContext == null || !(this.DataContext is Order))
                 return;
             Order order = this.DataContext as Order;
-            int sum = 0;
-            string tooltip = "";
-            foreach (var pair in order.army.getUnits())
-            {
-                string unitName = Enum.GetName(typeof(UnitType), pair.Key);
-                tooltip += "\n" + pair.Value.ToString();
-                sum += pair.Value.quanity;
-            }
-
-            tooltip = "Units : " + sum +  tooltip;
-            StackPanel.ToolTip = tooltip;
+            StackPanel.ToolTip = order.getTooltipText();
 
         }
     }
