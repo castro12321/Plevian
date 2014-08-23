@@ -27,12 +27,5 @@ namespace Plevian.Messages
             messageBlock.Text = message.message;
             this.Title = message.Topic.Content.ToString();
         }
-
-        
-        private void onWindowClose(object sender, EventArgs e)
-        {
-            MainWindow.getInstance().IsEnabled = true;
-            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(MainWindow.getInstance());
-        }
     }
 }

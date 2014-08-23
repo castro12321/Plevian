@@ -118,8 +118,6 @@ namespace Plevian.GUI
 
         private void onWindowClose(object sender, EventArgs e)
         {
-            MainWindow.getInstance().IsEnabled = true;
-            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(MainWindow.getInstance());
             timer.Stop();
         }
        

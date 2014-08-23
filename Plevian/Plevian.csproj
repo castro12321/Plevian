@@ -93,6 +93,7 @@
     <Compile Include="Entry.cs" />
     <Compile Include="GUI\TabChangeArgs.cs" />
     <Compile Include="GUI\TabType.cs" />
+    <Compile Include="GUI\WindowMgr.cs" />
     <Compile Include="Maps\Camera.cs" />
     <Compile Include="Maps\Events.cs" />
     <Compile Include="Maps\MapTab.xaml.cs">

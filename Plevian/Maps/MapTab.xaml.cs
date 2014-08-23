@@ -117,17 +117,13 @@ namespace Plevian.Maps
         private void OnSendUnitsClick(object sender, RoutedEventArgs e)
         {
             SendUnitsWindow window = new SendUnitsWindow(Game.player, clickedTile);
-            window.Show();
-            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
-            MainWindow.getInstance().IsEnabled = false;
+            WindowMgr.Show(window);
         }
 
         private void OnSendResourcesClick(object sender, RoutedEventArgs e)
         {
             TradeWindow window = new TradeWindow(clickedTile as Village);
-            window.Show();
-            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
-            MainWindow.getInstance().IsEnabled = false;
+            WindowMgr.Show(window);
         }
     }
 }
