@@ -94,7 +94,16 @@
                             </StackPanel>
                         </StackPanel>
                     </Expander>
-
+                    <Expander Header="Orders">
+                        <ItemsControl>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            
+                        </ItemsControl>
+                    </Expander>
                     <StackPanel Name="OrdersStackPanel">
                         
                         

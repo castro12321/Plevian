@@ -106,6 +106,9 @@
     <Compile Include="Orders\AttackOrder.cs" />
     <Compile Include="Orders\CaptureOrder.cs" />
     <Compile Include="Orders\Order.cs" />
+    <Compile Include="Orders\OrderControl.xaml.cs">
+      <DependentUpon>OrderControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Orders\OrderType.cs" />
     <Compile Include="Orders\CreateVillage.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
@@ -188,6 +191,10 @@
     <Page Include="Messages\MessagesTab.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Orders\OrderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Villages\VillageTab.xaml">
       <SubType>Designer</SubType>

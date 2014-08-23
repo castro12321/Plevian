@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Plevian.Maps;
 using Plevian.Units;
 using Plevian.Debugging;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 namespace Plevian.Orders
 {
-    public abstract class Order
+    public abstract class Order : INotifyPropertyChanged
     {
         public Army army { get; protected set; }
         /// <summary>
@@ -19,18 +21,17 @@ namespace Plevian.Orders
         public OrderType type { get; protected set; }
 
         protected Tile origin;
-        protected Tile destination;
+        protected Tile _destination;
         protected Seconds duration;
         protected GameTime endTime;
-       
-        
+
         protected float timePerTile;
 
 
         public Order(Tile origin, Tile destination, Army army, OrderType type)
         {
             this.origin = origin;
-            this.destination = destination;
+            Destination = destination;
             this.army = army;
             this.timePerTile = army.getMovementSpeed() / 10;
             this.completed = false;
@@ -52,9 +53,13 @@ namespace Plevian.Orders
         {
             Logger.s(this.ToString());
             if (!completed)
-                duration.seconds--;
-            if (duration.seconds <= 0)
+            {
+                Duration.seconds--;
+                NotifyPropertyChanged("Duration");
+            }
+            if (Duration.seconds <= 0)
                 onEnd();
+            
             
         }
 
@@ -62,20 +67,57 @@ namespace Plevian.Orders
         {
             isGoingBack = true;
 
-            float distance = origin.location.distance(destination.location);
+            float distance = origin.location.distance(Destination.location);
             Seconds newDuration = new Seconds((int)(timePerTile * distance));
             newDuration.seconds -= duration.seconds;
             duration = newDuration;
 
             endTime = GameTime.now + duration;
 
-            Tile temp = destination;
-            destination = origin;
-            origin = destination;
+            Tile temp = Destination;
+            Destination = origin;
+            origin = temp;
         }
 
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         protected abstract void onEnd();
+
+        public Seconds Duration
+        {
+            private set
+            {
+                duration = value;
+                NotifyPropertyChanged();
+            }
+
+            get
+            {
+                return duration;
+            }
+
+        }
+
+        public Tile Destination
+        {
+            private set
+            {
+                _destination = value;
+                NotifyPropertyChanged();
+            }
+            get
+            {
+                return _destination;
+            }
+        }
 
 
     }

@@ -24,7 +24,7 @@ namespace Plevian.Orders
         override protected void onEnd()
         {
             // Somebody taken over this tile? abort
-            if (destination.type != TerrainType.PLAINS)
+            if (Destination.type != TerrainType.PLAINS)
             {
                 Game.player.SendMessage("System", "Failed to create village", "The village has been created by someone else");
                 turnBack();
@@ -34,7 +34,7 @@ namespace Plevian.Orders
             Player player = Game.player;
             Map map = Game.game.map;
 
-            Village newVillage = new Village(destination.location, player, "New village");
+            Village newVillage = new Village(Destination.location, player, "New village");
             map.place(newVillage);
             player.addVillage(newVillage);
 
