@@ -17,7 +17,7 @@ namespace Plevian
             int seconds = second.seconds;
             int hours = seconds / 60 / 60;
             int minutes = seconds / 60;
-            return hours+":"+minutes+":"+seconds;
+            return hours.ToString() + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
         }
 
         public object ConvertBack(object value, Type targetType,

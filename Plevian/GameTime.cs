@@ -115,8 +115,8 @@ namespace Plevian
         public static bool operator ==(GameTime lh, GameTime rh)
         {
             if ((object)lh == (object)rh) return true;
-            if (lh == null || rh == null) return false;
-            return lh.time == rh.time;
+            if ((object)lh == null || (object)rh == null) return false;
+            return lh.Equals(rh.time);
         }
 
         public static bool operator !=(GameTime lh, GameTime rh)

@@ -9,15 +9,28 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ns:TileToStringConverter x:Key="converter" />
-        <ns:OrderTypeToStringConverter x:Key="orderConverter" />
+        <ns:OrderTypeToStringConverter x:Key="orderTypeConverter" />
         <sec:SecondsToStringConverter x:Key="durationConverter" />
-        <ns:progressBarConverter x:Key="progressConverter" />
+        <ns:progressBarMultiConverter x:Key="progressConverter" />
     </UserControl.Resources>
     <StackPanel Name="StackPanel" Orientation="Horizontal" ToolTip="ASD" ToolTipOpening="onToolTipShow" >
         <Label Name="Destination" Content="{Binding Destination, Converter={StaticResource converter}}" />
         <Label Name="Duration" Content="{Binding Duration, Converter={StaticResource durationConverter}}"  />
-        <ProgressBar Name="ProgressBar"  Value="{Binding ., Converter={StaticResource progressConverter}}" Width="100" VerticalAlignment="Center">
+        <ProgressBar Name="ProgressBar"  Width="100" VerticalAlignment="Center" Height="8">
+            <ProgressBar.Value>
+                <MultiBinding Mode="OneWay" Converter="{StaticResource progressConverter}" >
+                    <Binding Path="Duration" />
+                    <Binding Path="OverallTime" />
+                </MultiBinding>
+            </ProgressBar.Value>
         </ProgressBar>
-        <Label Name="OrderType" Content="{Binding Duration, Converter={StaticResource orderConverter} }" />
+        <Label Name="OrderType" >
+            <Label.Content>
+                <MultiBinding Mode="OneWay" Converter="{StaticResource orderTypeConverter}" >
+                    <Binding Path="Type" />
+                    <Binding Path="isGoingBack" />
+                </MultiBinding>
+            </Label.Content>
+        </Label>
     </StackPanel>
 </UserControl>
