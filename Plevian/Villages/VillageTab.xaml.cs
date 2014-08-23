@@ -134,10 +134,16 @@ namespace Plevian.Villages
             setBuildingLevel(LevelBarracks, BuildingType.BARRACKS);
             setBuildingLevel(LevelStable  , BuildingType.STABLE);
             setBuildingLevel(LevelTownHall, BuildingType.TOWN_HALL);
+            setBuildingLevel(LevelFarm    , BuildingType.FARM);
+            setBuildingLevel(LevelLumberMill, BuildingType.LUMBER_MILL);
+            setBuildingLevel(LevelMine    , BuildingType.MINE);
 
             setBuildingProgress(UpgradeBarracksProgress, BuildingType.BARRACKS);
             setBuildingProgress(UpgradeStableProgress, BuildingType.STABLE);
             setBuildingProgress(UpgradeTownHallProgress, BuildingType.TOWN_HALL);
+            setBuildingProgress(UpgradeFarmProgress, BuildingType.FARM);
+            setBuildingProgress(UpgradeLumberMillProgress, BuildingType.LUMBER_MILL);
+            setBuildingProgress(UpgradeMineProgress, BuildingType.MINE);
 
             // Render SFML
             villageView.render();
@@ -182,6 +188,21 @@ namespace Plevian.Villages
         private void UpgradeStable_Click(object sender, RoutedEventArgs e)
         {
             Village.build(BuildingType.STABLE);
+        }
+
+        private void UpgradeFarm_Click(object sender, RoutedEventArgs e)
+        {
+            Village.build(BuildingType.FARM);
+        }
+
+        private void UpgradeLumberMill_Click(object sender, RoutedEventArgs e)
+        {
+            Village.build(BuildingType.LUMBER_MILL);
+        }
+
+        private void UpgradeMine_Click(object sender, RoutedEventArgs e)
+        {
+            Village.build(BuildingType.MINE);
         }
     }
 }

@@ -9,8 +9,9 @@ namespace Plevian.Buildings
     public enum BuildingType
     {
         FARM = 1,
-        TOWN_HALL,
+        LUMBER_MILL,
         MINE,
+        TOWN_HALL,
         BARRACKS,
         STABLE
     };
