@@ -123,11 +123,13 @@ namespace Plevian.Villages
             setUnitCount(ResourcesArchers, UnitType.ARCHER);
             setUnitCount(ResourcesKnights, UnitType.KNIGHT);
             setUnitCount(ResourcesSettlers, UnitType.SETTLER);
+            setUnitCount(ResourcesTraders, UnitType.TRADER);
 
             setRecruitProgress(RecruitWarriorProgress, UnitType.WARRIOR);
             setRecruitProgress(RecruitArcherProgress, UnitType.ARCHER);
             setRecruitProgress(RecruitKnightProgress, UnitType.KNIGHT);
             setRecruitProgress(RecruitSettlerProgress, UnitType.SETTLER);
+            setRecruitProgress(RecruitTraderProgress, UnitType.TRADER);
 
             setBuildingLevel(LevelBarracks, BuildingType.BARRACKS);
             setBuildingLevel(LevelStable  , BuildingType.STABLE);
@@ -159,6 +161,11 @@ namespace Plevian.Villages
         private void RecruitSettler_Click(object sender, RoutedEventArgs e)
         {
             Village.recruit(new Settler(1));
+        }
+
+        private void RecruitTrader_Click(object sender, RoutedEventArgs e)
+        {
+            Village.recruit(new Trader(1));
         }
 
 

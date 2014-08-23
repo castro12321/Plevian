@@ -12,7 +12,7 @@ namespace Plevian.Players
         public readonly string name;
         public readonly Color color;
 
-        private List<Village> villages = new List<Village>();
+        public ObservableCollection<Village> villages = new ObservableCollection<Village>();
         public ObservableCollection<Message> messages = new ObservableCollection<Message>();
 
         public Village Capital
@@ -23,11 +23,12 @@ namespace Plevian.Players
             }
         }
 
-        public IReadOnlyCollection<Village> Villages
+        // TODO: remove
+        public ObservableCollection<Village> Villages
         {
             get
             {
-                return villages.AsReadOnly();
+                return villages;
             }
         }
 

@@ -73,11 +73,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GUI\TradeWindow.xaml.cs">
+      <DependentUpon>TradeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\SendUnitsWindow.xaml.cs">
       <DependentUpon>SendUnitsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\UnitSelector.xaml.cs">
       <DependentUpon>UnitSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\VillagePicker.xaml.cs">
+      <DependentUpon>VillagePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\VillageRecord.xaml.cs">
       <DependentUpon>VillageRecord.xaml</DependentUpon>
@@ -105,6 +111,7 @@
     </Compile>
     <Compile Include="Orders\AttackOrder.cs" />
     <Compile Include="Orders\CaptureOrder.cs" />
+    <Compile Include="Orders\TradeOrder.cs" />
     <Compile Include="Orders\Order.cs" />
     <Compile Include="Orders\OrderControl.xaml.cs">
       <DependentUpon>OrderControl.xaml</DependentUpon>
@@ -113,7 +120,9 @@
     <Compile Include="Orders\CreateVillage.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
     <Compile Include="Players\Player.cs" />
+    <Compile Include="Transaction.cs" />
     <Compile Include="Units\Duke.cs" />
+    <Compile Include="Units\Trader.cs" />
     <Compile Include="Units\Settler.cs" />
     <Compile Include="Units\UnitFactory.cs" />
     <Compile Include="Util\Utils.cs" />
@@ -142,11 +151,19 @@
     <Compile Include="Villages\VillageTab.xaml.cs">
       <DependentUpon>VillageTab.xaml</DependentUpon>
     </Compile>
+    <Page Include="GUI\TradeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="GUI\SendUnitsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\UnitSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\VillagePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

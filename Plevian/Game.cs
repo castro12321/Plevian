@@ -59,6 +59,7 @@ namespace Plevian
             enemy.addVillage(hamburger);
             addPlayer(enemy);
 
+            village1.addUnit(new Trader(3));
             village1.addUnit(new Knight(1000));
             village2.addUnit(new Knight(200));
             village2.addUnit(new Archer(500));

@@ -10,14 +10,13 @@ using Plevian.Units;
 using Plevian.Maps;
 using Plevian.Players;
 using Plevian.Orders;
-using System.Collections.ObjectModel;
 
 namespace Plevian.Villages
 {
     public class Village : Tile
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
-        public ObservableCollection<Order> orders = new ObservableCollection<Order>();
+        public List<Order> orders = new List<Order>();
         public Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         public List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
@@ -65,12 +64,12 @@ namespace Plevian.Villages
 
         public void addResources(Resources add)
         {
-            resources = resources + add;
+            resources += add;
         }
 
         public void takeResources(Resources take)
         {
-            resources = resources - take;
+            resources -= take;
         }
 
         /// <summary>
@@ -234,6 +233,11 @@ namespace Plevian.Villages
             this.army += army;
         }
 
+        public void takeArmy(Army army)
+        {
+            this.army -= army;
+        }
+
         public void addUnit(Unit unit)
         {
             if (army.contain(unit.getUnitType()))
@@ -253,15 +257,9 @@ namespace Plevian.Villages
                     order.turnBack();
             }
         }
-
         public override string ToString()
         {
             return name;
-        }
-
-        public void test()
-        {
-            name += "A";
         }
     }
 }

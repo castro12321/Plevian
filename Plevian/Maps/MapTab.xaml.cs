@@ -65,6 +65,7 @@ namespace Plevian.Maps
 
             EnterVillageButton.IsEnabled = false;
             SendUnitsButton.IsEnabled = false;
+            SendResourcesButton.IsEnabled = false;
             
             if(tile.type == TerrainType.PLAINS || tile.type == TerrainType.VILLAGE)
             {
@@ -74,6 +75,8 @@ namespace Plevian.Maps
 
             if(tile.type == TerrainType.VILLAGE)
             {
+                SendResourcesButton.IsEnabled = true;
+
                 Village village = tile as Village;
                 owner.Content = village.Owner.name;
                 VillageName.Content = village.name;
@@ -114,6 +117,14 @@ namespace Plevian.Maps
         private void OnSendUnitsClick(object sender, RoutedEventArgs e)
         {
             SendUnitsWindow window = new SendUnitsWindow(Game.player, clickedTile);
+            window.Show();
+            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
+            MainWindow.getInstance().IsEnabled = false;
+        }
+
+        private void OnSendResourcesClick(object sender, RoutedEventArgs e)
+        {
+            TradeWindow window = new TradeWindow(clickedTile as Village);
             window.Show();
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
             MainWindow.getInstance().IsEnabled = false;

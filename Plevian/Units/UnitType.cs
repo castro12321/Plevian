@@ -13,5 +13,6 @@ namespace Plevian.Units
         KNIGHT,
         DUKE,
         SETTLER,
+        TRADER,
     };
 }

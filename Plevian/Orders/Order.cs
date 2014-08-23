@@ -26,7 +26,6 @@ namespace Plevian.Orders
         protected Tile _destination;
         protected Seconds duration;
         protected GameTime endTime;
-
         protected float timePerTile;
 
 
