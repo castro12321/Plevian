@@ -1,17 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Plevian.Resource
 {
-    public class Resources
+    public class Resources : DependencyObject
     {
-        public int food {get; private set;}
-        public int wood {get; private set;}
-        public int iron {get; private set;}
-        public int stone {get; private set;}
+        public static readonly DependencyProperty FoodProperty =
+            DependencyProperty.Register("food", typeof(int),
+            typeof(Resources), new FrameworkPropertyMetadata(0));
+        public int food
+        {
+            get { return (int)GetValue(FoodProperty); }
+            set { SetValue(FoodProperty, value); }
+        }
+
+        public static readonly DependencyProperty WoodProperty =
+            DependencyProperty.Register("wood", typeof(int),
+            typeof(Resources), new FrameworkPropertyMetadata(0));
+        public int wood
+        {
+            get { return (int)GetValue(WoodProperty); }
+            set { SetValue(WoodProperty, value); }
+        }
+
+        public static readonly DependencyProperty IronProperty =
+            DependencyProperty.Register("iron", typeof(int),
+            typeof(Resources), new FrameworkPropertyMetadata(0));
+        public int iron
+        {
+            get { return (int)GetValue(IronProperty); }
+            set { SetValue(IronProperty, value); }
+        }
+
+        public static readonly DependencyProperty StoneProperty =
+            DependencyProperty.Register("stone", typeof(int),
+            typeof(Resources), new FrameworkPropertyMetadata(0));
+        public int stone
+        {
+            get { return (int)GetValue(StoneProperty); }
+            set { SetValue(StoneProperty, value); }
+        }
         
         public Resources(int food, int wood, int iron, int stone)
         {
@@ -29,6 +62,24 @@ namespace Plevian.Resource
         public Boolean canAfford(Resources price)
         {
             return this >= price;
+        }
+
+        public void Add(Resources toAdd)
+        {
+            Resources added = this + toAdd;
+            food = added.food;
+            wood = added.wood;
+            iron = added.iron;
+            stone = added.stone;
+        }
+
+        public void Substract(Resources toSubstract)
+        {
+            Resources substracted = this - toSubstract;
+            food = substracted.food;
+            wood = substracted.wood;
+            iron = substracted.iron;
+            stone = substracted.stone;
         }
 
         public static Resources operator +(Resources lh, Resources rh)
@@ -101,16 +152,6 @@ namespace Plevian.Resource
         public override string ToString()
         {
             return "F: " + food + " W:" + wood + " S:" + stone + " I: " + iron;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if(obj is Resources)
-            {
-                Resources other = (Resources)obj;
-                return this == other;
-            }
-            return false;
         }
 
         /// <summary>
