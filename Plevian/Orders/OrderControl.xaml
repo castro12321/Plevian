@@ -12,7 +12,7 @@
         <ns:OrderTypeToStringConverter x:Key="orderConverter" />
         <sec:SecondsToStringConverter x:Key="durationConverter" />
     </UserControl.Resources>
-    <StackPanel Orientation="Horizontal" >
+    <StackPanel Name="StackPanel" Orientation="Horizontal" ToolTip="ASD" ToolTipOpening="onToolTipShow" >
         <Label Name="Destination" Content="{Binding Destination, Converter={StaticResource converter}}" />
         <Label Name="Duration" Content="{Binding Duration, Converter={StaticResource durationConverter}}"  />
         <Label Name="OrderType" Content="{Binding ., Converter={StaticResource orderConverter}}" />

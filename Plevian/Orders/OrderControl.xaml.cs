@@ -1,4 +1,5 @@
 ﻿using Plevian.Maps;
+using Plevian.Units;
 using Plevian.Villages;
 using System;
 using System.Collections.Generic;
@@ -80,6 +81,25 @@ namespace Plevian.Orders
         public OrderControl()
         {
             InitializeComponent();
+        }
+
+        private void onToolTipShow(object sender, ToolTipEventArgs e)
+        {
+            if (this.DataContext == null || !(this.DataContext is Order))
+                return;
+            Order order = this.DataContext as Order;
+            int sum = 0;
+            string tooltip = "";
+            foreach (var pair in order.army.getUnits())
+            {
+                string unitName = Enum.GetName(typeof(UnitType), pair.Key);
+                tooltip += "\n" + pair.Value.ToString();
+                sum += pair.Value.quanity;
+            }
+
+            tooltip = "Units : " + sum +  tooltip;
+            StackPanel.ToolTip = tooltip;
+
         }
     }
 }
