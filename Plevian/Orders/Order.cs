@@ -68,8 +68,7 @@ namespace Plevian.Orders
         {
             isGoingBack = true;
 
-            float distance = origin.location.distance(Destination.location);
-            Seconds newDuration = new Seconds((int)(timePerTile * distance));
+            Seconds newDuration = OverallTime.copy() as Seconds;
             newDuration.seconds -= duration.seconds;
             duration = newDuration;
 
@@ -130,6 +129,21 @@ namespace Plevian.Orders
             {
                 _type = value;
                 NotifyPropertyChanged();
+            }
+        }
+
+
+        private Seconds _OverallTime;
+        public Seconds OverallTime
+        {
+            get
+            {
+                if(_OverallTime == null)
+                {
+                    float distance = origin.location.distance(Destination.location);
+                    _OverallTime = new Seconds((int)(timePerTile * distance));
+                }
+                return _OverallTime;
             }
         }
 

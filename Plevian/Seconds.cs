@@ -42,5 +42,10 @@ namespace Plevian
             return seconds.ToString();
         }
 
+        public override GameTime copy()
+        {
+            return new Seconds(this.seconds);
+        }
+
     }
 }

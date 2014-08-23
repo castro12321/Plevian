@@ -66,6 +66,30 @@ namespace Plevian.Orders
         }
     }
 
+    public class progressBarConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType,
+        object parameter, CultureInfo culture)
+        {
+            if (!(value is Order))
+                return "/ERROR/";
+            // Do the conversion from bool to visibility
+            Order order = value as Order;
+            int remaining = order.Duration.seconds;
+            int overall = order.OverallTime.seconds;
+
+            int progress = ((overall - remaining)*100) / overall;
+            return progress;
+        }
+
+        public object ConvertBack(object value, Type targetType,
+         object parameter, CultureInfo culture)
+        {
+            return null; //NO CONVERSION
+        }
+    }
+    
+
 
     /// <summary>
     /// Interaction logic for OrderControl.xaml

@@ -11,10 +11,13 @@
         <ns:TileToStringConverter x:Key="converter" />
         <ns:OrderTypeToStringConverter x:Key="orderConverter" />
         <sec:SecondsToStringConverter x:Key="durationConverter" />
+        <ns:progressBarConverter x:Key="progressConverter" />
     </UserControl.Resources>
     <StackPanel Name="StackPanel" Orientation="Horizontal" ToolTip="ASD" ToolTipOpening="onToolTipShow" >
         <Label Name="Destination" Content="{Binding Destination, Converter={StaticResource converter}}" />
         <Label Name="Duration" Content="{Binding Duration, Converter={StaticResource durationConverter}}"  />
-        <Label Name="OrderType" Content="{Binding ., Converter={StaticResource orderConverter}}" />
+        <ProgressBar Name="ProgressBar"  Value="{Binding ., Converter={StaticResource progressConverter}}" Width="100" VerticalAlignment="Center">
+        </ProgressBar>
+        <Label Name="OrderType" Content="{Binding Duration, Converter={StaticResource orderConverter} }" />
     </StackPanel>
 </UserControl>
