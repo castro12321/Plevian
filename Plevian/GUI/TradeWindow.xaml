@@ -1,0 +1,40 @@
+﻿<Window x:Class="Plevian.GUI.TradeWindow"
+        xmlns:plevian="clr-namespace:Plevian.GUI"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AttackWindow" Height="556" Width="536" Closed="onWindowClose">
+    <StackPanel Orientation="Vertical">
+
+        <plevian:VillagePicker x:Name="villagePicker" MinHeight="100" Background="Red"/>
+        
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label   MinWidth="50" Content="Food: "/>
+                <TextBox MinWidth="50" Text="0" Name="foodToSend"/>
+                <Button  MinWidth="50" Content="{Binding food}" Name="maxFood" Click="maxFood_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label   MinWidth="50" Content="Wood: "/>
+                <TextBox MinWidth="50" Text="0" Name="woodToSend"/>
+                <Button  MinWidth="50" Content="{Binding wood}" Name="maxWood" Click="maxWood_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label   MinWidth="50" Content="Iron: "/>
+                <TextBox MinWidth="50" Text="0" Name="ironToSend"/>
+                <Button  MinWidth="50" Content="{Binding iron}" Name="maxIron" Click="maxIron_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label   MinWidth="50" Content="Stone: "/>
+                <TextBox MinWidth="50" Text="0" Name="stoneToSend"/>
+                <Button  MinWidth="50" Content="{Binding stone}" Name="maxStone" Click="maxStone_Click"/>
+            </StackPanel>
+            
+            <Label Content="TODO: Wydzielic unitselector jako niezalezny komponent pokazujacy jednostki do wybrania"/>
+            <Label Content="    Otrzymuje w argumencie wioske do ktorej ma sie bindowac"/>
+            <Label Content="    Wykorzystywany w sendUnitsWindow oraz tutaj"/>
+            
+            <Button Content="Send" Click="SendButton_Click"/>
+            
+        </StackPanel>
+    </StackPanel>
+</Window>

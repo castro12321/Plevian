@@ -64,12 +64,12 @@ namespace Plevian.Villages
 
         public void addResources(Resources add)
         {
-            resources = resources + add;
+            resources += add;
         }
 
         public void takeResources(Resources take)
         {
-            resources = resources - take;
+            resources -= take;
         }
 
         /// <summary>
@@ -233,6 +233,11 @@ namespace Plevian.Villages
             this.army += army;
         }
 
+        public void takeArmy(Army army)
+        {
+            this.army -= army;
+        }
+
         public void addUnit(Unit unit)
         {
             if (army.contain(unit.getUnitType()))
@@ -251,6 +256,10 @@ namespace Plevian.Villages
                 if (order.isGoingBack == false)
                     order.turnBack();
             }
+        }
+        public override string ToString()
+        {
+            return name;
         }
     }
 }

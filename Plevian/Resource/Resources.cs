@@ -8,11 +8,10 @@ namespace Plevian.Resource
 {
     public class Resources
     {
-        public readonly int 
-            food,
-            wood,
-            iron,
-            stone;
+        public int food {get; private set;}
+        public int wood {get; private set;}
+        public int iron {get; private set;}
+        public int stone {get; private set;}
         
         public Resources(int food, int wood, int iron, int stone)
         {
@@ -86,6 +85,8 @@ namespace Plevian.Resource
 
         public static bool operator == (Resources lh, Resources rh)
         {
+            if (object.Equals(lh, null) || object.Equals(rh, null))
+                return object.Equals(lh, null) && object.Equals(rh, null);
             return lh.food == rh.food
                 && lh.wood == rh.wood
                 && lh.iron == rh.iron
@@ -94,10 +95,7 @@ namespace Plevian.Resource
 
         public static bool operator != (Resources lh, Resources rh)
         {
-            return lh.food != rh.food
-                || lh.wood != rh.wood
-                || lh.iron != rh.iron
-                || lh.stone != rh.stone;
+            return !(lh == rh);
         }
 
         public override string ToString()
