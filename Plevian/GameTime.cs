@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plevian.Debugging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -114,9 +115,11 @@ namespace Plevian
 
         public static bool operator ==(GameTime lh, GameTime rh)
         {
-            if ((object)lh == (object)rh) return true;
-            if ((object)lh == null || (object)rh == null) return false;
-            return lh.Equals(rh.time);
+            if (object.Equals(lh, rh))
+                return true;
+            if (object.Equals(lh, null) || object.Equals(rh, null))
+                return false;
+            return lh.time.Equals(rh.time);
         }
 
         public static bool operator !=(GameTime lh, GameTime rh)
