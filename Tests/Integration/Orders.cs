@@ -132,15 +132,44 @@ namespace Tests.Integration
             Army loser = new Army() + new Knight(1);
             Army winner = new Army() + new Archer(10000);
 
-            Village testVillage = new Village(new Location(0,0), null, "");
-            testVillage.addArmy(loser);
-            Village winnersVillage = new Village(new Location(10,10), null, "");
+            Player pl1 = new Player("", Color.Red);
+            Player pl2 = new Player("", Color.Red);
+
+            Village testVillage = new Village(new Location(0, 0), pl1, "");
+            testVillage.addArmy(new Army() + new Knight(1));
+            Village winnersVillage = new Village(new Location(10, 10), pl2, "");
             winnersVillage.addArmy(winner);
 
             Order losersOrder = new AttackOrder(testVillage, winnersVillage, loser);
-            for (int i = 0; i < losersOrder.OverallTime.seconds; ++i)
+            testVillage.addOrder(losersOrder);
+            for (int i = 0; i < losersOrder.OverallTime.seconds + 1; ++i)
                 testVillage.tick();
             Assert.IsTrue(testVillage.orders.Count == 0);
+        }
+
+        [TestMethod]
+        public void takeoverTest()
+        {
+            Player Ceasar = new Player("Ceaser the great", Color.Yellow);
+            Player weakling = new Player("Weakling", Color.Black);
+
+            Army loser = new Army() + new Knight(1);
+            Army winner = new Army() + new Archer(10000) + new Duke(1);
+
+            Village testVillage = new Village(new Location(0, 0), weakling, "");
+            testVillage.addArmy(loser);
+            Village winnersVillage = new Village(new Location(10, 10), Ceasar, "");
+            winnersVillage.addArmy(new Army() + new Archer(10000) + new Duke(1));
+
+            Ceasar.addVillage(winnersVillage);
+            weakling.addVillage(testVillage);
+
+            Order WinnersOrder = new CaptureOrder(winnersVillage, testVillage, winner);
+            winnersVillage.addOrder(WinnersOrder);
+            for (int i = 0; i < WinnersOrder.OverallTime.seconds + 1; ++i)
+                winnersVillage.tick();
+            Assert.IsTrue(winnersVillage.orders.Count == 0);
+            Assert.IsTrue(testVillage.Owner == Ceasar);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Orders
 {
-    class CaptureOrder : AttackOrder
+    public class CaptureOrder : AttackOrder
     {
         public CaptureOrder(Tile origin, Tile destination, Army army)
             : base(origin, destination, army)

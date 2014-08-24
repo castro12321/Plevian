@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Units
 {
-    class Duke : Unit
+    public class Duke : Unit
     {
         public Duke(int quanity = 0)
             : base(quanity)
