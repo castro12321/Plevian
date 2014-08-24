@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Orders
 {
-    class AttackOrder : Order
+    public class AttackOrder : Order
     {
         Resources loot = new Resources();
 
