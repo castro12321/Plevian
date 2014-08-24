@@ -19,12 +19,12 @@ using System.Threading.Tasks;
 namespace Tests.Integration
 {
     [TestClass]
-    public class Building : TestWithTime
+    public class BuildingTests : TestWithTime
     {
         Player player;
         Village village;
 
-        public Building()
+        public BuildingTests()
         {
             fakeTime(0);
             player = new Player("test", Color.Blue);
@@ -47,7 +47,8 @@ namespace Tests.Integration
 
             Assert.IsFalse(village.isBuilt(BuildingType.TOWN_HALL));
 
-            addFakeTime(15);
+            Building townHallTemplate = Building.Template(BuildingType.TOWN_HALL);
+            addFakeTime(townHallTemplate.getConstructionTimeFor(1).time);
             GameTime.update();
             village.tick();
 

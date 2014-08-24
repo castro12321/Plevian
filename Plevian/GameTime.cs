@@ -15,7 +15,7 @@ namespace Plevian
         private static ulong lastSystemTime;
         private static GameTime gameTime;
 
-        protected int time;
+        public int time;
         public static GameTime now
         {
             get
