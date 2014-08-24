@@ -32,17 +32,10 @@ namespace Plevian.Orders
 
         public Order(Tile origin, Tile destination, Army army, OrderType type)
         {
-            if (origin == null)
-                throw new ArgumentException("origin is null");
-            if (destination == null)
-                throw new ArgumentException("destination is null");
-            if (army == null)
-                throw new ArgumentException("army is null");
-
             this.origin = origin;
             Destination = destination;
             this.army = army;
-            this.timePerTile = army.getMovementSpeed() / 5;
+            this.timePerTile = army.getMovementSpeed();
             this.completed = false;
             this.isGoingBack = false;
             this.Type = type;

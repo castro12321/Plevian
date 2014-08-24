@@ -70,13 +70,15 @@ namespace Plevian
             village3.recruit(new Warrior(1000));
             berlin.addUnit(new Knight(100));
 
+
+            /* This sumething can test orders
             for(int i = 17;i < 30;++i)
             {
                 Army army = new Army();
                 army += new Knight(20);
                 Order ord = new AttackOrder(village1, berlin, army);
                 village1.addOrder(ord);
-            }
+            }*/
 
         }
 
