@@ -79,6 +79,7 @@
     <Compile Include="Units\TestMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Units\testArmy.cs" />
+    <Compile Include="Village\Building.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Plevian\Plevian.csproj">
@@ -89,6 +90,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
