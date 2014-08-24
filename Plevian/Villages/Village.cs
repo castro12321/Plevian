@@ -103,7 +103,7 @@ namespace Plevian.Villages
         {
             foreach (KeyValuePair<BuildingType, Building> building in buildings)
             {
-                Logger.village(building.Value.getDisplayName() + " produces " + building.Value.getProduction());
+                //Logger.village(building.Value.getDisplayName() + " produces " + building.Value.getProduction());
                 addResources(building.Value.getProduction());
             }
         }
