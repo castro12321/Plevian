@@ -82,7 +82,7 @@ namespace Plevian.Villages
             OrdersTick();
             finishBuilding();
             finishRecruiting();
-            Logger.village("village resources " + resources);
+            //Logger.village("village resources " + resources);
         }
         private void OrdersTick()
         {
