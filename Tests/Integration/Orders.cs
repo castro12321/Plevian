@@ -18,63 +18,111 @@ namespace Tests.Integration
     [TestClass]
     public class Orders : TestWithTime
     {
+        Player player;
+        Village village1, village2;
+        Tile plains;
+        Army trader, traders;
+        Resources testResources;
+
         public Orders()
         {
             fakeTime(0);
+            player = new Player("test", Color.Blue);
+            plains = new Tile(new Location(0, 0), TerrainType.PLAINS);
+            village1 = new Village(new Location(0, 0), player, "village1");
+            village2 = new Village(new Location(0, 3), player, "village2");
+            trader = new Army();
+            trader += UnitFactory.createUnit(UnitType.TRADER, 1);
+            traders = new Army();
+            traders += UnitFactory.createUnit(UnitType.TRADER, 3);
+            testResources = new Resources();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SourceNullThrowsException()
+        {
+            new TradeOrder(null, village2, trader, testResources, null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TargetNullThrowsException()
+        {
+            new TradeOrder(village1, null, trader, testResources, null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ArmyNullThrowsException()
+        {
+            new TradeOrder(village1, village2, null, testResources, null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Target tile must be village")]
+        public void TargetNotVillageThrowsException()
+        {
+            new TradeOrder(village1, plains, trader, testResources, null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(KeyNotFoundException))]
+        public void NoTradersInArmyThrowsException()
+        {
+            new TradeOrder(village1, plains, new Army(), testResources, null);
         }
 
         [TestMethod]
         public void Trading()
         {
-            Player player = new Player("test", Color.Blue);
-            Village source = new Village(new Location(0, 0), player, "source");
-            Village target = new Village(new Location(0, 3), player, "target");
-            source.resources.Clear();
-            target.resources.Clear();
-            source.resources.Add(new Resources(100, 200, 300, 400));
-            Army traders = new Army();
-            traders += UnitFactory.createUnit(UnitType.TRADER, 3);
-            source.addArmy(traders);
+            village1.resources.Clear();
+            village1.resources.Add(new Resources(100, 200, 300, 400));
+            village1.addArmy(traders);
 
-            Assert.AreEqual(100, source.resources.food);
-            Assert.AreEqual(200, source.resources.wood);
-            Assert.AreEqual(300, source.resources.iron);
-            Assert.AreEqual(400, source.resources.stone);
-            Assert.AreEqual(0, target.resources.food);
-            Assert.AreEqual(0, target.resources.wood);
-            Assert.AreEqual(0, target.resources.iron);
-            Assert.AreEqual(0, target.resources.stone);
+            village2.resources.Clear();
 
-            Assert.AreEqual(3, source.army.get(UnitType.TRADER).quanity);
+            // Test initial villages resources
+            Assert.AreEqual(100, village1.resources.food);
+            Assert.AreEqual(200, village1.resources.wood);
+            Assert.AreEqual(300, village1.resources.iron);
+            Assert.AreEqual(400, village1.resources.stone);
+            Assert.AreEqual(0, village2.resources.food);
+            Assert.AreEqual(0, village2.resources.wood);
+            Assert.AreEqual(0, village2.resources.iron);
+            Assert.AreEqual(0, village2.resources.stone);
 
-            Army trader = new Army();
-            trader += UnitFactory.createUnit(UnitType.TRADER, 1);
+            // Before sending any traders, village should have initial value of 3 traders
+            Assert.AreEqual(3, village1.army.get(UnitType.TRADER).quanity);
+
             Resources toSend = new Resources(50, 100, 150, 200);
-            Order order = new TradeOrder(source, target, trader, toSend, null);
-            source.addOrder(order);
+            Order order = new TradeOrder(village1, village2, trader, toSend, null);
+            village1.addOrder(order);
 
-            Assert.AreEqual(2, source.army.get(UnitType.TRADER).quanity);
+            // After sending one trader, village should have 2 traders
+            Assert.AreEqual(2, village1.army.get(UnitType.TRADER).quanity);
 
             // Need 9 ticks for traders to go to the target
             order.tick(); order.tick(); order.tick();
             order.tick(); order.tick(); order.tick();
             order.tick(); order.tick(); order.tick();
 
-            Assert.AreEqual(50, source.resources.food);
-            Assert.AreEqual(100, source.resources.wood);
-            Assert.AreEqual(150, source.resources.iron);
-            Assert.AreEqual(200, source.resources.stone);
-            Assert.AreEqual(50, target.resources.food);
-            Assert.AreEqual(100, target.resources.wood);
-            Assert.AreEqual(150, target.resources.iron);
-            Assert.AreEqual(200, target.resources.stone);
+            Assert.AreEqual(50, village1.resources.food);
+            Assert.AreEqual(100, village1.resources.wood);
+            Assert.AreEqual(150, village1.resources.iron);
+            Assert.AreEqual(200, village1.resources.stone);
+            Assert.AreEqual(50, village2.resources.food);
+            Assert.AreEqual(100, village2.resources.wood);
+            Assert.AreEqual(150, village2.resources.iron);
+            Assert.AreEqual(200, village2.resources.stone);
 
             // Need 9 ticks for traders to go back to the source
             order.tick(); order.tick(); order.tick();
             order.tick(); order.tick(); order.tick();
             order.tick(); order.tick(); order.tick();
 
-            Assert.AreEqual(3, source.army.get(UnitType.TRADER).quanity);
+            // Now source village should contain 3 traders again
+            Assert.AreEqual(3, village1.army.get(UnitType.TRADER).quanity);
         }
     }
 }

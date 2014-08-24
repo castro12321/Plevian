@@ -25,7 +25,7 @@ namespace Plevian.Orders
             if (!traders.contain(UnitType.TRADER))
                 throw new KeyNotFoundException("You need a trader to... trade");
             if(destination.type != TerrainType.VILLAGE)
-                throw new Exception("You can trade with other villages only");
+                throw new ArgumentException("You can trade with other villages only");
 
             Village sourceVillage = origin as Village;
             if (sentResources != null)
