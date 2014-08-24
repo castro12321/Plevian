@@ -9,7 +9,6 @@ namespace Plevian.Buildings
 {
     public abstract class Building
     {
-        private static Dictionary<BuildingType, Building> buildingsTemplate = getEmptyBuildingsList();
         public readonly BuildingType type;
         public int level { get; private set; }
 
@@ -76,11 +75,6 @@ namespace Plevian.Buildings
             buildings.Add(BuildingType.LUMBER_MILL, new LumberMill());
             buildings.Add(BuildingType.MINE, new Mine());
             return buildings;
-        }
-
-        public static Building Template(BuildingType type)
-        {
-            return buildingsTemplate[type];
         }
     }
 }

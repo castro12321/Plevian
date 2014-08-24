@@ -47,8 +47,7 @@ namespace Tests.Integration
 
             Assert.IsFalse(village.isBuilt(BuildingType.TOWN_HALL));
 
-            Building townHallTemplate = Building.Template(BuildingType.TOWN_HALL);
-            addFakeTime(townHallTemplate.getConstructionTimeFor(1).time);
+            addFakeTime(new TownHall().getConstructionTimeFor(1).time);
             GameTime.update();
             village.tick();
 
