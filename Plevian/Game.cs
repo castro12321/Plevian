@@ -61,7 +61,7 @@ namespace Plevian
             addPlayer(enemy);
 
             village1.addUnit(new Trader(3));
-            village1.addUnit(new Knight(1000));
+            village1.addUnit(new Knight(100000));
             village2.addUnit(new Knight(200));
             village2.addUnit(new Archer(500));
             village1.build(BuildingType.TOWN_HALL);
@@ -69,6 +69,16 @@ namespace Plevian
             village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
             village3.recruit(new Warrior(1000));
             berlin.addUnit(new Knight(100));
+
+
+            /* This sumething can test orders
+            for(int i = 17;i < 30;++i)
+            {
+                Army army = new Army();
+                army += new Knight(20);
+                Order ord = new AttackOrder(village1, berlin, army);
+                village1.addOrder(ord);
+            }*/
 
         }
 

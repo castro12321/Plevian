@@ -63,7 +63,7 @@ namespace Plevian.Battles
                 }
                 defender.getUnits().Clear();
 
-                float attackerLosses = ((float)overallDefense / (float)attackStrength) + ((float)Math.Sqrt(attackStrength)/(float)overallDefense);
+                float attackerLosses = ((float)overallDefense / (float)attackStrength) - ((float)Math.Sqrt(attackStrength)/(float)overallDefense);
                 if (attackerLosses > 0f && attackerLosses <= 1f)
                 {
                     foreach (var pair in attacker.getUnits())
@@ -83,7 +83,7 @@ namespace Plevian.Battles
                 }
                 attacker.getUnits().Clear();
 
-                float defenderLosses = ((float)attackStrength / (float)overallDefense) + ((float)Math.Sqrt(overallDefense) / (float)attackStrength);
+                float defenderLosses = ((float)attackStrength / (float)overallDefense) - ((float)Math.Sqrt(overallDefense) / (float)attackStrength);
                 if (defenderLosses > 0f && defenderLosses <= 1f)
                 {
                     foreach (var pair in defender.getUnits())

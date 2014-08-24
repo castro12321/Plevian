@@ -14,7 +14,7 @@ namespace Plevian.Units
         {
         }
 
-        public static readonly int attackStrength = 20;
+        public static readonly int attackStrength = 40;
 
         public static readonly int defenseOnInfantry = 50;
         public static readonly int defenseOnCavalry = 5;
