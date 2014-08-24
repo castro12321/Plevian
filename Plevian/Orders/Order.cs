@@ -35,7 +35,7 @@ namespace Plevian.Orders
             this.origin = origin;
             Destination = destination;
             this.army = army;
-            this.timePerTile = army.getMovementSpeed();
+            this.timePerTile = army.getMovementSpeed() / 5;
             this.completed = false;
             this.isGoingBack = false;
             this.Type = type;
