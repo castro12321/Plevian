@@ -62,6 +62,37 @@ namespace Tests.Battles
             //Assert.IsTrue(false);
         }
 
+        [TestMethod]
+        public void testBattleFormula()
+        {
+            Logger.turnOff();
+            Army attacker = new Army(), defender = new Army();
+
+            defender += new Warrior(1000);
+            int losses = -1;
+            for(int i = 0;defender.size() > 0;++i)
+            {
+                attacker = new Army();
+                attacker += new Knight(100);
+
+                Battle battle = new Battle(attacker, defender, 1f, 1f, 0);
+                Report report = battle.makeBattle();
+
+                int current_losses = report.defenderLosses[UnitType.WARRIOR];
+                if(losses == -1)
+                {
+                    losses = current_losses;
+                }
+                else
+                {
+                    Logger.log("losess = " + losses + ", current - " + current_losses);
+                    Assert.IsTrue(current_losses >= losses || current_losses == report.defenderArmy[UnitType.WARRIOR]);
+                    losses = current_losses;
+                }
+
+            }
+
+        }
 
     }
 }

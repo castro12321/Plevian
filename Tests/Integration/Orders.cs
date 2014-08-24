@@ -103,9 +103,10 @@ namespace Tests.Integration
             Assert.AreEqual(2, village1.army.get(UnitType.TRADER).quanity);
 
             // Need 9 ticks for traders to go to the target
-            order.tick(); order.tick(); order.tick();
-            order.tick(); order.tick(); order.tick();
-            order.tick(); order.tick(); order.tick();
+            for(int i = 0;i < order.OverallTime.seconds; ++ i)
+            {
+                order.tick(); 
+            }
 
             Assert.AreEqual(50, village1.resources.food);
             Assert.AreEqual(100, village1.resources.wood);
@@ -123,6 +124,23 @@ namespace Tests.Integration
 
             // Now source village should contain 3 traders again
             Assert.AreEqual(3, village1.army.get(UnitType.TRADER).quanity);
+        }
+
+        [TestMethod]
+        public void testLoserDisapearance()
+        {
+            Army loser = new Army() + new Knight(1);
+            Army winner = new Army() + new Archer(10000);
+
+            Village testVillage = new Village(new Location(0,0), null, "");
+            testVillage.addArmy(loser);
+            Village winnersVillage = new Village(new Location(10,10), null, "");
+            winnersVillage.addArmy(winner);
+
+            Order losersOrder = new AttackOrder(testVillage, winnersVillage, loser);
+            for (int i = 0; i < losersOrder.OverallTime.seconds; ++i)
+                testVillage.tick();
+            Assert.IsTrue(testVillage.orders.Count == 0);
         }
     }
 }
