@@ -32,8 +32,13 @@ namespace Plevian
     {
         public int seconds { get { return time; } set { time = value; } }
 
+        private static bool between(int value, int greaterOrEqualThan, int lessThan)
+        {
+            return value >= greaterOrEqualThan && value < lessThan;
+        }
+
         public Seconds(int seconds)
-            : base(seconds / speed)
+            : base(between(seconds, 1, 2) ? 1 : seconds / speed)
         {
         }
 

@@ -90,10 +90,15 @@ namespace Plevian
             return new GameTime(lh.time + rh.time);
         }
 
-        public static Seconds operator -(GameTime lh, GameTime rh)
+        public static GameTime operator -(GameTime lh, GameTime rh)
         {
             if (lh < rh) throw new Exception("Subtracting bigger time from lesser time");
-            return new Seconds(lh.time - rh.time);
+            return new GameTime(lh.time - rh.time);
+        }
+
+        public static GameTime operator *(GameTime lh, int rh)
+        {
+            return new GameTime(lh.time * rh);
         }
 
         public static bool operator >(GameTime lh, GameTime rh)
