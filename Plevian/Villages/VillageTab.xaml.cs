@@ -98,9 +98,9 @@ namespace Plevian.Villages
         {
             foreach (RecruitQueueItem queueItem in Village.recruitQueue)
             {
-                if (queueItem.unit.getUnitType() == type)
+                if (queueItem.toRecruit.getUnitType() == type)
                 {
-                    Seconds left = GameTime.now.diffrence(queueItem.endRecruiting);
+                    Seconds left = GameTime.now.diffrence(queueItem.end);
                     int minutes = left.seconds / 60;
                     int seconds = left.seconds % 60;
                     label.Content = minutes + ":" + seconds;

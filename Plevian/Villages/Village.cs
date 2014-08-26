@@ -19,7 +19,7 @@ namespace Plevian.Villages
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         public ObservableCollection<Order> orders = new ObservableCollection<Order>();
         public Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
-        public Queue<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
+        public Queue<RecruitQueueItem> recruitQueue = new Queue<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
         public GameTime buildTimeEnd { get; private set; }
         public Army army { get; private set; }
