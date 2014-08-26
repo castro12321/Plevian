@@ -19,7 +19,7 @@ namespace Plevian.Villages
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         public ObservableCollection<Order> orders = new ObservableCollection<Order>();
         public Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
-        public List<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
+        public Queue<RecruitQueueItem> recruitQueue = new List<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
         public GameTime buildTimeEnd { get; private set; }
         public Army army { get; private set; }
@@ -110,14 +110,14 @@ namespace Plevian.Villages
 
         private void finishBuilding()
         {
-            Logger.village("queue: " + buildingsQueue.Count);
+            //Logger.village("queue: " + buildingsQueue.Count);
             if(buildingsQueue.Count > 0)
             {
                 BuildingQueueItem queueItem = buildingsQueue.Peek();
-                Logger.village("item: " + queueItem.toBuild.ToString() + " " + GameTime.now + "/" + queueItem.end);
+                //Logger.village("item: " + queueItem.toBuild.ToString() + " " + GameTime.now + "/" + queueItem.end);
                 if (GameTime.now >= queueItem.end)
                 {
-                    Logger.village("Built! " + queueItem.toBuild.ToString());
+                    //Logger.village("Built! " + queueItem.toBuild.ToString());
                     buildings[queueItem.toBuild].upgrade();
                     buildingsQueue.Dequeue();
                 }
@@ -126,46 +126,21 @@ namespace Plevian.Villages
 
         private void finishRecruiting()
         {
-            if (recruitQueue.Count == 0) return;
-            // TODO: don't assume the tick is 1 second; use GameTime diff
-            float second = 1f;
-            RecruitQueueItem queue = recruitQueue[0];
-
-            if (queue.timeCurrent > 1f)
+            if (recruitQueue.Count > 0)
             {
-                queue.timeCurrent -= 1;
-            }
-            else
-            {
-                while (second > 0f && recruitQueue.Count > 0)
+                RecruitQueueItem queueItem = recruitQueue.Peek();
+                if (GameTime.now >= queueItem.end)
                 {
-                    while (second >= queue.timeCurrent && queue.remainingQuanity > 0)
-                    {
-                        second -= queue.timeCurrent;
-
-                        if (army.contain(queue.unit.getUnitType()))
-                            army.get(queue.unit.getUnitType()).quanity++;
-                        else
-                        {
-                            Unit clone = queue.unit.clone();
-                            clone.quanity = 1;
-                            army += clone;
-                        }
-
-                        queue.timeCurrent = queue.recruitTime;
-                        queue.remainingQuanity--;
-                    }
-                    if (queue.remainingQuanity > 0)
-                    {
-                        queue.timeCurrent -= second;
-                        second = 0f;
-                    }
+                    Unit toRecruit = queueItem.toRecruit;
+                    if (army.contain(toRecruit.getUnitType()))
+                        army.get(toRecruit.getUnitType()).quanity++;
                     else
                     {
-                        recruitQueue.RemoveAt(0);
-                        if (recruitQueue.Count == 0) return;
-                        queue = recruitQueue[0];
+                        Unit clone = toRecruit.clone();
+                        clone.quanity = 1;
+                        army += clone;
                     }
+                    recruitQueue.Dequeue();
                 }
             }
         }
@@ -203,17 +178,32 @@ namespace Plevian.Villages
         /// </summary>
         public void recruit(Unit unit)
         {
-            Resources neededResources = unit.getWholeUnitCost();
-            if (!resources.canAfford(neededResources))
-                throw new Exception("Not enough resources");
             if (unit.quanity == 0)
-                return;
+                throw new Exception("Cannot recruit 0 units");
+
+            // Reset recruit counter if needed
             if (recruitQueue.Count == 0)
                 recruitTimeEnd = GameTime.now;
-            takeResources(unit.getWholeUnitCost());
-            RecruitQueueItem newQueue = new RecruitQueueItem(unit, recruitTimeEnd.copy());
-            recruitTimeEnd += newQueue.duration;
-            recruitQueue.Add(newQueue);
+
+            // Take money
+            Resources neededResources = unit.getWholeUnitCost();
+            if (!resources.canAfford(neededResources))
+                throw new Exceptions.ExceptionNotEnoughResources();
+            takeResources(neededResources);
+
+            GameTime startTime = recruitTimeEnd.copy();
+
+            Unit newUnit = unit.clone();
+            newUnit.quanity = 1;
+
+            float recruitTimeFromNow = 0;
+            int unitsToRecruit = unit.quanity;
+            while(unitsToRecruit --> 0)
+            {
+                recruitTimeFromNow += unit.getRecruitTime();
+                recruitQueue.Enqueue(new RecruitQueueItem(startTime, recruitTimeEnd + new Seconds((int)recruitTimeFromNow), newUnit));
+            }
+            recruitTimeEnd += new Seconds((int)recruitTimeFromNow);
         }
 
         public void addOrder(Order order)
