@@ -33,7 +33,7 @@ namespace Plevian
         public int seconds { get { return time; } set { time = value; } }
 
         public Seconds(int seconds)
-            : base(seconds)
+            : base(seconds / speed)
         {
         }
 

@@ -12,10 +12,13 @@ namespace Plevian
     /// </summary>
     public class GameTime
     {
+        public static int speed = 2;
+        public static ulong uspeed = Convert.ToUInt32(speed);
         private static ulong lastSystemTime;
         private static GameTime gameTime;
 
         public int time;
+
         public static GameTime now
         {
             get
@@ -57,7 +60,7 @@ namespace Plevian
         public static ulong update()
         {
             ulong systemTime = SystemTime.now;
-            ulong datediff = systemTime - lastSystemTime;
+            ulong datediff = (systemTime - lastSystemTime);// *uspeed;
             gameTime.time += (int)datediff;
             lastSystemTime = systemTime;
             return datediff;
@@ -65,7 +68,7 @@ namespace Plevian
 
         public Seconds diffrence(GameTime other)
         {
-            return new Seconds(Math.Abs(time - other.time));
+            return new Seconds(Math.Abs(time - other.time) * speed);
         }
 
         private static class SystemTime
