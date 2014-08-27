@@ -178,6 +178,9 @@ namespace Plevian.Villages
         /// </summary>
         public void recruit(Unit unit)
         {
+            unit.quanity = 5; // TODO: remove
+            add logging for tests;
+
             if (unit.quanity == 0)
                 throw new Exception("Cannot recruit 0 units");
 

@@ -12,7 +12,7 @@ namespace Plevian
     /// </summary>
     public class GameTime
     {
-        public static int speed = 2;
+        public static int speed = 52;
         public static ulong uspeed = Convert.ToUInt32(speed);
         private static ulong lastSystemTime;
         private static GameTime gameTime;
