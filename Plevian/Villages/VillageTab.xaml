@@ -11,9 +11,9 @@
     </UserControl.Resources>
     
     <Grid Background="#FFE5E5E5">
-        
-        <DockPanel Background="GreenYellow">
-            <ScrollViewer DockPanel.Dock="Right" MinWidth="280" MinHeight="500">
+
+        <DockPanel>
+            <ScrollViewer DockPanel.Dock="Right" MinWidth="300" MinHeight="500">
                 <StackPanel Orientation="Vertical">
                     <!-- Resources -->
                     <Expander Header="Village Info" IsExpanded="True" >
@@ -35,82 +35,99 @@
                     </Expander>
 
                     <!-- Military -->
-                    <Expander Header="Military:" Margin="0,5,0,0">
+                    <Expander Name="Military" Header="Military" Margin="0,5,0,0">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                             <Label  Content="Warriors: " MinWidth="100"/>
                             <Label  Content="?"          MinWidth="45" Name="ResourcesWarriors"/>
-                            <Button Content="Recruit"    MinWidth="60" Name="RecruitWarrior" Click="RecruitWarrior_Click"/>
+                            <Button Content="Recruit"    MinWidth="60" Click="RecruitWarrior_Click"/>
                             <Label  Content="?%"         MinWidth="40" Name="RecruitWarriorProgress"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Archers: " MinWidth="100"/>
                             <Label  Content="?"         MinWidth="45" Name="ResourcesArchers"/>
-                            <Button Content="Recruit"   MinWidth="60" Name="RecruitArcher" Click="RecruitArcher_Click"/>
+                            <Button Content="Recruit"   MinWidth="60" Click="RecruitArcher_Click"/>
                             <Label  Content="?%"        MinWidth="40" Name="RecruitArcherProgress"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Knights: " MinWidth="100"/>
                             <Label  Content="?"         MinWidth="45" Name="ResourcesKnights"/>
-                            <Button Content="Recruit"   MinWidth="60" Name="RecruitKnight" Click="RecruitKnight_Click"/>
+                            <Button Content="Recruit"   MinWidth="60" Click="RecruitKnight_Click"/>
                             <Label  Content="?%"        MinWidth="40" Name="RecruitKnightProgress"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Settlers: " MinWidth="100"/>
                             <Label  Content="?"          MinWidth="45" Name="ResourcesSettlers"/>
-                            <Button Content="Recruit"    MinWidth="60" Name="RecruitSettler" Click="RecruitSettler_Click"/>
+                            <Button Content="Recruit"    MinWidth="60" Click="RecruitSettler_Click"/>
                             <Label  Content="?%"         MinWidth="40" Name="RecruitSettlerProgress"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Traders: "  MinWidth="100"/>
                             <Label  Content="?"          MinWidth="45" Name="ResourcesTraders"/>
-                            <Button Content="Recruit"    MinWidth="60" Name="RecruitTrader" Click="RecruitTrader_Click"/>
+                            <Button Content="Recruit"    MinWidth="60" Click="RecruitTrader_Click"/>
                             <Label  Content="?%"         MinWidth="40" Name="RecruitTraderProgress"/>
                         </StackPanel>
                     </StackPanel>
                     </Expander>
                     <!-- Buildings -->
-                    <Expander Header="Buildings:" Margin="0,5,0,0">
+                    <Expander Name="Buildings" Header="Buildings:" Margin="0,5,0,0">
                         <StackPanel Name="BuildingsPanel" Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label  Content="Barracks: "  MinWidth="100"/>
                                 <Label  Content="?"           MinWidth="45" Name="LevelBarracks"/>
-                                <Button Content="Upgrade"     MinWidth="60" Name="UpgradeBarracks" Click="UpgradeBarracks_Click"/>
+                                <Button Content="Upgrade"     MinWidth="60" Click="UpgradeBarracks_Click"/>
                                 <Label  Content="?%"          MinWidth="40" Name="UpgradeBarracksProgress"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label  Content="Town hall: " MinWidth="100"/>
                                 <Label  Content="?"           MinWidth="45" Name="LevelTownHall"/>
-                                <Button Content="Upgrade"     MinWidth="60" Name="UpgradeTownHall" Click="UpgradeTownHall_Click"/>
+                                <Button Content="Upgrade"     MinWidth="60" Click="UpgradeTownHall_Click"/>
                                 <Label  Content="?%"          MinWidth="40" Name="UpgradeTownHallProgress"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label  Content="Stable: "    MinWidth="100"/>
                                 <Label  Content="?"           MinWidth="45" Name="LevelStable"/>
-                                <Button Content="Upgrade"     MinWidth="60" Name="UpgradeStable" Click="UpgradeStable_Click"/>
+                                <Button Content="Upgrade"     MinWidth="60" Click="UpgradeStable_Click"/>
                                 <Label  Content="?%"          MinWidth="40" Name="UpgradeStableProgress"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label  Content="Farm: "      MinWidth="100"/>
                                 <Label  Content="?"           MinWidth="45" Name="LevelFarm"/>
-                                <Button Content="Upgrade"     MinWidth="60" Name="UpgradeFarm" Click="UpgradeFarm_Click"/>
+                                <Button Content="Upgrade"     MinWidth="60" Click="UpgradeFarm_Click"/>
                                 <Label  Content="?%"          MinWidth="40" Name="UpgradeFarmProgress"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label  Content="Lumber mill: " MinWidth="100"/>
                                 <Label  Content="?"           MinWidth="45" Name="LevelLumberMill"/>
-                                <Button Content="Upgrade"     MinWidth="60" Name="UpgradeLumberMill" Click="UpgradeLumberMill_Click"/>
+                                <Button Content="Upgrade"     MinWidth="60" Click="UpgradeLumberMill_Click"/>
                                 <Label  Content="?%"          MinWidth="40" Name="UpgradeLumberMillProgress"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label  Content="Mine: "      MinWidth="100"/>
                                 <Label  Content="?"           MinWidth="45" Name="LevelMine"/>
-                                <Button Content="Upgrade"     MinWidth="60" Name="UpgradeMine" Click="UpgradeMine_Click"/>
+                                <Button Content="Upgrade"     MinWidth="60" Click="UpgradeMine_Click"/>
                                 <Label  Content="?%"          MinWidth="40" Name="UpgradeMineProgress"/>
                             </StackPanel>
                         </StackPanel>
                     </Expander>
-                    
+
+                    <Expander Name="Technology" Header="Technology" Margin="0,5,0,0">
+                        <StackPanel Name="TechnologyPanel" Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label  Content="Lasers: "    MinWidth="100"/>
+                                <Label  Content="?"           MinWidth="45" Name="ResearchLasersState"/>
+                                <Button Content="Upgrade"     MinWidth="60" Click="ResearchLasers_Click"/>
+                                <Label  Content="?%"          MinWidth="40" Name="ResearchLasersProgress"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label  Content="Nukes: "     MinWidth="100"/>
+                                <Label  Content="?"           MinWidth="45" Name="ResearchNukesState"/>
+                                <Button Content="Upgrade"     MinWidth="60" Click="ResearchNukes_Click"/>
+                                <Label  Content="?%"          MinWidth="40" Name="ResearchNukesProgress"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Expander>
+
                     <Expander Header="Orders">
                         <ItemsControl Name="OrdersItemControl">
                             <ItemsControl.ItemsPanel>
@@ -136,7 +153,8 @@
             </ScrollViewer>
                 
             <!-- Village image -->
-            <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_village" Background="Purple" Margin="9,9,9,9" MinWidth="400" MinHeight="500"/>
-        </DockPanel>
+
+                    <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_village" Margin="9,9,9,9" MinWidth="500" MinHeight="500"/>
+                </DockPanel>
     </Grid>
 </UserControl>

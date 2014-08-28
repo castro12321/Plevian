@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -64,22 +65,23 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Battles\testBattles.cs" />
+    <Compile Include="Battles\TestBattles.cs" />
     <Compile Include="FakeGameTime.cs" />
-    <Compile Include="Integration\Orders.cs" />
+    <Compile Include="Integration\TestOrders.cs" />
     <Compile Include="Integration\TestSavingGame.cs" />
     <Compile Include="Integration\TestLoadingGame.cs" />
-    <Compile Include="Players\PlayerTests.cs" />
-    <Compile Include="Players\VillageHandling.cs" />
-    <Compile Include="Units\testFactory.cs" />
+    <Compile Include="Players\TestMessages.cs" />
+    <Compile Include="Players\TestPlayer.cs" />
+    <Compile Include="Players\TestVillageHandling.cs" />
+    <Compile Include="Units\TestFactory.cs" />
     <Compile Include="Units\TestRecruit.cs" />
-    <Compile Include="Units\TestResources.cs" />
-    <Compile Include="Units\TestTime.cs" />
+    <Compile Include="Village\TestResources.cs" />
+    <Compile Include="TestTime.cs" />
     <Compile Include="TestWithTime.cs" />
     <Compile Include="Units\TestMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Units\testArmy.cs" />
-    <Compile Include="Village\BuildingTests.cs" />
+    <Compile Include="Units\TestArmy.cs" />
+    <Compile Include="Village\TestBuilding.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Plevian\Plevian.csproj">

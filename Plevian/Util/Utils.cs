@@ -19,6 +19,7 @@ namespace Plevian.Util
         /// <returns>Generated color</returns>
         public static SFML.Graphics.Color smoothSFMLColor()
         {
+            return new SFML.Graphics.Color(235, 235, 235, 235);
             double r = Math.Abs(Math.Sin(rtick+=rstep) * 254);
             double g = Math.Abs(Math.Sin(gtick+=gstep) * 254);
             double b = Math.Abs(Math.Sin(btick+=bstep) * 254);
