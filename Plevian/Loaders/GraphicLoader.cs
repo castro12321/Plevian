@@ -8,7 +8,7 @@ namespace Plevian.Loaders
 {
     class GraphicLoader
     {
-        private static GraphicLoader loader;
+        //private static GraphicLoader loader;
         private static Dictionary<string, Texture> textures = new Dictionary<string,Texture>();
 
 

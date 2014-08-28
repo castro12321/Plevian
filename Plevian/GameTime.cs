@@ -12,7 +12,7 @@ namespace Plevian
     /// </summary>
     public class GameTime
     {
-        public static int speed = 52;
+        public static int speed = 1;
         public static ulong uspeed = Convert.ToUInt32(speed);
         private static ulong lastSystemTime;
         private static GameTime gameTime;
@@ -35,7 +35,7 @@ namespace Plevian
 
         public static void init(int time)
         {
-            init(new Seconds(time));
+            init(new GameTime(time));
         }
 
         public static void init(GameTime time)
@@ -133,6 +133,11 @@ namespace Plevian
         public static bool operator !=(GameTime lh, GameTime rh)
         {
             return lh.time != rh.time;
+        }
+
+        public override int GetHashCode()
+        {
+            return time.GetHashCode();
         }
 
         public override bool Equals(object obj)
