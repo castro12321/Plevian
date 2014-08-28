@@ -10,6 +10,7 @@ using Plevian.Units;
 using Plevian.Orders;
 using SFML.Graphics;
 using Plevian.Buildings;
+using Plevian.Messages;
 
 namespace Plevian
 {
@@ -30,6 +31,10 @@ namespace Plevian
             Game.game = this;
             GameTime.init(0);
             map = new MapGenerator().Generate(30, 30);
+
+            player.SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
+            player.SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
+            player.SendMessage(new Message("Hitler", "Message to you", "I'll kill you", DateTime.Now));
 
             Tile village1Tile = map.FindEmptyTile();
             Tile village2Tile = map.FindEmptyTile();
