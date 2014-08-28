@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d">
 
-    <DockPanel Background="GreenYellow">
+    <DockPanel Background="#FFE5E5E5">
         <StackPanel DockPanel.Dock="Right" Orientation="Vertical" MinWidth="300" MinHeight="500">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Coords:"/>

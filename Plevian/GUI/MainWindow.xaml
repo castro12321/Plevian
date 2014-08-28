@@ -8,11 +8,11 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-        <TabControl Name="MainWindowTabs" Background="Green" Padding="0" Grid.Row="0">
-            <TabItem Name="mapTabItem" Header="Mapa">
+        <TabControl Name="MainWindowTabs" Padding="0" Grid.Row="0">
+            <TabItem Name="villageTabItem" Header="Wioska">
                 <!-- Moved to custom control. Created in constructor -->
             </TabItem>
-            <TabItem Name="villageTabItem" Header="Wioska">
+            <TabItem Name="mapTabItem" Header="Mapa">
                 <!-- Moved to custom control. Created in constructor -->
             </TabItem>
             <TabItem Name="messagesTabItem" Header="Wiadomości">

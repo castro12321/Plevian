@@ -11,7 +11,7 @@
     
     <Grid Background="#FFE5E5E5">
         
-        <DockPanel Background="GreenYellow">
+        <DockPanel>
             <ScrollViewer DockPanel.Dock="Right" MinWidth="300" MinHeight="500">
                 <StackPanel Orientation="Vertical">
                     <!-- Resources -->
