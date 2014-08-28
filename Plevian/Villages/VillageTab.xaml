@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ord="clr-namespace:Plevian.Orders"
+             xmlns:resource="clr-namespace:Plevian.Resource"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ord:OrderControl x:Key="OrderControl" />
@@ -12,7 +13,7 @@
     <Grid Background="#FFE5E5E5">
         
         <DockPanel Background="GreenYellow">
-            <ScrollViewer DockPanel.Dock="Right" MinWidth="300" MinHeight="500">
+            <ScrollViewer DockPanel.Dock="Right" MinWidth="280" MinHeight="500">
                 <StackPanel Orientation="Vertical">
                     <!-- Resources -->
                     <Expander Header="Village Info" IsExpanded="True" >
@@ -27,23 +28,9 @@
                                 <Label Name="VillageName"/>
                             </StackPanel>
 
-                            <Label Content="Income:" FontWeight="ExtraBold"/>
-                            <StackPanel Orientation="Horizontal" >
-                                <Label Content="Food: " MinWidth="100"/>
-                                <Label Content="?"      MinWidth="45" Name="ResourcesFood"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Wood: " MinWidth="100"/>
-                                <Label Content="?"      MinWidth="45" Name="ResourcesWood"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Iron: " MinWidth="100"/>
-                                <Label Content="?"      MinWidth="45" Name="ResourcesIron"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Stone: " MinWidth="100"/>
-                                <Label Content="?"       MinWidth="45" Name="ResourcesStone"/>
-                            </StackPanel>
+                            <Label Content="Resources:" FontWeight="ExtraBold"/>
+                            
+                            <resource:ResourceControl x:Name="ResourcesControl" />
                         </StackPanel>
                     </Expander>
 
@@ -149,7 +136,7 @@
             </ScrollViewer>
                 
             <!-- Village image -->
-            <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_village" Background="Purple" Margin="9,9,9,9" MinWidth="500" MinHeight="500"/>
+            <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_village" Background="Purple" Margin="9,9,9,9" MinWidth="400" MinHeight="500"/>
         </DockPanel>
     </Grid>
 </UserControl>

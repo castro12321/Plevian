@@ -128,6 +128,9 @@
     <Compile Include="RequirementS\BuildingRequirement.cs" />
     <Compile Include="RequirementS\Requirement.cs" />
     <Compile Include="RequirementS\Requirements.cs" />
+    <Compile Include="Resource\ResourceControl.xaml.cs">
+      <DependentUpon>ResourceControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Transaction.cs" />
     <Compile Include="Units\Duke.cs" />
     <Compile Include="Units\Trader.cs" />
@@ -221,6 +224,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resource\ResourceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Villages\VillageTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -258,7 +265,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="GFX\food.png" />
+    <Resource Include="GFX\iron.png" />
+    <Resource Include="GFX\Stone.png" />
+    <Resource Include="GFX\wood.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

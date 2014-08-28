@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="Plevian.Resource.ResourceControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:gfx="clr-namespace:Plevian"
+             mc:Ignorable="d" 
+             >
+    
+    <UserControl.Resources>
+        <Style TargetType="Image">
+            <Style.Setters>
+                <Setter Property="Width" Value="20"/>
+                <Setter Property="Height" Value="20" />
+            </Style.Setters>
+        </Style>
+        
+        <Style TargetType="Label">
+            <Style.Setters>
+                <Setter Property="Padding" Value="1,5,6,5" />
+            </Style.Setters>
+        </Style>
+    </UserControl.Resources>
+    
+    <StackPanel Orientation="Horizontal">
+        <Image Name="foodImg" Source="/GFX/food.png" />
+        <Label Name="foodCount" Content="{Binding food}" />
+        <Image Name="woodIMG" Source="/GFX/wood.png" />
+        <Label Name="woodCount" Content="{Binding wood}" />
+        <Image Name="stoneImg" Source="/GFX/stone.png" />
+        <Label Name="stoneCount" Content="{Binding stone}" />
+        <Image Name="IronImg" Source="/GFX/iron.png" />
+        <Label Name="IronCount" Content="{Binding iron}" />
+
+
+    </StackPanel>
+</UserControl>

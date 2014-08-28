@@ -15,6 +15,8 @@ namespace Plevian.Orders
 {
     public class AttackOrder : Order
     {
+        private static Random rand = new Random();
+
         Resources loot = new Resources();
 
         public AttackOrder(Tile origin, Tile destination, Army army)
@@ -75,7 +77,7 @@ namespace Plevian.Orders
             Village village = Destination as Village;
             Army defendingArmy = village.army;
 
-            Battle battle = new Battle(army, defendingArmy, getLuck(), getDefense(), getBaseDefense());
+            Battle battle = new Battle(army, defendingArmy, getLuck(), getDefense(village), getBaseDefense(village));
             return battle.makeBattle();
         }
 
@@ -101,19 +103,19 @@ namespace Plevian.Orders
             return true;
         }
 
-        private int getBaseDefense()
+        private int getBaseDefense(Village village)
         {
-            return 0;
+            return village.getBaseDefense();
         }
 
-        private float getDefense()
+        private float getDefense(Village village)
         {
-            return 1f;
+            return village.getDefense();
         }
 
         private float getLuck()
         {
-            return 1f;
+            return 0.5f + (float)rand.NextDouble();
         }
 
         private void gatherLoot(Village village)

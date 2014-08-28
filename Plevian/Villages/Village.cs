@@ -59,7 +59,7 @@ namespace Plevian.Villages
         }
 
         /// <summary>
-        /// Returns building of desired type
+        /// Returns building of desired type. Returns building on success, otherwise null
         /// </summary>
         /// <param name="type">building type to retrieve</param>
         /// <returns>Building on success, otherwise null</returns>
@@ -265,6 +265,29 @@ namespace Plevian.Villages
                     order.turnBack();
             }
         }
+
+        public int getBaseDefense()
+        {
+            Building building = getBuilding(BuildingType.WALL);
+            if(building != null)
+            {
+                Wall wall = building as Wall;
+                return wall.getBaseDefense();
+            }
+            return 0;
+        }
+
+        public float getDefense()
+        {
+            Building building = getBuilding(BuildingType.WALL);
+            if (building != null)
+            {
+                Wall wall = building as Wall;
+                return wall.getDefense();
+            }
+            return 1f;
+        }
+
         public override string ToString()
         {
             return name;

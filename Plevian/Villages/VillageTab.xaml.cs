@@ -39,7 +39,9 @@ namespace Plevian.Villages
                 activeVillage = value;
                 villageView.village = value;
                 VillageName.Content = value.name;
+                ResourcesControl.DataContext = value.resources;
                 OrdersItemControl.ItemsSource = value.orders;
+                
                 MainWindow.getInstance().statusText.Text = value.name;
             }
         }
@@ -114,10 +116,10 @@ namespace Plevian.Villages
         {
             coords.Content = "X:" + Village.location.x + " Y:" + Village.location.y;
 
-            ResourcesFood.Content  = Village.resources.food;
-            ResourcesWood.Content  = Village.resources.wood;
-            ResourcesIron.Content  = Village.resources.iron;
-            ResourcesStone.Content = Village.resources.stone;
+           // ResourcesFood.Content  = Village.resources.food;
+           // ResourcesWood.Content  = Village.resources.wood;
+           // ResourcesIron.Content  = Village.resources.iron;
+           // ResourcesStone.Content = Village.resources.stone;
 
             setUnitCount(ResourcesWarriors, UnitType.WARRIOR);
             setUnitCount(ResourcesArchers, UnitType.ARCHER);
