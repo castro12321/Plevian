@@ -11,7 +11,6 @@ namespace Plevian.Buildings
         public readonly GameTime start;
         public readonly GameTime end;
         public readonly BuildingType toBuild;
-        // for units add int amount;
 
         public BuildingQueueItem(GameTime start, GameTime end, BuildingType toBuild)
         {

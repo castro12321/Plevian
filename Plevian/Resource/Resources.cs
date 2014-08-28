@@ -8,6 +8,7 @@ using System.Windows;
 
 namespace Plevian.Resource
 {
+    // TODO: przerobic na ten drugi system z notify zamiast dependencyproperty + overrideowac gethashcode()
     public class Resources : DependencyObject
     {
         public static readonly DependencyProperty FoodProperty =

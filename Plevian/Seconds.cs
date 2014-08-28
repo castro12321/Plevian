@@ -32,8 +32,21 @@ namespace Plevian
     {
         public int seconds { get { return time; } set { time = value; } }
 
+        private static int calculateSeconds(int seconds)
+        {
+            // If it already was 0, just leave it
+            if(seconds == 0)
+                return 0;
+
+            // Apply speedup, but don't allow the time to be 0
+            seconds /= speed;
+            if(seconds == 0)
+                return 1;
+            return seconds;
+        }
+
         public Seconds(int seconds)
-            : base(seconds)
+            : base(calculateSeconds(seconds))
         {
         }
 

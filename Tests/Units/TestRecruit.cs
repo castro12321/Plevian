@@ -20,14 +20,9 @@ namespace Tests.Units
         [TestMethod]
         public void testRecruit()
         {
-            fakeTime(0);
-
-            
-
             const int ARCH_QUANITY = 500;
             const int KNIG_QUANITY = 500;
             const int WARR_QUANITY = 500;
-
 
             Archer archer = new Archer(ARCH_QUANITY);
             Game game = new Game();
@@ -36,31 +31,17 @@ namespace Tests.Units
             testVillage.recruit(archer);
             testVillage.recruit(new Knight(KNIG_QUANITY));
             testVillage.recruit(new Warrior(WARR_QUANITY));
-            GameTime now = GameTime.now;
 
-            Seconds wait = testVillage.recruitTimeEnd - now;
-            wait.seconds += 2;
-            int seconds = wait.seconds;
-            while (wait.seconds > 0)
-            {
-                
-                wait.seconds--;
-                testVillage.tick();
-                addFakeTime(1);
-                now = GameTime.now;
-                Logger.s(""+(testVillage.recruitTimeEnd - now));
-            }
-            
-            
+            fakeTime(0);
+
+            GameTime wait = testVillage.recruitTimeEnd.diffrence(GameTime.now);
+            addFakeTime(wait.time);
             GameTime.update();
-            int czas = getFakeTime();
-            Logger.s("Fake time = " + czas);
-            if(ARCH_QUANITY > 0)
-                 Assert.IsTrue(testVillage.army.get(UnitType.ARCHER).quanity == ARCH_QUANITY);
-            if(KNIG_QUANITY > 0)
-                 Assert.IsTrue(testVillage.army.get(UnitType.KNIGHT).quanity == KNIG_QUANITY);
-            if(WARR_QUANITY > 0)
-                Assert.IsTrue(testVillage.army.get(UnitType.WARRIOR).quanity == WARR_QUANITY);
+            testVillage.tick();
+
+            Assert.IsTrue(testVillage.army.get(UnitType.ARCHER).quanity == ARCH_QUANITY);
+            Assert.IsTrue(testVillage.army.get(UnitType.KNIGHT).quanity == KNIG_QUANITY);
+            Assert.IsTrue(testVillage.army.get(UnitType.WARRIOR).quanity == WARR_QUANITY);
         }
     }
 }

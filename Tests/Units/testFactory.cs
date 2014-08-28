@@ -15,7 +15,7 @@ using SFML.Graphics;
 namespace Tests.Units
 {
     [TestClass]
-    public class testFactory
+    public class TestFactory
     {
         [TestMethod]
         public void testUnitFactory()

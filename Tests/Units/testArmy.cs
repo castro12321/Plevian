@@ -6,7 +6,7 @@ using Plevian.Debugging;
 namespace Tests.Units
 {
     [TestClass]
-    public class testArmy
+    public class TestArmy
     {
         [TestMethod]
         public void testLootCapacity()

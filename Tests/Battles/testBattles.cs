@@ -10,7 +10,7 @@ using Plevian.Debugging;
 namespace Tests.Battles
 {
     [TestClass]
-    public class testBattles
+    public class TestBattles
     {
         [TestMethod]
         public void tastBattleSystem()
