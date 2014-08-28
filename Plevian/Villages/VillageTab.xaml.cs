@@ -204,5 +204,15 @@ namespace Plevian.Villages
         {
             Village.build(BuildingType.MINE);
         }
+
+        private void ResearchLasers_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: start researching lasers
+        }
+
+        private void ResearchNukes_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: start researching nukes
+        }
     }
 }
