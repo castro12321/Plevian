@@ -10,6 +10,8 @@ using Plevian.Units;
 using Plevian.Orders;
 using SFML.Graphics;
 using Plevian.Buildings;
+using Plevian.RequirementS;
+using Plevian.Debugging;
 
 namespace Plevian
 {
@@ -70,6 +72,16 @@ namespace Plevian
             village3.recruit(new Warrior(1000));
             berlin.addUnit(new Knight(100));
 
+            Requirements reqs = new Requirements();
+            BuildingRequirement req = new BuildingRequirement(BuildingType.TOWN_HALL, 5);
+            reqs.addRequirement(req);
+            req = new BuildingRequirement(BuildingType.MINE, 5);
+            reqs.addRequirement(req);
+
+            foreach (var requirement in reqs)
+            {
+                Logger.log(requirement.ToString());
+            }
 
             /* This sumething can test orders
             for(int i = 17;i < 30;++i)

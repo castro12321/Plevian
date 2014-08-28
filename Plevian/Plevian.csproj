@@ -76,6 +76,7 @@
     <Compile Include="Buildings\LumberMill.cs" />
     <Compile Include="Buildings\Farm.cs" />
     <Compile Include="Buildings\Mine.cs" />
+    <Compile Include="Buildings\Wall.cs" />
     <Compile Include="GUI\TradeWindow.xaml.cs">
       <DependentUpon>TradeWindow.xaml</DependentUpon>
     </Compile>
@@ -124,6 +125,9 @@
     <Compile Include="Orders\CreateVillage.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
     <Compile Include="Players\Player.cs" />
+    <Compile Include="RequirementS\BuildingRequirement.cs" />
+    <Compile Include="RequirementS\Requirement.cs" />
+    <Compile Include="RequirementS\Requirements.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="Units\Duke.cs" />
     <Compile Include="Units\Trader.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plevian.Resource;
+using Plevian.RequirementS;
 
 namespace Plevian.Buildings
 {
@@ -62,6 +63,19 @@ namespace Plevian.Buildings
                 case 5: return new Seconds(360);
             }
             throw new KeyNotFoundException("Level not found");
+        }
+
+        private static Requirements _requirements = null;
+        public override Requirements requirements
+        {
+            get
+            {
+                if (_requirements == null)
+                {
+                    _requirements = new Requirements();
+                }
+                return _requirements;
+            }
         }
     }
 }

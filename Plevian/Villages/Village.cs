@@ -58,8 +58,15 @@ namespace Plevian.Villages
             this.buildings = buildings;
         }
 
+        /// <summary>
+        /// Returns building of desired type
+        /// </summary>
+        /// <param name="type">building type to retrieve</param>
+        /// <returns>Building on success, otherwise null</returns>
         public Building getBuilding(BuildingType type)
         {
+            if (!buildings.ContainsKey(type))
+                return null;
             return buildings[type];
         }
 

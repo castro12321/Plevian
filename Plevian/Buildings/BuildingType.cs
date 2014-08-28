@@ -13,6 +13,7 @@ namespace Plevian.Buildings
         MINE,
         TOWN_HALL,
         BARRACKS,
-        STABLE
+        STABLE,
+        WALL
     };
 }

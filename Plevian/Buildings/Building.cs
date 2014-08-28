@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plevian.Resource;
+using Plevian.RequirementS;
 
 namespace Plevian.Buildings
 {
@@ -76,5 +77,11 @@ namespace Plevian.Buildings
             buildings.Add(BuildingType.MINE, new Mine());
             return buildings;
         }
+
+        public abstract Requirements requirements
+        {
+            get;
+        }
+
     }
 }
