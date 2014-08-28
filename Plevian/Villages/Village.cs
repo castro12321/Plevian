@@ -46,7 +46,7 @@ namespace Plevian.Villages
             : base(location, TerrainType.VILLAGE)
         {
             Owner = owner;
-            resources = new Resources(999, 999, 999, 999);
+            resources = new Resources(9999, 9999, 9999, 9999);
             recruitTimeEnd = GameTime.now;
             buildTimeEnd = GameTime.now;
             this.name = name;
@@ -111,37 +111,37 @@ namespace Plevian.Villages
         private void finishBuilding()
         {
             //Logger.village("queue: " + buildingsQueue.Count);
-            if(buildingsQueue.Count > 0)
+            while(buildingsQueue.Count > 0)
             {
                 BuildingQueueItem queueItem = buildingsQueue.Peek();
                 //Logger.village("item: " + queueItem.toBuild.ToString() + " " + GameTime.now + "/" + queueItem.end);
-                if (GameTime.now >= queueItem.end)
-                {
-                    //Logger.village("Built! " + queueItem.toBuild.ToString());
-                    buildings[queueItem.toBuild].upgrade();
-                    buildingsQueue.Dequeue();
-                }
+                if (GameTime.now < queueItem.end)
+                    break;
+
+                //Logger.village("Built! " + queueItem.toBuild.ToString());
+                buildings[queueItem.toBuild].upgrade();
+                buildingsQueue.Dequeue();
             }
         }
 
         private void finishRecruiting()
         {
-            if (recruitQueue.Count > 0)
+            while (recruitQueue.Count > 0)
             {
                 RecruitQueueItem queueItem = recruitQueue.Peek();
-                if (GameTime.now >= queueItem.end)
+                if (GameTime.now < queueItem.end)
+                    break;
+
+                Unit toRecruit = queueItem.toRecruit;
+                if (army.contain(toRecruit.getUnitType()))
+                    army.get(toRecruit.getUnitType()).quanity++;
+                else
                 {
-                    Unit toRecruit = queueItem.toRecruit;
-                    if (army.contain(toRecruit.getUnitType()))
-                        army.get(toRecruit.getUnitType()).quanity++;
-                    else
-                    {
-                        Unit clone = toRecruit.clone();
-                        clone.quanity = 1;
-                        army += clone;
-                    }
-                    recruitQueue.Dequeue();
+                    Unit clone = toRecruit.clone();
+                    clone.quanity = 1;
+                    army += clone;
                 }
+                recruitQueue.Dequeue();
             }
         }
 
@@ -178,9 +178,6 @@ namespace Plevian.Villages
         /// </summary>
         public void recruit(Unit unit)
         {
-            unit.quanity = 5; // TODO: remove
-            add logging for tests;
-
             if (unit.quanity == 0)
                 throw new Exception("Cannot recruit 0 units");
 
