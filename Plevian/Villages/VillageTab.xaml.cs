@@ -27,7 +27,6 @@ namespace Plevian.Villages
         private VillageView villageView;
         /// <summary>Currently active village</summary>
         private Village activeVillage;
-        private bool editingName = false;
 
         public Village Village
         {
