@@ -25,7 +25,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Background="#19EFEFEF" >
             <Label Content="Upgrade cost :" />
             <resource:ResourceControl  />
-            <Button Content="Upgrade" Click="OnUpgradeClick" Margin="0,2,8,2" Padding="3,1" HorizontalContentAlignment="Center" HorizontalAlignment="Right" BorderThickness="1" />
+            <Button Content="Upgrade" Margin="0,2,8,2" Padding="3,1" HorizontalContentAlignment="Center" HorizontalAlignment="Right" BorderThickness="1" Click="OnUpgradeClick" />
         </StackPanel>
         <Label Name="OtherInfo" Content="" Visibility="Hidden" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" />
     </Grid>

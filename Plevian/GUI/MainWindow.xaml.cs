@@ -55,7 +55,10 @@ namespace Plevian
             Closed += new EventHandler(OnClose);
             PreviewKeyDown += KeyDownHandler;
 
-           
+            //get keyboard focus :F
+            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(MainWindow.getInstance());
+
+            statusText.DataContext = villageTab.Village;
         }
 
         void KeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)

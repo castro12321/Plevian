@@ -27,6 +27,8 @@ namespace Plevian.Villages
         private VillageView villageView;
         /// <summary>Currently active village</summary>
         private Village activeVillage;
+        private bool editingName = false;
+
         public Village Village
         {
             get
@@ -41,8 +43,6 @@ namespace Plevian.Villages
                 VillageName.Content = value.name;
                 ResourcesControl.DataContext = value.resources;
                 OrdersItemControl.ItemsSource = value.orders;
-                
-                MainWindow.getInstance().statusText.Text = value.name;
             }
         }
 
@@ -216,5 +216,38 @@ namespace Plevian.Villages
         {
             // TODO: start researching nukes
         }
+
+        private void onLabelClick(object sender, MouseButtonEventArgs e)
+        {
+            VillageNameTextbox.Text = VillageName.Content.ToString();
+            VillageName.Visibility = System.Windows.Visibility.Collapsed;
+            VillageNameTextbox.Visibility = System.Windows.Visibility.Visible;
+        }
+
+
+        private void onVillageNameFocusLost(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            VillageTextBoxHide();
+        }
+
+        private void VillageTextBoxHide()
+        {
+            VillageName.Content = VillageNameTextbox.Text;
+            VillageName.Visibility = System.Windows.Visibility.Visible;
+            VillageNameTextbox.Visibility = System.Windows.Visibility.Collapsed;
+            Village.name = VillageNameTextbox.Text;
+        }
+
+        private void onKeyDown(object sender, KeyEventArgs e)
+        {
+            if(sender == VillageNameTextbox)
+            {
+                if(e.Key == Key.Return)
+                {
+                    VillageTextBoxHide();
+                }
+            }
+        }
+
     }
 }

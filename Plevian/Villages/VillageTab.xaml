@@ -23,9 +23,10 @@
                                 <Label Name="coords"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Name="VillageNameStackpanel" Orientation="Horizontal">
                                 <Label Content="Village Name:"/>
-                                <Label Name="VillageName"/>
+                                <Label  Name="VillageName" MouseLeftButtonDown="onLabelClick"/>
+                                <TextBox Name="VillageNameTextbox" Visibility="Collapsed" LostKeyboardFocus="onVillageNameFocusLost" KeyDown="onKeyDown"  />
                             </StackPanel>
 
                             <Label Content="Resources:" FontWeight="ExtraBold"/>

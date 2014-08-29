@@ -21,7 +21,7 @@
         </TabControl>
 
         <StatusBar Grid.Row="2">
-            <TextBlock Name="statusText" Text=""></TextBlock>
+            <TextBlock Name="statusText" Text="{Binding name}"></TextBlock>
         </StatusBar>
     </Grid>
     

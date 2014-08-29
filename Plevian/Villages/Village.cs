@@ -11,10 +11,12 @@ using Plevian.Maps;
 using Plevian.Players;
 using Plevian.Orders;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Plevian.Villages
 {
-    public class Village : Tile
+    public class Village : Tile, INotifyPropertyChanged
     {
         private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         public ObservableCollection<Order> orders = new ObservableCollection<Order>();
@@ -24,7 +26,7 @@ namespace Plevian.Villages
         public GameTime buildTimeEnd { get; private set; }
         public Army army { get; private set; }
         public readonly Resources resources;
-        public string name { get; private set; }
+        private string _name;
         private Player owner;
 
         public Player Owner
@@ -281,6 +283,28 @@ namespace Plevian.Villages
         public override string ToString()
         {
             return name;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public string name
+        { 
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                NotifyPropertyChanged();
+            }
         }
     }
 }

@@ -24,5 +24,10 @@ namespace Plevian.Buildings
         {
             InitializeComponent();
         }
+
+        private void OnUpgradeClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
