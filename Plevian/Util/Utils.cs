@@ -10,11 +10,12 @@ namespace Plevian.Util
     public static class Utils
     {
         public static Random random = new Random();
-
+        /*
         private static double rtick, gtick, btick,
             rstep = random.NextDouble() / 400 + 0.005,
             gstep = random.NextDouble() / 400 + 0.005,
             bstep = random.NextDouble() / 400 + 0.005;
+        */
         /// <summary>Generates smooth color transition</summary>
         /// <returns>Generated color</returns>
         public static SFML.Graphics.Color smoothSFMLColor()
