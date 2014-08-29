@@ -22,7 +22,7 @@ namespace Plevian.RequirementS
         public override bool isFullfilled(Village village)
         {
             Building building = village.getBuilding(_buildingType);
-            if (building != null && building.level >= _desiredLevel) ;
+            if (building != null && building.level >= _desiredLevel)
                 return true;
             return false;
         }
