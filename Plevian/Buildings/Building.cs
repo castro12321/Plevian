@@ -5,13 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Plevian.Resource;
 using Plevian.RequirementS;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Plevian.Buildings
 {
-    public abstract class Building
+    public abstract class Building : INotifyPropertyChanged
     {
         public readonly BuildingType type;
-        public int level { get; private set; }
+        private int _level;
+
+        public int level 
+        {
+            get
+            {
+                return _level;
+            }
+            set
+            {
+                _level = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public abstract String getDisplayName();
         public abstract GameTime getConstructionTimeFor(int level);
@@ -80,7 +95,17 @@ namespace Plevian.Buildings
             buildings.Add(BuildingType.FARM, new Farm());
             buildings.Add(BuildingType.LUMBER_MILL, new LumberMill());
             buildings.Add(BuildingType.MINE, new Mine());
+            buildings.Add(BuildingType.WALL, new Wall());
             return buildings;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         

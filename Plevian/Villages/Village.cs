@@ -18,7 +18,7 @@ namespace Plevian.Villages
 {
     public class Village : Tile, INotifyPropertyChanged
     {
-        private Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
+        public Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         public ObservableCollection<Order> orders = new ObservableCollection<Order>();
         public Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
         public Queue<RecruitQueueItem> recruitQueue = new Queue<RecruitQueueItem>();

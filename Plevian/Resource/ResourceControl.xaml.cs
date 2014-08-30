@@ -20,6 +20,23 @@ namespace Plevian.Resource
     /// </summary>
     public partial class ResourceControl : UserControl
     {
+        public static readonly DependencyProperty ResourcesProperty = DependencyProperty.Register(
+    "Resources", typeof(Resources), typeof(ResourceControl));
+
+        public Resources resources
+        {
+            get
+            {
+                return (Resources) this.GetValue(ResourcesProperty); 
+            }
+            set
+            {
+                this.SetValue(ResourcesProperty, value);
+                this.DataContext = value;
+            }
+        }
+
+
         public ResourceControl()
         {
             InitializeComponent();
@@ -28,7 +45,25 @@ namespace Plevian.Resource
         public ResourceControl(Resources resources)
         {
             InitializeComponent();
-            this.DataContext = resources;
+            this.resources = resources;
         }
+
+        private void countChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            string newValue = e.NewValue.ToString();
+            Label label = sender as Label;
+            if(newValue == "0")
+            {
+
+                StackPanel panel = label.Parent as StackPanel;
+                panel.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                StackPanel panel = label.Parent as StackPanel;
+                panel.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
     }
 }

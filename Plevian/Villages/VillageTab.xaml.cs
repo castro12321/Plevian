@@ -42,6 +42,7 @@ namespace Plevian.Villages
                 VillageName.Content = value.name;
                 ResourcesControl.DataContext = value.resources;
                 OrdersItemControl.ItemsSource = value.orders;
+                BuildingsItemControl.ItemsSource = value.buildings;
             }
         }
 
@@ -132,7 +133,7 @@ namespace Plevian.Villages
             setRecruitProgress(RecruitSettlerProgress, UnitType.SETTLER);
             setRecruitProgress(RecruitTraderProgress, UnitType.TRADER);
 
-            setBuildingLevel(LevelBarracks, BuildingType.BARRACKS);
+            /*setBuildingLevel(LevelBarracks, BuildingType.BARRACKS);
             setBuildingLevel(LevelStable  , BuildingType.STABLE);
             setBuildingLevel(LevelTownHall, BuildingType.TOWN_HALL);
             setBuildingLevel(LevelFarm    , BuildingType.FARM);
@@ -144,7 +145,7 @@ namespace Plevian.Villages
             setBuildingProgress(UpgradeTownHallProgress, BuildingType.TOWN_HALL);
             setBuildingProgress(UpgradeFarmProgress, BuildingType.FARM);
             setBuildingProgress(UpgradeLumberMillProgress, BuildingType.LUMBER_MILL);
-            setBuildingProgress(UpgradeMineProgress, BuildingType.MINE);
+            setBuildingProgress(UpgradeMineProgress, BuildingType.MINE);*/
 
             // Render SFML
             villageView.render();
@@ -173,37 +174,6 @@ namespace Plevian.Villages
         private void RecruitTrader_Click(object sender, RoutedEventArgs e)
         {
             Village.recruit(new Trader(1));
-        }
-
-
-        private void UpgradeBarracks_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.BARRACKS);
-        }
-
-        private void UpgradeTownHall_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.TOWN_HALL);
-        }
-
-        private void UpgradeStable_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.STABLE);
-        }
-
-        private void UpgradeFarm_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.FARM);
-        }
-
-        private void UpgradeLumberMill_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.LUMBER_MILL);
-        }
-
-        private void UpgradeMine_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.MINE);
         }
 
         private void ResearchLasers_Click(object sender, RoutedEventArgs e)
@@ -246,6 +216,11 @@ namespace Plevian.Villages
                     VillageTextBoxHide();
                 }
             }
+        }
+
+        private void upgradeBuilding(Object sender, Building building)
+        {
+            Village.build(building.type);
         }
 
     }
