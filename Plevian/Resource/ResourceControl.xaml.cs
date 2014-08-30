@@ -47,5 +47,23 @@ namespace Plevian.Resource
             InitializeComponent();
             this.resources = resources;
         }
+
+        private void countChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            string newValue = e.NewValue.ToString();
+            Label label = sender as Label;
+            if(newValue == "0")
+            {
+
+                StackPanel panel = label.Parent as StackPanel;
+                panel.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                StackPanel panel = label.Parent as StackPanel;
+                panel.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
     }
 }

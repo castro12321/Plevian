@@ -1,8 +1,10 @@
 ﻿using Plevian.Resource;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -38,14 +40,104 @@ namespace Plevian.Buildings
 
     public partial class BuildingControl : UserControl
     {
+        ViewModel model = new ViewModel();
         public BuildingControl()
         {
             InitializeComponent();
+
+            this.DataContextChanged += BuildingControl_DataContextChanged;
+        }
+
+        void BuildingControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Object newValue = e.NewValue;
+            if(newValue is KeyValuePair<BuildingType, Building>)
+            {
+                KeyValuePair<BuildingType, Building> pair = (KeyValuePair<BuildingType, Building>)newValue;
+                setData(pair.Value);
+            }
         }
 
         private void OnUpgradeClick(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        public void setData(Building data)
+        {
+            stackPanel.DataContext = model;
+            model.setData(data);
+        }
+
+
+    }
+
+    public class ViewModel : INotifyPropertyChanged
+    {
+        Building data;
+        
+        public String Name
+        {
+            get
+            {
+                return data.getDisplayName();
+            }
+        }
+
+        public int Level
+        {
+            get
+            {
+                return data.level;
+            }
+        }
+
+        public Resources Price
+        {
+            get
+            {
+                return data.getPriceForNextLevel();
+            }
+        }
+
+
+        public ViewModel(Building data)
+        {
+            setData(data);
+        }
+
+        public ViewModel()
+        {
+            this.data = null;
+        }
+
+        public void setData(Building data)
+        {
+            this.data = data;
+            this.data.PropertyChanged += data_PropertyChanged;
+            NotifyPropertyChanged("Name");
+            NotifyPropertyChanged("Price");
+            NotifyPropertyChanged("Level");
+        }
+
+        private void data_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            string propertyName = e.PropertyName;
+            if (propertyName == "level")
+            {
+                NotifyPropertyChanged("Level");
+                NotifyPropertyChanged("Price");
+            }
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

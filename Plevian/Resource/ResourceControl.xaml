@@ -4,10 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:gfx="clr-namespace:Plevian"
+             xmlns:gui="clr-namespace:Plevian.GUI"
              mc:Ignorable="d" 
              >
     
     <UserControl.Resources>
+        
+        
         <Style TargetType="Image">
             <Style.Setters>
                 <Setter Property="Width" Value="20"/>
@@ -15,23 +18,49 @@
             </Style.Setters>
         </Style>
         
+        <Style TargetType="StackPanel">
+            <Style.Setters>
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style.Setters>
+        </Style>
+        
         <Style TargetType="Label">
             <Style.Setters>
                 <Setter Property="Padding" Value="1,5,6,5" />
             </Style.Setters>
+            
         </Style>
     </UserControl.Resources>
     
-    <StackPanel Orientation="Horizontal">
-        <Image Name="foodImg" Source="/GFX/food.png" />
-        <Label Name="foodCount" Content="{Binding food}" />
-        <Image Name="woodIMG" Source="/GFX/wood.png" />
-        <Label Name="woodCount" Content="{Binding wood}" />
-        <Image Name="stoneImg" Source="/GFX/stone.png" />
-        <Label Name="stoneCount" Content="{Binding stone}" />
-        <Image Name="IronImg" Source="/GFX/iron.png" />
-        <Label Name="IronCount" Content="{Binding iron}" />
+    <Grid  Width="200">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Name="foodStackPanel">
+            <Image Name="foodImg" Source="/GFX/food.png" />
+            <gui:BetterLabel x:Name="foodCount" ContentChanged="countChanged" Content="{Binding food}" >
+            </gui:BetterLabel>
+        </StackPanel>
+
+        <StackPanel Name="woodStackPanel" Grid.Column="1">
+            <Image Name="woodIMG" Source="/GFX/wood.png"  />
+            <gui:BetterLabel ContentChanged="countChanged" x:Name="woodCount" Content="{Binding wood}" />
+        </StackPanel>
+
+        <StackPanel Name="stoneStackPanel" Grid.Column="2">
+            <Image Name="stoneImg" Source="/GFX/stone.png" />
+            <gui:BetterLabel ContentChanged="countChanged" x:Name="stoneCount" Content="{Binding stone}" />
+        </StackPanel>
+        <StackPanel Name="ironStackPanel" Grid.Column="3">
+            <Image Name="ironImg" Source="/GFX/iron.png" />
+            <gui:BetterLabel ContentChanged="countChanged" x:Name="ironCount" Content="{Binding iron}" />
+        </StackPanel>
 
 
-    </StackPanel>
+    </Grid>
 </UserControl>
