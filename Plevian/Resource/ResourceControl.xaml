@@ -6,6 +6,7 @@
              xmlns:gfx="clr-namespace:Plevian"
              xmlns:gui="clr-namespace:Plevian.GUI"
              mc:Ignorable="d" 
+             MaxWidth="450"
              >
     
     <UserControl.Resources>
@@ -34,13 +35,8 @@
         </Style>
     </UserControl.Resources>
     
-    <Grid  Width="200">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <StackPanel>
+
         <StackPanel Name="foodStackPanel">
             <Image Name="foodImg" Source="/GFX/food.png" />
             <gui:BetterLabel x:Name="foodCount" ContentChanged="countChanged" Content="{Binding food}" >
@@ -62,5 +58,5 @@
         </StackPanel>
 
 
-    </Grid>
+    </StackPanel>
 </UserControl>

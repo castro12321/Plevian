@@ -82,7 +82,7 @@
 
                             <ItemsControl.ItemTemplate >
                                 <DataTemplate>
-                                    <buildings:BuildingControl/>
+                                    <buildings:BuildingControl Upgrade="upgradeBuilding"  />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

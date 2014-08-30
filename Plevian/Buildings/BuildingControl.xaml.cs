@@ -58,10 +58,6 @@ namespace Plevian.Buildings
             }
         }
 
-        private void OnUpgradeClick(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         public void setData(Building data)
         {
@@ -69,12 +65,30 @@ namespace Plevian.Buildings
             model.setData(data);
         }
 
+        public Building getData()
+        {
+            return model.data;
+        }
+
+        public delegate void upgradeEventHandler(Object sender, Building building);
+
+        public event upgradeEventHandler Upgrade;
+
+        private void OnUpgradeClick(object sender, RoutedEventArgs e)
+        {
+            if(Upgrade != null)
+            {
+                Upgrade(sender, getData());
+            }
+        }
+            
+
 
     }
 
     public class ViewModel : INotifyPropertyChanged
     {
-        Building data;
+        public Building data;
         
         public String Name
         {

@@ -176,37 +176,6 @@ namespace Plevian.Villages
             Village.recruit(new Trader(1));
         }
 
-
-        private void UpgradeBarracks_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.BARRACKS);
-        }
-
-        private void UpgradeTownHall_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.TOWN_HALL);
-        }
-
-        private void UpgradeStable_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.STABLE);
-        }
-
-        private void UpgradeFarm_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.FARM);
-        }
-
-        private void UpgradeLumberMill_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.LUMBER_MILL);
-        }
-
-        private void UpgradeMine_Click(object sender, RoutedEventArgs e)
-        {
-            Village.build(BuildingType.MINE);
-        }
-
         private void ResearchLasers_Click(object sender, RoutedEventArgs e)
         {
             // TODO: start researching lasers
@@ -247,6 +216,11 @@ namespace Plevian.Villages
                     VillageTextBoxHide();
                 }
             }
+        }
+
+        private void upgradeBuilding(Object sender, Building building)
+        {
+            Village.build(building.type);
         }
 
     }

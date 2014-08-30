@@ -16,9 +16,7 @@
     
     <StackPanel Name="stackPanel" Orientation="Horizontal">
         <Label Name="BuildingName" Content="{Binding Name}" FontFamily="Vani" FontSize="14" Width="80" MaxWidth="80" />
-        <Label Content="cost :" />
-        <resource:ResourceControl DataContext="{Binding Price}" >
-        </resource:ResourceControl>
+        <resource:ResourceControl DataContext="{Binding Price}" MinWidth="200" MaxWidth="400" />
         <Button Content="Upgrade" Margin="0,2,8,2" Padding="3,1" HorizontalContentAlignment="Center" HorizontalAlignment="Right" BorderThickness="1" Click="OnUpgradeClick" />
     </StackPanel>
 </UserControl>
