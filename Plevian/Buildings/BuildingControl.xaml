@@ -4,8 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:resource="clr-namespace:Plevian.Resource"
+             xmlns:local="clr-namespace:Plevian.Buildings"
              mc:Ignorable="d" 
              >
+    
+    <UserControl.Resources>
+        <ObjectDataProvider ObjectType="{x:Type local:Building}"
+                            MethodName="getPrice" x:Key="getPrice">
+            <ObjectDataProvider.MethodParameters/>
+        </ObjectDataProvider>
+
+
+        <local:BuildingCostConverter x:Key="buildingCostConverter" />
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -24,7 +36,14 @@
         <Image Name="BuildingImage" DockPanel.Dock="Left" Grid.Column="0" Grid.Row="1"    />
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Background="#19EFEFEF" >
             <Label Content="Upgrade cost :" />
-            <resource:ResourceControl  />
+            <resource:ResourceControl >
+                <resource:ResourceControl.DataContext>
+                    <MultiBinding Mode="OneWay" Converter="{StaticResource buildingCostConverter}" >
+                        <Binding Path="level" />
+                        <Binding Source="{StaticResource getPrice}"/>
+                    </MultiBinding>
+                </resource:ResourceControl.DataContext>
+            </resource:ResourceControl>
             <Button Content="Upgrade" Margin="0,2,8,2" Padding="3,1" HorizontalContentAlignment="Center" HorizontalAlignment="Right" BorderThickness="1" Click="OnUpgradeClick" />
         </StackPanel>
         <Label Name="OtherInfo" Content="" Visibility="Hidden" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" />

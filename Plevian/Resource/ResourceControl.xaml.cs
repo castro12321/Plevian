@@ -20,6 +20,23 @@ namespace Plevian.Resource
     /// </summary>
     public partial class ResourceControl : UserControl
     {
+        public static readonly DependencyProperty ResourcesProperty = DependencyProperty.Register(
+    "Resources", typeof(Resources), typeof(ResourceControl));
+
+        public Resources resources
+        {
+            get
+            {
+                return (Resources) this.GetValue(ResourcesProperty); 
+            }
+            set
+            {
+                this.SetValue(ResourcesProperty, value);
+                this.DataContext = value;
+            }
+        }
+
+
         public ResourceControl()
         {
             InitializeComponent();
@@ -28,7 +45,7 @@ namespace Plevian.Resource
         public ResourceControl(Resources resources)
         {
             InitializeComponent();
-            this.DataContext = resources;
+            this.resources = resources;
         }
     }
 }
