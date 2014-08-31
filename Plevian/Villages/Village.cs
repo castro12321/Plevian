@@ -31,6 +31,7 @@ namespace Plevian.Villages
         private Player owner;
 
         public event BuildingQueueItemAdded buildingQueueItemAdded;
+        public event BuildingBuilt buildingBuilt;
 
         public Player Owner
         {
@@ -133,6 +134,8 @@ namespace Plevian.Villages
                 //Logger.village("Built! " + queueItem.toBuild.ToString());
                 queueItem.toBuild.upgrade();
                 buildingsQueue.RemoveAt(0);
+                if (buildingBuilt != null)
+                    buildingBuilt(this, queueItem.toBuild);
             }
         }
 
@@ -330,7 +333,7 @@ namespace Plevian.Villages
         public bool canBuild(BuildingType type)
         {
             int level = getBuildingLevel(type, true);
-            if (level >= buildings[type].getMaxLevel())
+            if (level >= buildings[type].getMaxLevel() || !buildings[type].requirements.isFullfilled(this))
                 return false;
             return true;
         }

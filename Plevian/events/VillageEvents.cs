@@ -9,5 +9,6 @@ using Plevian.Villages;
 namespace Plevian.events
 {
     public delegate void BuildingQueueItemAdded(Village village, BuildingQueueItem item);
+    public delegate void BuildingBuilt(Village vilalge, Building building);
     public delegate void BuildingQueueItemRemoved(Village village, BuildingQueueItem item);
 }

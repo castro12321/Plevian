@@ -145,10 +145,17 @@ namespace Plevian.Buildings
             this.village = village;
             this.data.PropertyChanged += data_PropertyChanged;
             this.village.buildingQueueItemAdded += village_buildingQueueItemAdded;
+            this.village.buildingBuilt += village_buildingBuilt;
             NotifyPropertyChanged("Name");
             NotifyPropertyChanged("Price");
             NotifyPropertyChanged("Level");
             NotifyPropertyChanged("CanBuild");
+        }
+
+        void village_buildingBuilt(Village vilalge, Building building)
+        {
+           NotifyPropertyChanged("CanBuild");
+           NotifyPropertyChanged("Price");
         }
 
         void village_buildingQueueItemAdded(Village village, BuildingQueueItem item)
