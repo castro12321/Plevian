@@ -10,13 +10,15 @@ namespace Plevian.Buildings
     {
         public readonly GameTime start;
         public readonly GameTime end;
-        public readonly BuildingType toBuild;
+        public readonly Building toBuild;
+        public int level;
 
-        public BuildingQueueItem(GameTime start, GameTime end, BuildingType toBuild)
+        public BuildingQueueItem(GameTime start, GameTime end, Building toBuild, int level)
         {
             this.start = start;
             this.end = end;
             this.toBuild = toBuild;
+            this.level = level;
         }
     }
 }

@@ -43,6 +43,7 @@ namespace Plevian.Villages
                 ResourcesControl.DataContext = value.resources;
                 OrdersItemControl.ItemsSource = value.orders;
                 BuildingsItemControl.ItemsSource = value.buildings;
+                BuildingsQueueControl.ItemsSource = value.buildingsQueue;
             }
         }
 
@@ -84,7 +85,7 @@ namespace Plevian.Villages
         {
             foreach (BuildingQueueItem queueItem in Village.buildingsQueue)
             {
-                if (queueItem.toBuild == type)
+                if (queueItem.toBuild.type == type)
                 {
                     Seconds left = GameTime.now.diffrence(queueItem.end);
                     int minutes = left.seconds / 60;
@@ -194,11 +195,6 @@ namespace Plevian.Villages
         }
 
 
-        private void onVillageNameFocusLost(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            VillageTextBoxHide();
-        }
-
         private void VillageTextBoxHide()
         {
             VillageName.Content = VillageNameTextbox.Text;
@@ -221,6 +217,16 @@ namespace Plevian.Villages
         private void upgradeBuilding(Object sender, Building building)
         {
             Village.build(building.type);
+        }
+
+        private void onVillageNameFocusKeyboardLost(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            VillageTextBoxHide();
+        }
+
+        private void onVillageNameFocusLost(object sender, RoutedEventArgs e)
+        {
+            VillageTextBoxHide();
         }
 
     }

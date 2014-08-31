@@ -76,6 +76,9 @@
     <Compile Include="Buildings\BuildingControl.xaml.cs">
       <DependentUpon>BuildingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Buildings\BuildingTask.xaml.cs">
+      <DependentUpon>BuildingTask.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Buildings\LumberMill.cs" />
     <Compile Include="Buildings\Farm.cs" />
     <Compile Include="Buildings\Mine.cs" />
@@ -167,6 +170,10 @@
       <DependentUpon>VillageTab.xaml</DependentUpon>
     </Compile>
     <Page Include="Buildings\BuildingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buildings\BuildingTask.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

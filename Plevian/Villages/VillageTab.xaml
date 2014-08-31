@@ -27,7 +27,7 @@
                             <StackPanel Name="VillageNameStackpanel" Orientation="Horizontal">
                                 <Label Content="Village Name:"/>
                                 <Label  Name="VillageName" MouseLeftButtonDown="onLabelClick"/>
-                                <TextBox Name="VillageNameTextbox" Visibility="Collapsed" LostKeyboardFocus="onVillageNameFocusLost" KeyDown="onKeyDown"  />
+                                <TextBox Name="VillageNameTextbox" Visibility="Collapsed" LostFocus="onVillageNameFocusLost" LostKeyboardFocus="onVillageNameFocusKeyboardLost" KeyDown="onKeyDown"  />
                             </StackPanel>
 
                             <Label Content="Resources:" FontWeight="ExtraBold"/>
@@ -83,6 +83,22 @@
                             <ItemsControl.ItemTemplate >
                                 <DataTemplate>
                                     <buildings:BuildingControl Upgrade="upgradeBuilding"  />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Expander>
+
+                    <Expander Name="BuildingsQueue" Header="Buidlings Queue" Margin="0,5,0,0">
+                        <ItemsControl Name="BuildingsQueueControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate >
+                                <DataTemplate>
+                                    <buildings:BuildingTask  />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

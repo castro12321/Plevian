@@ -20,7 +20,7 @@ namespace Plevian.Villages
     {
         public Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         public ObservableCollection<Order> orders = new ObservableCollection<Order>();
-        public Queue<BuildingQueueItem> buildingsQueue = new Queue<BuildingQueueItem>();
+        public ObservableCollection<BuildingQueueItem> buildingsQueue = new ObservableCollection<BuildingQueueItem>();
         public Queue<RecruitQueueItem> recruitQueue = new Queue<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
         public GameTime buildTimeEnd { get; private set; }
@@ -122,14 +122,14 @@ namespace Plevian.Villages
             //Logger.village("queue: " + buildingsQueue.Count);
             while(buildingsQueue.Count > 0)
             {
-                BuildingQueueItem queueItem = buildingsQueue.Peek();
+                BuildingQueueItem queueItem = buildingsQueue[0];
                 //Logger.village("item: " + queueItem.toBuild.ToString() + " " + GameTime.now + "/" + queueItem.end);
                 if (GameTime.now < queueItem.end)
                     break;
 
                 //Logger.village("Built! " + queueItem.toBuild.ToString());
-                buildings[queueItem.toBuild].upgrade();
-                buildingsQueue.Dequeue();
+                queueItem.toBuild.upgrade();
+                buildingsQueue.RemoveAt(0);
             }
         }
 
@@ -179,7 +179,15 @@ namespace Plevian.Villages
 
             GameTime startTime = buildTimeEnd.copy();
             buildTimeEnd += buildTime;
-            buildingsQueue.Enqueue(new BuildingQueueItem(startTime, buildTimeEnd.copy(), buildingType));
+
+            Building toBuild = buildings[buildingType];
+            int level = toBuild.level + 1;
+            foreach(var build in buildingsQueue)
+            {
+                if (build.toBuild.type == toBuild.type)
+                    level++;
+            }
+            buildingsQueue.Add(new BuildingQueueItem(startTime, buildTimeEnd.copy(), toBuild, level));
         }
 
         /// <summary>

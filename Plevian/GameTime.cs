@@ -1,9 +1,13 @@
 ﻿using Plevian.Debugging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace Plevian
 {
@@ -12,7 +16,7 @@ namespace Plevian
     /// </summary>
     public class GameTime
     {
-        public static int speed = 10;
+        public static int speed = 1;
         public static ulong uspeed = Convert.ToUInt32(speed);
         private static ulong lastSystemTime;
         private static GameTime gameTime;
@@ -63,6 +67,7 @@ namespace Plevian
             ulong datediff = (systemTime - lastSystemTime);// *uspeed;
             gameTime.time += (int)datediff;
             lastSystemTime = systemTime;
+            NotifyPropertyChanged("now");
             return datediff;
         }
 
@@ -148,6 +153,36 @@ namespace Plevian
                 return time.Equals(other.time);
             }
             return false;
+        }
+
+        public static event PropertyChangedEventHandler PropertyChanged;
+
+        protected static void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(GameTime.now, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+
+
+    public class GameTimeToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType,
+        object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return "0";
+            GameTime gameTime = value as GameTime;
+            int time = gameTime.time;
+            return value.ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType,
+         object parameter, CultureInfo culture)
+        {
+            return null; //NO CONVERSION
         }
     }
 }
