@@ -1,4 +1,6 @@
-﻿using Plevian.Resource;
+﻿using Plevian.Buildings;
+using Plevian.RequirementS;
+using Plevian.Resource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +56,13 @@ namespace Plevian.Units
 
         public override UnitType getUnitType() { return unitType; }
         public override UnitClass getUnitClass() { return unitClass; }
+
+        public override Requirements getRequirements()
+        {
+            return new Requirements()
+                + new BuildingRequirement(BuildingType.BARRACKS, 3)
+                + new BuildingRequirement(BuildingType.TOWN_HALL, 5);
+        }
 #endregion
 
     }

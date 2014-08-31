@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plevian.Resource;
+using Plevian.RequirementS;
 
 namespace Plevian.Units
 {
@@ -38,6 +39,8 @@ namespace Plevian.Units
         
         public abstract UnitType getUnitType();
         public abstract UnitClass getUnitClass();
+
+        public abstract Requirements getRequirements();
 
         public abstract Unit clone();
 #endregion

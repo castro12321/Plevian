@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plevian.Resource;
+using Plevian.RequirementS;
+using Plevian.Buildings;
 
 namespace Plevian.Units
 {
@@ -53,6 +55,12 @@ namespace Plevian.Units
 
         public override UnitType getUnitType() { return unitType; }
         public override UnitClass getUnitClass() { return unitClass; }
+
+        public override Requirements getRequirements()
+        {
+            return new Requirements()
+                + new BuildingRequirement(BuildingType.BARRACKS, 1);
+        }
 #endregion
     }
 }

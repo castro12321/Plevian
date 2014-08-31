@@ -197,6 +197,8 @@ namespace Plevian.Villages
         {
             if (unit.quanity == 0)
                 throw new Exception("Cannot recruit 0 units");
+            if (!unit.getRequirements().isFullfilled(this))
+                throw new Exception("Requirements not met for " + unit);
 
             // Reset recruit counter if needed
             if (recruitQueue.Count == 0)

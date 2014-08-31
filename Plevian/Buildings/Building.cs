@@ -34,10 +34,7 @@ namespace Plevian.Buildings
         public abstract Resources getProductionFor(int level);
         public abstract int getMaxLevel();
 
-        public abstract Requirements requirements
-        {
-            get;
-        }
+        public abstract Requirements requirements { get; }
 
         public Building(BuildingType type)
         {

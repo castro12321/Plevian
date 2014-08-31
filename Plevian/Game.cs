@@ -71,6 +71,7 @@ namespace Plevian
             village1.build(BuildingType.TOWN_HALL);
             village1.addUnit(new Duke(100));
             village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
+            village3.getBuilding(BuildingType.BARRACKS).level = 1;
             village3.recruit(new Warrior(1000));
             berlin.addUnit(new Knight(100));
 

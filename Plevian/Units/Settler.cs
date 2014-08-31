@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plevian.Resource;
+using Plevian.Buildings;
+using Plevian.RequirementS;
 
 namespace Plevian.Units
 {
@@ -31,6 +33,11 @@ namespace Plevian.Units
         public static readonly UnitType unitType = UnitType.SETTLER;
         public static readonly UnitClass unitClass = UnitClass.SUPPORT;
 
+        public override Requirements getRequirements()
+        {
+            return new Requirements()
+                + new BuildingRequirement(BuildingType.TOWN_HALL, 3);
+        }
 #region overrided functions
         public override Unit clone()
         {

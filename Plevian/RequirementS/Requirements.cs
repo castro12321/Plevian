@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,54 +11,52 @@ namespace Plevian.RequirementS
 {
     public class Requirements : IEnumerator, IEnumerable
     {
-        List<Requirement> _requirements = new List<Requirement>();
-        int position = -1;
+        private List<Requirement> requirementsList = new List<Requirement>();
+        public ReadOnlyCollection<Requirement> RequirementsList { get { return requirementsList.AsReadOnly(); } }
 
         public bool isFullfilled(Village village)
         {
-            foreach( var req in _requirements )
-            {
+            foreach(Requirement req in requirementsList)
                 if (!req.isFullfilled(village))
                     return false;
-            }
             return true;
         }
 
         public void addRequirement(Requirement requirement)
         {
-            _requirements.Add(requirement);
+            requirementsList.Add(requirement);
         }
 
         public static Requirements operator +(Requirements lh, Requirement rh)
         {
             Requirements _ret = new Requirements();
-            foreach (Requirement req in lh)
-                _ret._requirements.Add(req);
-            _ret._requirements.Add(rh);
+            foreach (Requirement req in lh.RequirementsList)
+                _ret.requirementsList.Add(req);
+            _ret.requirementsList.Add(rh);
             return _ret;
         }
+
+        private int position = -1;
 
         public int Count
         {
             get
             {
-                return _requirements.Count;
+                return requirementsList.Count;
             }
         }
 
         public Requirement this[int i]
         {
-            get { return _requirements[i];  }
-            protected set { _requirements[i] = value; }
+            get { return requirementsList[i];  }
+            protected set { requirementsList[i] = value; }
         }
-
-       
 
         public object Current
         {
             get
             {
-                return _requirements[position];
+                return requirementsList[position];
             }
         }
 
