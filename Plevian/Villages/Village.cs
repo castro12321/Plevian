@@ -178,7 +178,7 @@ namespace Plevian.Villages
             if (buildingsQueue.Count == 0)
                 buildTimeEnd = GameTime.now;
 
-            Resources neededResources = building.getPriceForNextLevel();
+            Resources neededResources = getPriceForNextLevel(building);
             if (!resources.canAfford(neededResources))
                 throw new Exceptions.ExceptionNotEnoughResources();
 
@@ -330,12 +330,19 @@ namespace Plevian.Villages
             }
         }
 
+        
+
         public bool canBuild(BuildingType type)
         {
             int level = getBuildingLevel(type, true);
-            if (level >= buildings[type].getMaxLevel() || !buildings[type].requirements.isFullfilled(this))
-                return false;
-            return true;
+            bool hasMaxLevel = (level >= buildings[type].getMaxLevel());
+            bool requirementsFullfiled = buildings[type].requirements.isFullfilled(this);
+            bool hasResources = false;
+            if(hasMaxLevel == false)
+                hasResources = resources.canAfford(getPriceForNextLevel(type));
+            if (hasMaxLevel == false && requirementsFullfiled && hasResources)
+                return true;
+            return false;
         }
 
         public int getBuildingLevel(BuildingType type, bool includeQueue = false)
@@ -349,5 +356,17 @@ namespace Plevian.Villages
                 }
             return level;
         }
+
+        protected Resources getPriceForNextLevel(Building building)
+        {
+            return building.getPriceFor(getBuildingLevel(building.type, true) + 1);
+        }
+
+        public Resources getPriceForNextLevel(BuildingType building)
+        {
+            return getPriceForNextLevel(buildings[building]);
+        }
+
+       
     }
 }

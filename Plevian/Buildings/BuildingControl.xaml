@@ -21,10 +21,10 @@
                 <DataTrigger Binding="{Binding CanBuild}" Value="true" >
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding CanBuild, ElementName=resourceControl}" Value="false" >
+                <DataTrigger Binding="{Binding showResources, ElementName=resourceControl}" Value="false" >
                     <Setter Property="Visibility" Value="Collapsed" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding CanBuild, ElementName=resourceControl}" Value="true" >
+                <DataTrigger Binding="{Binding showResources, ElementName=resourceControl}" Value="true" >
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </Style.Triggers>

@@ -115,7 +115,7 @@ namespace Plevian.Buildings
         {
             get
             {
-                if (!village.canBuild(data.type))
+                if (showResources)
                     return new Resources();
                 return data.getPriceFor(village.getBuildingLevel(data.type, true) + 1);
             }
@@ -125,7 +125,16 @@ namespace Plevian.Buildings
         {
             get
             {
+                bool test = village.canBuild(data.type);
                 return village.canBuild(data.type);
+            }
+        }
+
+        public bool showResources
+        {
+            get
+            {
+                return village.getBuildingLevel(data.type, true) >= data.getMaxLevel();
             }
         }
 
@@ -145,11 +154,21 @@ namespace Plevian.Buildings
             this.village = village;
             this.data.PropertyChanged += data_PropertyChanged;
             this.village.buildingQueueItemAdded += village_buildingQueueItemAdded;
+            GameTime.PropertyChanged += GameTime_PropertyChanged;
             this.village.buildingBuilt += village_buildingBuilt;
             NotifyPropertyChanged("Name");
             NotifyPropertyChanged("Price");
             NotifyPropertyChanged("Level");
             NotifyPropertyChanged("CanBuild");
+        }
+
+        void GameTime_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "now")
+            {
+                NotifyPropertyChanged("CanBuild");
+                NotifyPropertyChanged("showResources");
+            }
         }
 
         void village_buildingBuilt(Village vilalge, Building building)
@@ -175,6 +194,7 @@ namespace Plevian.Buildings
             {
                 NotifyPropertyChanged("Level");
                 NotifyPropertyChanged("Price");
+                NotifyPropertyChanged("CanBuild");
             }
         }
 

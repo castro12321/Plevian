@@ -50,7 +50,7 @@ namespace Plevian.Resource
 
         private void countChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (e == null)
+            if (e == null || e.NewValue == null)
                 return;
             string newValue = e.NewValue.ToString();
             Label label = sender as Label;
