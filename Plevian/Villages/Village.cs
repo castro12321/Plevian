@@ -169,6 +169,9 @@ namespace Plevian.Villages
         public void build(BuildingType buildingType)
         {
             Building building = buildings[buildingType];
+            if (!building.requirements.isFullfilled(this))
+                throw new Exception("Requirements not met for " + building);
+
             if (buildingsQueue.Count == 0)
                 buildTimeEnd = GameTime.now;
 
