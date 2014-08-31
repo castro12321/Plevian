@@ -1,4 +1,5 @@
 ﻿using Plevian.Resource;
+using Plevian.Villages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -54,15 +55,18 @@ namespace Plevian.Buildings
             if(newValue is KeyValuePair<BuildingType, Building>)
             {
                 KeyValuePair<BuildingType, Building> pair = (KeyValuePair<BuildingType, Building>)newValue;
-                setData(pair.Value);
+                Village village = MainWindow.getInstance().villageTab.Village;
+
+                setData(pair.Value, village);
+
             }
         }
 
 
-        public void setData(Building data)
+        public void setData(Building data, Village village)
         {
             stackPanel.DataContext = model;
-            model.setData(data);
+            model.setData(data, village);
         }
 
         public Building getData()
@@ -89,7 +93,8 @@ namespace Plevian.Buildings
     public class ViewModel : INotifyPropertyChanged
     {
         public Building data;
-        
+        public Village village;
+
         public String Name
         {
             get
@@ -110,14 +115,23 @@ namespace Plevian.Buildings
         {
             get
             {
-                return data.getPriceForNextLevel();
+                if (!village.canBuild(data.type))
+                    return new Resources();
+                return data.getPriceFor(village.getBuildingLevel(data.type, true) + 1);
             }
         }
 
-
-        public ViewModel(Building data)
+        public bool CanBuild
         {
-            setData(data);
+            get
+            {
+                return village.canBuild(data.type);
+            }
+        }
+
+        public ViewModel(Building data, Village village)
+        {
+            setData(data, village);
         }
 
         public ViewModel()
@@ -125,14 +139,27 @@ namespace Plevian.Buildings
             this.data = null;
         }
 
-        public void setData(Building data)
+        public void setData(Building data, Village village)
         {
             this.data = data;
+            this.village = village;
             this.data.PropertyChanged += data_PropertyChanged;
+            this.village.buildingQueueItemAdded += village_buildingQueueItemAdded;
             NotifyPropertyChanged("Name");
             NotifyPropertyChanged("Price");
             NotifyPropertyChanged("Level");
+            NotifyPropertyChanged("CanBuild");
         }
+
+        void village_buildingQueueItemAdded(Village village, BuildingQueueItem item)
+        {
+            if (item.toBuild.type == data.type)
+            {
+                NotifyPropertyChanged("CanBuild");
+                NotifyPropertyChanged("Price");
+            }
+        }
+        
 
         private void data_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

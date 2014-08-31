@@ -13,6 +13,7 @@ using Plevian.Orders;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Plevian.events;
 
 namespace Plevian.Villages
 {
@@ -28,6 +29,8 @@ namespace Plevian.Villages
         public readonly Resources resources;
         private string _name;
         private Player owner;
+
+        public event BuildingQueueItemAdded buildingQueueItemAdded;
 
         public Player Owner
         {
@@ -187,7 +190,11 @@ namespace Plevian.Villages
                 if (build.toBuild.type == toBuild.type)
                     level++;
             }
-            buildingsQueue.Add(new BuildingQueueItem(startTime, buildTimeEnd.copy(), toBuild, level));
+            BuildingQueueItem item = new BuildingQueueItem(startTime, buildTimeEnd.copy(), toBuild, level);
+            buildingsQueue.Add(item);
+
+            if (buildingQueueItemAdded != null)
+                buildingQueueItemAdded(this, item);
         }
 
         /// <summary>
@@ -315,6 +322,26 @@ namespace Plevian.Villages
                 _name = value;
                 NotifyPropertyChanged();
             }
+        }
+
+        public bool canBuild(BuildingType type)
+        {
+            int level = getBuildingLevel(type, true);
+            if (level >= buildings[type].getMaxLevel())
+                return false;
+            return true;
+        }
+
+        public int getBuildingLevel(BuildingType type, bool includeQueue = false)
+        {
+            int level = buildings[type].level;
+            if(includeQueue)
+                foreach (var queue in buildingsQueue)
+                {
+                    if (buildings[type].type == queue.toBuild.type)
+                        level++;
+                }
+            return level;
         }
     }
 }

@@ -83,6 +83,7 @@
     <Compile Include="Buildings\Farm.cs" />
     <Compile Include="Buildings\Mine.cs" />
     <Compile Include="Buildings\Wall.cs" />
+    <Compile Include="events\VillageEvents.cs" />
     <Compile Include="GUI\BetterLabel.cs" />
     <Compile Include="GUI\TradeWindow.xaml.cs">
       <DependentUpon>TradeWindow.xaml</DependentUpon>

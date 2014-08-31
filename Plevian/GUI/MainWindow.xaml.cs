@@ -27,7 +27,7 @@ namespace Plevian
         private Game game;
 
         private MapTab mapTab;
-        private VillageTab villageTab;
+        public VillageTab villageTab;
         private MessagesTab messagesTab;
 
         private static MainWindow instance;

@@ -98,7 +98,7 @@
 
                             <ItemsControl.ItemTemplate >
                                 <DataTemplate>
-                                    <buildings:BuildingTask  />
+                                    <buildings:BuildingTask Name="BuildingsQueueTemplate"  />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

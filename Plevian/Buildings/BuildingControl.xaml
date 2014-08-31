@@ -12,12 +12,30 @@
     
     <UserControl.Resources>
         <local:BuildingCostConverter x:Key="buildingCostConverter" />
+        
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CanBuild}" Value="false" >
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding CanBuild}" Value="true" >
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding CanBuild, ElementName=resourceControl}" Value="false" >
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding CanBuild, ElementName=resourceControl}" Value="true" >
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     
     <StackPanel Name="stackPanel" Orientation="Horizontal">
         <Label Name="BuildingName" Content="{Binding Name}" FontFamily="Vani" FontSize="14" Width="80" MaxWidth="80" />
         <Label Name="BuildingLevel" Content="{Binding Level}" />
-        <resource:ResourceControl DataContext="{Binding Price}" MinWidth="200" MaxWidth="400" />
-        <Button Content="Upgrade" Margin="0,2,8,2" Padding="3,1" HorizontalContentAlignment="Center" HorizontalAlignment="Right" BorderThickness="1" Click="OnUpgradeClick" />
+        <resource:ResourceControl x:Name="resourceControl" DataContext="{Binding Price}" MinWidth="200" MaxWidth="400" />
+        <Button Content="Upgrade" Margin="0,2,8,2" Padding="3,1" HorizontalContentAlignment="Center" HorizontalAlignment="Right" BorderThickness="1" Click="OnUpgradeClick" >
+        </Button>
     </StackPanel>
 </UserControl>
