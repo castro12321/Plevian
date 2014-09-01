@@ -102,6 +102,7 @@ namespace Plevian.Buildings
             buildings.Add(BuildingType.LUMBER_MILL, new LumberMill());
             buildings.Add(BuildingType.MINE, new Mine());
             buildings.Add(BuildingType.WALL, new Wall());
+            buildings.Add(BuildingType.WORKSHOP, new Workshop());
             return buildings;
         }
 

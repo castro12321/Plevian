@@ -14,5 +14,6 @@ namespace Plevian.Units
         DUKE,
         SETTLER,
         TRADER,
+        RAM,
     };
 }

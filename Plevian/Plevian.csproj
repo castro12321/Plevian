@@ -73,6 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Buildings\Workshop.cs" />
     <Compile Include="Buildings\BuildingControl.xaml.cs">
       <DependentUpon>BuildingControl.xaml</DependentUpon>
     </Compile>
@@ -140,6 +141,7 @@
       <DependentUpon>ResourceControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Transaction.cs" />
+    <Compile Include="Units\Ram.cs" />
     <Compile Include="Units\Duke.cs" />
     <Compile Include="Units\Trader.cs" />
     <Compile Include="Units\Settler.cs" />

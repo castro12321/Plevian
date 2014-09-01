@@ -14,6 +14,7 @@ namespace Plevian.Buildings
         TOWN_HALL,
         BARRACKS,
         STABLE,
-        WALL
+        WALL,
+        WORKSHOP,
     };
 }

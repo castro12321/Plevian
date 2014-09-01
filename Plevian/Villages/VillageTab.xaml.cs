@@ -127,12 +127,16 @@ namespace Plevian.Villages
             setUnitCount(ResourcesKnights, UnitType.KNIGHT);
             setUnitCount(ResourcesSettlers, UnitType.SETTLER);
             setUnitCount(ResourcesTraders, UnitType.TRADER);
+            setUnitCount(ResourcesDukes, UnitType.DUKE);
+            setUnitCount(ResourcesRams, UnitType.RAM);
 
             setRecruitProgress(RecruitWarriorProgress, UnitType.WARRIOR);
             setRecruitProgress(RecruitArcherProgress, UnitType.ARCHER);
             setRecruitProgress(RecruitKnightProgress, UnitType.KNIGHT);
             setRecruitProgress(RecruitSettlerProgress, UnitType.SETTLER);
             setRecruitProgress(RecruitTraderProgress, UnitType.TRADER);
+            setRecruitProgress(RecruitDukeProgress, UnitType.DUKE);
+            setRecruitProgress(RecruitRamProgress, UnitType.RAM);
 
             /*setBuildingLevel(LevelBarracks, BuildingType.BARRACKS);
             setBuildingLevel(LevelStable  , BuildingType.STABLE);
@@ -175,6 +179,16 @@ namespace Plevian.Villages
         private void RecruitTrader_Click(object sender, RoutedEventArgs e)
         {
             Village.recruit(new Trader(1));
+        }
+
+        private void RecruitDuke_Click(object sender, RoutedEventArgs e)
+        {
+            Village.recruit(new Duke(1));
+        }
+
+        private void RecruitRam_Click(object sender, RoutedEventArgs e)
+        {
+            Village.recruit(new Ram(1));
         }
 
         private void ResearchLasers_Click(object sender, RoutedEventArgs e)
