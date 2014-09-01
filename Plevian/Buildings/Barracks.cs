@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Plevian.Resource;
 using Plevian.RequirementS;
+using Plevian.Units;
 
 namespace Plevian.Buildings
 {
@@ -67,6 +68,21 @@ namespace Plevian.Buildings
                     _requirements += new BuildingRequirement(BuildingType.TOWN_HALL, 3);
                 }
                 return _requirements;
+            }
+        }
+
+        public override float getUnitTimeModifierFor(Units.UnitType type)
+        {
+            switch (type)
+            {
+                case UnitType.WARRIOR:
+                case UnitType.ARCHER:
+                    return 1.0f - (0.10f * level); // 10% per level
+                case UnitType.DUKE:
+                case UnitType.SETTLER:
+                case UnitType.TRADER:
+                    return 1.0f - (0.05f * level); // 5% per level
+                default: return 1.0f;
             }
         }
     }

@@ -68,5 +68,10 @@ namespace Plevian.Buildings
                 return _requirements;
             }
         }
+
+        public override float getBuildingTimeModifierFor(BuildingType type)
+        {
+            return 1.0f - (0.05f * (float)level); // 0.05% per level
+        }
     }
 }

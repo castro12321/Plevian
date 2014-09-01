@@ -16,7 +16,7 @@ namespace Plevian
     /// </summary>
     public class GameTime
     {
-        public static int speed = 20;
+        public static int speed = 1;
         public static ulong uspeed = Convert.ToUInt32(speed);
         private static ulong lastSystemTime;
         private static GameTime gameTime;
@@ -104,6 +104,11 @@ namespace Plevian
         public static GameTime operator *(GameTime lh, int rh)
         {
             return new GameTime(lh.time * rh);
+        }
+
+        public static GameTime operator *(GameTime lh, float rh)
+        {
+            return new GameTime((int)((float)lh.time * rh));
         }
 
         public static bool operator >(GameTime lh, GameTime rh)

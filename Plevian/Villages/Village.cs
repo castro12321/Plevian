@@ -185,6 +185,8 @@ namespace Plevian.Villages
             takeResources(neededResources);
 
             GameTime buildTime = building.getConstructionTimeForNextLevel();
+            foreach (Building b in buildings.Values)
+                buildTime *= b.getBuildingTimeModifierFor(buildingType);
 
             GameTime startTime = buildTimeEnd.copy();
             buildTimeEnd += buildTime;
@@ -229,10 +231,13 @@ namespace Plevian.Villages
             newUnit.quanity = 1;
 
             float recruitTimeFromNow = 0;
+            float unitRecruitTime = unit.getRecruitTime();
+            foreach (Building b in buildings.Values)
+                unitRecruitTime *= b.getUnitTimeModifierFor(unit.getUnitType());
             int unitsToRecruit = unit.quanity;
             while(unitsToRecruit --> 0)
             {
-                recruitTimeFromNow += unit.getRecruitTime();
+                recruitTimeFromNow += unitRecruitTime;
                 recruitQueue.Enqueue(new RecruitQueueItem(startTime, recruitTimeEnd + new Seconds((int)recruitTimeFromNow), newUnit));
             }
             recruitTimeEnd += new Seconds((int)recruitTimeFromNow);

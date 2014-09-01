@@ -7,6 +7,7 @@ using Plevian.Resource;
 using Plevian.RequirementS;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Plevian.Units;
 
 namespace Plevian.Buildings
 {
@@ -33,6 +34,14 @@ namespace Plevian.Buildings
         public abstract Resources getPriceFor(int level);
         public abstract Resources getProductionFor(int level);
         public abstract int getMaxLevel();
+        public virtual float getBuildingTimeModifierFor(BuildingType type)
+        {
+            return 1;
+        }
+        public virtual float getUnitTimeModifierFor(UnitType type)
+        {
+            return 1;
+        }
 
         public abstract Requirements requirements { get; }
 

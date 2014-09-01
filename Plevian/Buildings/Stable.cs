@@ -70,5 +70,14 @@ namespace Plevian.Buildings
                 return _requirements;
             }
         }
+
+        public override float getUnitTimeModifierFor(Units.UnitType type)
+        {
+            switch(type)
+            {
+                case Units.UnitType.KNIGHT: return 1.0f - (0.1f * level); // 10% per level
+                default: return 1.0f;
+            }
+        }
     }
 }

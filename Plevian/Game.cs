@@ -66,10 +66,10 @@ namespace Plevian
 
             village1.addUnit(new Trader(3));
             village1.addUnit(new Knight(100000));
-            village2.addUnit(new Knight(200));
-            village2.addUnit(new Archer(500));
             village1.build(BuildingType.TOWN_HALL);
             village1.addUnit(new Duke(100));
+            village2.addUnit(new Knight(200));
+            village2.addUnit(new Archer(500));
             village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
             village3.getBuilding(BuildingType.BARRACKS).level = 1;
             village3.recruit(new Warrior(1000));
