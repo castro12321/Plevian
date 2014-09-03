@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Plevian.Units.UnitControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:resource="clr-namespace:Plevian.Resource"
+             xmlns:local="clr-namespace:Plevian.Units"
+             mc:Ignorable="d" 
+             >
+    <StackPanel Orientation="Horizontal" Name="stackPanel">
+        <Label Name="UnitName" Content="{Binding name}" FontSize="14" Width="80" MaxWidth="80"  />
+        <resource:ResourceControl x:Name="Resources" />
+        <TextBox Name="Quanity" Text="0" MinWidth="30" MaxWidth="50" />
+        <Button Name="RecruitButton" Content="Recruit" />
+    </StackPanel>
+</UserControl>

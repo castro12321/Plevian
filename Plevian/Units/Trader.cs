@@ -16,51 +16,38 @@ namespace Plevian.Units
         {
         }
 
-        public static readonly int attackStrength = 5;
-
-        public static readonly int defenseOnInfantry = 1;
-        public static readonly int defenseOnCavalry = 1;
-        public static readonly int defenseOnArchers = 1;
-
-        public static readonly int movementSpeed = 3;
-        public static readonly int lootCapacity = 500;
-
-        public static readonly float recruitTime = 30.0f;
-
-        public static readonly Resources recruitCost = new Food(500) + new Wood(150);
-        public static readonly Resources upkeepCost = new Food(10);
-
-        public static readonly UnitType unitType = UnitType.TRADER;
-        public static readonly UnitClass unitClass = UnitClass.SUPPORT;
-
-#region overrided functions
+#region overrided properties
         public override Unit clone()
         {
             return new Trader(quanity);
         }
 
-        public override int getAttackStrength() { return attackStrength; }
+        public override int attackStrength { get { return 5; } }
 
-        public override int getDefenseOnInfantry() { return defenseOnInfantry; }
-        public override int getDefenseOnCavalry() { return defenseOnCavalry; }
-        public override int getDefenseOnArchers() { return defenseOnArchers; }
+        public override int defenseInfantry { get { return 1; } }
+        public override int defenseCavalry { get { return 1; } }
+        public override int defenseArchers { get { return 1; } }
 
-        public override int GetMovementSpeed() { return movementSpeed; }
+        public override int movementSpeed { get { return 3; } }
+        public override int lootCapacity { get { return 500; } }
 
-        public override int getLootCapacity() { return lootCapacity; }
+        public override Resources recruitCost { get { return new Food(500) + new Wood(150); } }
 
-        public override Resources getRecruitCost() { return recruitCost; }
-        public override float getRecruitTime() { return recruitTime; }
-        public override Resources getUpkeepCost() { return upkeepCost; }
+        public override float recruitTime { get { return 30.0f; } }
+        public override Resources upkeepCost { get { return new Food(10); } }
 
-        public override UnitType getUnitType() { return unitType; }
-        public override UnitClass getUnitClass() { return unitClass; }
+        public override UnitType unitType { get { return UnitType.TRADER; } }
+        public override UnitClass unitClass { get { return UnitClass.SUPPORT; } }
 
+        public override string name { get { return "Handlarz"; } }
 
-        public override Requirements getRequirements()
+        public override Requirements requirements
         {
-            return new Requirements()
-                + new BuildingRequirement(BuildingType.TOWN_HALL, 2);
+            get
+            {
+                return new Requirements()
+                            + new BuildingRequirement(BuildingType.TOWN_HALL, 2);
+            }
         }
 #endregion
     }

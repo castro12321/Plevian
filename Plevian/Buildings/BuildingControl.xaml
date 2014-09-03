@@ -7,11 +7,14 @@
              xmlns:local="clr-namespace:Plevian.Buildings"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
+             Name="userControl"
              >
    
     
     <UserControl.Resources>
         <local:BuildingCostConverter x:Key="buildingCostConverter" />
+
+        
         
         <Style TargetType="Button">
             <Style.Triggers>

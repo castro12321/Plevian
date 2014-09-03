@@ -16,52 +16,40 @@ namespace Plevian.Units
         {
         }
 
-        public static readonly int attackStrength = 100;
 
-        public static readonly int defenseOnInfantry = 150;
-        public static readonly int defenseOnCavalry = 50;
-        public static readonly int defenseOnArchers = 100;
-
-        public static readonly int movementSpeed = 3;
-        public static readonly int lootCapacity = 0;
-
-        public static readonly float recruitTime = 60f;
-
-        public static readonly Resources recruitCost = new Iron(100) + new Food(50) + new Wood(25);
-        public static readonly Resources upkeepCost = new Iron(1) + new Food(5);
-
-        public static readonly UnitType unitType = UnitType.DUKE;
-        public static readonly UnitClass unitClass = UnitClass.INFANTRY;
-
-
-#region overrided functions
+#region overrided properties
         public override Unit clone()
         {
             return new Duke(quanity);
         }
 
-        public override int getAttackStrength() { return attackStrength; }
+        public override int attackStrength { get { return 100; } }
 
-        public override int getDefenseOnInfantry() { return defenseOnInfantry; }
-        public override int getDefenseOnCavalry() { return defenseOnCavalry; }
-        public override int getDefenseOnArchers() { return defenseOnArchers; }
+        public override int defenseInfantry { get { return 150; } }
+        public override int defenseCavalry { get { return 50; } }
+        public override int defenseArchers { get { return 100; } }
 
-        public override int GetMovementSpeed() { return movementSpeed; }
+        public override int movementSpeed { get { return 3; } }
+        public override int lootCapacity { get { return 0; } }
 
-        public override int getLootCapacity() { return lootCapacity; }
+        public override Resources recruitCost { get { return new Iron(100) + new Food(50) + new Wood(25); } }
 
-        public override Resources getRecruitCost() { return recruitCost; }
-        public override float getRecruitTime() { return recruitTime; }
-        public override Resources getUpkeepCost() { return upkeepCost; }
+        public override float recruitTime { get { return 60f; } }
+        public override Resources upkeepCost { get { return new Iron(1) + new Food(5); } }
 
-        public override UnitType getUnitType() { return unitType; }
-        public override UnitClass getUnitClass() { return unitClass; }
+        public override UnitType unitType { get { return UnitType.DUKE; } }
+        public override UnitClass unitClass { get { return UnitClass.INFANTRY; } }
 
-        public override Requirements getRequirements()
+        public override string name { get { return "Wojewoda XD?"; } }
+
+        public override Requirements requirements
         {
-            return new Requirements()
-                + new BuildingRequirement(BuildingType.BARRACKS, 3)
-                + new BuildingRequirement(BuildingType.TOWN_HALL, 5);
+            get
+            {
+                return new Requirements()
+                            + new BuildingRequirement(BuildingType.BARRACKS, 3) 
+                            + new BuildingRequirement(BuildingType.TOWN_HALL, 5);
+            }
         }
 #endregion
 

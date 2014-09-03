@@ -44,6 +44,7 @@ namespace Plevian.Villages
                 OrdersItemControl.ItemsSource = value.orders;
                 BuildingsItemControl.ItemsSource = value.buildings;
                 BuildingsQueueControl.ItemsSource = value.buildingsQueue;
+                UnitsItemControl.ItemsSource = value.army;
             }
         }
 
@@ -101,7 +102,7 @@ namespace Plevian.Villages
         {
             foreach (RecruitQueueItem queueItem in Village.recruitQueue)
             {
-                if (queueItem.toRecruit.getUnitType() == type)
+                if (queueItem.toRecruit.unitType == type)
                 {
                     Seconds left = GameTime.now.diffrence(queueItem.end);
                     int minutes = left.seconds / 60;
@@ -116,41 +117,6 @@ namespace Plevian.Villages
         public void render()
         {
             coords.Content = "X:" + Village.location.x + " Y:" + Village.location.y;
-
-           // ResourcesFood.Content  = Village.resources.food;
-           // ResourcesWood.Content  = Village.resources.wood;
-           // ResourcesIron.Content  = Village.resources.iron;
-           // ResourcesStone.Content = Village.resources.stone;
-
-            setUnitCount(ResourcesWarriors, UnitType.WARRIOR);
-            setUnitCount(ResourcesArchers, UnitType.ARCHER);
-            setUnitCount(ResourcesKnights, UnitType.KNIGHT);
-            setUnitCount(ResourcesSettlers, UnitType.SETTLER);
-            setUnitCount(ResourcesTraders, UnitType.TRADER);
-            setUnitCount(ResourcesDukes, UnitType.DUKE);
-            setUnitCount(ResourcesRams, UnitType.RAM);
-
-            setRecruitProgress(RecruitWarriorProgress, UnitType.WARRIOR);
-            setRecruitProgress(RecruitArcherProgress, UnitType.ARCHER);
-            setRecruitProgress(RecruitKnightProgress, UnitType.KNIGHT);
-            setRecruitProgress(RecruitSettlerProgress, UnitType.SETTLER);
-            setRecruitProgress(RecruitTraderProgress, UnitType.TRADER);
-            setRecruitProgress(RecruitDukeProgress, UnitType.DUKE);
-            setRecruitProgress(RecruitRamProgress, UnitType.RAM);
-
-            /*setBuildingLevel(LevelBarracks, BuildingType.BARRACKS);
-            setBuildingLevel(LevelStable  , BuildingType.STABLE);
-            setBuildingLevel(LevelTownHall, BuildingType.TOWN_HALL);
-            setBuildingLevel(LevelFarm    , BuildingType.FARM);
-            setBuildingLevel(LevelLumberMill, BuildingType.LUMBER_MILL);
-            setBuildingLevel(LevelMine    , BuildingType.MINE);
-
-            setBuildingProgress(UpgradeBarracksProgress, BuildingType.BARRACKS);
-            setBuildingProgress(UpgradeStableProgress, BuildingType.STABLE);
-            setBuildingProgress(UpgradeTownHallProgress, BuildingType.TOWN_HALL);
-            setBuildingProgress(UpgradeFarmProgress, BuildingType.FARM);
-            setBuildingProgress(UpgradeLumberMillProgress, BuildingType.LUMBER_MILL);
-            setBuildingProgress(UpgradeMineProgress, BuildingType.MINE);*/
 
             // Render SFML
             villageView.render();

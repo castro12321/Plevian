@@ -21,7 +21,7 @@ namespace Tests.Units
         public void testUnitFactory()
         {
             Unit unit = UnitFactory.createUnit(UnitType.ARCHER, 100);
-            Assert.IsTrue((unit.getUnitType() == UnitType.ARCHER) && unit.quanity == 100);
+            Assert.IsTrue((unit.unitType == UnitType.ARCHER) && unit.quanity == 100);
         }
     }
 }

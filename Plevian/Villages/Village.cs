@@ -22,7 +22,7 @@ namespace Plevian.Villages
         public Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         public ObservableCollection<Order> orders = new ObservableCollection<Order>();
         public ObservableCollection<BuildingQueueItem> buildingsQueue = new ObservableCollection<BuildingQueueItem>();
-        public Queue<RecruitQueueItem> recruitQueue = new Queue<RecruitQueueItem>();
+        public ObservableCollection<RecruitQueueItem> recruitQueue = new ObservableCollection<RecruitQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
         public GameTime buildTimeEnd { get; private set; }
         public Army army { get; private set; }
@@ -143,20 +143,20 @@ namespace Plevian.Villages
         {
             while (recruitQueue.Count > 0)
             {
-                RecruitQueueItem queueItem = recruitQueue.Peek();
+                RecruitQueueItem queueItem = recruitQueue[0];
                 if (GameTime.now < queueItem.end)
                     break;
 
                 Unit toRecruit = queueItem.toRecruit;
-                if (army.contain(toRecruit.getUnitType()))
-                    army.get(toRecruit.getUnitType()).quanity++;
+                if (army.contain(toRecruit.unitType))
+                    army.get(toRecruit.unitType).quanity++;
                 else
                 {
                     Unit clone = toRecruit.clone();
                     clone.quanity = 1;
                     army += clone;
                 }
-                recruitQueue.Dequeue();
+                recruitQueue.RemoveAt(0);
             }
         }
 
@@ -212,7 +212,7 @@ namespace Plevian.Villages
         {
             if (unit.quanity == 0)
                 throw new Exception("Cannot recruit 0 units");
-            if (!unit.getRequirements().isFullfilled(this))
+            if (!unit.requirements.isFullfilled(this))
                 throw new Exception("Requirements not met for " + unit);
 
             // Reset recruit counter if needed
@@ -231,14 +231,15 @@ namespace Plevian.Villages
             newUnit.quanity = 1;
 
             float recruitTimeFromNow = 0;
-            float unitRecruitTime = unit.getRecruitTime();
+            float unitRecruitTime = unit.recruitTime;
             foreach (Building b in buildings.Values)
-                unitRecruitTime *= b.getUnitTimeModifierFor(unit.getUnitType());
+                unitRecruitTime *= b.getUnitTimeModifierFor(unit.unitType);
             int unitsToRecruit = unit.quanity;
             while(unitsToRecruit --> 0)
             {
                 recruitTimeFromNow += unitRecruitTime;
-                recruitQueue.Enqueue(new RecruitQueueItem(startTime, recruitTimeEnd + new Seconds((int)recruitTimeFromNow), newUnit));
+                RecruitQueueItem queueItem = new RecruitQueueItem(startTime, recruitTimeEnd + new Seconds((int) recruitTimeFromNow), newUnit);
+                recruitQueue.Add(queueItem);
             }
             recruitTimeEnd += new Seconds((int)recruitTimeFromNow);
         }
@@ -268,8 +269,8 @@ namespace Plevian.Villages
 
         public void addUnit(Unit unit)
         {
-            if (army.contain(unit.getUnitType()))
-                army.get(unit.getUnitType()).quanity+= unit.quanity;
+            if (army.contain(unit.unitType))
+                army.get(unit.unitType).quanity+= unit.quanity;
             else
             {
                 army += unit;

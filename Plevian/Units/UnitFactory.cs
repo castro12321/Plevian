@@ -23,5 +23,15 @@ namespace Plevian.Units
 
             throw new NotSupportedException("UnitFactory cannot create " + type + "; " + quanity);
         }
+
+        public Army createArmyWithAllUnits()
+        {
+            Army army = new Army();
+                foreach (UnitType type in (UnitType[]) Enum.GetValues(typeof(UnitType)))
+                {
+                    army += createUnit(type);
+                }
+            return army;
+        }
     }
 }

@@ -145,6 +145,9 @@
     <Compile Include="Units\Duke.cs" />
     <Compile Include="Units\Trader.cs" />
     <Compile Include="Units\Settler.cs" />
+    <Compile Include="Units\UnitControl.xaml.cs">
+      <DependentUpon>UnitControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Units\UnitFactory.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="Villages\VillageRenderer.cs">
@@ -243,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resource\ResourceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\UnitControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plevian.Exceptions;
+using System.Collections;
 
 namespace Plevian.Units
 {
-    public class Army
+    public class Army : IEnumerator, IEnumerable
     {
         private Dictionary<UnitType, Unit> units = new Dictionary<UnitType, Unit>();
         
@@ -39,7 +40,7 @@ namespace Plevian.Units
         public static Army operator +(Army lh, Unit rh)
         {
             Army army = new Army();
-            UnitType unitType = rh.getUnitType();
+            UnitType unitType = rh.unitType;
             foreach (var pair in lh.units)
             {
                 army.units.Add(pair.Key, pair.Value);
@@ -99,7 +100,7 @@ namespace Plevian.Units
             int attackStrength = 0;
             foreach (var pair in units)
             {
-                attackStrength += pair.Value.getAttackStrength() * pair.Value.quanity;
+                attackStrength += pair.Value.attackStrength * pair.Value.quanity;
             }
             return attackStrength;
         }
@@ -109,7 +110,7 @@ namespace Plevian.Units
             int defenseInfantry = 0;
             foreach (var pair in units)
             {
-                defenseInfantry += pair.Value.getDefenseOnInfantry() * pair.Value.quanity;
+                defenseInfantry += pair.Value.defenseInfantry * pair.Value.quanity;
             }
             return defenseInfantry;
         }
@@ -119,7 +120,7 @@ namespace Plevian.Units
             int defenseCavalry = 0;
             foreach (var pair in units)
             {
-                defenseCavalry += pair.Value.getDefenseOnCavalry() * pair.Value.quanity;
+                defenseCavalry += pair.Value.defenseCavalry * pair.Value.quanity;
             }
             return defenseCavalry;
         }
@@ -129,7 +130,7 @@ namespace Plevian.Units
             int defenseArchers = 0;
             foreach (var pair in units)
             {
-                defenseArchers += pair.Value.getDefenseOnArchers() * pair.Value.quanity;
+                defenseArchers += pair.Value.defenseArchers * pair.Value.quanity;
             }
             return defenseArchers;
         }
@@ -139,7 +140,7 @@ namespace Plevian.Units
             float slowest = 0f;
             foreach(var pair in units)
             {
-                float speed = (float)pair.Value.GetMovementSpeed();
+                float speed = (float)pair.Value.movementSpeed;
                 if (speed > slowest)
                     slowest = speed;
             }
@@ -177,7 +178,7 @@ namespace Plevian.Units
         {
             int size = 0;
             foreach (var pair in units)
-                if (pair.Value.getUnitClass() == unitClass) size += pair.Value.quanity;
+                if (pair.Value.unitClass == unitClass) size += pair.Value.quanity;
             return size;
         }
 
@@ -186,7 +187,7 @@ namespace Plevian.Units
             int capacity = 0;
             foreach(var pair in units)
             {
-                capacity += pair.Value.getLootCapacity() * pair.Value.quanity;
+                capacity += pair.Value.lootCapacity * pair.Value.quanity;
             }
             return capacity;
         }
@@ -201,6 +202,46 @@ namespace Plevian.Units
                 str += name + " - " + pair.Value.quanity + "\n";
             }
             return str;
+        }
+
+        private int position = -1;
+
+        public int Count
+        {
+            get
+            {
+                return units.Count;
+            }
+        }
+
+        public Unit this[int i]
+        {
+            get { return units.Values.ElementAt(i); }
+            protected set { Unit unit = units.Values.ElementAt(i); unit = value; }
+        }
+
+        public object Current
+        {
+            get
+            {
+                return units.Values.ElementAt(position);
+            }
+        }
+
+        public bool MoveNext()
+        {
+            position++;
+            return (position < Count);
+        }
+
+        public void Reset()
+        {
+            position = 0;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return (IEnumerator)this;
         }
     }
 }

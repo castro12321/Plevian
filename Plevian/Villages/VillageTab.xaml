@@ -6,10 +6,27 @@
              xmlns:ord="clr-namespace:Plevian.Orders"
              xmlns:buildings="clr-namespace:Plevian.Buildings"
              xmlns:resource="clr-namespace:Plevian.Resource"
+             xmlns:units="clr-namespace:Plevian.Units"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ord:OrderControl x:Key="OrderControl" />
+
+        <Style TargetType="{x:Type buildings:BuildingControl}" x:Key="BuildingControlVisibility">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HaveTechnology}" Value="false">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding HaveTechnology}" Value="true">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
     </UserControl.Resources>
+    
+
+        
+
     
     <Grid Background="#FFE5E5E5">
 
@@ -38,50 +55,19 @@
 
                     <!-- Military -->
                     <Expander Name="Military" Header="Military" Margin="0,5,0,0">
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <Label  Content="Warriors: "  MinWidth="100"/>
-                                <Label  Content="?"           MinWidth="45" Name="ResourcesWarriors"/>
-                                <Button Content="Recruit"     MinWidth="60" Click="RecruitWarrior_Click"/>
-                                <Label  Content="?%"          MinWidth="40" Name="RecruitWarriorProgress"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label  Content="Archers: "  MinWidth="100"/>
-                                <Label  Content="?"          MinWidth="45" Name="ResourcesArchers"/>
-                                <Button Content="Recruit"    MinWidth="60" Click="RecruitArcher_Click"/>
-                                <Label  Content="?%"         MinWidth="40" Name="RecruitArcherProgress"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label  Content="Knights: "  MinWidth="100"/>
-                                <Label  Content="?"          MinWidth="45" Name="ResourcesKnights"/>
-                                <Button Content="Recruit"    MinWidth="60" Click="RecruitKnight_Click"/>
-                                <Label  Content="?%"         MinWidth="40" Name="RecruitKnightProgress"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label  Content="Settlers: " MinWidth="100"/>
-                                <Label  Content="?"          MinWidth="45" Name="ResourcesSettlers"/>
-                                <Button Content="Recruit"    MinWidth="60" Click="RecruitSettler_Click"/>
-                                <Label  Content="?%"         MinWidth="40" Name="RecruitSettlerProgress"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label  Content="Traders: "  MinWidth="100"/>
-                                <Label  Content="?"          MinWidth="45" Name="ResourcesTraders"/>
-                                <Button Content="Recruit"    MinWidth="60" Click="RecruitTrader_Click"/>
-                                <Label  Content="?%"         MinWidth="40" Name="RecruitTraderProgress"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label  Content="Dukes: "    MinWidth="100"/>
-                                <Label  Content="?"          MinWidth="45" Name="ResourcesDukes"/>
-                                <Button Content="Recruit"    MinWidth="60" Click="RecruitDuke_Click"/>
-                                <Label  Content="?%"         MinWidth="40" Name="RecruitDukeProgress"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label  Content="Rams: "     MinWidth="100"/>
-                                <Label  Content="?"          MinWidth="45" Name="ResourcesRams"/>
-                                <Button Content="Recruit"    MinWidth="60" Click="RecruitRam_Click"/>
-                                <Label  Content="?%"         MinWidth="40" Name="RecruitRamProgress"/>
-                            </StackPanel>
-                        </StackPanel>
+                        <ItemsControl Name="UnitsItemControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate >
+                                <DataTemplate>
+                                    <units:UnitControl />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </Expander>
                     <!-- Buildings -->
                     <Expander Name="Buildings" Header="Buildings:" Margin="0,5,0,0">
@@ -94,7 +80,7 @@
 
                             <ItemsControl.ItemTemplate >
                                 <DataTemplate>
-                                    <buildings:BuildingControl Upgrade="upgradeBuilding"  />
+                                    <buildings:BuildingControl Upgrade="upgradeBuilding" Style="{StaticResource BuildingControlVisibility}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -110,7 +96,7 @@
 
                             <ItemsControl.ItemTemplate >
                                 <DataTemplate>
-                                    <buildings:BuildingTask Name="BuildingsQueueTemplate"  />
+                                    <buildings:BuildingTask Name="BuildingsQueueTemplate" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

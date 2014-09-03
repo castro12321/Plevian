@@ -19,36 +19,40 @@ namespace Plevian.Units
 
         public Resources getWholeUnitCost()
         {
-            return getRecruitCost() * quanity;
+            return recruitCost * quanity;
         }
 
-#region abstract functions
-        public abstract int getAttackStrength();
-
-        public abstract int getDefenseOnInfantry();
-        public abstract int getDefenseOnCavalry();
-        public abstract int getDefenseOnArchers();
-
-        public abstract int GetMovementSpeed();
-        public abstract int getLootCapacity();
-
-        public abstract Resources getRecruitCost();
-
-        public abstract float getRecruitTime();
-        public abstract Resources getUpkeepCost();
+#region abstract properties
+        public abstract int attackStrength { get; }
         
-        public abstract UnitType getUnitType();
-        public abstract UnitClass getUnitClass();
+        public abstract int defenseInfantry { get; }
+        public abstract int defenseCavalry { get; }
+        public abstract int defenseArchers { get; }
 
-        public abstract Requirements getRequirements();
+        public abstract int movementSpeed { get;  }
+        public abstract int lootCapacity { get; }
 
-        public abstract Unit clone();
+        public abstract Resources recruitCost { get;  }
+
+        public abstract float recruitTime { get; }
+        public abstract Resources upkeepCost { get; }
+
+        public abstract UnitType unitType { get; }
+        public abstract UnitClass unitClass { get;  }
+
+        public abstract Requirements requirements { get;  }
+
+        public abstract string name { get; }
+
+        
 #endregion
 
         public override string ToString()
         {
-            return Enum.GetName(typeof(UnitType), getUnitType()) + "(" + quanity + ")";
+            return Enum.GetName(typeof(UnitType), unitType) + "(" + quanity + ")";
         }
+
+        public abstract Unit clone();
 
     }
 }

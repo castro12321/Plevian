@@ -65,6 +65,7 @@ namespace Plevian.Buildings
 
         public void setData(Building data, Village village)
         {
+            this.DataContext = model;
             stackPanel.DataContext = model;
             model.setData(data, village);
         }
@@ -138,6 +139,14 @@ namespace Plevian.Buildings
             }
         }
 
+        public bool HaveTechnology
+        {
+            get
+            {
+                return data.requirements.isFullfilled(village);
+            }
+        }
+
         public ViewModel(Building data, Village village)
         {
             setData(data, village);
@@ -160,6 +169,7 @@ namespace Plevian.Buildings
             NotifyPropertyChanged("Price");
             NotifyPropertyChanged("Level");
             NotifyPropertyChanged("CanBuild");
+            NotifyPropertyChanged("HaveTechnology");
         }
 
         void GameTime_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -175,6 +185,7 @@ namespace Plevian.Buildings
         {
            NotifyPropertyChanged("CanBuild");
            NotifyPropertyChanged("Price");
+           NotifyPropertyChanged("HaveTechnology");
         }
 
         void village_buildingQueueItemAdded(Village village, BuildingQueueItem item)
