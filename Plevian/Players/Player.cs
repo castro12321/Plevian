@@ -1,4 +1,5 @@
 ﻿using Plevian.Messages;
+using Plevian.TechnologY;
 using Plevian.Villages;
 using SFML.Graphics;
 using System;
@@ -14,6 +15,7 @@ namespace Plevian.Players
 
         public ObservableCollection<Village> villages = new ObservableCollection<Village>();
         public ObservableCollection<Message> messages = new ObservableCollection<Message>();
+        public Technologies technologies = new Technologies();
 
         public Village Capital
         {

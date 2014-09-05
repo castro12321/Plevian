@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Plevian.events;
+using Plevian.TechnologY;
 
 namespace Plevian.Villages
 {
@@ -23,8 +24,10 @@ namespace Plevian.Villages
         public ObservableCollection<Order> orders = new ObservableCollection<Order>();
         public ObservableCollection<BuildingQueueItem> buildingsQueue = new ObservableCollection<BuildingQueueItem>();
         public ObservableCollection<RecruitQueueItem> recruitQueue = new ObservableCollection<RecruitQueueItem>();
+        public ObservableCollection<ResearchQueueItem> researchQueue = new ObservableCollection<ResearchQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
         public GameTime buildTimeEnd { get; private set; }
+        public GameTime researchTimeEnd { get; private set; }
         public Army army { get; private set; }
         public readonly Resources resources;
         private string _name;
@@ -95,6 +98,7 @@ namespace Plevian.Villages
             OrdersTick();
             finishBuilding();
             finishRecruiting();
+            finishResearching();
             //Logger.village("village resources " + resources);
         }
         private void OrdersTick()
@@ -157,6 +161,19 @@ namespace Plevian.Villages
                     army += clone;
                 }
                 recruitQueue.RemoveAt(0);
+            }
+        }
+
+        private void finishResearching()
+        {
+            while (researchQueue.Count > 0)
+            {
+                ResearchQueueItem queueItem = researchQueue[0];
+                if (GameTime.now < queueItem.end)
+                    break;
+
+                owner.technologies.discover(queueItem.researched);
+                researchQueue.RemoveAt(0);
             }
         }
 
@@ -242,6 +259,28 @@ namespace Plevian.Villages
                 recruitQueue.Add(queueItem);
             }
             recruitTimeEnd += new Seconds((int)recruitTimeFromNow);
+        }
+
+        public void research(Technology technology)
+        {
+            if (!technology.Requirements.isFullfilled(this))
+                throw new Exception("Requirements not met for " + technology);
+
+            // Reset recruit counter if needed
+            if (researchQueue.Count == 0)
+                researchTimeEnd = GameTime.now;
+
+            // Take money
+            Resources neededResources = technology.Cost;
+            if (!resources.canAfford(neededResources))
+                throw new Exceptions.ExceptionNotEnoughResources();
+            takeResources(neededResources);
+
+            GameTime startTime = researchTimeEnd.copy();
+            researchTimeEnd += technology.ResearchTime;
+
+            ResearchQueueItem queueItem = new ResearchQueueItem(startTime, researchTimeEnd, technology);
+            researchQueue.Add(queueItem);
         }
 
         public void addOrder(Order order)

@@ -1,6 +1,7 @@
 ﻿using Plevian.Buildings;
 using Plevian.Debugging;
 using Plevian.Maps;
+using Plevian.TechnologY;
 using Plevian.Units;
 using System;
 using System.Collections.Generic;
@@ -173,12 +174,12 @@ namespace Plevian.Villages
 
         private void ResearchLasers_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: start researching lasers
+            Village.research(new TechnologyLasers());
         }
 
         private void ResearchNukes_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: start researching nukes
+            Village.research(new TechnologyNukes());
         }
 
         private void onLabelClick(object sender, MouseButtonEventArgs e)

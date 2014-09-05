@@ -140,6 +140,9 @@
     <Compile Include="Resource\ResourceControl.xaml.cs">
       <DependentUpon>ResourceControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TechnologY\ResearchQueueItem.cs" />
+    <Compile Include="TechnologY\Technologies.cs" />
+    <Compile Include="TechnologY\Technology.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="Units\Ram.cs" />
     <Compile Include="Units\Duke.cs" />
@@ -296,6 +299,7 @@
     <Resource Include="GFX\Stone.png" />
     <Resource Include="GFX\wood.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
