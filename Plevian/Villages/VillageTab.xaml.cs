@@ -44,8 +44,22 @@ namespace Plevian.Villages
                 OrdersItemControl.ItemsSource = value.orders;
                 BuildingsItemControl.ItemsSource = value.buildings;
                 BuildingsQueueControl.ItemsSource = value.buildingsQueue;
-                UnitsItemControl.ItemsSource = value.army;
+
+                foreach(object child in UnitsRecruitStackPanel.Children)
+                {
+                    UnitControl control = child as UnitControl;
+                    control.setVillage(value);
+                    control.recruitEvent += recruitEvent;
+                }
             }
+        }
+
+        void recruitEvent(UnitType type, int quanity)
+        {
+           if(Village != null)
+           {
+               Village.recruit(UnitFactory.createUnit(type, quanity));
+           }
         }
 
         public VillageTab(Game game)

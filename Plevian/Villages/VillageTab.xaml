@@ -54,20 +54,16 @@
                     </Expander>
 
                     <!-- Military -->
-                    <Expander Name="Military" Header="Military" Margin="0,5,0,0">
-                        <ItemsControl Name="UnitsItemControl">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical" IsItemsHost="True" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-
-                            <ItemsControl.ItemTemplate >
-                                <DataTemplate>
-                                    <units:UnitControl />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                    <Expander Name="Military" Header="Recruit" Margin="0,5,0,0">
+                        <StackPanel  Orientation="Vertical" HorizontalAlignment="Stretch" Name="UnitsRecruitStackPanel">
+                            <units:UnitControl Unit="WARRIOR" />
+                            <units:UnitControl Unit="KNIGHT" />
+                            <units:UnitControl Unit="ARCHER" />
+                            <units:UnitControl Unit="RAM" />
+                            <units:UnitControl Unit="SETTLER" />
+                            <units:UnitControl Unit="TRADER" />
+                            <units:UnitControl Unit="DUKE" />
+                        </StackPanel>
                     </Expander>
                     <!-- Buildings -->
                     <Expander Name="Buildings" Header="Buildings:" Margin="0,5,0,0">

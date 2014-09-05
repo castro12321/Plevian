@@ -81,7 +81,6 @@ namespace Plevian.GUI
                 e.Handled = true;
 
             base.OnPreviewTextInput(e);
-
         }
 
         private void maxQuanityEnter(object sender, MouseEventArgs e)

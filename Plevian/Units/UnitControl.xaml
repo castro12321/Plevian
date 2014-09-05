@@ -8,9 +8,9 @@
              mc:Ignorable="d" 
              >
     <StackPanel Orientation="Horizontal" Name="stackPanel">
-        <Label Name="UnitName" Content="{Binding name}" FontSize="14" Width="80" MaxWidth="80"  />
-        <resource:ResourceControl x:Name="Resources" />
-        <TextBox Name="Quanity" Text="0" MinWidth="30" MaxWidth="50" />
-        <Button Name="RecruitButton" Content="Recruit" />
+        <Label Name="UnitName" Content="{Binding Name}" FontSize="14" Width="80" MaxWidth="80"  />
+        <resource:ResourceControl x:Name="Resources" DataContext="{Binding Cost}" />
+        <TextBox Name="Quanity" Text="{Binding Quanity, Mode=TwoWay}" MinWidth="30" MaxWidth="50" PreviewTextInput="onPreviewTextInput" TextChanged="quanityChanged" HorizontalAlignment="Right" />
+        <Button Name="RecruitButton" Content="Recruit" Click="RecruitClicked" HorizontalAlignment="Right"/>
     </StackPanel>
 </UserControl>
