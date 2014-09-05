@@ -146,6 +146,14 @@ namespace Plevian.Units
                 }
             }
 
+            public bool HaveResources
+            {
+                get
+                {
+                    
+                }
+            }
+
             public void setData(Unit unit)
             {
                 data = unit;

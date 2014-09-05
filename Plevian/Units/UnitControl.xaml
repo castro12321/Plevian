@@ -7,10 +7,10 @@
              xmlns:local="clr-namespace:Plevian.Units"
              mc:Ignorable="d" 
              >
-    <StackPanel Orientation="Horizontal" Name="stackPanel">
+    <DockPanel Name="stackPanel">
         <Label Name="UnitName" Content="{Binding Name}" FontSize="14" Width="80" MaxWidth="80"  />
         <resource:ResourceControl x:Name="Resources" DataContext="{Binding Cost}" />
-        <TextBox Name="Quanity" Text="{Binding Quanity, Mode=TwoWay}" MinWidth="30" MaxWidth="50" PreviewTextInput="onPreviewTextInput" TextChanged="quanityChanged" HorizontalAlignment="Right" />
-        <Button Name="RecruitButton" Content="Recruit" Click="RecruitClicked" HorizontalAlignment="Right"/>
-    </StackPanel>
+        <Button Name="RecruitButton" Content="Recruit" Click="RecruitClicked" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
+        <TextBox Name="Quanity" Text="{Binding Quanity, Mode=TwoWay}" MinWidth="30" MaxWidth="50" PreviewTextInput="onPreviewTextInput" TextChanged="quanityChanged" HorizontalAlignment="Right" DockPanel.Dock="Right" />  
+    </DockPanel>
 </UserControl>
