@@ -61,7 +61,7 @@ namespace Plevian.Battles
                 {
                     defLosses.Add(pair.Key, pair.Value.quantity);
                 }
-                defender.getUnits().Clear();
+                defender.clear();
 
                 float attackerLosses = ((float)overallDefense / (float)attackStrength) - ((float)Math.Sqrt(attackStrength)/(float)overallDefense);
                 if (attackerLosses > 0f && attackerLosses <= 1f)
@@ -81,7 +81,7 @@ namespace Plevian.Battles
                 {
                     attLosses.Add(pair.Key, pair.Value.quantity);
                 }
-                attacker.getUnits().Clear();
+                attacker.clear();
 
                 float defenderLosses = ((float)attackStrength / (float)overallDefense) - ((float)Math.Sqrt(overallDefense) / (float)attackStrength);
                 if (defenderLosses > 0f && defenderLosses <= 1f)

@@ -32,9 +32,9 @@ namespace Tests.Integration
             village1 = new Village(new Location(0, 0), player, "village1");
             village2 = new Village(new Location(0, 3), player, "village2");
             trader = new Army();
-            trader += UnitFactory.createUnit(UnitType.TRADER, 1);
+            trader.add(UnitFactory.createUnit(UnitType.TRADER, 1));
             traders = new Army();
-            traders += UnitFactory.createUnit(UnitType.TRADER, 3);
+            traders.add(UnitFactory.createUnit(UnitType.TRADER, 3));
             testResources = new Resources();
         }
 
@@ -129,8 +129,8 @@ namespace Tests.Integration
         [TestMethod]
         public void testLoserDisapearance()
         {
-            Army loser = new Army() + new Knight(1);
-            Army winner = new Army() + new Archer(10000);
+            Army loser = new Army().add(new Knight(1));
+            Army winner = new Army().add(new Archer(10000));
 
             Village testVillage = new Village(new Location(0,0), null, "");
             testVillage.addArmy(loser);

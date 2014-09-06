@@ -97,7 +97,7 @@ namespace Plevian.GUI
             Village selectedVillage = villagePicker.CurrentlySelectedVillage;
 
             Army trader = new Army();
-            trader += UnitFactory.createUnit(UnitType.TRADER, 1);
+            trader.add(UnitFactory.createUnit(UnitType.TRADER, 1));
 
             Order order = new TradeOrder(selectedVillage, target, trader, toSend, null);
             selectedVillage.addOrder(order);

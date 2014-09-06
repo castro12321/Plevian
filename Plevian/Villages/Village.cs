@@ -153,13 +153,13 @@ namespace Plevian.Villages
                     break;
 
                 Unit toRecruit = queueItem.toRecruit;
-                if (army.contain(toRecruit.unitType))
+                if (army.contains(toRecruit.unitType))
                     army.get(toRecruit.unitType).quantity++;
                 else
                 {
                     Unit clone = toRecruit.clone();
                     clone.quantity = 1;
-                    army += clone;
+                    army.add(clone);
                 }
                 recruitQueue.RemoveAt(0);
             }
@@ -286,10 +286,10 @@ namespace Plevian.Villages
 
         public void addOrder(Order order)
         {
-            if (army.canDivide(order.army))
+            if (army.canRemove(order.army))
             {
                 orders.Add(order);
-                army -= order.army;
+                army.remove(order.army);
             }
             else
             {
@@ -299,22 +299,20 @@ namespace Plevian.Villages
 
         public void addArmy(Army army)
         {
-            this.army += army;
+            this.army.add(army);
         }
 
         public void takeArmy(Army army)
         {
-            this.army -= army;
+            this.army.add(army);
         }
 
         public void addUnit(Unit unit)
         {
-            if (army.contain(unit.unitType))
-                army.get(unit.unitType).quantity+= unit.quantity;
+            if (army.contains(unit.unitType))
+                army.get(unit.unitType).quantity += unit.quantity;
             else
-            {
-                army += unit;
-            }
+                army.add(unit);
 
         }
 

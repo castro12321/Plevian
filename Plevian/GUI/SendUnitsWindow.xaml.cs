@@ -134,7 +134,7 @@ namespace Plevian.GUI
                     if (selector.quantity == 0) continue;
                     UnitType type = selector.type;
                     int quantity = selector.quantity;
-                    army += UnitFactory.createUnit(type, quantity);
+                    army.add(UnitFactory.createUnit(type, quantity));
                 }
                 Tile origin = selectedVillage;
 

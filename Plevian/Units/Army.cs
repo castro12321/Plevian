@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Plevian.Exceptions;
 using System.Collections;
+using Plevian.Debugging;
 
 namespace Plevian.Units
 {
@@ -13,95 +14,60 @@ namespace Plevian.Units
         private Dictionary<UnitType, Unit> units = new Dictionary<UnitType, Unit>();
         
         public Army()
-        {}
-
-        public static Army operator + ( Army lh, Army rh )
         {
-            Army army = new Army();
-            foreach (var pair in lh.units)
-            {
-                army.units.Add(pair.Key, pair.Value);
-            }
-
-            foreach (var pair in rh.units)
-            {
-                if (army.units.ContainsKey(pair.Key))
-                {
-                    army.units[pair.Key].quantity += pair.Value.quantity;
-                }
-                else
-                {
-                    army.units.Add(pair.Key, pair.Value);
-                }
-            }
-            return army;
+            clear();
         }
 
-        public static Army operator +(Army lh, Unit rh)
+        public Army add(Army army)
         {
-            Army army = new Army();
-            UnitType unitType = rh.unitType;
-            foreach (var pair in lh.units)
-            {
-                army.units.Add(pair.Key, pair.Value);
-            }
-
-            if (!army.units.ContainsKey(unitType))
-            {
-                army.units.Add(unitType, rh);
-            }
-            else
-            {
-                int quantity = rh.quantity;
-                army.units[unitType].quantity += quantity;
-            }
-
-            return army;
-
+            foreach (var pair in army.units)
+                get(pair.Key).quantity += pair.Value.quantity;
+            return this;
         }
 
-        public static Army operator -(Army lh, Army rh)
+        public Army add(Unit unit)
         {
-            if( lh.canDivide(rh) == false) throw new ExceptionNotEnoughUnits();
-            Army army = new Army();
-
-            foreach (var pair in lh.units)
-            {
-                army.units.Add(pair.Key, pair.Value);
-            }
-            
-            foreach( var pair in rh.units )
-            {
-                army.units[pair.Key].quantity -= pair.Value.quantity;
-
-                if (army.units[pair.Key].quantity == 0) army.units.Remove(pair.Key);
-            }
-
-            return army;
+            get(unit.unitType).quantity += unit.quantity;
+            return this;
         }
 
-        /// <summary>
-        /// Checks wheter the army( this ) is able to divide into another army
-        /// </summary>
-        /// <param name="other">another army into which this will be divided to</param>
-        /// <returns></returns>
-        public bool canDivide(Army other)
+        public bool canRemove(Army army)
         {
-            foreach (var pair in other.units)
-            {
-                if (units.ContainsKey(pair.Key) == false) return false;
-                if (units[pair.Key].quantity < pair.Value.quantity) return false;
-            }
+            foreach(var pair in army.units)
+                if(get(pair.Key).quantity < pair.Value.quantity)
+                    return false;
             return true;
+        }
+
+        public bool canRemove(Unit unit)
+        {
+            Army army = new Army();
+            army.add(unit);
+            return canRemove(army);
+        }
+
+        public Army remove(Army army)
+        {
+            foreach(var pair in army.units)
+            {
+                Unit our = get(pair.Key);
+                if (our.quantity < pair.Value.quantity)
+                    throw new ExceptionNotEnoughUnits();
+                our.quantity -= pair.Value.quantity;
+            }
+            return this;
+        }
+
+        public Dictionary<UnitType, Unit> getUnits()
+        {
+            return units;
         }
 
         public int getAttackStrength()
         {
             int attackStrength = 0;
             foreach (var pair in units)
-            {
                 attackStrength += pair.Value.attackStrength * pair.Value.quantity;
-            }
             return attackStrength;
         }
 
@@ -109,9 +75,7 @@ namespace Plevian.Units
         {
             int defenseInfantry = 0;
             foreach (var pair in units)
-            {
                 defenseInfantry += pair.Value.defenseInfantry * pair.Value.quantity;
-            }
             return defenseInfantry;
         }
 
@@ -119,9 +83,7 @@ namespace Plevian.Units
         {
             int defenseCavalry = 0;
             foreach (var pair in units)
-            {
                 defenseCavalry += pair.Value.defenseCavalry * pair.Value.quantity;
-            }
             return defenseCavalry;
         }
 
@@ -129,9 +91,7 @@ namespace Plevian.Units
         {
             int defenseArchers = 0;
             foreach (var pair in units)
-            {
                 defenseArchers += pair.Value.defenseArchers * pair.Value.quantity;
-            }
             return defenseArchers;
         }
 
@@ -147,14 +107,16 @@ namespace Plevian.Units
             return slowest;
         }
 
-        public bool contain(UnitType unitType)
+        public bool contains(UnitType unitType)
         {
-            return units.ContainsKey(unitType);
+            if (units.ContainsKey(unitType))
+                return units[unitType].quantity > 0;
+            return false;
         }
 
         public Unit get(UnitType unitType)
         {
-            if (contain(unitType) == false) throw new KeyNotFoundException("Army doesn't contain selected unit!!!");
+            Logger.log("get unit: " + unitType + " ? " + units.ContainsKey(unitType) + " ; " + this);
             return units[unitType];
         }
 
@@ -169,9 +131,12 @@ namespace Plevian.Units
             return size;
         }
 
-        public Dictionary<UnitType, Unit> getUnits()
+        public void clear()
         {
-            return units;
+            units.Clear();
+            List<Unit> allUnits = UnitFactory.createAllUnits();
+            foreach (Unit unit in allUnits)
+                units.Add(unit.unitType, unit);
         }
 
         public int getUnitClassCount(UnitClass unitClass)

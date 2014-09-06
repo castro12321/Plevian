@@ -11,6 +11,7 @@ using Plevian.Resource;
 using Plevian.Debugging;
 using Plevian.Players;
 using SFML.Graphics;
+using Plevian.Buildings;
 
 namespace Tests.Units
 {
@@ -24,11 +25,12 @@ namespace Tests.Units
             const int KNIG_QUANTITY = 500;
             const int WARR_QUANTITY = 500;
 
-            Archer archer = new Archer(ARCH_QUANTITY);
             Game game = new Game();
             Village testVillage = new Village(null, new Player("", Color.Blue), "test");
             testVillage.addResources(new Resources(1000000, 1000000, 1000000, 1000000));
-            testVillage.recruit(archer);
+            testVillage.buildings[BuildingType.BARRACKS].level = 2;
+            testVillage.buildings[BuildingType.STABLE].level = 1;
+            testVillage.recruit(new Archer(ARCH_QUANTITY));
             testVillage.recruit(new Knight(KNIG_QUANTITY));
             testVillage.recruit(new Warrior(WARR_QUANTITY));
 

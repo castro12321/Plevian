@@ -19,21 +19,19 @@ namespace Tests.Battles
 
             Army attacker = new Army(), defender = new Army();
 
-            attacker += new Knight(100);
-            attacker += new Archer(5);
-
-            defender += new Warrior(25);
+            attacker.add(new Knight(100)).add(new Archer(5));
+            defender.add(new Warrior(25));
 
             Battle battle = new Battle(attacker, defender, 1f, 1f, 0);
             Report report = battle.makeBattle();
-
+            
             Assert.IsTrue(report.battleResult == BattleState.AttackerVictory);
             Assert.IsTrue(report.attackerArmy[UnitType.KNIGHT] == 100);
             Assert.IsTrue(report.attackerArmy[UnitType.ARCHER] == 5);
             Assert.IsTrue(report.defenderArmy[UnitType.WARRIOR] == 25);
             Assert.IsTrue(report.defenderLosses[UnitType.WARRIOR] == 25);
 
-            defender += new Knight(300);
+            defender.add(new Knight(300));
 
             battle = new Battle(attacker, defender, 1f, 1f, 0);
             report = battle.makeBattle();
@@ -49,12 +47,8 @@ namespace Tests.Battles
 
             Army attacker = new Army(), defender = new Army();
 
-            attacker += new Knight(500);
-            attacker += new Archer(250);
-            attacker += new Warrior(100);
-
-            defender += new Warrior(1000);
-            defender += new Archer(100);
+            attacker.add(new Warrior(100)).add(new Archer(250)).add(new Knight(500));
+            defender.add(new Warrior(1000)).add(new Archer(100));
 
             Battle battle = new Battle(attacker, defender, 1f, 1f, 0);
 
@@ -68,12 +62,12 @@ namespace Tests.Battles
             Logger.turnOff();
             Army attacker = new Army(), defender = new Army();
 
-            defender += new Warrior(1000);
+            defender.add(new Warrior(1000));
             int losses = -1;
             for(int i = 0;defender.size() > 0;++i)
             {
                 attacker = new Army();
-                attacker += new Knight(100);
+                attacker.add(new Knight(100));
 
                 Battle battle = new Battle(attacker, defender, 1f, 1f, 0);
                 Report report = battle.makeBattle();

@@ -22,7 +22,7 @@ namespace Plevian.Orders
             this.sentResources = sentResources;
             this.sentArmy = sentArmy;
 
-            if (!traders.contain(UnitType.TRADER))
+            if (!traders.contains(UnitType.TRADER))
                 throw new KeyNotFoundException("You need a trader to... trade");
             if(destination.type != TerrainType.VILLAGE)
                 throw new ArgumentException("You can trade with other villages only");

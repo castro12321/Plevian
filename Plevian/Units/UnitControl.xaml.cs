@@ -97,11 +97,11 @@ namespace Plevian.Units
         {
             private Unit data;
 
-            private Unit mUnitInVillage;
+            private Unit _unitInVillage;
             public Unit unitInVillage
             {
-                get { return mUnitInVillage; }
-                set { mUnitInVillage = value; NotifyPropertyChanged(); }
+                get { return _unitInVillage; }
+                set { _unitInVillage = value; NotifyPropertyChanged(); }
             }
 
             public String Name
@@ -158,15 +158,12 @@ namespace Plevian.Units
             public void setVillage(Village village)
             {
                 //this.village = village;
-                unitInVillage = null;
-                if(village.army.contain(data.unitType))
-                    unitInVillage = village.army[data.unitType];
+                unitInVillage = village.army[data.unitType];
                 QuantityToRecruit = 1;
                 NotifyPropertyChanged("QuantityToRecruit");
             }
 
             public event PropertyChangedEventHandler PropertyChanged;
-
             protected virtual void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
             {
                 var handler = PropertyChanged;

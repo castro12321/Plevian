@@ -24,14 +24,12 @@ namespace Plevian.Units
             throw new NotSupportedException("UnitFactory cannot create " + type + "; " + quantity);
         }
 
-        public static Army createArmyWithAllUnits()
+        public static List<Unit> createAllUnits()
         {
-            Army army = new Army();
-                foreach (UnitType type in (UnitType[]) Enum.GetValues(typeof(UnitType)))
-                {
-                    army += createUnit(type, 1);
-                }
-            return army;
+            List<Unit> allUnits = new List<Unit>();
+            foreach (UnitType type in (UnitType[])Enum.GetValues(typeof(UnitType)))
+                allUnits.Add(createUnit(type, 0));
+            return allUnits;
         }
     }
 }

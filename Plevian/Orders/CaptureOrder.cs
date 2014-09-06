@@ -15,14 +15,14 @@ namespace Plevian.Orders
         public CaptureOrder(Tile origin, Tile destination, Army army)
             : base(origin, destination, army)
         {
-            if (!army.contain(UnitType.DUKE))
+            if (!army.contains(UnitType.DUKE))
                 throw new Exception("CaptureOrder without duke!");
             this.Type = OrderType.CAPTURE;
         }
 
         protected override void onFightWin(Battles.Report report)
         {
-            if (army.contain(UnitType.DUKE))
+            if (army.contains(UnitType.DUKE))
             {
                 Village village = Destination as Village;
                 Village attVillage = origin as Village;
