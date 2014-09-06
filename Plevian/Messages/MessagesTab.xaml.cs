@@ -70,7 +70,6 @@ namespace Plevian.Messages
         {
             DataGridRow row = DataGridExtensions.GetSelectedRow(messages);
             Message message = row.DataContext as Message;
-            Logger.log("Message: " + message + "; " + message.Topic);
             DeleteMessage(message);
         }
 

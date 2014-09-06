@@ -116,7 +116,6 @@ namespace Plevian.Units
 
         public Unit get(UnitType unitType)
         {
-            Logger.log("get unit: " + unitType + " ? " + units.ContainsKey(unitType) + " ; " + this);
             return units[unitType];
         }
 

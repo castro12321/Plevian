@@ -58,10 +58,7 @@ namespace Plevian.Villages
         void recruitEvent(UnitType type, int quantity)
         {
            if(Village != null)
-           {
-               Logger.log(Name + " recruit " + type);
                Village.recruit(UnitFactory.createUnit(type, quantity));
-           }
         }
 
         public VillageTab(Game game)

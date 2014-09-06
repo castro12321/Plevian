@@ -99,7 +99,8 @@ namespace Plevian.Villages
             finishBuilding();
             finishRecruiting();
             finishResearching();
-            Logger.log(name + " army " + army);
+            if(name == "Capital")
+                Logger.log(name + " army " + army);
             //Logger.village("village resources " + resources);
         }
         private void OrdersTick()

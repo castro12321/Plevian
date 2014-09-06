@@ -89,7 +89,7 @@ namespace Plevian.GUI
             }
             catch(Exception ex)
             {
-                Logger.log("Cannot send resources in TradeWindow. " + ex.Message + "\n" + ex.StackTrace);
+                Logger.warn("Cannot send resources in TradeWindow. " + ex.Message + "\n" + ex.StackTrace);
                 this.Close();
                 return;
             }

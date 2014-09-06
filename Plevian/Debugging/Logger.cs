@@ -45,6 +45,11 @@ namespace Plevian.Debugging
             Console.WriteLine(msg);
         }
 
+        public static void warn(String msg)
+        {
+            log("Warn: " + msg);
+        }
+
         public static void turnOff()
         {
             cas = shot = logVillage = logGraphics = false;
