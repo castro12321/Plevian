@@ -39,22 +39,22 @@
 
         <StackPanel Name="foodStackPanel">
             <Image Name="foodImg" Source="/GFX/food.png" />
-            <gui:BetterLabel x:Name="foodCount" ContentChanged="countChanged" Content="{Binding food}" >
+            <gui:BetterLabel MinWidth="40" ContentChanged="countChanged" x:Name="foodCount" Content="{Binding food}" >
             </gui:BetterLabel>
         </StackPanel>
 
         <StackPanel Name="woodStackPanel" Grid.Column="1">
             <Image Name="woodIMG" Source="/GFX/wood.png"  />
-            <gui:BetterLabel ContentChanged="countChanged" x:Name="woodCount" Content="{Binding wood}" />
+            <gui:BetterLabel MinWidth="40" ContentChanged="countChanged" x:Name="woodCount" Content="{Binding wood}" />
         </StackPanel>
 
         <StackPanel Name="stoneStackPanel" Grid.Column="2">
             <Image Name="stoneImg" Source="/GFX/stone.png" />
-            <gui:BetterLabel ContentChanged="countChanged" x:Name="stoneCount" Content="{Binding stone}" />
+            <gui:BetterLabel MinWidth="40" ContentChanged="countChanged" x:Name="stoneCount" Content="{Binding stone}" />
         </StackPanel>
         <StackPanel Name="ironStackPanel" Grid.Column="3">
             <Image Name="ironImg" Source="/GFX/iron.png" />
-            <gui:BetterLabel ContentChanged="countChanged" x:Name="ironCount" Content="{Binding iron}" />
+            <gui:BetterLabel MinWidth="40" ContentChanged="countChanged" x:Name="ironCount" Content="{Binding iron}" />
         </StackPanel>
 
 
