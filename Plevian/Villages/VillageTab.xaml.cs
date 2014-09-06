@@ -46,11 +46,11 @@ namespace Plevian.Villages
                 BuildingsItemControl.ItemsSource = value.buildings;
                 BuildingsQueueControl.ItemsSource = value.buildingsQueue;
 
-                foreach(object child in UnitsRecruitStackPanel.Children)
+                foreach (UnitControl control in UnitsRecruitStackPanel.Children)
                 {
-                    UnitControl control = child as UnitControl;
                     control.setVillage(value);
-                    control.recruitEvent += recruitEvent;
+                    control.recruitEvent -= recruitEvent; // To remove old event handler (it's weird but works)
+                    control.recruitEvent += recruitEvent; // To add current object handler
                 }
             }
         }
