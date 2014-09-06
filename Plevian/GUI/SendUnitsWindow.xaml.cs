@@ -64,7 +64,7 @@ namespace Plevian.GUI
         {
             VillagePanel.Children.Clear();
 
-            foreach(Village village in player.Villages)
+            foreach (Village village in player.villages)
             {
                 VillageRecord record = new VillageRecord(village);
                 VillagePanel.Children.Add(record);

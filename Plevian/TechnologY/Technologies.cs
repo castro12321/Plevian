@@ -15,8 +15,13 @@ namespace Plevian.TechnologY
 
         public void discover(Technology technology)
         {
-            if (!technologies.Contains(technology))
+            if (!isDiscovered(technology))
                 technologies.Add(technology);
+        }
+
+        public bool isDiscovered(Technology technology)
+        {
+            return technologies.Contains(technology);
         }
 
         // Uh, forget()? xD

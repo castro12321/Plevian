@@ -113,8 +113,7 @@ namespace Plevian
             while (timediff --> 0)
             {
                 foreach (Player player in players)
-                    for (int i = 0; i < player.Villages.Count; ++i )
-                        player.Villages.ElementAt(i).tick();
+                    player.tick();
             }
         }
 

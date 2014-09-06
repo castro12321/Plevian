@@ -1,4 +1,5 @@
-﻿using Plevian.Messages;
+﻿using Plevian.Debugging;
+using Plevian.Messages;
 using Plevian.TechnologY;
 using Plevian.Villages;
 using SFML.Graphics;
@@ -22,15 +23,6 @@ namespace Plevian.Players
             get
             {
                 return villages[0];
-            }
-        }
-
-        // TODO: remove
-        public ObservableCollection<Village> Villages
-        {
-            get
-            {
-                return villages;
             }
         }
 
@@ -75,6 +67,12 @@ namespace Plevian.Players
         public void DeleteMessage(Message message)
         {
             messages.Remove(message);
+        }
+
+        public virtual void tick() // Meant to be overridable by NPCs
+        {
+            for (int i = 0; i < villages.Count; ++i)
+                villages[i].tick();
         }
 
         public override string ToString()

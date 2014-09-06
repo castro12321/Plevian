@@ -77,62 +77,10 @@ namespace Plevian.Villages
             villageView.handleEvents();
         }
 
-        private void setUnitCount(Label label, UnitType type)
-        {
-            try
-            {
-                label.Content = Village.army.get(type).quanity;
-            }
-            catch(KeyNotFoundException)
-            {
-                label.Content = "0";
-            }
-        }
-
-        private void setBuildingLevel(Label label, BuildingType type)
-        {
-            if (Village.isBuilt(type))
-                label.Content = Village.getBuilding(type).level;
-            else
-                label.Content = "0";
-        }
-
-        private void setBuildingProgress(Label label, BuildingType type)
-        {
-            foreach (BuildingQueueItem queueItem in Village.buildingsQueue)
-            {
-                if (queueItem.toBuild.type == type)
-                {
-                    Seconds left = GameTime.now.diffrence(queueItem.end);
-                    int minutes = left.seconds / 60;
-                    int seconds = left.seconds % 60;
-                    label.Content = minutes + ":" + seconds;
-                    return;
-                }
-            }
-            label.Content = "";
-        }
-
-        private void setRecruitProgress(Label label, UnitType type)
-        {
-            foreach (RecruitQueueItem queueItem in Village.recruitQueue)
-            {
-                if (queueItem.toRecruit.unitType == type)
-                {
-                    Seconds left = GameTime.now.diffrence(queueItem.end);
-                    int minutes = left.seconds / 60;
-                    int seconds = left.seconds % 60;
-                    label.Content = minutes + ":" + seconds;
-                    return;
-                }
-            }
-            label.Content = "";
-        }
-
         public void render()
         {
             coords.Content = "X:" + Village.location.x + " Y:" + Village.location.y;
-
+            
             // Render SFML
             villageView.render();
         }
