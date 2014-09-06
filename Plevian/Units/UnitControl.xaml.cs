@@ -1,4 +1,5 @@
-﻿using Plevian.Resource;
+﻿using Plevian.Debugging;
+using Plevian.Resource;
 using Plevian.Villages;
 using System;
 using System.Collections.Generic;
@@ -24,38 +25,25 @@ namespace Plevian.Units
     /// </summary>
     public partial class UnitControl : UserControl
     {
-
-        #region Properties
         public static readonly DependencyProperty UnitProperty =
-        DependencyProperty.Register("Unit", typeof(UnitType), typeof(UnitControl), new UIPropertyMetadata(MyPropertyChangedHandler));
+            //DependencyProperty.Register("Unit", typeof(UnitType), typeof(UnitControl), new UIPropertyMetadata(UnitPropertyChangedHandler));
+        DependencyProperty.Register("Unit", typeof(UnitType), typeof(UnitControl), new UIPropertyMetadata(UnitPropertyChangedHandler));
+
+        public delegate void RecruitEvent(UnitType type, int quanity);
+        public event RecruitEvent recruitEvent;
+
+        private UnitModel model = new UnitModel();
 
         public UnitType Unit
         {
             get { return (UnitType)GetValue(UnitProperty); }
-            set 
-            {
-                SetValue(UnitProperty, value);
-            }
+            set { SetValue(UnitProperty, value); }
         }
-        #endregion
-        #region Events
-        public delegate void RecruitEvent(UnitType type, int quanity);
-        public event RecruitEvent recruitEvent;
-        #endregion
 
-        public static void MyPropertyChangedHandler(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        public static void UnitPropertyChangedHandler(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            switch(e.Property.ToString())
-            {
-                case "Unit" :
-                    {
-                        ((UnitControl)sender).setData((UnitType)e.NewValue);
-                        break;
-                    }
-            }
+            ((UnitControl)sender).setData((UnitType)e.NewValue);
         }
-
-        private UnitModel model = new UnitModel();
 
         public UnitControl()
         {
@@ -76,33 +64,31 @@ namespace Plevian.Units
 
         private void RecruitClicked(object sender, RoutedEventArgs e)
         {
-            if(recruitEvent != null)
-            {
-                recruitEvent(model.Type, model.Quanity);
-            }
+            if (recruitEvent != null)
+                recruitEvent(model.Type, model.Quantity);
         }
 
         private void onPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            char c = Convert.ToChar(e.Text);
-            if (Char.IsNumber(c))
-                e.Handled = false;
-            else
-                e.Handled = true;
-
-            base.OnPreviewTextInput(e);
+            try
+            {
+                Convert.ToInt32(e.Text);
+            }
+            catch { e.Handled = true; }
+            //base.OnPreviewTextInput(e);
         }
 
-        private void quanityChanged(object sender, TextChangedEventArgs e)
+        private void quantityChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox tBox = Quanity;
-            int quanity;
-            if (Int32.TryParse(Quanity.Text.ToString(), out quanity)) ;
-            model.Quanity = quanity;
+            try
+            {
+                int quantity = Convert.ToInt32(Quanity.Text);
+                model.Quantity = quantity;
+            }
+            catch { }
         }
 
 
-        #region UnitModel
         private class UnitModel : INotifyPropertyChanged
         {
             private Unit data;
@@ -124,7 +110,7 @@ namespace Plevian.Units
                 }
             }
 
-            public int Quanity
+            public int Quantity
             {
                 get
                 {
@@ -162,7 +148,7 @@ namespace Plevian.Units
             public void setVillage(Village village)
             {
                 this.village = village;
-                Quanity = 1;
+                Quantity = 1;
             }
 
             public event PropertyChangedEventHandler PropertyChanged;
@@ -174,12 +160,5 @@ namespace Plevian.Units
                     handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        #endregion
-
-       
-
-        
-
-        
     }
 }
