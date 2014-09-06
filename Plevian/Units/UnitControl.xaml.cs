@@ -26,8 +26,7 @@ namespace Plevian.Units
     public partial class UnitControl : UserControl
     {
         public static readonly DependencyProperty UnitProperty =
-            //DependencyProperty.Register("Unit", typeof(UnitType), typeof(UnitControl), new UIPropertyMetadata(UnitPropertyChangedHandler));
-        DependencyProperty.Register("Unit", typeof(UnitType), typeof(UnitControl), new UIPropertyMetadata(UnitPropertyChangedHandler));
+            DependencyProperty.Register("Unit", typeof(UnitType), typeof(UnitControl),  new UIPropertyMetadata(UnitPropertyChangedHandler));
 
         public delegate void RecruitEvent(UnitType type, int quanity);
         public event RecruitEvent recruitEvent;
@@ -65,7 +64,7 @@ namespace Plevian.Units
         private void RecruitClicked(object sender, RoutedEventArgs e)
         {
             if (recruitEvent != null)
-                recruitEvent(model.Type, model.Quantity);
+                recruitEvent(model.Type, model.QuantityToRecruit);
         }
 
         private void onPreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -88,7 +87,7 @@ namespace Plevian.Units
                     quantity = 10000;
                     (sender as TextBox).Text = quantity.ToString();
                 }
-                model.Quantity = quantity;
+                model.QuantityToRecruit = quantity;
             }
             catch { }
         }
@@ -97,7 +96,13 @@ namespace Plevian.Units
         private class UnitModel : INotifyPropertyChanged
         {
             private Unit data;
-            private Village village;
+
+            private Unit mUnitInVillage;
+            public Unit unitInVillage
+            {
+                get { return mUnitInVillage; }
+                set { mUnitInVillage = value; NotifyPropertyChanged(); }
+            }
 
             public String Name
             {
@@ -115,7 +120,7 @@ namespace Plevian.Units
                 }
             }
 
-            public int Quantity
+            public int QuantityToRecruit
             {
                 get
                 {
@@ -152,8 +157,12 @@ namespace Plevian.Units
 
             public void setVillage(Village village)
             {
-                this.village = village;
-                Quantity = 1;
+                //this.village = village;
+                unitInVillage = null;
+                if(village.army.contain(data.unitType))
+                    unitInVillage = village.army[data.unitType];
+                QuantityToRecruit = 1;
+                NotifyPropertyChanged("QuantityToRecruit");
             }
 
             public event PropertyChangedEventHandler PropertyChanged;

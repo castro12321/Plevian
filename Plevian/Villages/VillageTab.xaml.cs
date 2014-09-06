@@ -59,6 +59,7 @@ namespace Plevian.Villages
         {
            if(Village != null)
            {
+               Logger.log(Name + " recruit " + type);
                Village.recruit(UnitFactory.createUnit(type, quanity));
            }
         }

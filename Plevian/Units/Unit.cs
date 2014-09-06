@@ -5,12 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Plevian.Resource;
 using Plevian.RequirementS;
+using System.Windows;
+using System.ComponentModel;
 
 namespace Plevian.Units
 {
-    public abstract class Unit
+    public abstract class Unit : DependencyObject
     {
-        public int quanity;
+        public static readonly DependencyProperty QuantityProperty =
+            DependencyProperty.Register("quanity", typeof(int),
+            typeof(Unit), new FrameworkPropertyMetadata(0));
+        public int quanity
+        {
+            get { return (int)GetValue(QuantityProperty); }
+            set { SetValue(QuantityProperty, value); }
+        }
 
         public Unit(int quanity = 0)
         {

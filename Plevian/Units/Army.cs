@@ -214,10 +214,18 @@ namespace Plevian.Units
             }
         }
 
-        public Unit this[int i]
+        public Unit this[String type]
         {
-            get { return units.Values.ElementAt(i); }
-            protected set { Unit unit = units.Values.ElementAt(i); unit = value; }
+            get
+            {
+                UnitType uType = (UnitType)Enum.Parse(typeof(UnitType), type);
+                return get(uType);
+            }
+        }
+
+        public Unit this[UnitType type]
+        {
+            get { return get(type); }
         }
 
         public object Current
@@ -242,6 +250,14 @@ namespace Plevian.Units
         public IEnumerator GetEnumerator()
         {
             return (IEnumerator)this;
+        }
+
+        public override string ToString()
+        {
+            String s = "army: ";
+            foreach (Unit unit in units.Values)
+                s += unit.name + "=" + unit.quanity + "; ";
+            return s;
         }
     }
 }

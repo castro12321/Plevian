@@ -9,6 +9,7 @@
              >
     <DockPanel Name="stackPanel">
         <Label Content="{Binding Name}" FontSize="14" Width="80"/>
+        <Label Content="{Binding Path=unitInVillage.quanity}" MinWidth="50"/>
         <resource:ResourceControl DataContext="{Binding Cost}" />
         <Button Content="Recruit" Click="RecruitClicked" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
         <TextBox Name="Quantity" Text="{Binding Quanity, Mode=TwoWay}" Width="50" PreviewTextInput="onPreviewTextInput" TextChanged="quantityChanged" HorizontalAlignment="Right" DockPanel.Dock="Right" />
