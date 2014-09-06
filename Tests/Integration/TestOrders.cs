@@ -93,14 +93,14 @@ namespace Tests.Integration
             Assert.AreEqual(0, village2.resources.stone);
 
             // Before sending any traders, village should have initial value of 3 traders
-            Assert.AreEqual(3, village1.army.get(UnitType.TRADER).quanity);
+            Assert.AreEqual(3, village1.army.get(UnitType.TRADER).quantity);
 
             Resources toSend = new Resources(50, 100, 150, 200);
             Order order = new TradeOrder(village1, village2, trader, toSend, null);
             village1.addOrder(order);
 
             // After sending one trader, village should have 2 traders
-            Assert.AreEqual(2, village1.army.get(UnitType.TRADER).quanity);
+            Assert.AreEqual(2, village1.army.get(UnitType.TRADER).quantity);
 
             // Need 9 ticks for traders to go to the target
             for(int i = 0;i < order.OverallTime.seconds; ++ i)
@@ -123,7 +123,7 @@ namespace Tests.Integration
             order.tick(); order.tick(); order.tick();
 
             // Now source village should contain 3 traders again
-            Assert.AreEqual(3, village1.army.get(UnitType.TRADER).quanity);
+            Assert.AreEqual(3, village1.army.get(UnitType.TRADER).quantity);
         }
 
         [TestMethod]

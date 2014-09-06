@@ -50,9 +50,9 @@ namespace Plevian.Battles
                 int losses = 0;
                 if(attackerLosses.ContainsKey(type))
                     losses = attackerLosses[type];
-                int startQuanity = pair.Value;
-                int endQuanity = pair.Value - losses;
-                _return += type + " >> " + startQuanity + " - " + losses + " = " + endQuanity + "\n";
+                int startQuantity = pair.Value;
+                int endQuantity = pair.Value - losses;
+                _return += type + " >> " + startQuantity + " - " + losses + " = " + endQuantity + "\n";
             }
 
             _return += "\nDefender\n";
@@ -63,9 +63,9 @@ namespace Plevian.Battles
                 int losses = 0;
                 if (defenderLosses.ContainsKey(type))
                     losses = defenderLosses[type];
-                int startQuanity = pair.Value;
-                int endQuanity = pair.Value - losses;
-                _return += type + " >> " + startQuanity + " - " + losses + " = " + endQuanity + "\n";
+                int startQuantity = pair.Value;
+                int endQuantity = pair.Value - losses;
+                _return += type + " >> " + startQuantity + " - " + losses + " = " + endQuantity + "\n";
             }
 
             if( !Object.ReferenceEquals(loot,null) && villageCaptured == false)

@@ -23,31 +23,31 @@ namespace Plevian.GUI
     public partial class UnitSelector : UserControl
     {
         public UnitType type;
-        private int _maxQuanity = 0;
+        private int _maxQuantity = 0;
 #region attributes
-        public int maxQuanity
+        public int maxQuantity
         {
             get
             {
-                return _maxQuanity;
+                return _maxQuantity;
             }
             set
             {
-                _maxQuanity = value;
-                UnitMaxQuanity.Content = "(" + maxQuanity + ")";
-                quanityChanged();
+                _maxQuantity = value;
+                UnitMaxQuantity.Content = "(" + maxQuantity + ")";
+                quantityChanged();
             }
 
         }
 
         
-        public int quanity
+        public int quantity
         {
             get
             {
                 if(checkCorrectness())
                 {
-                    return Int32.Parse(UnitQuanity.Text);
+                    return Int32.Parse(UnitQuantity.Text);
                 }
                 else
                 {
@@ -56,20 +56,20 @@ namespace Plevian.GUI
             }
             set
             {
-                UnitQuanity.Text = value.ToString();
-                quanityChanged();
+                UnitQuantity.Text = value.ToString();
+                quantityChanged();
             }
 
 
         }
 #endregion
 
-        public UnitSelector(string unitName, int maxQuanity, UnitType type)
+        public UnitSelector(string unitName, int maxQuantity, UnitType type)
         {
             InitializeComponent();
             UnitName.Content = unitName;
             this.type = type;
-            this.maxQuanity = maxQuanity;
+            this.maxQuantity = maxQuantity;
         }
 
         private void onPreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -83,49 +83,49 @@ namespace Plevian.GUI
             base.OnPreviewTextInput(e);
         }
 
-        private void maxQuanityEnter(object sender, MouseEventArgs e)
+        private void maxQuantityEnter(object sender, MouseEventArgs e)
         {
-            Label quanity = sender as Label;
-            quanity.FontWeight = FontWeights.Bold;
+            Label quantity = sender as Label;
+            quantity.FontWeight = FontWeights.Bold;
         }
 
-        private void maxQuanityLeave(object sender, MouseEventArgs e)
+        private void maxQuantityLeave(object sender, MouseEventArgs e)
         {
-            Label quanity = sender as Label;
-            quanity.FontWeight = FontWeights.Normal;
+            Label quantity = sender as Label;
+            quantity.FontWeight = FontWeights.Normal;
         }
 
         private void maxQaunityMouseDown(object sender, MouseButtonEventArgs e)
         {
             if(e.MouseDevice.LeftButton == MouseButtonState.Pressed)
             {
-                UnitQuanity.Text = maxQuanity.ToString();
+                UnitQuantity.Text = maxQuantity.ToString();
             }
         }
 
         private void onInputChange(object sender, TextChangedEventArgs e)
         {
-            quanityChanged();
+            quantityChanged();
         }
 
-        private void quanityChanged()
+        private void quantityChanged()
         {
             if (checkCorrectness())
             {
-                UnitQuanity.Background = Brushes.White;
+                UnitQuantity.Background = Brushes.White;
             }
             else
             {
-                UnitQuanity.Background = Brushes.Red;
+                UnitQuantity.Background = Brushes.Red;
             }
         }
 
         public bool checkCorrectness()
         {
-            string content = UnitQuanity.Text;
-            int quanity = 0;
-            bool result = Int32.TryParse(content, out quanity);
-            if (result == false || quanity > maxQuanity)
+            string content = UnitQuantity.Text;
+            int quantity = 0;
+            bool result = Int32.TryParse(content, out quantity);
+            if (result == false || quantity > maxQuantity)
             {
                 return false;
             }

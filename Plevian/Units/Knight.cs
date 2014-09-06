@@ -11,15 +11,15 @@ namespace Plevian.Units
 {
     public class Knight : Unit
     {
-        public Knight(int quanity = 0)
-            : base(quanity)
+        public Knight(int quantity = 0)
+            : base(quantity)
         {
         }
 
 #region overrided properties
         public override Unit clone()
         {
-            return new Knight(quanity);
+            return new Knight(quantity);
         }
 
         public override int attackStrength { get { return 40; } }

@@ -27,7 +27,7 @@ namespace Plevian.Units
             {
                 if (army.units.ContainsKey(pair.Key))
                 {
-                    army.units[pair.Key].quanity += pair.Value.quanity;
+                    army.units[pair.Key].quantity += pair.Value.quantity;
                 }
                 else
                 {
@@ -52,8 +52,8 @@ namespace Plevian.Units
             }
             else
             {
-                int quanity = rh.quanity;
-                army.units[unitType].quanity += quanity;
+                int quantity = rh.quantity;
+                army.units[unitType].quantity += quantity;
             }
 
             return army;
@@ -72,9 +72,9 @@ namespace Plevian.Units
             
             foreach( var pair in rh.units )
             {
-                army.units[pair.Key].quanity -= pair.Value.quanity;
+                army.units[pair.Key].quantity -= pair.Value.quantity;
 
-                if (army.units[pair.Key].quanity == 0) army.units.Remove(pair.Key);
+                if (army.units[pair.Key].quantity == 0) army.units.Remove(pair.Key);
             }
 
             return army;
@@ -90,7 +90,7 @@ namespace Plevian.Units
             foreach (var pair in other.units)
             {
                 if (units.ContainsKey(pair.Key) == false) return false;
-                if (units[pair.Key].quanity < pair.Value.quanity) return false;
+                if (units[pair.Key].quantity < pair.Value.quantity) return false;
             }
             return true;
         }
@@ -100,7 +100,7 @@ namespace Plevian.Units
             int attackStrength = 0;
             foreach (var pair in units)
             {
-                attackStrength += pair.Value.attackStrength * pair.Value.quanity;
+                attackStrength += pair.Value.attackStrength * pair.Value.quantity;
             }
             return attackStrength;
         }
@@ -110,7 +110,7 @@ namespace Plevian.Units
             int defenseInfantry = 0;
             foreach (var pair in units)
             {
-                defenseInfantry += pair.Value.defenseInfantry * pair.Value.quanity;
+                defenseInfantry += pair.Value.defenseInfantry * pair.Value.quantity;
             }
             return defenseInfantry;
         }
@@ -120,7 +120,7 @@ namespace Plevian.Units
             int defenseCavalry = 0;
             foreach (var pair in units)
             {
-                defenseCavalry += pair.Value.defenseCavalry * pair.Value.quanity;
+                defenseCavalry += pair.Value.defenseCavalry * pair.Value.quantity;
             }
             return defenseCavalry;
         }
@@ -130,7 +130,7 @@ namespace Plevian.Units
             int defenseArchers = 0;
             foreach (var pair in units)
             {
-                defenseArchers += pair.Value.defenseArchers * pair.Value.quanity;
+                defenseArchers += pair.Value.defenseArchers * pair.Value.quantity;
             }
             return defenseArchers;
         }
@@ -165,7 +165,7 @@ namespace Plevian.Units
         {
             int size = 0;
             foreach (var pair in units)
-                size += pair.Value.quanity;
+                size += pair.Value.quantity;
             return size;
         }
 
@@ -178,7 +178,7 @@ namespace Plevian.Units
         {
             int size = 0;
             foreach (var pair in units)
-                if (pair.Value.unitClass == unitClass) size += pair.Value.quanity;
+                if (pair.Value.unitClass == unitClass) size += pair.Value.quantity;
             return size;
         }
 
@@ -187,7 +187,7 @@ namespace Plevian.Units
             int capacity = 0;
             foreach(var pair in units)
             {
-                capacity += pair.Value.lootCapacity * pair.Value.quanity;
+                capacity += pair.Value.lootCapacity * pair.Value.quantity;
             }
             return capacity;
         }
@@ -199,7 +199,7 @@ namespace Plevian.Units
             foreach (var pair in units)
             {
                 string name = Enum.GetName(typeof(UnitType), pair.Key);
-                str += name + " - " + pair.Value.quanity + "\n";
+                str += name + " - " + pair.Value.quantity + "\n";
             }
             return str;
         }
@@ -256,7 +256,7 @@ namespace Plevian.Units
         {
             String s = "army: ";
             foreach (Unit unit in units.Values)
-                s += unit.name + "=" + unit.quanity + "; ";
+                s += unit.name + "=" + unit.quantity + "; ";
             return s;
         }
     }

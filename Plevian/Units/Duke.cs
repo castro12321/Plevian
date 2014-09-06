@@ -11,8 +11,8 @@ namespace Plevian.Units
 {
     public class Duke : Unit
     {
-        public Duke(int quanity = 0)
-            : base(quanity)
+        public Duke(int quantity = 0)
+            : base(quantity)
         {
         }
 
@@ -20,7 +20,7 @@ namespace Plevian.Units
 #region overrided properties
         public override Unit clone()
         {
-            return new Duke(quanity);
+            return new Duke(quantity);
         }
 
         public override int attackStrength { get { return 100; } }

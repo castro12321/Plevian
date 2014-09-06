@@ -11,8 +11,8 @@ namespace Plevian.Units
 {
     public class Archer : Unit
     {
-        public Archer(int quanity = 0)
-            : base(quanity)
+        public Archer(int quantity = 0)
+            : base(quantity)
         {
         }
 
@@ -21,7 +21,7 @@ namespace Plevian.Units
 #region overrided properties
         public override Unit clone()
         {
-            return new Archer(quanity);
+            return new Archer(quantity);
         }
 
         public override int attackStrength { get { return 35; } }

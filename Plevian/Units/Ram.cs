@@ -11,15 +11,15 @@ namespace Plevian.Units
 {
     public class Ram : Unit
     {
-        public Ram(int quanity = 0)
-            : base(quanity)
+        public Ram(int quantity = 0)
+            : base(quantity)
         {
         }
 
 #region overrided properties
         public override Unit clone()
         {
-            return new Ram(quanity);
+            return new Ram(quantity);
         }
 
         public override int attackStrength { get { return 1; } }

@@ -28,7 +28,7 @@ namespace Plevian.Units
         public static readonly DependencyProperty UnitProperty =
             DependencyProperty.Register("Unit", typeof(UnitType), typeof(UnitControl),  new UIPropertyMetadata(UnitPropertyChangedHandler));
 
-        public delegate void RecruitEvent(UnitType type, int quanity);
+        public delegate void RecruitEvent(UnitType type, int quantity);
         public event RecruitEvent recruitEvent;
 
         private UnitModel model = new UnitModel();
@@ -124,12 +124,12 @@ namespace Plevian.Units
             {
                 get
                 {
-                    return data.quanity;
+                    return data.quantity;
                 }
 
                 set
                 {
-                    data.quanity = value;
+                    data.quantity = value;
                     NotifyPropertyChanged("Cost");
                 }
             }

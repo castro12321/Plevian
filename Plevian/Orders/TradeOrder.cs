@@ -32,7 +32,7 @@ namespace Plevian.Orders
             {
                 /* Idea for traders capacity limit
                 int summedResources = sentResources.sumResources();
-                int tradersCount = traders.get(UnitType.TRADER).quanity;
+                int tradersCount = traders.get(UnitType.TRADER).quantity;
                 if (tradersCount * Trader.lootCapacity < summedResources)
                     throw new Exception("Traders don't have enough capacity");
                 */

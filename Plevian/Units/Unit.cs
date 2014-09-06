@@ -13,22 +13,22 @@ namespace Plevian.Units
     public abstract class Unit : DependencyObject
     {
         public static readonly DependencyProperty QuantityProperty =
-            DependencyProperty.Register("quanity", typeof(int),
+            DependencyProperty.Register("quantity", typeof(int),
             typeof(Unit), new FrameworkPropertyMetadata(0));
-        public int quanity
+        public int quantity
         {
             get { return (int)GetValue(QuantityProperty); }
             set { SetValue(QuantityProperty, value); }
         }
 
-        public Unit(int quanity = 0)
+        public Unit(int quantity = 0)
         {
-            this.quanity = quanity;
+            this.quantity = quantity;
         }
 
         public Resources getWholeUnitCost()
         {
-            return recruitCost * quanity;
+            return recruitCost * quantity;
         }
 
 #region abstract properties
@@ -58,7 +58,7 @@ namespace Plevian.Units
 
         public override string ToString()
         {
-            return Enum.GetName(typeof(UnitType), unitType) + "(" + quanity + ")";
+            return Enum.GetName(typeof(UnitType), unitType) + "(" + quantity + ")";
         }
 
         public abstract Unit clone();

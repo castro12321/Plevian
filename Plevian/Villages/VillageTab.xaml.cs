@@ -55,12 +55,12 @@ namespace Plevian.Villages
             }
         }
 
-        void recruitEvent(UnitType type, int quanity)
+        void recruitEvent(UnitType type, int quantity)
         {
            if(Village != null)
            {
                Logger.log(Name + " recruit " + type);
-               Village.recruit(UnitFactory.createUnit(type, quanity));
+               Village.recruit(UnitFactory.createUnit(type, quantity));
            }
         }
 
