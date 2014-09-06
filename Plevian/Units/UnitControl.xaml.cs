@@ -82,7 +82,12 @@ namespace Plevian.Units
         {
             try
             {
-                int quantity = Convert.ToInt32(Quanity.Text);
+                int quantity = Convert.ToInt32(Quantity.Text);
+                if (quantity > 10000)
+                {
+                    quantity = 10000;
+                    (sender as TextBox).Text = quantity.ToString();
+                }
                 model.Quantity = quantity;
             }
             catch { }
