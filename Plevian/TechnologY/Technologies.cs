@@ -58,7 +58,8 @@ namespace Plevian.TechnologY
             get
             {
                 return new Requirements()
-                     + new BuildingRequirement(BuildingType.WORKSHOP, 5);
+                     + new BuildingRequirement(BuildingType.WORKSHOP, 5)
+                     + new TechnologyRequirement(new TechnologyLasers());
             }
         }
 
