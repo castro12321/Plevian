@@ -46,8 +46,7 @@ namespace Plevian.Units
         {
             get
             {
-                return new Requirements()
-                            + new BuildingRequirement(BuildingType.BARRACKS, 1);
+                return new Requirements();
             }
         }
 #endregion
