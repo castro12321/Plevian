@@ -11,15 +11,15 @@ namespace Plevian.Units
 {
     public class Trader : Unit
     {
-        public Trader(int quanity = 0)
-            : base(quanity)
+        public Trader(int quantity = 0)
+            : base(quantity)
         {
         }
 
 #region overrided properties
         public override Unit clone()
         {
-            return new Trader(quanity);
+            return new Trader(quantity);
         }
 
         public override int attackStrength { get { return 5; } }

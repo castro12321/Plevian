@@ -11,15 +11,15 @@ namespace Plevian.Units
 {
     public class Settler : Unit
     {
-        public Settler(int quanity = 0)
-            : base(quanity)
+        public Settler(int quantity = 0)
+            : base(quantity)
         {
         }
 
 #region overrided properties
         public override Unit clone()
         {
-            return new Settler(quanity);
+            return new Settler(quantity);
         }
 
         public override int attackStrength { get { return 5; } }

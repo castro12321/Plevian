@@ -17,7 +17,7 @@ namespace Plevian.Orders
         {
             if (destination.type != TerrainType.PLAINS)
                 throw new Exception("You can create villages only on PLAINS tiles");
-            if (!army.contain(UnitType.SETTLER))
+            if (!army.contains(UnitType.SETTLER))
                 throw new KeyNotFoundException("You need a settler to create village");
         }
 

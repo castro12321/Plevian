@@ -5,21 +5,30 @@ using System.Text;
 using System.Threading.Tasks;
 using Plevian.Resource;
 using Plevian.RequirementS;
+using System.Windows;
+using System.ComponentModel;
 
 namespace Plevian.Units
 {
-    public abstract class Unit
+    public abstract class Unit : DependencyObject
     {
-        public int quanity;
-
-        public Unit(int quanity = 0)
+        public static readonly DependencyProperty QuantityProperty =
+            DependencyProperty.Register("quantity", typeof(int),
+            typeof(Unit), new FrameworkPropertyMetadata(0));
+        public int quantity
         {
-            this.quanity = quanity;
+            get { return (int)GetValue(QuantityProperty); }
+            set { SetValue(QuantityProperty, value); }
+        }
+
+        public Unit(int quantity = 0)
+        {
+            this.quantity = quantity;
         }
 
         public Resources getWholeUnitCost()
         {
-            return recruitCost * quanity;
+            return recruitCost * quantity;
         }
 
 #region abstract properties
@@ -49,7 +58,7 @@ namespace Plevian.Units
 
         public override string ToString()
         {
-            return Enum.GetName(typeof(UnitType), unitType) + "(" + quanity + ")";
+            return Enum.GetName(typeof(UnitType), unitType) + "(" + quantity + ")";
         }
 
         public abstract Unit clone();

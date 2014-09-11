@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Plevian.events;
+using Plevian.TechnologY;
 
 namespace Plevian.Villages
 {
@@ -23,8 +24,10 @@ namespace Plevian.Villages
         public ObservableCollection<Order> orders = new ObservableCollection<Order>();
         public ObservableCollection<BuildingQueueItem> buildingsQueue = new ObservableCollection<BuildingQueueItem>();
         public ObservableCollection<RecruitQueueItem> recruitQueue = new ObservableCollection<RecruitQueueItem>();
+        public ObservableCollection<ResearchQueueItem> researchQueue = new ObservableCollection<ResearchQueueItem>();
         public GameTime recruitTimeEnd { get; private set; }
         public GameTime buildTimeEnd { get; private set; }
+        public GameTime researchTimeEnd { get; private set; }
         public Army army { get; private set; }
         public readonly Resources resources;
         private string _name;
@@ -52,7 +55,7 @@ namespace Plevian.Villages
             : base(location, TerrainType.VILLAGE)
         {
             Owner = owner;
-            resources = new Resources(9999, 9999, 9999, 9999);
+            resources = new Resources(99999, 99999, 99999, 99999);
             recruitTimeEnd = GameTime.now;
             buildTimeEnd = GameTime.now;
             this.name = name;
@@ -95,6 +98,9 @@ namespace Plevian.Villages
             OrdersTick();
             finishBuilding();
             finishRecruiting();
+            finishResearching();
+            if(name == "Capital")
+                Logger.log(name + " army " + army);
             //Logger.village("village resources " + resources);
         }
         private void OrdersTick()
@@ -148,15 +154,28 @@ namespace Plevian.Villages
                     break;
 
                 Unit toRecruit = queueItem.toRecruit;
-                if (army.contain(toRecruit.unitType))
-                    army.get(toRecruit.unitType).quanity++;
+                if (army.contains(toRecruit.unitType))
+                    army.get(toRecruit.unitType).quantity++;
                 else
                 {
                     Unit clone = toRecruit.clone();
-                    clone.quanity = 1;
-                    army += clone;
+                    clone.quantity = 1;
+                    army.add(clone);
                 }
                 recruitQueue.RemoveAt(0);
+            }
+        }
+
+        private void finishResearching()
+        {
+            while (researchQueue.Count > 0)
+            {
+                ResearchQueueItem queueItem = researchQueue[0];
+                if (GameTime.now < queueItem.end)
+                    break;
+
+                owner.technologies.discover(queueItem.researched);
+                researchQueue.RemoveAt(0);
             }
         }
 
@@ -210,7 +229,7 @@ namespace Plevian.Villages
         /// </summary>
         public void recruit(Unit unit)
         {
-            if (unit.quanity == 0)
+            if (unit.quantity == 0)
                 throw new Exception("Cannot recruit 0 units");
             if (!unit.requirements.isFullfilled(this))
                 throw new Exception("Requirements not met for " + unit);
@@ -228,13 +247,13 @@ namespace Plevian.Villages
             GameTime startTime = recruitTimeEnd.copy();
 
             Unit newUnit = unit.clone();
-            newUnit.quanity = 1;
+            newUnit.quantity = 1;
 
             float recruitTimeFromNow = 0;
             float unitRecruitTime = unit.recruitTime;
             foreach (Building b in buildings.Values)
                 unitRecruitTime *= b.getUnitTimeModifierFor(unit.unitType);
-            int unitsToRecruit = unit.quanity;
+            int unitsToRecruit = unit.quantity;
             while(unitsToRecruit --> 0)
             {
                 recruitTimeFromNow += unitRecruitTime;
@@ -244,12 +263,34 @@ namespace Plevian.Villages
             recruitTimeEnd += new Seconds((int)recruitTimeFromNow);
         }
 
+        public void research(Technology technology)
+        {
+            if (!technology.Requirements.isFullfilled(this))
+                throw new Exception("Requirements not met for " + technology);
+
+            // Reset recruit counter if needed
+            if (researchQueue.Count == 0)
+                researchTimeEnd = GameTime.now;
+
+            // Take money
+            Resources neededResources = technology.Cost;
+            if (!resources.canAfford(neededResources))
+                throw new Exceptions.ExceptionNotEnoughResources();
+            takeResources(neededResources);
+
+            GameTime startTime = researchTimeEnd.copy();
+            researchTimeEnd += technology.ResearchTime;
+
+            ResearchQueueItem queueItem = new ResearchQueueItem(startTime, researchTimeEnd, technology);
+            researchQueue.Add(queueItem);
+        }
+
         public void addOrder(Order order)
         {
-            if (army.canDivide(order.army))
+            if (army.canRemove(order.army))
             {
                 orders.Add(order);
-                army -= order.army;
+                army.remove(order.army);
             }
             else
             {
@@ -259,22 +300,20 @@ namespace Plevian.Villages
 
         public void addArmy(Army army)
         {
-            this.army += army;
+            this.army.add(army);
         }
 
         public void takeArmy(Army army)
         {
-            this.army -= army;
+            this.army.add(army);
         }
 
         public void addUnit(Unit unit)
         {
-            if (army.contain(unit.unitType))
-                army.get(unit.unitType).quanity+= unit.quanity;
+            if (army.contains(unit.unitType))
+                army.get(unit.unitType).quantity += unit.quantity;
             else
-            {
-                army += unit;
-            }
+                army.add(unit);
 
         }
 

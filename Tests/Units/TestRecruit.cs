@@ -11,6 +11,7 @@ using Plevian.Resource;
 using Plevian.Debugging;
 using Plevian.Players;
 using SFML.Graphics;
+using Plevian.Buildings;
 
 namespace Tests.Units
 {
@@ -20,17 +21,18 @@ namespace Tests.Units
         [TestMethod]
         public void testRecruit()
         {
-            const int ARCH_QUANITY = 500;
-            const int KNIG_QUANITY = 500;
-            const int WARR_QUANITY = 500;
+            const int ARCH_QUANTITY = 500;
+            const int KNIG_QUANTITY = 500;
+            const int WARR_QUANTITY = 500;
 
-            Archer archer = new Archer(ARCH_QUANITY);
             Game game = new Game();
             Village testVillage = new Village(null, new Player("", Color.Blue), "test");
             testVillage.addResources(new Resources(1000000, 1000000, 1000000, 1000000));
-            testVillage.recruit(archer);
-            testVillage.recruit(new Knight(KNIG_QUANITY));
-            testVillage.recruit(new Warrior(WARR_QUANITY));
+            testVillage.buildings[BuildingType.BARRACKS].level = 2;
+            testVillage.buildings[BuildingType.STABLE].level = 1;
+            testVillage.recruit(new Archer(ARCH_QUANTITY));
+            testVillage.recruit(new Knight(KNIG_QUANTITY));
+            testVillage.recruit(new Warrior(WARR_QUANTITY));
 
             fakeTime(0);
 
@@ -39,9 +41,9 @@ namespace Tests.Units
             GameTime.update();
             testVillage.tick();
 
-            Assert.IsTrue(testVillage.army.get(UnitType.ARCHER).quanity == ARCH_QUANITY);
-            Assert.IsTrue(testVillage.army.get(UnitType.KNIGHT).quanity == KNIG_QUANITY);
-            Assert.IsTrue(testVillage.army.get(UnitType.WARRIOR).quanity == WARR_QUANITY);
+            Assert.IsTrue(testVillage.army.get(UnitType.ARCHER).quantity == ARCH_QUANTITY);
+            Assert.IsTrue(testVillage.army.get(UnitType.KNIGHT).quantity == KNIG_QUANTITY);
+            Assert.IsTrue(testVillage.army.get(UnitType.WARRIOR).quantity == WARR_QUANTITY);
         }
     }
 }

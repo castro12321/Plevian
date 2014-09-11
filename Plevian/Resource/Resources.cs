@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,42 +10,34 @@ using System.Windows;
 namespace Plevian.Resource
 {
     // TODO: przerobic na ten drugi system z notify zamiast dependencyproperty + overrideowac gethashcode()
-    public class Resources : DependencyObject
+    public class Resources : INotifyPropertyChanged
     {
-        public static readonly DependencyProperty FoodProperty =
-            DependencyProperty.Register("food", typeof(int),
-            typeof(Resources), new FrameworkPropertyMetadata(0));
+        private int _food;
         public int food
         {
-            get { return (int)GetValue(FoodProperty); }
-            set { SetValue(FoodProperty, value); }
+            get { return _food; }
+            set { _food = value; NotifyPropertyChanged(); }
         }
 
-        public static readonly DependencyProperty WoodProperty =
-            DependencyProperty.Register("wood", typeof(int),
-            typeof(Resources), new FrameworkPropertyMetadata(0));
+        private int _wood;
         public int wood
         {
-            get { return (int)GetValue(WoodProperty); }
-            set { SetValue(WoodProperty, value); }
+            get { return _wood; }
+            set { _wood = value; NotifyPropertyChanged(); }
         }
 
-        public static readonly DependencyProperty IronProperty =
-            DependencyProperty.Register("iron", typeof(int),
-            typeof(Resources), new FrameworkPropertyMetadata(0));
+        private int _iron;
         public int iron
         {
-            get { return (int)GetValue(IronProperty); }
-            set { SetValue(IronProperty, value); }
+            get { return _iron; }
+            set { _iron = value; NotifyPropertyChanged(); }
         }
 
-        public static readonly DependencyProperty StoneProperty =
-            DependencyProperty.Register("stone", typeof(int),
-            typeof(Resources), new FrameworkPropertyMetadata(0));
+        private int _stone;
         public int stone
         {
-            get { return (int)GetValue(StoneProperty); }
-            set { SetValue(StoneProperty, value); }
+            get { return _stone; }
+            set { _stone = value; NotifyPropertyChanged(); }
         }
         
         public Resources(int food, int wood, int iron, int stone)
@@ -179,6 +172,14 @@ namespace Plevian.Resource
         public void Clear()
         {
             food = wood = iron = stone = 0;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

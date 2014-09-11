@@ -93,7 +93,7 @@ namespace Plevian.Orders
             {
                 string unitName = Enum.GetName(typeof(UnitType), pair.Key);
                 tooltip += "\n" + pair.Value.ToString();
-                sum += pair.Value.quanity;
+                sum += pair.Value.quantity;
             }
 
             tooltip = "Units : " + sum + tooltip;

@@ -64,7 +64,7 @@ namespace Plevian.GUI
         {
             VillagePanel.Children.Clear();
 
-            foreach(Village village in player.Villages)
+            foreach (Village village in player.villages)
             {
                 VillageRecord record = new VillageRecord(village);
                 VillagePanel.Children.Add(record);
@@ -109,7 +109,7 @@ namespace Plevian.GUI
                     UnitSelector selector = UnitPanel.Children[i] as UnitSelector;
                     if(selector.type == pair.Key)
                     {
-                        selector.maxQuanity = pair.Value.quanity;
+                        selector.maxQuantity = pair.Value.quantity;
                         break;
                     }
                 }
@@ -131,10 +131,10 @@ namespace Plevian.GUI
                 foreach(Object obj in UnitPanel.Children)
                 {
                     UnitSelector selector = obj as UnitSelector;
-                    if (selector.quanity == 0) continue;
+                    if (selector.quantity == 0) continue;
                     UnitType type = selector.type;
-                    int quanity = selector.quanity;
-                    army += UnitFactory.createUnit(type, quanity);
+                    int quantity = selector.quantity;
+                    army.add(UnitFactory.createUnit(type, quantity));
                 }
                 Tile origin = selectedVillage;
 

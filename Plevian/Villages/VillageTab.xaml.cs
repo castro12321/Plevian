@@ -1,6 +1,7 @@
 ﻿using Plevian.Buildings;
 using Plevian.Debugging;
 using Plevian.Maps;
+using Plevian.TechnologY;
 using Plevian.Units;
 using System;
 using System.Collections.Generic;
@@ -45,21 +46,19 @@ namespace Plevian.Villages
                 BuildingsItemControl.ItemsSource = value.buildings;
                 BuildingsQueueControl.ItemsSource = value.buildingsQueue;
 
-                foreach(object child in UnitsRecruitStackPanel.Children)
+                foreach (UnitControl control in UnitsRecruitStackPanel.Children)
                 {
-                    UnitControl control = child as UnitControl;
                     control.setVillage(value);
-                    control.recruitEvent += recruitEvent;
+                    control.recruitEvent -= recruitEvent; // To remove old event handler (it's weird but works)
+                    control.recruitEvent += recruitEvent; // To add current object handler
                 }
             }
         }
 
-        void recruitEvent(UnitType type, int quanity)
+        void recruitEvent(UnitType type, int quantity)
         {
            if(Village != null)
-           {
-               Village.recruit(UnitFactory.createUnit(type, quanity));
-           }
+               Village.recruit(UnitFactory.createUnit(type, quantity));
         }
 
         public VillageTab(Game game)
@@ -76,62 +75,10 @@ namespace Plevian.Villages
             villageView.handleEvents();
         }
 
-        private void setUnitCount(Label label, UnitType type)
-        {
-            try
-            {
-                label.Content = Village.army.get(type).quanity;
-            }
-            catch(KeyNotFoundException)
-            {
-                label.Content = "0";
-            }
-        }
-
-        private void setBuildingLevel(Label label, BuildingType type)
-        {
-            if (Village.isBuilt(type))
-                label.Content = Village.getBuilding(type).level;
-            else
-                label.Content = "0";
-        }
-
-        private void setBuildingProgress(Label label, BuildingType type)
-        {
-            foreach (BuildingQueueItem queueItem in Village.buildingsQueue)
-            {
-                if (queueItem.toBuild.type == type)
-                {
-                    Seconds left = GameTime.now.diffrence(queueItem.end);
-                    int minutes = left.seconds / 60;
-                    int seconds = left.seconds % 60;
-                    label.Content = minutes + ":" + seconds;
-                    return;
-                }
-            }
-            label.Content = "";
-        }
-
-        private void setRecruitProgress(Label label, UnitType type)
-        {
-            foreach (RecruitQueueItem queueItem in Village.recruitQueue)
-            {
-                if (queueItem.toRecruit.unitType == type)
-                {
-                    Seconds left = GameTime.now.diffrence(queueItem.end);
-                    int minutes = left.seconds / 60;
-                    int seconds = left.seconds % 60;
-                    label.Content = minutes + ":" + seconds;
-                    return;
-                }
-            }
-            label.Content = "";
-        }
-
         public void render()
         {
             coords.Content = "X:" + Village.location.x + " Y:" + Village.location.y;
-
+            
             // Render SFML
             villageView.render();
         }
@@ -173,12 +120,12 @@ namespace Plevian.Villages
 
         private void ResearchLasers_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: start researching lasers
+            Village.research(new TechnologyLasers());
         }
 
         private void ResearchNukes_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: start researching nukes
+            Village.research(new TechnologyNukes());
         }
 
         private void onLabelClick(object sender, MouseButtonEventArgs e)

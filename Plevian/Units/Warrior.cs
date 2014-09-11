@@ -11,8 +11,8 @@ namespace Plevian.Units
 {
     public class Warrior : Unit
     {
-        public Warrior(int quanity = 0)
-            : base(quanity)
+        public Warrior(int quantity = 0)
+            : base(quantity)
         {
         }
 
@@ -20,7 +20,7 @@ namespace Plevian.Units
 #region overrided functions
         public override Unit clone()
         {
-            return new Warrior(quanity);
+            return new Warrior(quantity);
         }
 
         public override int attackStrength { get { return 10; } }
@@ -46,8 +46,7 @@ namespace Plevian.Units
         {
             get
             {
-                return new Requirements()
-                            + new BuildingRequirement(BuildingType.BARRACKS, 1);
+                return new Requirements();
             }
         }
 #endregion

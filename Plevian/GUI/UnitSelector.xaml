@@ -16,7 +16,7 @@
             </LinearGradientBrush>
         </StackPanel.Background>
         <Label Name="UnitName" Content="Unit name" FontFamily="Global Serif" FontSize="20" VerticalAlignment="Center" Width="120" />
-        <TextBox Name="UnitQuanity" Text="0" MinWidth="25" VerticalAlignment="Center" Width="50" PreviewTextInput="onPreviewTextInput" MaxLength="6" MaxLines="4" TextChanged="onInputChange" />
-        <Label x:Name="UnitMaxQuanity" Content="(100)" FontFamily="Global Serif" FontSize="20" VerticalAlignment="Center" Foreground="#FFFF7400" MouseEnter="maxQuanityEnter" MouseLeave="maxQuanityLeave" MouseDown="maxQaunityMouseDown" />
+        <TextBox Name="UnitQuantity" Text="0" MinWidth="25" VerticalAlignment="Center" Width="50" PreviewTextInput="onPreviewTextInput" MaxLength="6" MaxLines="4" TextChanged="onInputChange" />
+        <Label x:Name="UnitMaxQuantity" Content="(100)" FontFamily="Global Serif" FontSize="20" VerticalAlignment="Center" Foreground="#FFFF7400" MouseEnter="maxQuantityEnter" MouseLeave="maxQuantityLeave" MouseDown="maxQaunityMouseDown" />
     </StackPanel>
 </UserControl>

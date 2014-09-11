@@ -22,7 +22,7 @@ namespace Plevian.Orders
             this.sentResources = sentResources;
             this.sentArmy = sentArmy;
 
-            if (!traders.contain(UnitType.TRADER))
+            if (!traders.contains(UnitType.TRADER))
                 throw new KeyNotFoundException("You need a trader to... trade");
             if(destination.type != TerrainType.VILLAGE)
                 throw new ArgumentException("You can trade with other villages only");
@@ -32,7 +32,7 @@ namespace Plevian.Orders
             {
                 /* Idea for traders capacity limit
                 int summedResources = sentResources.sumResources();
-                int tradersCount = traders.get(UnitType.TRADER).quanity;
+                int tradersCount = traders.get(UnitType.TRADER).quantity;
                 if (tradersCount * Trader.lootCapacity < summedResources)
                     throw new Exception("Traders don't have enough capacity");
                 */

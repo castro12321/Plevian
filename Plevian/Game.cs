@@ -74,27 +74,6 @@ namespace Plevian
             village3.getBuilding(BuildingType.BARRACKS).level = 1;
             village3.recruit(new Warrior(1000));
             berlin.addUnit(new Knight(100));
-
-            Requirements reqs = new Requirements();
-            BuildingRequirement req = new BuildingRequirement(BuildingType.TOWN_HALL, 5);
-            reqs.addRequirement(req);
-            req = new BuildingRequirement(BuildingType.MINE, 5);
-            reqs.addRequirement(req);
-
-            foreach (var requirement in reqs)
-            {
-                Logger.log(requirement.ToString());
-            }
-
-            /* This sumething can test orders
-            for(int i = 17;i < 30;++i)
-            {
-                Army army = new Army();
-                army += new Knight(20);
-                Order ord = new AttackOrder(village1, berlin, army);
-                village1.addOrder(ord);
-            }*/
-
         }
 
         /// <summary>
@@ -113,8 +92,7 @@ namespace Plevian
             while (timediff --> 0)
             {
                 foreach (Player player in players)
-                    for (int i = 0; i < player.Villages.Count; ++i )
-                        player.Villages.ElementAt(i).tick();
+                    player.tick();
             }
         }
 
