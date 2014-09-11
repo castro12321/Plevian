@@ -159,13 +159,17 @@ namespace Plevian.Resource
 
         public int howMuchAfford(Resources cost)
         {
-            int q = cost.wood / wood;
-            if (cost.food / food < q)
-                q = cost.food / food;
-            if (cost.iron / iron < q)
-                q = cost.iron / iron;
-            if (cost.stone / food < q)
-                q = cost.stone / stone;
+            int q = 24000000;
+            if(cost.wood != 0)
+                q = wood / cost.wood;
+            if (cost.food != 0 && food / cost.food < q)
+                q = food / cost.food;
+            if (cost.iron != 0 && iron / cost.iron < q)
+                q = iron / cost.iron;
+            if (cost.stone != 0 && stone / cost.stone < q)
+                q = stone / cost.stone;
+            if(q == 24000000)
+                return 0;
             return q;
         }
 

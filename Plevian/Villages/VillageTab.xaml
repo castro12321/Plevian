@@ -16,8 +16,13 @@
                 <DataTrigger Binding="{Binding HaveTechnology}" Value="false">
                     <Setter Property="Visibility" Value="Collapsed" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding HaveTechnology}" Value="true">
-                    <Setter Property="Visibility" Value="Visible" />
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type units:UnitControl}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RequirementsMet}" Value="false">
+                    <Setter Property="Visibility" Value="Collapsed" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>

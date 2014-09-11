@@ -47,6 +47,22 @@ namespace Plevian.Units
         public UnitControl()
         {
             InitializeComponent();
+            model.PropertyChanged += model_PropertyChanged;
+        }
+
+        void model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "HaveResources")
+            {
+                if(!model.HaveResources)
+                {
+                    resourceControl.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                }
+                else
+                {
+                    resourceControl.Background = new SolidColorBrush(Colors.Transparent);
+                }
+            }
         }
 
         public void setData(UnitType type)
@@ -64,7 +80,8 @@ namespace Plevian.Units
         private void RecruitClicked(object sender, RoutedEventArgs e)
         {
             if (recruitEvent != null)
-                recruitEvent(model.Type, model.QuantityToRecruit);
+                recruitEvent(model.Type, model.Quantity);
+            model.Quantity = 1;
         }
 
         private void onPreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -87,7 +104,7 @@ namespace Plevian.Units
                     quantity = 10000;
                     (sender as TextBox).Text = quantity.ToString();
                 }
-                model.QuantityToRecruit = quantity;
+                model.Quantity = quantity;
             }
             catch { }
         }
@@ -95,7 +112,23 @@ namespace Plevian.Units
 
         private class UnitModel : INotifyPropertyChanged
         {
-            private Unit data;
+            public Unit data;
+            public Village village;
+
+            public UnitModel()
+            {
+                GameTime.PropertyChanged += GameTime_PropertyChanged;
+            }
+
+            void GameTime_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            {
+                if(e.PropertyName == "now")
+                {
+                    NotifyPropertyChanged("MaxQuantity");
+                    NotifyPropertyChanged("RequirementsMet");
+                    NotifyPropertyChanged("HaveResources");
+                }
+            }
 
             private Unit _unitInVillage;
             public Unit unitInVillage
@@ -103,6 +136,8 @@ namespace Plevian.Units
                 get { return _unitInVillage; }
                 set { _unitInVillage = value; NotifyPropertyChanged(); }
             }
+
+
 
             public String Name
             {
@@ -120,7 +155,7 @@ namespace Plevian.Units
                 }
             }
 
-            public int QuantityToRecruit
+            public int Quantity
             {
                 get
                 {
@@ -147,17 +182,32 @@ namespace Plevian.Units
             {
                 get
                 {
-                    return true;
+                    if (village == null || data == null)
+                        return false;
+                    return village.resources.canAfford(data.getWholeUnitCost());
                 }
             }
 
-            public int maxQuanity
+            public int maxQuantity
             {
                 get
                 {
+                    if (village == null || data == null)
+                        return 0;
                     Resources vilResources = village.resources;
                     Resources neededResources = data.recruitCost;
+                    int quant = vilResources.howMuchAfford(neededResources);
                     return vilResources.howMuchAfford(neededResources);
+                }
+            }
+
+            public bool RequirementsMet
+            {
+                get
+                {
+                    if (village == null || data == null)
+                        return false;
+                    return data.requirements.isFullfilled(village);
                 }
             }
 
@@ -168,9 +218,9 @@ namespace Plevian.Units
 
             public void setVillage(Village village)
             {
-                //this.village = village;
+                this.village = village;
                 unitInVillage = village.army[data.unitType];
-                QuantityToRecruit = 1;
+                Quantity = 1;
                 NotifyPropertyChanged("QuantityToRecruit");
             }
 
@@ -182,5 +232,7 @@ namespace Plevian.Units
                     handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        
     }
 }

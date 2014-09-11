@@ -23,7 +23,7 @@ namespace Plevian.Resource
         public static readonly DependencyProperty ResourcesProperty = DependencyProperty.Register(
     "Resources", typeof(Resources), typeof(ResourceControl));
 
-        public Resources resources
+        public Resources Resources
         {
             get
             {
@@ -45,7 +45,7 @@ namespace Plevian.Resource
         public ResourceControl(Resources resources)
         {
             InitializeComponent();
-            this.resources = resources;
+            this.Resources = resources;
         }
 
         private void countChanged(object sender, DependencyPropertyChangedEventArgs e)
