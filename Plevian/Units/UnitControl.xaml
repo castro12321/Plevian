@@ -14,22 +14,9 @@
                 <DataTrigger Binding="{Binding HaveResources}" Value="false" >
                     <Setter Property="Visibility" Value="Hidden" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding HaveResources, ElementName=Quantity}" Value="false" >
-                    <Setter Property="Visibility" Value="Hidden" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding HaveResources, ElementName=Quantity}" Value="true" >
-                    <Setter Property="Background" Value="Green" />
-                </DataTrigger>
             </Style.Triggers>
         </Style>
-        
-        <Style TargetType="resource:ResourceControl" x:Key="resourceStyle">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding HaveResources, RelativeSource={RelativeSource AncestorType=StackPanel}}">
-                    <Setter Property="Background" Value="Red" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
+
     </UserControl.Resources>
 
     <DockPanel Name="stackPanel">
