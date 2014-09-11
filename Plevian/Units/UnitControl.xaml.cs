@@ -135,6 +135,7 @@ namespace Plevian.Units
                 {
                     data.quanity = value;
                     NotifyPropertyChanged("Cost");
+                    NotifyPropertyChanged();
                 }
             }
 
@@ -151,6 +152,16 @@ namespace Plevian.Units
                 get
                 {
                     return true;
+                }
+            }
+
+            public int maxQuanity
+            {
+                get
+                {
+                    Resources vilResources = village.resources;
+                    Resources neededResources = data.recruitCost;
+                    return vilResources.howMuchAfford(neededResources);
                 }
             }
 

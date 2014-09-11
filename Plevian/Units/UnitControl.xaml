@@ -7,10 +7,31 @@
              xmlns:local="clr-namespace:Plevian.Units"
              mc:Ignorable="d" 
              >
+    
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CanBuild}" Value="false" >
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding CanBuild}" Value="true" >
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding showResources, ElementName=resourceControl}" Value="false" >
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding showResources, ElementName=resourceControl}" Value="true" >
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
     <DockPanel Name="stackPanel">
         <Label Name="UnitName" Content="{Binding Name}" FontSize="14" Width="80" MaxWidth="80"  />
-        <resource:ResourceControl x:Name="Resources" DataContext="{Binding Cost}" />
+        <resource:ResourceControl x:Name="Resources" DataContext="{Binding Cost}" MinWidth="250"/>
         <Button Name="RecruitButton" Content="Recruit" Click="RecruitClicked" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-        <TextBox Name="Quanity" Text="{Binding Quanity, Mode=TwoWay}" MinWidth="30" MaxWidth="50" PreviewTextInput="onPreviewTextInput" TextChanged="quanityChanged" HorizontalAlignment="Right" DockPanel.Dock="Right" />  
+        <TextBox Name="Quanity" Text="{Binding Quanity, Mode=TwoWay}" MinWidth="30" MaxWidth="50" PreviewTextInput="onPreviewTextInput" TextChanged="quanityChanged" HorizontalAlignment="Right" DockPanel.Dock="Right" />
+        <Slider Value="{Binding Quanity, Mode=TwoWay}" MinWidth="50" MaxWidth="50" DockPanel.Dock="Right" Maximum="{Binding maxQuanity}"></Slider>
     </DockPanel>
 </UserControl>

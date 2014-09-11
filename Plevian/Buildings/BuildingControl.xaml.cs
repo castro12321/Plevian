@@ -93,8 +93,13 @@ namespace Plevian.Buildings
 
     public class ViewModel : INotifyPropertyChanged
     {
-        public Building data;
-        public Village village;
+        public Building data = null;
+        public Village village = null;
+
+        public ViewModel()
+        {
+            GameTime.PropertyChanged += GameTime_PropertyChanged;
+        }
 
         public String Name
         {
@@ -152,24 +157,28 @@ namespace Plevian.Buildings
             setData(data, village);
         }
 
-        public ViewModel()
-        {
-            this.data = null;
-        }
 
         public void setData(Building data, Village village)
         {
             this.data = data;
             this.village = village;
+
             this.data.PropertyChanged += data_PropertyChanged;
             this.village.buildingQueueItemAdded += village_buildingQueueItemAdded;
-            GameTime.PropertyChanged += GameTime_PropertyChanged;
             this.village.buildingBuilt += village_buildingBuilt;
-            NotifyPropertyChanged("Name");
-            NotifyPropertyChanged("Price");
-            NotifyPropertyChanged("Level");
-            NotifyPropertyChanged("CanBuild");
-            NotifyPropertyChanged("HaveTechnology");
+
+            allChanged();
+        }
+
+        public void removeHandlers()
+        {
+            if(this.data != null)
+                this.data.PropertyChanged -= data_PropertyChanged;
+            if (this.village != null)
+            {
+                this.village.buildingQueueItemAdded -= village_buildingQueueItemAdded;
+                this.village.buildingBuilt -= village_buildingBuilt;
+            }
         }
 
         void GameTime_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -217,6 +226,15 @@ namespace Plevian.Buildings
             var handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void allChanged()
+        {
+            NotifyPropertyChanged("Name");
+            NotifyPropertyChanged("Price");
+            NotifyPropertyChanged("Level");
+            NotifyPropertyChanged("CanBuild");
+            NotifyPropertyChanged("HaveTechnology");
         }
     }
 }

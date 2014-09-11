@@ -164,6 +164,18 @@ namespace Plevian.Resource
             return food + iron + wood + stone;
         }
 
+        public int howMuchAfford(Resources cost)
+        {
+            int q = cost.wood / wood;
+            if (cost.food / food < q)
+                q = cost.food / food;
+            if (cost.iron / iron < q)
+                q = cost.iron / iron;
+            if (cost.stone / food < q)
+                q = cost.stone / stone;
+            return q;
+        }
+
         public void Clear()
         {
             food = wood = iron = stone = 0;
