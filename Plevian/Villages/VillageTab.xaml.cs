@@ -44,6 +44,7 @@ namespace Plevian.Villages
                 ResourcesControl.DataContext = value.resources;
                 OrdersItemControl.ItemsSource = value.orders;
                 BuildingsItemControl.ItemsSource = value.buildings;
+                TechnologyItemsControl.ItemsSource = value.Owner.technologies.technologies;
                 BuildingsQueueControl.ItemsSource = value.buildingsQueue;
 
                 foreach (UnitControl control in UnitsRecruitStackPanel.Children)
@@ -83,51 +84,6 @@ namespace Plevian.Villages
             villageView.render();
         }
 
-        private void RecruitWarrior_Click(object sender, RoutedEventArgs e)
-        {
-            Village.recruit(new Warrior(1));
-        }
-
-        private void RecruitArcher_Click(object sender, RoutedEventArgs e)
-        {
-            Village.recruit(new Archer(1));
-        }
-
-        private void RecruitKnight_Click(object sender, RoutedEventArgs e)
-        {
-            Village.recruit(new Knight(1));
-        }
-
-        private void RecruitSettler_Click(object sender, RoutedEventArgs e)
-        {
-            Village.recruit(new Settler(1));
-        }
-
-        private void RecruitTrader_Click(object sender, RoutedEventArgs e)
-        {
-            Village.recruit(new Trader(1));
-        }
-
-        private void RecruitDuke_Click(object sender, RoutedEventArgs e)
-        {
-            Village.recruit(new Duke(1));
-        }
-
-        private void RecruitRam_Click(object sender, RoutedEventArgs e)
-        {
-            Village.recruit(new Ram(1));
-        }
-
-        private void ResearchLasers_Click(object sender, RoutedEventArgs e)
-        {
-            Village.research(new TechnologyLasers());
-        }
-
-        private void ResearchNukes_Click(object sender, RoutedEventArgs e)
-        {
-            Village.research(new TechnologyNukes());
-        }
-
         private void onLabelClick(object sender, MouseButtonEventArgs e)
         {
             VillageNameTextbox.Text = VillageName.Content.ToString();
@@ -158,6 +114,11 @@ namespace Plevian.Villages
         private void upgradeBuilding(Object sender, Building building)
         {
             Village.build(building.type);
+        }
+
+        private void discoverTechnology(Object sender, Technology technology)
+        {
+            Village.research(technology);
         }
 
         private void onVillageNameFocusKeyboardLost(object sender, KeyboardFocusChangedEventArgs e)

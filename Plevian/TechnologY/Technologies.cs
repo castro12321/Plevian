@@ -13,23 +13,70 @@ namespace Plevian.TechnologY
     {
         public List<Technology> technologies = new List<Technology>();
 
+        public Technologies()
+        {
+            technologies.Add(new TechnologyFire());
+            technologies.Add(new TechnologyFoo());
+            technologies.Add(new TechnologyLasers());
+            technologies.Add(new TechnologyNukes());
+        }
+
+        private Technology find(Technology technology)
+        {
+            return technologies.Find(x => x.Equals(technology));
+        }
+
         public void discover(Technology technology)
         {
             if (!isDiscovered(technology))
-                technologies.Add(technology);
+                find(technology).researched = true;
         }
 
         public bool isDiscovered(Technology technology)
         {
-            return technologies.Contains(technology);
+            return find(technology).researched;
+        }
+    }
+
+    public class TechnologyFire : Technology
+    {
+        public override Resources Price
+        {
+            get { return new Wood(50); }
         }
 
-        // Uh, forget()? xD
+        public override Requirements Requirements
+        {
+            get { return new Requirements(); }
+        }
+
+        public override GameTime ResearchTime
+        {
+            get { return new Seconds(30); }
+        }
+    }
+
+    public class TechnologyFoo : Technology
+    {
+        public override Resources Price
+        {
+            get { return new Wood(100) + new Food(150); }
+        }
+
+        public override Requirements Requirements
+        {
+            get { return new Requirements(); }
+        }
+
+        public override GameTime ResearchTime
+        {
+            get { return new Seconds(30); }
+        }
     }
 
     public class TechnologyLasers : Technology
     {
-        public override Resources Cost
+        public override Resources Price
         {
             get { return new Stone(500) + new Iron(1500); }
         }
@@ -48,7 +95,7 @@ namespace Plevian.TechnologY
 
     public class TechnologyNukes : Technology
     {
-        public override Resources Cost
+        public override Resources Price
         {
             get { return new Stone(1000) + new Iron(3000); }
         }

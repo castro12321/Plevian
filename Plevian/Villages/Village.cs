@@ -35,6 +35,8 @@ namespace Plevian.Villages
 
         public event BuildingQueueItemAdded buildingQueueItemAdded;
         public event BuildingBuilt buildingBuilt;
+        public event TechnologyQueueItemAdded technologyQueueItemAdded;
+        public event TechnologyResearched technologyResearched;
 
         public Player Owner
         {
@@ -176,6 +178,8 @@ namespace Plevian.Villages
 
                 owner.technologies.discover(queueItem.researched);
                 researchQueue.RemoveAt(0);
+                if (technologyResearched != null)
+                    technologyResearched(this, queueItem.researched);
             }
         }
 
@@ -273,7 +277,7 @@ namespace Plevian.Villages
                 researchTimeEnd = GameTime.now;
 
             // Take money
-            Resources neededResources = technology.Cost;
+            Resources neededResources = technology.Price;
             if (!resources.canAfford(neededResources))
                 throw new Exceptions.ExceptionNotEnoughResources();
             takeResources(neededResources);
@@ -283,6 +287,9 @@ namespace Plevian.Villages
 
             ResearchQueueItem queueItem = new ResearchQueueItem(startTime, researchTimeEnd, technology);
             researchQueue.Add(queueItem);
+
+            if (technologyQueueItemAdded != null)
+                technologyQueueItemAdded(this, queueItem);
         }
 
         public void addOrder(Order order)
@@ -388,6 +395,12 @@ namespace Plevian.Villages
             if (hasMaxLevel == false && requirementsFullfiled && hasResources)
                 return true;
             return false;
+        }
+
+        public bool canResearch(Technology technology)
+        {
+            return technology.Requirements.isFullfilled(this)
+                && resources.canAfford(technology.Price);
         }
 
         public int getBuildingLevel(BuildingType type, bool includeQueue = false)

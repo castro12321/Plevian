@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ord="clr-namespace:Plevian.Orders"
              xmlns:buildings="clr-namespace:Plevian.Buildings"
+             xmlns:gui="clr-namespace:Plevian.GUI"
              xmlns:resource="clr-namespace:Plevian.Resource"
              xmlns:units="clr-namespace:Plevian.Units"
              mc:Ignorable="d">
@@ -12,6 +13,14 @@
         <ord:OrderControl x:Key="OrderControl" />
 
         <Style TargetType="{x:Type buildings:BuildingControl}" x:Key="BuildingControlVisibility">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HaveTechnology}" Value="false">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type gui:UpgradeTechnology}" x:Key="TechnologyControlVisibility">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding HaveTechnology}" Value="false">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -104,7 +113,20 @@
                     </Expander>
 
                     <Expander Name="Technology" Header="Technology" Margin="0,5,0,0">
-                        <StackPanel Name="TechnologyPanel" Orientation="Vertical">
+                        <ItemsControl Name="TechnologyItemsControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            
+                            <ItemsControl.ItemTemplate >
+                                <DataTemplate>
+                                    <gui:UpgradeTechnology Upgrade="discoverTechnology" Style="{StaticResource TechnologyControlVisibility}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <!--<StackPanel Name="TechnologyPanel" Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label  Content="Lasers: "    MinWidth="100"/>
                                 <Label  Content="?"           MinWidth="45" Name="ResearchLasersState"/>
@@ -117,7 +139,7 @@
                                 <Button Content="Upgrade"     MinWidth="60" Click="ResearchNukes_Click"/>
                                 <Label  Content="?%"          MinWidth="40" Name="ResearchNukesProgress"/>
                             </StackPanel>
-                        </StackPanel>
+                        </StackPanel>-->
                     </Expander>
 
                     <Expander Header="Orders">

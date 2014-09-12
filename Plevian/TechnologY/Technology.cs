@@ -10,15 +10,16 @@ namespace Plevian.TechnologY
 {
     public abstract class Technology
     {
+        public bool researched { get; set; }
         public abstract Requirements Requirements { get; }
-        public abstract Resources Cost { get; }
+        public abstract Resources Price { get; }
         public abstract GameTime ResearchTime { get; }
 
-        public String name
+        public String Name
         {
             get
             {
-                return GetType().Name;
+                return GetType().Name.Replace("Technology", "");
             }
         }
 
@@ -26,18 +27,18 @@ namespace Plevian.TechnologY
         {
             Technology tech = obj as Technology;
             if (tech != null)
-                return name == tech.name;
+                return Name == tech.Name;
             return false;
         }
 
         public override int GetHashCode()
         {
-            return name.GetHashCode();
+            return Name.GetHashCode();
         }
 
         public override string ToString()
         {
-            return name;
+            return Name;
         }
     }
 }

@@ -1,16 +1,11 @@
-﻿<UserControl x:Class="Plevian.Buildings.BuildingControl"
+﻿<UserControl x:Class="Plevian.GUI.UpgradeTechnology"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:resource="clr-namespace:Plevian.Resource"
-             xmlns:local="clr-namespace:Plevian.Buildings"
-             xmlns:System="clr-namespace:System;assembly=mscorlib"
-             mc:Ignorable="d" 
-             Name="userControl"
-             >
-   
-    
+             xmlns:local="clr-namespace:Plevian.TechnologY"
+             mc:Ignorable="d" >
     <UserControl.Resources>
         <Style TargetType="Button">
             <Style.Triggers>
@@ -32,8 +27,12 @@
     
     <StackPanel Name="stackPanel" Orientation="Horizontal">
         <Label Name="BuildingName" Content="{Binding Name}" FontFamily="Vani" FontSize="14" Width="80" MaxWidth="80" />
-        <Label Name="BuildingLevel" Content="{Binding Level}" />
         <resource:ResourceControl x:Name="resourceControl" DataContext="{Binding Price}" MinWidth="200" MaxWidth="400" />
+        <!-- CANNOT_RESEARCH / RESEARCHABLE / BEING_RESEARCHED (show percentage) / REASEARCHED -->
+        <!-- If cannot research, show red crossed circle -->
+        <!-- When not researched, this is the button -->
+        <!-- When the technology is being researched, it turns into a percentage -->
+        <!-- When the technology is researched, it turns into a green ticked box -->
         <Button Content="Upgrade" Margin="0,2,8,2" Padding="3,1" HorizontalContentAlignment="Center" HorizontalAlignment="Right" BorderThickness="1" Click="OnUpgradeClick" />
     </StackPanel>
 </UserControl>

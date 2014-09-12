@@ -1,4 +1,8 @@
-﻿using Plevian.Resource;
+﻿using Plevian;
+using Plevian.Buildings;
+using Plevian.Debugging;
+using Plevian.Resource;
+using Plevian.TechnologY;
 using Plevian.Villages;
 using System;
 using System.Collections.Generic;
@@ -18,67 +22,52 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Plevian.Buildings
+namespace Plevian.GUI
 {
-    /// <summary>
-    /// Interaction logic for BuildingControl.xaml
-    /// </summary>
-
-    public partial class BuildingControl : UserControl
+    public partial class UpgradeTechnology : UserControl
     {
         ViewModel model = new ViewModel();
-        public BuildingControl()
+        public UpgradeTechnology()
         {
             InitializeComponent();
-
-            this.DataContextChanged += BuildingControl_DataContextChanged;
+            this.DataContextChanged += UpgradeControl_DataContextChanged;
         }
 
-        void BuildingControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        void UpgradeControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Object newValue = e.NewValue;
-            if(newValue is KeyValuePair<BuildingType, Building>)
+            Technology newValue = e.NewValue as Technology;
+            if(newValue != null)
             {
-                KeyValuePair<BuildingType, Building> pair = (KeyValuePair<BuildingType, Building>)newValue;
-                Village village = MainWindow.getInstance().villageTab.Village;
-
-                setData(pair.Value, village);
-
+                Village currentVillage = MainWindow.getInstance().villageTab.Village;
+                setData(newValue, currentVillage);
             }
         }
 
-
-        public void setData(Building data, Village village)
+        public void setData(Technology data, Village village)
         {
             this.DataContext = model;
             stackPanel.DataContext = model;
             model.setData(data, village);
         }
 
-        public Building getData()
+        public Technology getData()
         {
             return model.data;
         }
 
-        public delegate void upgradeEventHandler(Object sender, Building building);
-
+        public delegate void upgradeEventHandler(Object sender, Technology technology);
         public event upgradeEventHandler Upgrade;
 
         private void OnUpgradeClick(object sender, RoutedEventArgs e)
         {
-            if(Upgrade != null)
-            {
+            if (Upgrade != null)
                 Upgrade(sender, getData());
-            }
         }
-            
-
-
     }
 
     public class ViewModel : INotifyPropertyChanged
     {
-        public Building data = null;
+        public Technology data = null;
         public Village village = null;
 
         public ViewModel()
@@ -90,15 +79,7 @@ namespace Plevian.Buildings
         {
             get
             {
-                return data.getDisplayName();
-            }
-        }
-
-        public int Level
-        {
-            get
-            {
-                return data.level;
+                return data.Name;
             }
         }
 
@@ -108,7 +89,7 @@ namespace Plevian.Buildings
             {
                 if (showResources)
                     return new Resources();
-                return data.getPriceFor(village.getBuildingLevel(data.type, true) + 1);
+                return data.Price;
             }
         }
 
@@ -116,8 +97,7 @@ namespace Plevian.Buildings
         {
             get
             {
-                bool test = village.canBuild(data.type);
-                return village.canBuild(data.type);
+                return village.canResearch(data);
             }
         }
 
@@ -125,7 +105,7 @@ namespace Plevian.Buildings
         {
             get
             {
-                return village.getBuildingLevel(data.type, true) >= data.getMaxLevel();
+                return village.Owner.technologies.isDiscovered(data);
             }
         }
 
@@ -133,73 +113,58 @@ namespace Plevian.Buildings
         {
             get
             {
-                return data.requirements.isFullfilled(village);
+                return data.Requirements.isFullfilled(village);
             }
         }
 
-        public ViewModel(Building data, Village village)
+        public ViewModel(Technology data, Village village)
         {
             setData(data, village);
         }
 
 
-        public void setData(Building data, Village village)
+        public void setData(Technology data, Village village)
         {
             this.data = data;
             this.village = village;
 
-            this.data.PropertyChanged += data_PropertyChanged;
-            this.village.buildingQueueItemAdded += village_buildingQueueItemAdded;
-            this.village.buildingBuilt += village_buildingBuilt;
+            this.village.technologyQueueItemAdded += village_buildingQueueItemAdded;
+            this.village.technologyResearched += village_buildingBuilt;
 
             allChanged();
         }
 
         public void removeHandlers()
         {
-            if(this.data != null)
-                this.data.PropertyChanged -= data_PropertyChanged;
             if (this.village != null)
             {
-                this.village.buildingQueueItemAdded -= village_buildingQueueItemAdded;
-                this.village.buildingBuilt -= village_buildingBuilt;
+                this.village.technologyQueueItemAdded -= village_buildingQueueItemAdded;
+                this.village.technologyResearched -= village_buildingBuilt;
             }
         }
 
         void GameTime_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "now")
+            if (e.PropertyName == "now")
             {
                 NotifyPropertyChanged("CanBuild");
                 NotifyPropertyChanged("showResources");
             }
         }
 
-        void village_buildingBuilt(Village vilalge, Building building)
+        void village_buildingBuilt(Village village, Technology technology)
         {
-           NotifyPropertyChanged("CanBuild");
-           NotifyPropertyChanged("Price");
-           NotifyPropertyChanged("HaveTechnology");
+            NotifyPropertyChanged("CanBuild");
+            NotifyPropertyChanged("Price");
+            NotifyPropertyChanged("HaveTechnology");
         }
 
-        void village_buildingQueueItemAdded(Village village, BuildingQueueItem item)
+        void village_buildingQueueItemAdded(Village village, ResearchQueueItem item)
         {
-            if (item.toBuild.type == data.type)
+            if (item.researched == data)
             {
                 NotifyPropertyChanged("CanBuild");
                 NotifyPropertyChanged("Price");
-            }
-        }
-        
-
-        private void data_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            string propertyName = e.PropertyName;
-            if (propertyName == "level")
-            {
-                NotifyPropertyChanged("Level");
-                NotifyPropertyChanged("Price");
-                NotifyPropertyChanged("CanBuild");
             }
         }
 
@@ -217,7 +182,6 @@ namespace Plevian.Buildings
         {
             NotifyPropertyChanged("Name");
             NotifyPropertyChanged("Price");
-            NotifyPropertyChanged("Level");
             NotifyPropertyChanged("CanBuild");
             NotifyPropertyChanged("HaveTechnology");
         }
