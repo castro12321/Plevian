@@ -136,6 +136,7 @@
     <Compile Include="Orders\OrderType.cs" />
     <Compile Include="Orders\CreateVillage.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
+    <Compile Include="Players\ComputerPlayer.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="RequirementS\TechnologyRequirement.cs" />
     <Compile Include="RequirementS\BuildingRequirement.cs" />

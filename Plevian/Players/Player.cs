@@ -69,7 +69,7 @@ namespace Plevian.Players
             messages.Remove(message);
         }
 
-        public virtual void tick() // Meant to be overridable by NPCs
+        public virtual void tick()
         {
             for (int i = 0; i < villages.Count; ++i)
                 villages[i].tick();
