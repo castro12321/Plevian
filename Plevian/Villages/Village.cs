@@ -101,8 +101,8 @@ namespace Plevian.Villages
             finishBuilding();
             finishRecruiting();
             finishResearching();
-            if(name == "Capital")
-                Logger.log(name + " army " + army);
+            //if(name == "Capital")
+                //Logger.log(name + " army " + army);
             //Logger.village("village resources " + resources);
         }
         private void OrdersTick()
@@ -233,10 +233,8 @@ namespace Plevian.Villages
         /// </summary>
         public void recruit(Unit unit)
         {
-            if (unit.quantity == 0)
-                throw new Exception("Cannot recruit 0 units");
-            if (!unit.requirements.isFullfilled(this))
-                throw new Exception("Requirements not met for " + unit);
+            if (!canRecruit(unit))
+                throw new Exception("Cannot recruit " + unit);
 
             // Reset recruit counter if needed
             if (recruitQueue.Count == 0)
@@ -395,6 +393,17 @@ namespace Plevian.Villages
             if (hasMaxLevel == false && requirementsFullfiled && hasResources)
                 return true;
             return false;
+        }
+
+        public bool canRecruit(Unit unit)
+        {
+            if (unit.quantity == 0)
+                return false;
+            if (!unit.requirements.isFullfilled(this))
+                return false;
+            if (!resources.canAfford(unit.getWholeUnitCost()))
+                return false;
+            return true;
         }
 
         public bool canResearch(Technology technology)

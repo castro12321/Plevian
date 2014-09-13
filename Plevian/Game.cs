@@ -49,19 +49,19 @@ namespace Plevian
             player.addVillage(village3);
             addPlayer(player);
 
-            Player enemy = new Player("Hitler", SFML.Graphics.Color.Red);
+            Player enemy = new ComputerPlayer("Hitler", SFML.Graphics.Color.Red);
             Tile berlinTile    = map.FindEmptyTile();
             Tile frankfurtTile = map.FindEmptyTile();
             Tile hamburgTile   = map.FindEmptyTile();
             Village berlin     = new Village(berlinTile.location, enemy, "Berlin");
-            Village frankfurt  = new Village(frankfurtTile.location, enemy, "Frankfurt");
-            Village hamburger  = new Village(hamburgTile.location, enemy, "Hamburger");
+            //Village frankfurt  = new Village(frankfurtTile.location, enemy, "Frankfurt");
+            //Village hamburger  = new Village(hamburgTile.location, enemy, "Hamburger");
             map.place(berlin);
-            map.place(frankfurt);
-            map.place(hamburger);
+            //map.place(frankfurt);
+            //map.place(hamburger);
             enemy.addVillage(berlin);
-            enemy.addVillage(frankfurt);
-            enemy.addVillage(hamburger);
+            //enemy.addVillage(frankfurt);
+            //enemy.addVillage(hamburger);
             addPlayer(enemy);
 
             village1.addUnit(new Trader(3));
