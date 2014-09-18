@@ -105,6 +105,51 @@ namespace Plevian.Villages
         {
             queue.GroupBy(item => item.End);
         }
+
+        public int BuildingsBeingBuilt()
+        {
+            int buildings = 0;
+            foreach(BuildingQueueItem item in queue)
+                buildings++;
+            return buildings;
+        }
+
+        public int UnitsBeingRecruit()
+        {
+            int units = 0;
+            foreach (RecruitQueueItem item in queue)
+                units++;
+            return units;
+        }
+
+        public int TechnologiesBeingResearched()
+        {
+            int technologies = 0;
+            foreach (ResearchQueueItem item in queue)
+                technologies++;
+            return technologies;
+        }
+
+        public BuildingQueueItem pollBuildingQueueItem()
+        {
+            foreach (BuildingQueueItem item in queue)
+                return item;
+            return null;
+        }
+
+        public RecruitQueueItem pollRecruitQueueItem()
+        {
+            foreach (RecruitQueueItem item in queue)
+                return item;
+            return null;
+        }
+
+        public ResearchQueueItem pollResearchQueueItem()
+        {
+            foreach (ResearchQueueItem item in queue)
+                return item;
+            return null;
+        }
     }
 
     public class Village : Tile, INotifyPropertyChanged
@@ -156,6 +201,32 @@ namespace Plevian.Villages
             this.buildTimeEnd = GameTime.now;
             this.name = name;
             this.army = new Army();
+
+            queues.queueItemFinished += queues_queueItemFinished;
+        }
+
+        void queues_queueItemFinished(Village village, Queues.QueueItem item)
+        {
+            if (this != village)
+                throw new Exception("Shouldn't happen but to be sure");
+
+            BuildingQueueItem buildingQueueItem = item as BuildingQueueItem;
+            if(buildingQueueItem != null)
+            {
+                buildingQueueItem.toBuild.upgrade();
+            }
+
+            RecruitQueueItem recruitQueueITem = item as RecruitQueueItem;
+            if(recruitQueueITem != null)
+            {
+                army.add(recruitQueueITem.toRecruit);
+            }
+
+            ResearchQueueItem researchQueueItem = item as ResearchQueueItem;
+            if(researchQueueItem != null)
+            {
+                owner.technologies.discover(researchQueueItem.researched);
+            }
         }
 
         public void setBuildings(Dictionary<BuildingType, Building> buildings)
@@ -192,16 +263,15 @@ namespace Plevian.Villages
         {
             collectProduction();
             OrdersTick();
-            finishBuilding();
-            finishRecruiting();
-            finishResearching();
-            if(name == "Capital")
-                Logger.log(name + " army " + army);
+            queues.CompleteAvailableItems();
+            //if(name == "Capital")
+            //    Logger.log(name + " army " + army);
             //Logger.village("village resources " + resources);
         }
+
         private void OrdersTick()
         {
-            for(int i = 0;i < orders.Count; ++i)
+            for(int i = 0; i < orders.Count; ++i)
             {
                 Order order = orders[i];
                 if(order.completed)
@@ -223,60 +293,6 @@ namespace Plevian.Villages
             }
         }
 
-        private void finishBuilding()
-        {
-            //Logger.village("queue: " + buildingsQueue.Count);
-            while(buildingsQueue.Count > 0)
-            {
-                BuildingQueueItem queueItem = buildingsQueue[0];
-                //Logger.village("item: " + queueItem.toBuild.ToString() + " " + GameTime.now + "/" + queueItem.end);
-                if (GameTime.now < queueItem.end)
-                    break;
-
-                //Logger.village("Built! " + queueItem.toBuild.ToString());
-                queueItem.toBuild.upgrade();
-                buildingsQueue.RemoveAt(0);
-                if (buildingBuilt != null)
-                    buildingBuilt(this, queueItem.toBuild);
-            }
-        }
-
-        private void finishRecruiting()
-        {
-            while (recruitQueue.Count > 0)
-            {
-                RecruitQueueItem queueItem = recruitQueue[0];
-                if (GameTime.now < queueItem.end)
-                    break;
-
-                Unit toRecruit = queueItem.toRecruit;
-                if (army.contains(toRecruit.unitType))
-                    army.get(toRecruit.unitType).quantity++;
-                else
-                {
-                    Unit clone = toRecruit.clone();
-                    clone.quantity = 1;
-                    army.add(clone);
-                }
-                recruitQueue.RemoveAt(0);
-            }
-        }
-
-        private void finishResearching()
-        {
-            while (researchQueue.Count > 0)
-            {
-                ResearchQueueItem queueItem = researchQueue[0];
-                if (GameTime.now < queueItem.end)
-                    break;
-
-                owner.technologies.discover(queueItem.researched);
-                researchQueue.RemoveAt(0);
-                if (technologyResearched != null)
-                    technologyResearched(this, queueItem.researched);
-            }
-        }
-
         public bool isBuilt(BuildingType type)
         {
             return buildings[type].isBuilt();
@@ -292,7 +308,7 @@ namespace Plevian.Villages
             if (!building.requirements.isFullfilled(this))
                 throw new Exception("Requirements not met for " + building);
 
-            if (buildingsQueue.Count == 0)
+            if (queues.BuildingsBeingBuilt() == 0)
                 buildTimeEnd = GameTime.now;
 
             Resources neededResources = getPriceForNextLevel(building);
@@ -310,16 +326,13 @@ namespace Plevian.Villages
 
             Building toBuild = buildings[buildingType];
             int level = toBuild.level + 1;
-            foreach(var build in buildingsQueue)
+            foreach(BuildingQueueItem build in queues.queue)
             {
                 if (build.toBuild.type == toBuild.type)
                     level++;
             }
             BuildingQueueItem item = new BuildingQueueItem(startTime, buildTimeEnd.copy(), toBuild, level);
-            buildingsQueue.Add(item);
-
-            if (buildingQueueItemAdded != null)
-                buildingQueueItemAdded(this, item);
+            queues.Add(item);
         }
 
         /// <summary>
@@ -333,7 +346,7 @@ namespace Plevian.Villages
                 throw new Exception("Requirements not met for " + unit);
 
             // Reset recruit counter if needed
-            if (recruitQueue.Count == 0)
+            if (queues.UnitsBeingRecruit() == 0)
                 recruitTimeEnd = GameTime.now;
 
             // Take money
@@ -356,7 +369,7 @@ namespace Plevian.Villages
             {
                 recruitTimeFromNow += unitRecruitTime;
                 RecruitQueueItem queueItem = new RecruitQueueItem(startTime, recruitTimeEnd + new Seconds((int) recruitTimeFromNow), newUnit);
-                recruitQueue.Add(queueItem);
+                queues.Add(queueItem);
             }
             recruitTimeEnd += new Seconds((int)recruitTimeFromNow);
         }
@@ -367,7 +380,7 @@ namespace Plevian.Villages
                 throw new Exception("Requirements not met for " + technology);
 
             // Reset recruit counter if needed
-            if (researchQueue.Count == 0)
+            if (queues.TechnologiesBeingResearched() == 0)
                 researchTimeEnd = GameTime.now;
 
             // Take money
@@ -380,10 +393,7 @@ namespace Plevian.Villages
             researchTimeEnd += technology.ResearchTime;
 
             ResearchQueueItem queueItem = new ResearchQueueItem(startTime, researchTimeEnd, technology);
-            researchQueue.Add(queueItem);
-
-            if (technologyQueueItemAdded != null)
-                technologyQueueItemAdded(this, queueItem);
+            queues.Add(queueItem);
         }
 
         public void addOrder(Order order)
@@ -501,7 +511,7 @@ namespace Plevian.Villages
         {
             int level = buildings[type].level;
             if(includeQueue)
-                foreach (var queue in buildingsQueue)
+                foreach (BuildingQueueItem queue in queues.queue)
                 {
                     if (buildings[type].type == queue.toBuild.type)
                         level++;

@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace Plevian.TechnologY
 {
-    public class ResearchQueueItem
+    public class ResearchQueueItem : Plevian.Villages.Queues.QueueItem
     {
-        public readonly GameTime start;
-        public readonly GameTime end;
         public readonly Technology researched;
 
         public ResearchQueueItem(GameTime start, GameTime end, Technology researched)
+            : base(start, end)
         {
-            this.start = start;
-            this.end = end;
             this.researched = researched;
         }
     }

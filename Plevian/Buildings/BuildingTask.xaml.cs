@@ -63,7 +63,7 @@ namespace Plevian.Buildings
         {
             get
             {
-                return data.end.diffrence(GameTime.now);
+                return data.End.diffrence(GameTime.now);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Plevian.Buildings
         {
             get
             {
-                return data.end;
+                return data.End;
             }
         }
 
