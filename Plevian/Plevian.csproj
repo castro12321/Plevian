@@ -167,7 +167,6 @@
     <Compile Include="Resource\Resources.cs" />
     <Compile Include="Resource\Stone.cs" />
     <Compile Include="Resource\Wood.cs" />
-    <Compile Include="Save.cs" />
     <Compile Include="Seconds.cs" />
     <Compile Include="Maps\TerrainType.cs" />
     <Compile Include="Units\Archer.cs" />

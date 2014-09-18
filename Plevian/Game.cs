@@ -6,6 +6,7 @@ using Plevian.Players;
 using Plevian.RequirementS;
 using Plevian.Units;
 using Plevian.Villages;
+using Plevian.Save;
 using SFML.Graphics;
 using System;
 using System.Collections.Generic;
@@ -80,7 +81,7 @@ namespace Plevian
         /// Initializes a game from save
         /// </summary>
         /// <param name="save">save to initialize from</param>
-        public Game(Save save)
+        public Game(SaveWriter save)
         {
             gameTime = save.getGameTime();
             map = new MapFileReader().read(save);
