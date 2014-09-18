@@ -21,8 +21,8 @@
             <ColumnDefinition Width="0.8*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Label Name="BuildingName" Content="{Binding BuildingName}" FontFamily="Vani" FontSize="14"  />
-        <Label Name="BuildingLevel" Content="{Binding Level}" Grid.Column="1" />
+        <Label Name="BuildingName" Content="{Binding Name}" FontFamily="Vani" FontSize="14"  />
+        <Label Name="BuildingLevel" Content="{Binding Extra}" Grid.Column="1" />
         <Label Name="RemainingTime" Content="{Binding RemainingTime, Converter={StaticResource secondsConverter}}" Grid.Column="2"/>
         <Label Name="EndTime" Content="{Binding EndTime, Converter={StaticResource gameTimeConverter}}" Grid.Column="3" />
         <Button Name="Cancel" Content="Cancel" Grid.Column="4" />

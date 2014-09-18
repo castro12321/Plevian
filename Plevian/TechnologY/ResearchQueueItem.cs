@@ -11,7 +11,7 @@ namespace Plevian.TechnologY
         public readonly Technology researched;
 
         public ResearchQueueItem(GameTime start, GameTime end, Technology researched)
-            : base(start, end)
+            : base(researched.Name, null, start, end)
         {
             this.researched = researched;
         }

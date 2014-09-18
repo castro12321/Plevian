@@ -12,7 +12,7 @@ namespace Plevian.Units
         public readonly Unit toRecruit;
 
         public RecruitQueueItem(GameTime start, GameTime end, Unit toRecruit)
-            : base(start, end)
+            : base(toRecruit.name, toRecruit.quantity.ToString(), start, end)
         {
             this.toRecruit = toRecruit;
         }

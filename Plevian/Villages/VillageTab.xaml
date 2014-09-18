@@ -35,12 +35,8 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-
     </UserControl.Resources>
     
-
-        
-
     
     <Grid Background="#FFE5E5E5">
 
@@ -130,7 +126,7 @@
                         </ItemsControl>
                     </Expander>
 
-                    <Expander Header="Queues" Margin="0,5,0,0">
+                    <Expander Header="Queues" Margin="0,5,0,0" IsExpanded="True">
                         <ItemsControl Name="QueueControl">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -150,8 +146,8 @@
             </ScrollViewer>
                 
             <!-- Village image -->
-
-                    <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_village" Margin="9,9,9,9" MinWidth="500" MinHeight="500"/>
-                </DockPanel>
+            <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_village" Margin="9,9,9,9" MinWidth="500" MinHeight="500"/>
+            
+        </DockPanel>
     </Grid>
 </UserControl>

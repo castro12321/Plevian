@@ -25,11 +25,15 @@ namespace Plevian.Villages
         /// </summary>
         public class QueueItem
         {
+            public readonly String Name;
+            public readonly String Extra;
             public readonly GameTime Start;
             public readonly GameTime End;
 
-            public QueueItem(GameTime Start, GameTime End)
+            public QueueItem(String Name, String Extra, GameTime Start, GameTime End)
             {
+                this.Name = Name;
+                this.Extra = Extra;
                 this.Start = Start;
                 this.End = End;
             }
@@ -473,7 +477,7 @@ namespace Plevian.Villages
         {
             int level = buildings[type].level;
             if(includeQueue)
-                foreach (BuildingQueueItem queue in queues.queue)
+                foreach (BuildingQueueItem queue in queues.buildingQueue)
                 {
                     if (buildings[type].type == queue.toBuild.type)
                         level++;

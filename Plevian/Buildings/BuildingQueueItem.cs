@@ -12,7 +12,7 @@ namespace Plevian.Buildings
         public int level;
 
         public BuildingQueueItem(GameTime start, GameTime end, Building toBuild, int level)
-            : base(start, end)
+            : base(toBuild.getDisplayName(), level.ToString(), start, end)
         {
             this.toBuild = toBuild;
             this.level = level;
