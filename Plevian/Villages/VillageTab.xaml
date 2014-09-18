@@ -93,6 +93,7 @@
                         </ItemsControl>
                     </Expander>
                     
+                    <!-- Technology -->
                     <Expander Name="Technology" Header="Technology" Margin="0,5,0,0">
                         <ItemsControl Name="TechnologyItemsControl">
                             <ItemsControl.ItemsPanel>
@@ -109,7 +110,8 @@
                         </ItemsControl>
                     </Expander>
 
-                    <Expander Header="Orders">
+                    <!-- Orders -->
+                    <Expander Header="Orders" Margin="0,5,0,0">
                         <ItemsControl Name="OrdersItemControl">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
