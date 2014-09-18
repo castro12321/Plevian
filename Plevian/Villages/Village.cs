@@ -292,7 +292,7 @@ namespace Plevian.Villages
 
             Building toBuild = buildings[buildingType];
             int level = toBuild.level + 1;
-            foreach(BuildingQueueItem build in queues.queue)
+            foreach(BuildingQueueItem build in queues.buildingQueue)
             {
                 if (build.toBuild.type == toBuild.type)
                     level++;
