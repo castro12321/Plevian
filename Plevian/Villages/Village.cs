@@ -67,10 +67,17 @@ namespace Plevian.Villages
         public event QueueItemRemoved queueItemRemoved;
 
         public ObservableCollection<QueueItem> queue = new ObservableCollection<QueueItem>();
+        public ObservableCollection<BuildingQueueItem> buildingQueue = new ObservableCollection<BuildingQueueItem>();
+        public ObservableCollection<RecruitQueueItem> recruitQueue = new ObservableCollection<RecruitQueueItem>();
+        public ObservableCollection<ResearchQueueItem> researchQueue = new ObservableCollection<ResearchQueueItem>();
 
         public void Add(QueueItem item)
         {
             queue.Add(item);
+            if (item is BuildingQueueItem) buildingQueue.Add(item as BuildingQueueItem);
+            else if (item is RecruitQueueItem) recruitQueue.Add(item as RecruitQueueItem);
+            else if (item is ResearchQueueItem) researchQueue.Add(item as ResearchQueueItem);
+            
             sort();
             if (queueItemAdded != null)
                 queueItemAdded(owner, item);
@@ -79,6 +86,10 @@ namespace Plevian.Villages
         public void Remove(QueueItem item)
         {
             queue.Remove(item);
+            if (item is BuildingQueueItem) buildingQueue.Remove(item as BuildingQueueItem);
+            else if (item is RecruitQueueItem) recruitQueue.Remove(item as RecruitQueueItem);
+            else if (item is ResearchQueueItem) researchQueue.Remove(item as ResearchQueueItem);
+
             sort();
             if (queueItemRemoved != null)
                 queueItemRemoved(owner, item);
@@ -96,6 +107,10 @@ namespace Plevian.Villages
                     return;
 
                 queue.RemoveAt(0);
+                if (item is BuildingQueueItem) buildingQueue.RemoveAt(0);
+                else if (item is RecruitQueueItem) recruitQueue.RemoveAt(0);
+                else if (item is ResearchQueueItem) researchQueue.RemoveAt(0);
+
                 if (queueItemFinished != null)
                     queueItemFinished(owner, item);
             }
@@ -104,51 +119,8 @@ namespace Plevian.Villages
         private void sort()
         {
             queue.GroupBy(item => item.End);
-        }
-
-        public int BuildingsBeingBuilt()
-        {
-            int buildings = 0;
-            foreach(BuildingQueueItem item in queue)
-                buildings++;
-            return buildings;
-        }
-
-        public int UnitsBeingRecruit()
-        {
-            int units = 0;
-            foreach (RecruitQueueItem item in queue)
-                units++;
-            return units;
-        }
-
-        public int TechnologiesBeingResearched()
-        {
-            int technologies = 0;
-            foreach (ResearchQueueItem item in queue)
-                technologies++;
-            return technologies;
-        }
-
-        public BuildingQueueItem pollBuildingQueueItem()
-        {
-            foreach (BuildingQueueItem item in queue)
-                return item;
-            return null;
-        }
-
-        public RecruitQueueItem pollRecruitQueueItem()
-        {
-            foreach (RecruitQueueItem item in queue)
-                return item;
-            return null;
-        }
-
-        public ResearchQueueItem pollResearchQueueItem()
-        {
-            foreach (ResearchQueueItem item in queue)
-                return item;
-            return null;
+            // Don't sort building/recruit/research queues on its own
+            // They are sorted by default because they are finished in the same order they were placed
         }
     }
 
@@ -158,11 +130,6 @@ namespace Plevian.Villages
         public ObservableCollection<Order> orders = new ObservableCollection<Order>();
 
         public Queues queues { get; private set; }
-/*
-        public ObservableCollection<BuildingQueueItem> buildingsQueue = new ObservableCollection<BuildingQueueItem>();
-        public ObservableCollection<RecruitQueueItem> recruitQueue = new ObservableCollection<RecruitQueueItem>();
-        public ObservableCollection<ResearchQueueItem> researchQueue = new ObservableCollection<ResearchQueueItem>();
-*/
         public GameTime recruitTimeEnd { get; private set; }
         public GameTime buildTimeEnd { get; private set; }
         public GameTime researchTimeEnd { get; private set; }
@@ -170,12 +137,7 @@ namespace Plevian.Villages
         public readonly Resources resources;
         private string _name;
         private Player owner;
-/*
-        public event BuildingQueueItemAdded buildingQueueItemAdded;
-        public event BuildingBuilt buildingBuilt;
-        public event TechnologyQueueItemAdded technologyQueueItemAdded;
-        public event TechnologyResearched technologyResearched;
-*/
+
         public Player Owner
         {
             get
@@ -308,7 +270,7 @@ namespace Plevian.Villages
             if (!building.requirements.isFullfilled(this))
                 throw new Exception("Requirements not met for " + building);
 
-            if (queues.BuildingsBeingBuilt() == 0)
+            if (queues.buildingQueue.Count == 0)
                 buildTimeEnd = GameTime.now;
 
             Resources neededResources = getPriceForNextLevel(building);
@@ -346,7 +308,7 @@ namespace Plevian.Villages
                 throw new Exception("Requirements not met for " + unit);
 
             // Reset recruit counter if needed
-            if (queues.UnitsBeingRecruit() == 0)
+            if (queues.recruitQueue.Count == 0)
                 recruitTimeEnd = GameTime.now;
 
             // Take money
@@ -380,7 +342,7 @@ namespace Plevian.Villages
                 throw new Exception("Requirements not met for " + technology);
 
             // Reset recruit counter if needed
-            if (queues.TechnologiesBeingResearched() == 0)
+            if (queues.researchQueue.Count == 0)
                 researchTimeEnd = GameTime.now;
 
             // Take money

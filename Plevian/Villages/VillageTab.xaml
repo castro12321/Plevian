@@ -79,6 +79,7 @@
                             <units:UnitControl Unit="DUKE" />
                         </StackPanel>
                     </Expander>
+                    
                     <!-- Buildings -->
                     <Expander Name="Buildings" Header="Buildings:" Margin="0,5,0,0">
                         <ItemsControl Name="BuildingsItemControl">
@@ -95,23 +96,7 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Expander>
-
-                    <Expander Name="BuildingsQueue" Header="Buidlings Queue" Margin="0,5,0,0">
-                        <ItemsControl Name="BuildingsQueueControl">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical" IsItemsHost="True" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-
-                            <ItemsControl.ItemTemplate >
-                                <DataTemplate>
-                                    <buildings:BuildingTask Name="BuildingsQueueTemplate" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Expander>
-
+                    
                     <Expander Name="Technology" Header="Technology" Margin="0,5,0,0">
                         <ItemsControl Name="TechnologyItemsControl">
                             <ItemsControl.ItemsPanel>
@@ -126,20 +111,6 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <!--<StackPanel Name="TechnologyPanel" Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <Label  Content="Lasers: "    MinWidth="100"/>
-                                <Label  Content="?"           MinWidth="45" Name="ResearchLasersState"/>
-                                <Button Content="Upgrade"     MinWidth="60" Click="ResearchLasers_Click"/>
-                                <Label  Content="?%"          MinWidth="40" Name="ResearchLasersProgress"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label  Content="Nukes: "     MinWidth="100"/>
-                                <Label  Content="?"           MinWidth="45" Name="ResearchNukesState"/>
-                                <Button Content="Upgrade"     MinWidth="60" Click="ResearchNukes_Click"/>
-                                <Label  Content="?%"          MinWidth="40" Name="ResearchNukesProgress"/>
-                            </StackPanel>
-                        </StackPanel>-->
                     </Expander>
 
                     <Expander Header="Orders">
@@ -158,10 +129,22 @@
                             
                         </ItemsControl>
                     </Expander>
-                    <StackPanel Name="OrdersStackPanel">
-                        
-                        
-                    </StackPanel>
+
+                    <Expander Header="Queues" Margin="0,5,0,0">
+                        <ItemsControl Name="QueueControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate >
+                                <DataTemplate>
+                                    <buildings:BuildingTask Name="QueueTemplate" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Expander>
                     
                 </StackPanel>
             </ScrollViewer>

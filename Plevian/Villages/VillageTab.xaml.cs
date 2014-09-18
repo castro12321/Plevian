@@ -45,7 +45,7 @@ namespace Plevian.Villages
                 OrdersItemControl.ItemsSource = value.orders;
                 BuildingsItemControl.ItemsSource = value.buildings;
                 TechnologyItemsControl.ItemsSource = value.Owner.technologies.technologies;
-                BuildingsQueueControl.ItemsSource = value.buildingsQueue;
+                QueueControl.ItemsSource = value.queues.queue;
 
                 foreach (UnitControl control in UnitsRecruitStackPanel.Children)
                 {
