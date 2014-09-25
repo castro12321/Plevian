@@ -28,6 +28,9 @@ namespace Plevian
         /// </summary>
         public Game()
         {
+
+            players.Add(player); //<-----------
+
             Game.game = this;
             GameTime.init(0);
             map = new MapGenerator().Generate(30, 30);
@@ -75,6 +78,11 @@ namespace Plevian
             village3.getBuilding(BuildingType.BARRACKS).level = 1;
             village3.recruit(new Warrior(1000));
             berlin.addUnit(new Knight(100));
+
+
+            System.Console.WriteLine("player save --------");
+            SaveWriter save = new SaveWriter("playerTest");
+            save.savePlayer(players);
         }
 
         /// <summary>
