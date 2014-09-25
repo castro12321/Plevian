@@ -58,7 +58,6 @@
                             </StackPanel>
 
                             <Label Content="Resources:" FontWeight="ExtraBold"/>
-                            
                             <resource:ResourceControl x:Name="ResourcesControl" />
                         </StackPanel>
                     </Expander>

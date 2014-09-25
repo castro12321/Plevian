@@ -72,9 +72,6 @@ namespace Plevian.Buildings
                 Upgrade(sender, getData());
             }
         }
-            
-
-
     }
 
     public class ViewModel : INotifyPropertyChanged
