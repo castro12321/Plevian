@@ -28,6 +28,9 @@ namespace Plevian.Buildings
     {
         BuildingTaskModel model = new BuildingTaskModel();
 
+        public delegate void cancelEventHandler(Queues.QueueItem queueItem);
+        public event cancelEventHandler Cancelled;
+
         public BuildingTask()
         {
             InitializeComponent();
@@ -52,6 +55,12 @@ namespace Plevian.Buildings
         public Queues.QueueItem getData()
         {
             return model.data;
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            if (Cancelled != null)
+                Cancelled(model.data);
         }
     }
 

@@ -127,7 +127,8 @@
                             
                         </ItemsControl>
                     </Expander>
-
+                    
+                    <!-- Queues -->
                     <Expander Header="Queues" Margin="0,5,0,0" IsExpanded="True">
                         <ItemsControl Name="QueueControl">
                             <ItemsControl.ItemsPanel>
@@ -138,7 +139,7 @@
 
                             <ItemsControl.ItemTemplate >
                                 <DataTemplate>
-                                    <buildings:BuildingTask Name="QueueTemplate" />
+                                    <buildings:BuildingTask Name="QueueTemplate" Cancelled="BuildingTask_Cancelled" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

@@ -131,5 +131,17 @@ namespace Plevian.Villages
             VillageTextBoxHide();
         }
 
+        private void BuildingTask_Cancelled(Queues.QueueItem queueItem)
+        {
+            activeVillage.queues.Remove(queueItem);
+            /* Don't allow refunds? >:D
+            activeVillage.resources.Add(queueItem.price);
+            if(queueItem is BuildingQueueItem)
+            {
+                BuildingQueueItem item = queueItem as BuildingQueueItem;
+                activeVillage.resources.Add(item.price)
+            } */
+        }
+
     }
 }
