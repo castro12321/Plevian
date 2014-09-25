@@ -57,7 +57,7 @@ namespace Plevian.Villages
             : base(location, TerrainType.VILLAGE)
         {
             Owner = owner;
-            resources = new Resources(99999, 99999, 99999, 99999);
+            resources = new Resources(999, 999, 999, 999);
             recruitTimeEnd = GameTime.now;
             buildTimeEnd = GameTime.now;
             this.name = name;
