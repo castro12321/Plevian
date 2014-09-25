@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace Plevian.Buildings
 {
-    public class BuildingQueueItem
+    public class BuildingQueueItem : Plevian.Villages.Queues.QueueItem
     {
-        public readonly GameTime start;
-        public readonly GameTime end;
         public readonly Building toBuild;
         public int level;
 
         public BuildingQueueItem(GameTime start, GameTime end, Building toBuild, int level)
+            : base(toBuild.getDisplayName(), level.ToString(), start, end)
         {
-            this.start = start;
-            this.end = end;
             this.toBuild = toBuild;
             this.level = level;
         }

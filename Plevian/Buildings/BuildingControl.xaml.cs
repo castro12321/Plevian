@@ -1,4 +1,5 @@
 ﻿using Plevian.Resource;
+using Plevian.TechnologY;
 using Plevian.Villages;
 using System;
 using System.Collections.Generic;
@@ -149,10 +150,25 @@ namespace Plevian.Buildings
             this.village = village;
 
             this.data.PropertyChanged += data_PropertyChanged;
-            this.village.buildingQueueItemAdded += village_buildingQueueItemAdded;
-            this.village.buildingBuilt += village_buildingBuilt;
+            village.queues.queueItemAdded += queues_queueItemAdded;
+            village.queues.queueItemFinished += queues_queueItemFinished;
 
             allChanged();
+        }
+
+        void queues_queueItemAdded(Village village, Queues.QueueItem item)
+        {
+            //if(item is BuildingQueueItem
+            //|| item is ResearchQueueItem)
+            NotifyPropertyChanged("CanBuild");
+            NotifyPropertyChanged("Price");
+        }
+
+        void queues_queueItemFinished(Village village, Queues.QueueItem item)
+        {
+            NotifyPropertyChanged("CanBuild");
+            NotifyPropertyChanged("Price");
+            NotifyPropertyChanged("HaveTechnology");
         }
 
         public void removeHandlers()
@@ -161,8 +177,8 @@ namespace Plevian.Buildings
                 this.data.PropertyChanged -= data_PropertyChanged;
             if (this.village != null)
             {
-                this.village.buildingQueueItemAdded -= village_buildingQueueItemAdded;
-                this.village.buildingBuilt -= village_buildingBuilt;
+                village.queues.queueItemAdded -= queues_queueItemAdded;
+                village.queues.queueItemFinished -= queues_queueItemFinished;
             }
         }
 
@@ -172,22 +188,6 @@ namespace Plevian.Buildings
             {
                 NotifyPropertyChanged("CanBuild");
                 NotifyPropertyChanged("showResources");
-            }
-        }
-
-        void village_buildingBuilt(Village vilalge, Building building)
-        {
-           NotifyPropertyChanged("CanBuild");
-           NotifyPropertyChanged("Price");
-           NotifyPropertyChanged("HaveTechnology");
-        }
-
-        void village_buildingQueueItemAdded(Village village, BuildingQueueItem item)
-        {
-            if (item.toBuild.type == data.type)
-            {
-                NotifyPropertyChanged("CanBuild");
-                NotifyPropertyChanged("Price");
             }
         }
         

@@ -1,5 +1,6 @@
 ﻿using Plevian;
 using Plevian.Buildings;
+using Plevian.Debugging;
 using Plevian.Villages;
 using System;
 using System.Collections.Generic;
@@ -37,19 +38,18 @@ namespace Plevian.Buildings
         void BuildingTask_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             Object newValue = e.NewValue;
-            if (newValue is BuildingQueueItem)
-            {
-                setData(newValue as BuildingQueueItem);
-            }
+            setData(newValue as Queues.QueueItem);
         }
 
-        public void setData(BuildingQueueItem data)
+        public void setData(Queues.QueueItem data)
         {
+            if (data == null)
+                Logger.warn("QueueItem in QueueTask.xaml.cs is null!");
             StackPanel.DataContext = model;
             model.setData(data);
         }
 
-        public BuildingQueueItem getData()
+        public Queues.QueueItem getData()
         {
             return model.data;
         }
@@ -57,13 +57,13 @@ namespace Plevian.Buildings
 
     public class BuildingTaskModel : INotifyPropertyChanged
     {
-        public BuildingQueueItem data;
+        public Queues.QueueItem data;
 
         public Seconds RemainingTime
         {
             get
             {
-                return data.end.diffrence(GameTime.now);
+                return data.End.diffrence(GameTime.now);
             }
         }
 
@@ -71,23 +71,23 @@ namespace Plevian.Buildings
         {
             get
             {
-                return data.end;
+                return data.End;
             }
         }
 
-        public String BuildingName
+        public String Name
         {
             get
             {
-                return data.toBuild.getDisplayName();
+                return data.Name;
             }
         }
 
-        public int Level
+        public String Extra
         {
             get
             {
-                return data.level;
+                return data.Extra;
             }
         }
         
@@ -106,7 +106,7 @@ namespace Plevian.Buildings
             }
         }
 
-        public void setData(BuildingQueueItem data)
+        public void setData(Queues.QueueItem data)
         {
             this.data = data;
             allChanged();

@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 
 namespace Plevian.Units
 {
-    public class RecruitQueueItem
+    public class RecruitQueueItem : Plevian.Villages.Queues.QueueItem
     {
-        public readonly GameTime start;
-        public readonly GameTime end;
         public readonly Unit toRecruit;
 
         public RecruitQueueItem(GameTime start, GameTime end, Unit toRecruit)
+            : base(toRecruit.name, toRecruit.quantity.ToString(), start, end)
         {
-            this.start = start;
-            this.end = end;
             this.toRecruit = toRecruit;
         }
     }

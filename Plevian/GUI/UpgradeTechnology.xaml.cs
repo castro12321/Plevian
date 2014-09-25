@@ -128,18 +128,33 @@ namespace Plevian.GUI
             this.data = data;
             this.village = village;
 
-            this.village.technologyQueueItemAdded += village_buildingQueueItemAdded;
-            this.village.technologyResearched += village_buildingBuilt;
+            village.queues.queueItemAdded += queues_queueItemAdded;
+            village.queues.queueItemFinished += queues_queueItemFinished;
 
             allChanged();
+        }
+
+        void queues_queueItemAdded(Village village, Queues.QueueItem item)
+        {
+            //if(item is BuildingQueueItem
+            //|| item is ResearchQueueItem)
+            NotifyPropertyChanged("CanBuild");
+            NotifyPropertyChanged("Price");
+        }
+
+        void queues_queueItemFinished(Village village, Queues.QueueItem item)
+        {
+            NotifyPropertyChanged("CanBuild");
+            NotifyPropertyChanged("Price");
+            NotifyPropertyChanged("HaveTechnology");
         }
 
         public void removeHandlers()
         {
             if (this.village != null)
             {
-                this.village.technologyQueueItemAdded -= village_buildingQueueItemAdded;
-                this.village.technologyResearched -= village_buildingBuilt;
+                village.queues.queueItemAdded -= queues_queueItemAdded;
+                village.queues.queueItemFinished -= queues_queueItemFinished;
             }
         }
 
@@ -151,23 +166,6 @@ namespace Plevian.GUI
                 NotifyPropertyChanged("showResources");
             }
         }
-
-        void village_buildingBuilt(Village village, Technology technology)
-        {
-            NotifyPropertyChanged("CanBuild");
-            NotifyPropertyChanged("Price");
-            NotifyPropertyChanged("HaveTechnology");
-        }
-
-        void village_buildingQueueItemAdded(Village village, ResearchQueueItem item)
-        {
-            if (item.researched == data)
-            {
-                NotifyPropertyChanged("CanBuild");
-                NotifyPropertyChanged("Price");
-            }
-        }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

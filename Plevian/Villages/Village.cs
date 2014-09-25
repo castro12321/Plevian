@@ -18,13 +18,122 @@ using Plevian.TechnologY;
 
 namespace Plevian.Villages
 {
+    public class Queues
+    {
+        /// <summary>
+        /// Base QueueItem class for other queue items (BuildingQueueItem, RecruitQueueItem, TechnologyQueueItem)
+        /// </summary>
+        public class QueueItem
+        {
+            public readonly String Name;
+            public readonly String Extra;
+            public readonly GameTime Start;
+            public readonly GameTime End;
+
+            public QueueItem(String Name, String Extra, GameTime Start, GameTime End)
+            {
+                this.Name = Name;
+                this.Extra = Extra;
+                this.Start = Start;
+                this.End = End;
+            }
+        }
+
+        private Village owner;
+
+        public Queues(Village owner)
+        {
+            this.owner = owner;
+        }
+
+        /// <summary>Called when when new item has been added to the queue</summary>
+        /// <param name="village">May be useful for WPF</param>
+        /// <param name="item">Item added to the queue</param>
+        public delegate void QueueItemAdded(Village village, QueueItem item);
+        /// <summary>Called when the time passed for the queue item</summary>
+        public delegate void QueueItemFinished(Village village, QueueItem item);
+        /// <summary>Called when an item is being removed before the time pass. For example, user canceled the task</summary>
+        public delegate void QueueItemRemoved(Village village, QueueItem item);
+
+        // Events that village and WPF may listen to.
+        public event QueueItemAdded queueItemAdded;
+        /// <summary>
+        /// Event for the village to listen. (finishBuilding, finishRecruiting and finishResearching merges into FinishQueueItem(Village village, QueueItem item))
+        /// When an item is finished, village checks which (BuildingQueueItem, RecruitQueueItem, TechnologyQueueItem)
+        /// and then takes an appropriate action
+        /// For example:
+        /// BuildingQueueItem buildingItem = queueItem as BuildingQueueItem;
+        /// if(buildingItem != null)
+        /// { ... }
+        /// then check for RecruitQueueItem and TechnologyQueueItem like above
+        /// </summary>
+        public event QueueItemFinished queueItemFinished;
+        public event QueueItemRemoved queueItemRemoved;
+
+        public ObservableCollection<QueueItem> queue = new ObservableCollection<QueueItem>();
+        public ObservableCollection<BuildingQueueItem> buildingQueue = new ObservableCollection<BuildingQueueItem>();
+        public ObservableCollection<RecruitQueueItem> recruitQueue = new ObservableCollection<RecruitQueueItem>();
+        public ObservableCollection<ResearchQueueItem> researchQueue = new ObservableCollection<ResearchQueueItem>();
+
+        public void Add(QueueItem item)
+        {
+            queue.Add(item);
+            if (item is BuildingQueueItem) buildingQueue.Add(item as BuildingQueueItem);
+            else if (item is RecruitQueueItem) recruitQueue.Add(item as RecruitQueueItem);
+            else if (item is ResearchQueueItem) researchQueue.Add(item as ResearchQueueItem);
+            
+            sort();
+            if (queueItemAdded != null)
+                queueItemAdded(owner, item);
+        }
+
+        public void Remove(QueueItem item)
+        {
+            queue.Remove(item);
+            if (item is BuildingQueueItem) buildingQueue.Remove(item as BuildingQueueItem);
+            else if (item is RecruitQueueItem) recruitQueue.Remove(item as RecruitQueueItem);
+            else if (item is ResearchQueueItem) researchQueue.Remove(item as ResearchQueueItem);
+
+            sort();
+            if (queueItemRemoved != null)
+                queueItemRemoved(owner, item);
+        }
+
+        /// <summary>
+        /// Called by the village every tick
+        /// </summary>
+        public void CompleteAvailableItems()
+        {
+            while(queue.Count > 0)
+            {
+                QueueItem item = queue[0];
+                if (GameTime.now < item.End)
+                    return;
+
+                queue.RemoveAt(0);
+                if (item is BuildingQueueItem) buildingQueue.RemoveAt(0);
+                else if (item is RecruitQueueItem) recruitQueue.RemoveAt(0);
+                else if (item is ResearchQueueItem) researchQueue.RemoveAt(0);
+
+                if (queueItemFinished != null)
+                    queueItemFinished(owner, item);
+            }
+        }
+
+        private void sort()
+        {
+            queue.GroupBy(item => item.End);
+            // Don't sort building/recruit/research queues on its own
+            // They are sorted by default because they are finished in the same order they were placed
+        }
+    }
+
     public class Village : Tile, INotifyPropertyChanged
     {
         public Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();
         public ObservableCollection<Order> orders = new ObservableCollection<Order>();
-        public ObservableCollection<BuildingQueueItem> buildingsQueue = new ObservableCollection<BuildingQueueItem>();
-        public ObservableCollection<RecruitQueueItem> recruitQueue = new ObservableCollection<RecruitQueueItem>();
-        public ObservableCollection<ResearchQueueItem> researchQueue = new ObservableCollection<ResearchQueueItem>();
+
+        public Queues queues { get; private set; }
         public GameTime recruitTimeEnd { get; private set; }
         public GameTime buildTimeEnd { get; private set; }
         public GameTime researchTimeEnd { get; private set; }
@@ -32,11 +141,6 @@ namespace Plevian.Villages
         public readonly Resources resources;
         private string _name;
         private Player owner;
-
-        public event BuildingQueueItemAdded buildingQueueItemAdded;
-        public event BuildingBuilt buildingBuilt;
-        public event TechnologyQueueItemAdded technologyQueueItemAdded;
-        public event TechnologyResearched technologyResearched;
 
         public Player Owner
         {
@@ -56,12 +160,39 @@ namespace Plevian.Villages
         public Village(Location location, Player owner, string name )
             : base(location, TerrainType.VILLAGE)
         {
-            Owner = owner;
-            resources = new Resources(999, 999, 999, 999);
-            recruitTimeEnd = GameTime.now;
-            buildTimeEnd = GameTime.now;
+            this.queues = new Queues(this);
+            this.Owner = owner;
+            this.resources = new Resources(999, 999, 999, 999);
+            this.recruitTimeEnd = GameTime.now;
+            this.buildTimeEnd = GameTime.now;
             this.name = name;
-            army = new Army();
+            this.army = new Army();
+
+            queues.queueItemFinished += queues_queueItemFinished;
+        }
+
+        void queues_queueItemFinished(Village village, Queues.QueueItem item)
+        {
+            if (this != village)
+                throw new Exception("Shouldn't happen but to be sure");
+
+            BuildingQueueItem buildingQueueItem = item as BuildingQueueItem;
+            if(buildingQueueItem != null)
+            {
+                buildingQueueItem.toBuild.upgrade();
+            }
+
+            RecruitQueueItem recruitQueueITem = item as RecruitQueueItem;
+            if(recruitQueueITem != null)
+            {
+                army.add(recruitQueueITem.toRecruit);
+            }
+
+            ResearchQueueItem researchQueueItem = item as ResearchQueueItem;
+            if(researchQueueItem != null)
+            {
+                owner.technologies.discover(researchQueueItem.researched);
+            }
         }
 
         public void setBuildings(Dictionary<BuildingType, Building> buildings)
@@ -98,16 +229,17 @@ namespace Plevian.Villages
         {
             collectProduction();
             OrdersTick();
-            finishBuilding();
-            finishRecruiting();
-            finishResearching();
             //if(name == "Capital")
                 //Logger.log(name + " army " + army);
+            queues.CompleteAvailableItems();
+            //if(name == "Capital")
+            //    Logger.log(name + " army " + army);
             //Logger.village("village resources " + resources);
         }
+
         private void OrdersTick()
         {
-            for(int i = 0;i < orders.Count; ++i)
+            for(int i = 0; i < orders.Count; ++i)
             {
                 Order order = orders[i];
                 if(order.completed)
@@ -129,60 +261,6 @@ namespace Plevian.Villages
             }
         }
 
-        private void finishBuilding()
-        {
-            //Logger.village("queue: " + buildingsQueue.Count);
-            while(buildingsQueue.Count > 0)
-            {
-                BuildingQueueItem queueItem = buildingsQueue[0];
-                //Logger.village("item: " + queueItem.toBuild.ToString() + " " + GameTime.now + "/" + queueItem.end);
-                if (GameTime.now < queueItem.end)
-                    break;
-
-                //Logger.village("Built! " + queueItem.toBuild.ToString());
-                queueItem.toBuild.upgrade();
-                buildingsQueue.RemoveAt(0);
-                if (buildingBuilt != null)
-                    buildingBuilt(this, queueItem.toBuild);
-            }
-        }
-
-        private void finishRecruiting()
-        {
-            while (recruitQueue.Count > 0)
-            {
-                RecruitQueueItem queueItem = recruitQueue[0];
-                if (GameTime.now < queueItem.end)
-                    break;
-
-                Unit toRecruit = queueItem.toRecruit;
-                if (army.contains(toRecruit.unitType))
-                    army.get(toRecruit.unitType).quantity++;
-                else
-                {
-                    Unit clone = toRecruit.clone();
-                    clone.quantity = 1;
-                    army.add(clone);
-                }
-                recruitQueue.RemoveAt(0);
-            }
-        }
-
-        private void finishResearching()
-        {
-            while (researchQueue.Count > 0)
-            {
-                ResearchQueueItem queueItem = researchQueue[0];
-                if (GameTime.now < queueItem.end)
-                    break;
-
-                owner.technologies.discover(queueItem.researched);
-                researchQueue.RemoveAt(0);
-                if (technologyResearched != null)
-                    technologyResearched(this, queueItem.researched);
-            }
-        }
-
         public bool isBuilt(BuildingType type)
         {
             return buildings[type].isBuilt();
@@ -198,7 +276,7 @@ namespace Plevian.Villages
             if (!building.requirements.isFullfilled(this))
                 throw new Exception("Requirements not met for " + building);
 
-            if (buildingsQueue.Count == 0)
+            if (queues.buildingQueue.Count == 0)
                 buildTimeEnd = GameTime.now;
 
             Resources neededResources = getPriceForNextLevel(building);
@@ -216,16 +294,13 @@ namespace Plevian.Villages
 
             Building toBuild = buildings[buildingType];
             int level = toBuild.level + 1;
-            foreach(var build in buildingsQueue)
+            foreach(BuildingQueueItem build in queues.buildingQueue)
             {
                 if (build.toBuild.type == toBuild.type)
                     level++;
             }
             BuildingQueueItem item = new BuildingQueueItem(startTime, buildTimeEnd.copy(), toBuild, level);
-            buildingsQueue.Add(item);
-
-            if (buildingQueueItemAdded != null)
-                buildingQueueItemAdded(this, item);
+            queues.Add(item);
         }
 
         /// <summary>
@@ -237,7 +312,7 @@ namespace Plevian.Villages
                 throw new Exception("Cannot recruit " + unit);
 
             // Reset recruit counter if needed
-            if (recruitQueue.Count == 0)
+            if (queues.recruitQueue.Count == 0)
                 recruitTimeEnd = GameTime.now;
 
             // Take money
@@ -260,7 +335,7 @@ namespace Plevian.Villages
             {
                 recruitTimeFromNow += unitRecruitTime;
                 RecruitQueueItem queueItem = new RecruitQueueItem(startTime, recruitTimeEnd + new Seconds((int) recruitTimeFromNow), newUnit);
-                recruitQueue.Add(queueItem);
+                queues.Add(queueItem);
             }
             recruitTimeEnd += new Seconds((int)recruitTimeFromNow);
         }
@@ -271,7 +346,7 @@ namespace Plevian.Villages
                 throw new Exception("Requirements not met for " + technology);
 
             // Reset recruit counter if needed
-            if (researchQueue.Count == 0)
+            if (queues.researchQueue.Count == 0)
                 researchTimeEnd = GameTime.now;
 
             // Take money
@@ -284,10 +359,7 @@ namespace Plevian.Villages
             researchTimeEnd += technology.ResearchTime;
 
             ResearchQueueItem queueItem = new ResearchQueueItem(startTime, researchTimeEnd, technology);
-            researchQueue.Add(queueItem);
-
-            if (technologyQueueItemAdded != null)
-                technologyQueueItemAdded(this, queueItem);
+            queues.Add(queueItem);
         }
 
         public void addOrder(Order order)
@@ -416,7 +488,7 @@ namespace Plevian.Villages
         {
             int level = buildings[type].level;
             if(includeQueue)
-                foreach (var queue in buildingsQueue)
+                foreach (BuildingQueueItem queue in queues.buildingQueue)
                 {
                     if (buildings[type].type == queue.toBuild.type)
                         level++;

@@ -51,7 +51,7 @@ namespace Plevian.Players
             Logger.AI(name + " village tick:");
 
             // Most important - Buildings
-            if(village.buildingsQueue.Count == 0)
+            if(village.queues.buildingQueue.Count == 0)
             {
                 BuildingType toBuildType = RandomBuildingType();
                 Logger.AI("Trying build " + toBuildType);
@@ -81,7 +81,7 @@ namespace Plevian.Players
             }
 
             // Second most important - Army
-            if(village.recruitQueue.Count == 0)
+            if(village.queues.recruitQueue.Count == 0)
             {
                 Unit toRecruit = RandomUnit(village);
                 Logger.AI("Trying recruit " + toRecruit);
@@ -94,7 +94,7 @@ namespace Plevian.Players
             }
 
             // Least important - Technology
-            if(village.researchQueue.Count == 0)
+            if(village.queues.researchQueue.Count == 0)
             {
                 Technology toResearch = RandomTechnology(village);
                 Logger.AI("Trying research " + toResearch);
