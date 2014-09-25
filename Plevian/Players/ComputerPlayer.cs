@@ -1,5 +1,6 @@
 ﻿using Plevian.Buildings;
 using Plevian.Debugging;
+using Plevian.Resource;
 using Plevian.TechnologY;
 using Plevian.Units;
 using Plevian.Villages;
@@ -57,25 +58,12 @@ namespace Plevian.Players
                 Logger.AI("Trying build " + toBuildType);
                 if(village.canBuild(toBuildType))
                 {
-                    switch(toBuildType)
+                    Resources basePrice = village.getPriceForNextLevel(toBuildType);
+                    Resources price = basePrice * village.getBuilding(toBuildType).getAiImportance();
+                    if (village.resources.canAfford(price))
                     {
-                        // Allow buildings that produce resources
-                        case BuildingType.MINE:
-                        case BuildingType.FARM:
-                        case BuildingType.LUMBER_MILL:
-                            Logger.AI("Building res " + toBuildType);
-                            village.build(toBuildType);
-                            break;
-                        // For other buildings make sure that you have at least 5x more resources than needed
-                        default:
-                        {
-                            if (village.resources.canAfford(village.getPriceForNextLevel(toBuildType) * 5))
-                            {
-                                Logger.AI("Building " + toBuildType);
-                                village.build(toBuildType);
-                            }
-                            break;
-                        }
+                        Logger.AI("Building " + toBuildType);
+                        village.build(toBuildType);
                     }
                 }
             }
@@ -86,11 +74,11 @@ namespace Plevian.Players
                 Unit toRecruit = RandomUnit(village);
                 Logger.AI("Trying recruit " + toRecruit);
                 if(village.canRecruit(toRecruit)
-                && village.resources.canAfford(village.resources * 15))
+                && village.resources.canAfford(toRecruit.getWholeUnitCost() * toRecruit.getAiImportance()))
                 {
                     Logger.AI("Recruiting " + toRecruit);
                     village.recruit(toRecruit);
-                }
+               } 
             }
 
             // Least important - Technology
@@ -99,7 +87,7 @@ namespace Plevian.Players
                 Technology toResearch = RandomTechnology(village);
                 Logger.AI("Trying research " + toResearch);
                 if(village.canResearch(toResearch)
-                && village.resources.canAfford(toResearch.Price * 5))
+                && village.resources.canAfford(toResearch.Price * toResearch.getAiImportance()))
                 {
                     Logger.AI("Researching " + toResearch);
                     village.research(toResearch);

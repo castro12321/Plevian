@@ -77,5 +77,10 @@ namespace Plevian.Buildings
                 return _requirements;
             }
         }
+
+        public override int getAiImportance()
+        {
+            return 1;
+        }
     }
 }
