@@ -120,6 +120,14 @@ namespace Plevian.Villages
             }
         }
 
+        public bool isResearching(Technology technology)
+        {
+            foreach (ResearchQueueItem item in researchQueue)
+                if (item.researched == technology)
+                    return true;
+            return false;
+        }
+
         private void sort()
         {
             queue.GroupBy(item => item.End);
@@ -480,7 +488,9 @@ namespace Plevian.Villages
 
         public bool canResearch(Technology technology)
         {
-            return technology.Requirements.isFullfilled(this)
+            return !owner.technologies.isDiscovered(technology)
+                && !queues.isResearching(technology)
+                && technology.Requirements.isFullfilled(this)
                 && resources.canAfford(technology.Price);
         }
 
