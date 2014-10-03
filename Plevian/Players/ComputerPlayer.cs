@@ -12,57 +12,10 @@ using System.Threading.Tasks;
 
 namespace Plevian.Players
 {
-    class Relations
-    {
-        public Dictionary<Player, float> relations = new Dictionary<Player, float>();
-
-        public float get(Player player)
-        {
-            return relations[player];
-        }
-
-        private void add(Player player)
-        {
-            relations.Add(player, 0f);
-        }
-
-        private bool contains(Player player)
-        {
-            return relations.ContainsKey(player);
-        }
-
-        public void set(Player player, float relations)
-        {
-            if (!contains(player))
-                add(player);
-            if (relations < -10f)
-                relations = -10f;
-            if (relations > 10f)
-                relations = 10f;
-            this.relations[player] = relations;
-        }
-
-        public void reduce(Player player, float reduce)
-        {
-            set(player, get(player) - reduce);
-        }
-
-        public void increase(Player player, float increase)
-        {
-            set(player, get(player) + increase);
-        }
-
-        public void step()
-        {
-            foreach(var pair in relations)
-                set(pair.Key, pair.Value * 0.999f);
-        }
-    }
-
     public class ComputerPlayer : Player
     {
         private static Random random = new Random();
-        private Relations relations = new Relations();
+        private AiRelations relations = new AiRelations();
 
         public ComputerPlayer(String name, SFML.Graphics.Color color)
             : base(name, color)
