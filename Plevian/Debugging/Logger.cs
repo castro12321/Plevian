@@ -14,34 +14,11 @@ namespace Plevian.Debugging
         private static bool logVillage = false;
         private static bool logGraphics = false;
 
-        public static void AI(String msg)
-        {
-            if (ai) Console.WriteLine(msg);
-        }
-
-        public static void c(String msg)
-        {
-            if (cas)
-                Console.WriteLine(msg);
-        }
-
-        public static void s(String msg)
-        {
-            if (!shot) return;
-            Console.WriteLine(msg);
-        }
-
-        public static void village(String msg)
-        {
-            if (logVillage)
-                Console.WriteLine(msg);
-        }
-
-        public static void graphics(String msg)
-        {
-            if (logGraphics)
-                Console.WriteLine(msg);
-        }
+        public static void AI(String msg) { if (ai) Console.WriteLine(msg); }
+        public static void c(String msg) { if (cas) Console.WriteLine(msg); }
+        public static void s(String msg) { if (shot) Console.WriteLine(msg); }
+        public static void village(String msg) { if (logVillage) Console.WriteLine(msg); }
+        public static void graphics(String msg) { if (logGraphics) Console.WriteLine(msg); }
 
         /// <summary>
         /// Always output a debug message
