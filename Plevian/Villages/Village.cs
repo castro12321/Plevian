@@ -466,13 +466,15 @@ namespace Plevian.Villages
         {
             int level = getBuildingLevel(type, true);
             bool hasMaxLevel = (level >= buildings[type].getMaxLevel());
+            if (hasMaxLevel)
+                return false;
             bool requirementsFullfiled = buildings[type].requirements.isFullfilled(this);
-            bool hasResources = false;
-            if(hasMaxLevel == false)
-                hasResources = resources.canAfford(getPriceForNextLevel(type));
-            if (hasMaxLevel == false && requirementsFullfiled && hasResources)
-                return true;
-            return false;
+            if (!requirementsFullfiled)
+                return false;
+            bool hasResources = resources.canAfford(getPriceForNextLevel(type));
+            if(!hasResources)
+                return false;
+            return true;
         }
 
         public bool canRecruit(Unit unit)
