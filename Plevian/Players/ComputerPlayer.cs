@@ -12,9 +12,57 @@ using System.Threading.Tasks;
 
 namespace Plevian.Players
 {
+    class Relations
+    {
+        public Dictionary<Player, float> relations = new Dictionary<Player, float>();
+
+        public float get(Player player)
+        {
+            return relations[player];
+        }
+
+        private void add(Player player)
+        {
+            relations.Add(player, 0f);
+        }
+
+        private bool contains(Player player)
+        {
+            return relations.ContainsKey(player);
+        }
+
+        public void set(Player player, float relations)
+        {
+            if (!contains(player))
+                add(player);
+            if (relations < -10f)
+                relations = -10f;
+            if (relations > 10f)
+                relations = 10f;
+            this.relations[player] = relations;
+        }
+
+        public void reduce(Player player, float reduce)
+        {
+            set(player, get(player) - reduce);
+        }
+
+        public void increase(Player player, float increase)
+        {
+            set(player, get(player) + increase);
+        }
+
+        public void step()
+        {
+            foreach(var pair in relations)
+                set(pair.Key, pair.Value * 0.999f);
+        }
+    }
+
     public class ComputerPlayer : Player
     {
         private static Random random = new Random();
+        private Relations relations = new Relations();
 
         public ComputerPlayer(String name, SFML.Graphics.Color color)
             : base(name, color)
@@ -24,9 +72,13 @@ namespace Plevian.Players
         public override void tick()
         {
             base.tick();
+            relations.step();
 
             foreach (Village village in villages)
+            {
                 DoVillage(village);
+                DoAttacks(village);
+            }
         }
 
         private BuildingType RandomBuildingType()
@@ -49,6 +101,14 @@ namespace Plevian.Players
 
         private void DoVillage(Village village)
         {
+            /* Main ideas:
+             * 
+             * - Build/Recruit/Research only one unit at a time
+             * - should we Build/Recruit/Research? = price * AiImportance 
+             * --> The bigger the number, the more spare resources we need to process
+             * --> So Farm/Mine/etc are the number 1 AiImportance so build them as soon as we have resources
+             * --> Other are less important
+             */
             Logger.AI(name + " village tick:");
 
             // Most important - Buildings
@@ -92,6 +152,38 @@ namespace Plevian.Players
                     Logger.AI("Researching " + toResearch);
                     village.research(toResearch);
                 }
+            }
+        }
+
+        private void DoAttacks(Village village)
+        {
+            /* Main ideas:
+             * 
+             * Deciding if we should attack
+             * - Calculate average unit count out of the all villages on the map (once every 5 minute or so)
+             * - If we have more than average; send 25%-75% of our army to steal cookies
+             * 
+             * Choosing target (priorities)
+             * - Attacking enemy at war (~95% chance)
+             * - Attacking neutral (~5% chance)
+             * - Attacking ally (Less than 1% chance)
+             * 
+             * Relationship:
+             * Add Map<Player, Relationship> for chances?
+             * The worse the relationship, the more chance that we attack the player
+             * -10 --> +10
+             * When -10 --> ~95% chance of being attacked
+             * When 0 --> Around 5% chance
+             * When +10 --> Less than 1%
+             * The relationship is going to be 0 over time.
+             * Like relationship *= 0.999 per tick?
+             */
+
+            ComputerPlayer owner = village.Owner as ComputerPlayer;
+
+            foreach(var relation in relations.relations)
+            {
+
             }
         }
     }

@@ -137,8 +137,6 @@ namespace Plevian.Units
                 set { _unitInVillage = value; NotifyPropertyChanged(); }
             }
 
-
-
             public String Name
             {
                 get
