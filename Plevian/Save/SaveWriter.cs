@@ -19,14 +19,12 @@ namespace Plevian.Save
             string playersMessages = playersPath + "messages\\";
             string playersTechnologies = playersPath + "technologies\\";
             string playersVillages = playersPath + "villages\\";
-            //string playersCapital = playersPath + "capital\\";
 
             Directory.CreateDirectory(playersPath);
             Directory.CreateDirectory(playersBasicInfo);
             Directory.CreateDirectory(playersMessages);
             Directory.CreateDirectory(playersTechnologies);
             Directory.CreateDirectory(playersVillages);
-            //Directory.CreateDirectory(playersCapital);
             int playerCounter = 1;
 
             foreach (Players.Player player in players)
@@ -224,7 +222,38 @@ namespace Plevian.Save
 
         public void saveMap(Maps.Map map)
         {
+            string mapPath = this.path + "map\\";
+            Directory.CreateDirectory(mapPath);
 
+            StreamWriter mapFile = new StreamWriter(mapPath + "map.txt");
+            Plevian.Maps.Tile[,] tiles = map.getMap();
+
+            mapFile.WriteLine("<---map-start--->");
+
+            mapFile.WriteLine("\t<size>");
+            mapFile.WriteLine("\t\t<x>" + map.sizeX + "</x>");
+            mapFile.WriteLine("\t\t<y>" + map.sizeY + "</y>");
+            mapFile.WriteLine("\t</size>");
+
+            mapFile.WriteLine("\t<tiles>");
+            for (int i = 0; i < tiles.GetLength(0); i++)
+            {
+                for (int j = 0; j < tiles.GetLength(1); j++)
+                {
+                    mapFile.WriteLine("\t\t<tile>");
+                    mapFile.WriteLine("\t\t\t<index>" + i + " " + j + "</index>");
+                    mapFile.WriteLine("\t\t\t<location>");
+                    mapFile.WriteLine("\t\t\t\t<x>" + tiles[i, j].location.x + "</x>");
+                    mapFile.WriteLine("\t\t\t\t<y>" + tiles[i, j].location.y + "</y>");
+                    mapFile.WriteLine("\t\t\t</location>");
+                    mapFile.WriteLine("\t\t\t<type>" + tiles[i, j].type + "</type>");
+                    mapFile.WriteLine("\t\t</tile>");
+                }
+            }
+            mapFile.WriteLine("\t</tiles>");
+
+            mapFile.WriteLine("<---map-stop--->");
+            mapFile.Close();
         }
 
         public SaveWriter(String path)
