@@ -82,6 +82,9 @@ namespace Plevian.Orders
             float distance = origin.location.distance(Destination.location);
             OverallTime = (int)(army.getMovementSpeed() * distance);
             endTime = GameTime.now + OverallTime;
+
+            NotifyPropertyChanged("Type");
+            NotifyPropertyChanged("isGoingBack");
         }
 
         public virtual String getTooltipText()

@@ -66,7 +66,7 @@ namespace Plevian
             addPlayer(enemy);
 
             village1.addUnit(new Trader(3));
-            village1.addUnit(new Knight(100000));
+            village1.addUnit(new Knight(10));
             village1.build(BuildingType.TOWN_HALL);
             village1.addUnit(new Duke(100));
             //village2.addUnit(new Knight(200));
@@ -74,7 +74,7 @@ namespace Plevian
             //village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
             //village3.getBuilding(BuildingType.BARRACKS).level = 1;
             //village3.recruit(new Warrior(1000));
-            berlin.addUnit(new Knight(100));
+            berlin.addUnit(new Knight(1000));
         }
 
         /// <summary>

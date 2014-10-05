@@ -34,7 +34,7 @@ namespace Plevian.Units
 
         public override Resources recruitCost { get { return new Food(50) + new Wood(50); } }
 
-        public override float recruitTime { get { return 30f; } }
+        public override float recruitTime { get { return 0.1f; } }
         public override Resources upkeepCost { get { return new Food(5); } }
 
         public override UnitType unitType { get { return UnitType.WARRIOR; } }
