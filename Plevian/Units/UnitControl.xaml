@@ -20,7 +20,8 @@
     </UserControl.Resources>
 
     <DockPanel Name="stackPanel">
-        <Label Name="UnitName" Content="{Binding Name}" FontSize="14" Width="80" MaxWidth="80"  />
+        <Label Name="UnitName" Content="{Binding Name}" FontSize="14" Width="80" />
+        <Label Name="UnitCount" Content="{Binding Path='unitInVillage.quantity'}" MinWidth="50" />
         <resource:ResourceControl x:Name="resourceControl" DataContext="{Binding Cost}" MinWidth="250"/>
         <Button Name="RecruitButton" Content="Recruit" Click="RecruitClicked" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
         <TextBox Name="Quantity" Text="{Binding Quantity, Mode=TwoWay}" MinWidth="30" MaxWidth="50" PreviewTextInput="onPreviewTextInput" TextChanged="quantityChanged" HorizontalAlignment="Right" DockPanel.Dock="Right" />
