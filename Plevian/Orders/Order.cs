@@ -23,7 +23,7 @@ namespace Plevian.Orders
         private OrderType _type;
         protected Tile origin;
         protected Tile _destination;
-        protected Seconds duration;
+        protected GameTime duration;
         protected GameTime endTime;
         private bool _completed;
         private bool _isGoingBack;
@@ -48,7 +48,7 @@ namespace Plevian.Orders
             this.Type = type;
 
             float distance = origin.location.distance(destination.location);
-            duration = new Seconds((int)(timePerTile * distance));
+            duration = new GameTime((int)(timePerTile * distance));
             endTime = GameTime.now + duration;
 
         }
@@ -63,10 +63,10 @@ namespace Plevian.Orders
             Logger.s(this.ToString());
             if (!completed)
             {
-                Duration.seconds--;
+                Duration.time--;
                 NotifyPropertyChanged("Duration");
             }
-            if (Duration.seconds <= 0)
+            if (Duration.time <= 0)
                 onEnd();
         }
 
@@ -74,8 +74,8 @@ namespace Plevian.Orders
         {
             isGoingBack = true;
 
-            Seconds newDuration = OverallTime.copy() as Seconds;
-            newDuration.seconds -= duration.seconds;
+            GameTime newDuration = OverallTime.copy();
+            newDuration.time -= duration.time;
             duration = newDuration;
 
             endTime = GameTime.now + duration;
@@ -112,7 +112,7 @@ namespace Plevian.Orders
 
         protected abstract void onEnd();
 
-        public Seconds Duration
+        public GameTime Duration
         {
             private set
             {
@@ -154,15 +154,15 @@ namespace Plevian.Orders
         }
 
 
-        private Seconds _OverallTime;
-        public Seconds OverallTime
+        private GameTime _OverallTime;
+        public GameTime OverallTime
         {
             get
             {
                 if(_OverallTime == null)
                 {
                     float distance = origin.location.distance(Destination.location);
-                    _OverallTime = new Seconds((int)(timePerTile * distance));
+                    _OverallTime = new GameTime((int)(timePerTile * distance));
                 }
                 return _OverallTime;
             }

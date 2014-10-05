@@ -90,7 +90,7 @@ namespace Plevian
         public void tick()
         {
             ulong timediff = GameTime.update();
-            while (timediff --> 0)
+            if(timediff > 0)
             {
                 foreach (Player player in players)
                     player.tick();

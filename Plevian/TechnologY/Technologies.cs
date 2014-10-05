@@ -52,7 +52,7 @@ namespace Plevian.TechnologY
 
         public override GameTime ResearchTime
         {
-            get { return new Seconds(30); }
+            get { return new GameTime(30); }
         }
     }
 
@@ -70,7 +70,7 @@ namespace Plevian.TechnologY
 
         public override GameTime ResearchTime
         {
-            get { return new Seconds(30); }
+            get { return new GameTime(30); }
         }
     }
 
@@ -89,7 +89,7 @@ namespace Plevian.TechnologY
 
         public override GameTime ResearchTime
         {
-            get { return new Seconds(30); }
+            get { return new GameTime(30); }
         }
     }
 
@@ -112,7 +112,7 @@ namespace Plevian.TechnologY
 
         public override GameTime ResearchTime
         {
-            get { return new Seconds(60); }
+            get { return new GameTime(60); }
         }
     }
 }

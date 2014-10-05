@@ -237,12 +237,7 @@ namespace Plevian.Villages
         {
             collectProduction();
             OrdersTick();
-            //if(name == "Capital")
-                //Logger.log(name + " army " + army);
             queues.CompleteAvailableItems();
-            //if(name == "Capital")
-            //    Logger.log(name + " army " + army);
-            //Logger.village("village resources " + resources);
         }
 
         private void OrdersTick()
@@ -260,12 +255,17 @@ namespace Plevian.Villages
             }
         }
 
+        private GameTime lastCheck = GameTime.now;
         private void collectProduction()
         {
+            GameTime diff = GameTime.now.diffrence(lastCheck);
+            Logger.log("cpdiff: " + diff.time);
+            lastCheck = GameTime.now;
+
             foreach (KeyValuePair<BuildingType, Building> building in buildings)
             {
                 //Logger.village(building.Value.getDisplayName() + " produces " + building.Value.getProduction());
-                addResources(building.Value.getProduction());
+                addResources(building.Value.getProduction() * diff.time);
             }
         }
 
@@ -342,10 +342,10 @@ namespace Plevian.Villages
             while(unitsToRecruit --> 0)
             {
                 recruitTimeFromNow += unitRecruitTime;
-                RecruitQueueItem queueItem = new RecruitQueueItem(startTime, recruitTimeEnd + new Seconds((int) recruitTimeFromNow), newUnit);
+                RecruitQueueItem queueItem = new RecruitQueueItem(startTime, recruitTimeEnd + new GameTime((int)recruitTimeFromNow), newUnit);
                 queues.Add(queueItem);
             }
-            recruitTimeEnd += new Seconds((int)recruitTimeFromNow);
+            recruitTimeEnd += new GameTime((int)recruitTimeFromNow);
         }
 
         public void research(Technology technology)

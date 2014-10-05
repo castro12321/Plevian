@@ -9,8 +9,8 @@
              >
 
     <UserControl.Resources>
-        <plevian:GameTimeToStringConverter x:Key="gameTimeConverter" />
-        <plevian:SecondsToStringConverter x:Key="secondsConverter" />
+        <plevian:UserTimeToStringConverter x:Key="gameTimeConverter" />
+        <plevian:UserTimeToStringConverter x:Key="secondsConverter" />
     </UserControl.Resources>
     
     <Grid Name="StackPanel" MinWidth="300" MaxWidth="400">

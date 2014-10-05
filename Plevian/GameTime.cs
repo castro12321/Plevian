@@ -11,6 +11,22 @@ using System.Windows.Data;
 
 namespace Plevian
 {
+    /*
+    public class UserTime
+    {
+        private GameTime gametime;
+        public UserTime(GameTime gametime)
+        {
+            this.gametime = new GameTime(gametime.time / GameTime.speed);
+        }
+
+        public override string ToString()
+        {
+            return gametime.ToString();
+        }
+    }
+    */
+
     /// <summary>
     /// Represents virtual seconds since game start
     /// </summary>
@@ -27,20 +43,18 @@ namespace Plevian
         {
             get
             {
-                //return gameTime;
-                return new GameTime(gameTime.time);
+                return gameTime.time;
             }
         }
 
-        protected GameTime(int time)
+        public GameTime(int time)
         {
             this.time = time;
         }
-
-        public static void init(int time)
-        {
-            init(new GameTime(time));
-        }
+        
+        // Conversions from-to GameTime
+        public static implicit operator int(GameTime time) { return time.time; }
+        public static implicit operator GameTime(int time) { return new GameTime(time); }
 
         public static void init(GameTime time)
         {
@@ -53,9 +67,9 @@ namespace Plevian
             return time.ToString();
         }
 
-        public virtual GameTime copy()
+        public GameTime copy()
         {
-            return new GameTime(time);
+            return time;
         }
 
         /// <summary>
@@ -64,86 +78,29 @@ namespace Plevian
         public static ulong update()
         {
             ulong systemTime = SystemTime.now;
-            ulong datediff = (systemTime - lastSystemTime);// *uspeed;
+            ulong datediff = (systemTime - lastSystemTime) * uspeed;
             gameTime.time += (int)datediff;
             lastSystemTime = systemTime;
             NotifyPropertyChanged("now");
             return datediff;
         }
 
-        public Seconds diffrence(GameTime other)
+        public GameTime diffrence(GameTime other)
         {
-            return new Seconds(Math.Abs(time - other.time) * speed);
+            return Math.Abs(time - other.time);
         }
 
-        private static class SystemTime
-        {
-            private static DateTime epoch = new DateTime(1970, 1, 1);
-
-            public static ulong now
-            {
-                get
-                {
-                    DateTime currentTime = DateTime.UtcNow;
-                    return (ulong)((currentTime - epoch).TotalSeconds);
-                }
-            }
-        }
-
-        public static GameTime operator +(GameTime lh, GameTime rh)
-        {
-            return new GameTime(lh.time + rh.time);
-        }
-
-        public static GameTime operator -(GameTime lh, GameTime rh)
-        {
-            if (lh < rh) throw new Exception("Subtracting bigger time from lesser time");
-            return new GameTime(lh.time - rh.time);
-        }
-
-        public static GameTime operator *(GameTime lh, int rh)
-        {
-            return new GameTime(lh.time * rh);
-        }
-
-        public static GameTime operator *(GameTime lh, float rh)
-        {
-            return new GameTime((int)((float)lh.time * rh));
-        }
-
-        public static bool operator >(GameTime lh, GameTime rh)
-        {
-            return lh.time > rh.time;
-        }
-
-        public static bool operator >=(GameTime lh, GameTime rh)
-        {
-            return lh.time >= rh.time;
-        }
-
-        public static bool operator <(GameTime lh, GameTime rh)
-        {
-            return lh.time < rh.time;
-        }
-
-        public static bool operator <=(GameTime lh, GameTime rh)
-        {
-            return lh.time <= rh.time;
-        }
-
-        public static bool operator ==(GameTime lh, GameTime rh)
-        {
-            if (object.Equals(lh, rh))
-                return true;
-            if (object.Equals(lh, null) || object.Equals(rh, null))
-                return false;
-            return lh.time.Equals(rh.time);
-        }
-
-        public static bool operator !=(GameTime lh, GameTime rh)
-        {
-            return lh.time != rh.time;
-        }
+        // Operators
+        public static GameTime operator + (GameTime lh, GameTime rh) { return lh.time + rh.time; }
+        public static GameTime operator - (GameTime lh, GameTime rh) { if (lh < rh) throw new Exception("Subtracting bigger time from lesser time"); return lh.time - rh.time; }
+        public static GameTime operator * (GameTime lh, GameTime rh) { return lh.time * rh; }
+        public static GameTime operator * (GameTime lh, float rh)    { return (int)((float)lh.time * rh); }
+        public static bool operator > (GameTime lh, GameTime rh) { return lh.time > rh.time; }
+        public static bool operator < (GameTime lh, GameTime rh) { return lh.time < rh.time; }
+        public static bool operator >=(GameTime lh, GameTime rh) { return lh.time >= rh.time; }
+        public static bool operator <=(GameTime lh, GameTime rh) { return lh.time <= rh.time; }
+        public static bool operator ==(GameTime lh, GameTime rh) { return Equals(lh, rh); }
+        public static bool operator !=(GameTime lh, GameTime rh) { return !Equals(lh, rh); }
 
         public override int GetHashCode()
         {
@@ -152,12 +109,9 @@ namespace Plevian
 
         public override bool Equals(object obj)
         {
-            if(obj is GameTime)
-            {
-                GameTime other = (GameTime)obj;
-                return time.Equals(other.time);
-            }
-            return false;
+            if (!(obj is GameTime))
+                return false;
+            return time.Equals(((GameTime)obj).time);
         }
 
         public static event PropertyChangedEventHandler PropertyChanged;
@@ -170,22 +124,50 @@ namespace Plevian
         }
     }
 
+    public static class SystemTime
+    {
+        private static DateTime epoch = new DateTime(1970, 1, 1);
 
+        public static ulong now
+        {
+            get
+            {
+                DateTime currentTime = DateTime.UtcNow;
+                return (ulong)((currentTime - epoch).TotalSeconds);
+            }
+        }
+    }
 
-    public class GameTimeToStringConverter : IValueConverter
+    public class GameTimeToStringConverter2 : IValueConverter
     {
         public object Convert(object value, Type targetType,
-        object parameter, CultureInfo culture)
+            object parameter, CultureInfo culture)
         {
-            if (value == null)
-                return "0";
-            GameTime gameTime = value as GameTime;
-            int time = gameTime.time;
-            return value.ToString();
+            if (value != null)
+                return value.ToString();
+            return "0";
         }
 
         public object ConvertBack(object value, Type targetType,
-         object parameter, CultureInfo culture)
+            object parameter, CultureInfo culture)
+        {
+            return null; //NO CONVERSION
+        }
+    }
+
+    public class UserTimeToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType,
+            object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return "0";
+            GameTime time = value as GameTime;
+            return new GameTime(time.time / GameTime.speed).ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType,
+            object parameter, CultureInfo culture)
         {
             return null; //NO CONVERSION
         }

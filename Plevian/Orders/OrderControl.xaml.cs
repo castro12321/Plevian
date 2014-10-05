@@ -71,8 +71,8 @@ namespace Plevian.Orders
                 return "/ERROR/";
             // Do the conversion from bool to visibility
             Order order = value as Order;
-            int remaining = order.Duration.seconds;
-            int overall = order.OverallTime.seconds;
+            int remaining = order.Duration.time;
+            int overall = order.OverallTime.time;
 
             int progress = ((overall - remaining)*100) / overall;
             return progress;
@@ -89,8 +89,8 @@ namespace Plevian.Orders
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            double duration = (values[0] as Seconds).seconds;
-            double overall = (values[1] as Seconds).seconds;
+            double duration = (values[0] as GameTime).time;
+            double overall = (values[1] as GameTime).time;
             double returnValue = ((overall - duration) * 100.0) / overall;
             return returnValue;
         }

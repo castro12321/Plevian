@@ -25,6 +25,7 @@ namespace Plevian.Players
         public override void tick()
         {
             base.tick();
+            return;
             relations.step();
 
             foreach (Village village in villages)

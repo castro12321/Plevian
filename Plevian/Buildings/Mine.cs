@@ -56,11 +56,11 @@ namespace Plevian.Buildings
         {
             switch (level)
             {
-                case 1: return new Seconds(10);
-                case 2: return new Seconds(25);
-                case 3: return new Seconds(50);
-                case 4: return new Seconds(120);
-                case 5: return new Seconds(360);
+                case 1: return new GameTime(10);
+                case 2: return new GameTime(25);
+                case 3: return new GameTime(50);
+                case 4: return new GameTime(120);
+                case 5: return new GameTime(360);
             }
             throw new KeyNotFoundException("Level not found");
         }

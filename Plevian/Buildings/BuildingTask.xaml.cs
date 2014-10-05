@@ -68,7 +68,7 @@ namespace Plevian.Buildings
     {
         public Queues.QueueItem data;
 
-        public Seconds RemainingTime
+        public GameTime RemainingTime
         {
             get
             {

@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <ns:TileToStringConverter x:Key="converter" />
         <ns:OrderTypeToStringConverter x:Key="orderTypeConverter" />
-        <sec:SecondsToStringConverter x:Key="durationConverter" />
+        <sec:UserTimeToStringConverter x:Key="durationConverter" />
         <ns:progressBarMultiConverter x:Key="progressConverter" />
     </UserControl.Resources>
     <StackPanel Name="StackPanel" Orientation="Horizontal" ToolTip="ASD" ToolTipOpening="onToolTipShow" >
