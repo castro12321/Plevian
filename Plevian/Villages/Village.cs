@@ -259,7 +259,6 @@ namespace Plevian.Villages
         private void collectProduction()
         {
             GameTime diff = GameTime.now.diffrence(lastCheck);
-            Logger.log("cpdiff: " + diff.time);
             lastCheck = GameTime.now;
 
             foreach (KeyValuePair<BuildingType, Building> building in buildings)

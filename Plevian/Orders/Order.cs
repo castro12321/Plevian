@@ -17,18 +17,23 @@ namespace Plevian.Orders
         /// <summary>
         /// After setting it to true order will be deleted from orders list in village
         /// </summary>
-        
-        
+        public Tile Destination { get; private set; }
+        public OrderType Type { get; protected set; }
+        public bool completed { get; protected set; }
+        public bool isGoingBack { get; protected set; }
+        public GameTime OverallTime { get; private set; }
+        protected Tile origin { get; set; }
+        protected GameTime endTime { get; set; }
 
-        private OrderType _type;
-        protected Tile origin;
-        protected Tile _destination;
-        protected GameTime duration;
-        protected GameTime endTime;
-        private bool _completed;
-        private bool _isGoingBack;
-        protected float timePerTile;
+        protected abstract void onEnd();
 
+        public GameTime Duration
+        {
+            get
+            {
+                return GameTime.now.diffrence(endTime);
+            }
+        }
 
         public Order(Tile origin, Tile destination, Army army, OrderType type)
         {
@@ -42,31 +47,27 @@ namespace Plevian.Orders
             this.origin = origin;
             Destination = destination;
             this.army = army;
-            this.timePerTile = army.getMovementSpeed();
             this.completed = false;
             this.isGoingBack = false;
             this.Type = type;
 
             float distance = origin.location.distance(destination.location);
-            duration = new GameTime((int)(timePerTile * distance));
-            endTime = GameTime.now + duration;
-
+            OverallTime = (int)(army.getMovementSpeed() * distance);
+            endTime = GameTime.now + OverallTime;
         }
 
         public override string ToString()
         {
-            return "Arrival : " + endTime + ", duration : " + duration;
+            return "Arrival : " + endTime + ", duration : " + Duration;
         }
 
         public void tick()
         {
             Logger.s(this.ToString());
             if (!completed)
-            {
-                Duration.time--;
                 NotifyPropertyChanged("Duration");
-            }
-            if (Duration.time <= 0)
+
+            if(GameTime.now >= endTime)
                 onEnd();
         }
 
@@ -74,15 +75,13 @@ namespace Plevian.Orders
         {
             isGoingBack = true;
 
-            GameTime newDuration = OverallTime.copy();
-            newDuration.time -= duration.time;
-            duration = newDuration;
-
-            endTime = GameTime.now + duration;
-
             Tile temp = Destination;
             Destination = origin;
             origin = temp;
+
+            float distance = origin.location.distance(Destination.location);
+            OverallTime = (int)(army.getMovementSpeed() * distance);
+            endTime = GameTime.now + OverallTime;
         }
 
         public virtual String getTooltipText()
@@ -100,100 +99,13 @@ namespace Plevian.Orders
             return tooltip;
         }
 
-
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             var handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        protected abstract void onEnd();
-
-        public GameTime Duration
-        {
-            private set
-            {
-                duration = value;
-                NotifyPropertyChanged();
-            }
-
-            get
-            {
-                return duration;
-            }
-
-        }
-
-        public Tile Destination
-        {
-            private set
-            {
-                _destination = value;
-                NotifyPropertyChanged();
-            }
-            get
-            {
-                return _destination;
-            }
-        }
-
-        public OrderType Type 
-        {
-            get
-            {
-                return _type;
-            }
-            protected set
-            {
-                _type = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-
-        private GameTime _OverallTime;
-        public GameTime OverallTime
-        {
-            get
-            {
-                if(_OverallTime == null)
-                {
-                    float distance = origin.location.distance(Destination.location);
-                    _OverallTime = new GameTime((int)(timePerTile * distance));
-                }
-                return _OverallTime;
-            }
-        }
-
-        public bool completed
-        {
-            get
-            {
-                return _completed;
-            }
-                protected set
-            {
-                _completed = value;
-                NotifyPropertyChanged();
-            }
-        }
-        public bool isGoingBack 
-        {
-            get
-            {
-                return _isGoingBack;
-            }
-            protected set
-            {
-                _isGoingBack = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-
     }
 }
 

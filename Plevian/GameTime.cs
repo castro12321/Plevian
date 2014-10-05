@@ -11,28 +11,12 @@ using System.Windows.Data;
 
 namespace Plevian
 {
-    /*
-    public class UserTime
-    {
-        private GameTime gametime;
-        public UserTime(GameTime gametime)
-        {
-            this.gametime = new GameTime(gametime.time / GameTime.speed);
-        }
-
-        public override string ToString()
-        {
-            return gametime.ToString();
-        }
-    }
-    */
-
     /// <summary>
     /// Represents virtual seconds since game start
     /// </summary>
     public class GameTime
     {
-        public static int speed = 10;
+        public static int speed = 3;
         public static ulong uspeed = Convert.ToUInt32(speed);
         private static ulong lastSystemTime;
         private static GameTime gameTime;
@@ -137,8 +121,7 @@ namespace Plevian
             }
         }
     }
-
-    public class GameTimeToStringConverter2 : IValueConverter
+    /*public class GameTimeToStringConverter2 : IValueConverter
     {
         public object Convert(object value, Type targetType,
             object parameter, CultureInfo culture)
@@ -153,7 +136,7 @@ namespace Plevian
         {
             return null; //NO CONVERSION
         }
-    }
+    }*/
 
     public class UserTimeToStringConverter : IValueConverter
     {
