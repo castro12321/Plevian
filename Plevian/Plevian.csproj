@@ -141,6 +141,7 @@
     <Compile Include="Resource\ResourceControl.xaml.cs">
       <DependentUpon>ResourceControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Save\SaveReader.cs" />
     <Compile Include="Save\SaveWriter.cs" />
     <Compile Include="TechnologY\ResearchQueueItem.cs" />
     <Compile Include="TechnologY\Technologies.cs" />
