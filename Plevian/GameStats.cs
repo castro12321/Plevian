@@ -23,7 +23,7 @@ namespace Plevian
         public static void collect()
         {
             // Don't collect stats every tick
-            if (counter-- > 0)
+            if (counter --> 0)
                 return;
             counter = 10;
             Logger.log("Collecting stats");

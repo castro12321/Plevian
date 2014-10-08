@@ -11,7 +11,7 @@ namespace Plevian.Debugging
         private static bool ai = true;
         private static bool cas = false;
         private static bool shot = false;
-        private static bool logVillage = false;
+        private static bool logVillage = true;
         private static bool logGraphics = false;
 
         public static void AI(String msg) { if (ai) Console.WriteLine(msg); }

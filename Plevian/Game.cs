@@ -95,6 +95,7 @@ namespace Plevian
                 foreach (Player player in players)
                     player.tick();
             }
+            GameStats.collect();
         }
 
         public void addPlayer(Player player)

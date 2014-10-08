@@ -130,7 +130,10 @@ namespace Plevian.Villages
 
         private void sort()
         {
-            queue.GroupBy(item => item.End);
+            var ordered = queue.OrderBy(item => item.End.time).ToList();
+            queue.Clear();
+            foreach (QueueItem item in ordered)
+                queue.Add(item);
             // Don't sort building/recruit/research queues on its own
             // They are sorted by default because they are finished in the same order they were placed
         }
