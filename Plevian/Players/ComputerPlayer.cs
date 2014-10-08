@@ -25,7 +25,6 @@ namespace Plevian.Players
         public override void tick()
         {
             base.tick();
-            return;
             relations.step();
 
             foreach (Village village in villages)
@@ -38,29 +37,12 @@ namespace Plevian.Players
             }
         }
 
-        private void DoVillage(Village village)
-        {
-            
-
-            /* Main ideas:
-             * 
-             * - Build/Recruit/Research only one unit at a time
-             * - should we Build/Recruit/Research? = price * AiImportance 
-             * --> The bigger the number, the more spare resources we need to process
-             * --> So Farm/Mine/etc are the number 1 AiImportance so build them as soon as we have resources
-             * --> Other are less important
-             */
-        }
-
         #region building
         /* Idea outline:
-         * Just pick a random building.
-         * Check if we are able to build it (requirements, resources, space, etc)
-         * If so, check if we should build it by comparing some random number
-         *     to the building importance (the chance of building it in %)
-         * Yes? Do it
+         * Just build a random building.
+         * Build only if we have some spare resources
+         * (upper don't apply to resource-related buildings - mine/farm/etc)
          */
-
         private BuildingType RandomBuildingType()
         {
             Array values = Enum.GetValues(typeof(BuildingType));
@@ -75,7 +57,6 @@ namespace Plevian.Players
                 return;
 
             // Find a random building to build.
-            // Maybe modify it later but for now it's good enough
             BuildingType toBuildType = RandomBuildingType();
 
             // Check if we are able to build it (requirements, resources, space, etc)
@@ -83,7 +64,7 @@ namespace Plevian.Players
             if (village.canBuild(toBuildType))
             {
                 Resources basePrice = village.getPriceForNextLevel(toBuildType);
-                Resources price = basePrice * village.getBuilding(toBuildType).getAiImportance();
+                Resources price = basePrice * village.getBuilding(toBuildType).getAiResourceModifier();
                 if (village.resources.canAfford(price))
                 {
                     Logger.AI("Building " + toBuildType);
@@ -94,15 +75,26 @@ namespace Plevian.Players
         #endregion
 
         #region recruiting
-        /* Main idea:
+        /* Idea outline:
+         * Do we need to recruit more units?
+         * let globalAverage be 100 - the global average of units per village
+         * let x be units in our city
+         * while(x < 50%) --> recruit a lot of units (95% chance of recruiting)
+         * while(x < 95%) --> recruit only if we have free resources (30%)
+         * while(x > 95%) --> avoid recruiting if not neccessary (5%)
          * 
+         * Pick a random unit.
+         * Check if we are able to build it (requirements, resources, space, etc)
+         * If so, check if we should recruit by comparing some random number to the unit importance (the chance of building it in %)
+         * Yes? Do it
          */
 
         private Unit RandomUnit(Village village)
         {
             Array values = Enum.GetValues(typeof(UnitType));
             UnitType type = (UnitType)values.GetValue(random.Next(values.Length));
-            return UnitFactory.createUnit(type, 1);
+            int quantityToRecruit = GameTime.speed;
+            return UnitFactory.createUnit(type, quantityToRecruit);
         }
 
         private void DoRecruiting(Village village)
@@ -112,7 +104,7 @@ namespace Plevian.Players
                 Unit toRecruit = RandomUnit(village);
                 Logger.AI("Trying recruit " + toRecruit);
                 if (village.canRecruit(toRecruit)
-                && village.resources.canAfford(toRecruit.getWholeUnitCost() * toRecruit.getAiImportance()))
+                && village.resources.canAfford(toRecruit.getWholeUnitCost() * toRecruit.getAiResourceModifier()))
                 {
                     Logger.AI("Recruiting " + toRecruit);
                     village.recruit(toRecruit);
@@ -123,7 +115,8 @@ namespace Plevian.Players
 
         #region researching
         /* Main idea:
-         * 
+         * Just randomly research whatever you can...
+         * Reasearch only if you have free resources
          */
 
         private Technology RandomTechnology(Village village)
@@ -138,7 +131,7 @@ namespace Plevian.Players
                 Technology toResearch = RandomTechnology(village);
                 Logger.AI("Trying research " + toResearch);
                 if (village.canResearch(toResearch)
-                && village.resources.canAfford(toResearch.Price * toResearch.getAiImportance()))
+                && village.resources.canAfford(toResearch.Price * toResearch.getAiResourceModifier()))
                 {
                     Logger.AI("Researching " + toResearch);
                     village.research(toResearch);

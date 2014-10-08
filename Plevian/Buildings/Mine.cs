@@ -78,7 +78,7 @@ namespace Plevian.Buildings
             }
         }
 
-        public override int getAiImportance()
+        public override int getAiResourceModifier()
         {
             return 1;
         }

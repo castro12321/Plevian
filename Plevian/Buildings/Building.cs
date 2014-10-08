@@ -35,7 +35,7 @@ namespace Plevian.Buildings
         public abstract Resources getProductionFor(int level);
         public abstract int getMaxLevel();
         /// <summary>How important is this building in the village? The lower the more important. 1 being the most important</summary>
-        public virtual int getAiImportance() { return 3; }
+        public virtual int getAiResourceModifier() { return 3; }
         public virtual float getBuildingTimeModifierFor(BuildingType type) { return 1; }
         public virtual float getUnitTimeModifierFor(UnitType type) { return 1; }
 
