@@ -107,25 +107,25 @@ namespace Plevian.Players
             if (relativeArmySize < 0.5d) // Do we have less than 50% of avg units per village?
             {
                 Logger.AI("army < 50%");
-                if (chance > 0.7d) // 30% chance of recruiting
+                if (chance < 0.5d) // 50% chance of recruiting
                     return;
             }
             else if(relativeArmySize < 0.9d) // 90%?
             {
                 Logger.AI("army < 90%");
-                if (chance > 0.85d) // 15% chance of recruiting
+                if (chance < 0.66d) // 33% chance of recruiting
                     return;
             }
             else if(relativeArmySize < 1.1d) // 110%?
             {
                 Logger.AI("army < 110%");
-                if (chance > 0.95d) // 5% chance of recruiting
+                if (chance < 0.85d) // 15% chance of recruiting
                     return;
             }
             else // Do we have more than 110% of avg units per village?
             {
                 Logger.AI("army > 110%");
-                if (chance > 0.99d) // 1% chance of recruiting
+                if (chance < 0.95d) // 5% chance of recruiting
                     return;
             }
             
@@ -133,8 +133,9 @@ namespace Plevian.Players
             {
                 Unit toRecruit = RandomUnit(village);
                 Logger.AI("Trying recruit " + toRecruit);
-                if (village.canRecruit(toRecruit)
-                && village.resources.canAfford(toRecruit.getWholeUnitCost() * toRecruit.getAiResourceModifier()))
+                if (village.canRecruit(toRecruit) // First of all. Are we able to recruit it?
+                && random.NextDouble() < toRecruit.getAiImportance() // Some randomness
+                && village.resources.canAfford(toRecruit.getWholeUnitCost() * toRecruit.getAiResourceModifier())) // Do we have spare resources?
                 {
                     Logger.AI("Recruiting " + toRecruit);
                     village.recruit(toRecruit);

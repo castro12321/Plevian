@@ -40,6 +40,8 @@ namespace Plevian.Units
         public override UnitType unitType { get { return UnitType.WARRIOR; } }
         public override UnitClass unitClass { get { return UnitClass.INFANTRY; } }
 
+        public override double getAiImportance() { return 0.8d; }
+
         public override string name { get { return "Wojownik"; } }
 
         public override Requirements requirements

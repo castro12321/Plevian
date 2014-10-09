@@ -52,6 +52,8 @@ namespace Plevian.Units
         public abstract Requirements requirements { get;  }
         /// <summary>How important is this unit in the village? The lower the more important. 1 being the most important</summary>
         public virtual int getAiResourceModifier() { return 15; }
+        /// <summary>Chance of the unit being recruit (in % where 0=0%; 1=100%)</summary>
+        public virtual double getAiImportance() { return 0.1d; }
 
         public abstract string name { get; }
 
