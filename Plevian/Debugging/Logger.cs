@@ -8,12 +8,12 @@ namespace Plevian.Debugging
 {
     public class Logger
     {
-        private static bool ai = false;
+        private static bool ai = true;
         private static bool cas = false;
         private static bool shot = false;
-        private static bool logVillage = true;
+        private static bool logVillage = false;
         private static bool logGraphics = false;
-        private static bool logStats = true;
+        private static bool logStats = false;
 
         public static void AI(String msg) { if (ai) Console.WriteLine(msg); }
         public static void c(String msg) { if (cas) Console.WriteLine(msg); }

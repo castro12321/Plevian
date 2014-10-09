@@ -99,7 +99,37 @@ namespace Plevian.Players
 
         private void DoRecruiting(Village village)
         {
-            if (village.queues.recruitQueue.Count == 0)
+            double armySize = village.army.size();
+            double relativeArmySize = armySize / GameStats.AverageUnitCountPerVillage;
+            double chance = random.NextDouble();
+
+            // TODO: profile <relativeArmySize> and <chance> values
+            if (relativeArmySize < 0.5d) // Do we have less than 50% of avg units per village?
+            {
+                Logger.AI("army < 50%");
+                if (chance < 0.05d)
+                    return;
+            }
+            else if(relativeArmySize < 0.9d) // 90%?
+            {
+                Logger.AI("army < 90%");
+                if (chance < 0.66d)
+                    return;
+            }
+            else if(relativeArmySize < 1.1d) // 110%?
+            {
+                Logger.AI("army < 110%");
+                if (chance < 0.75d)
+                    return;
+            }
+            else // Do we have more than 110% of avg units per village?
+            {
+                Logger.AI("army > 110%");
+                if (chance < 0.9d) // 10% chance of recruiting
+                    return;
+            }
+            
+            if (village.queues.recruitQueue.Count <= GameTime.speed)
             {
                 Unit toRecruit = RandomUnit(village);
                 Logger.AI("Trying recruit " + toRecruit);
