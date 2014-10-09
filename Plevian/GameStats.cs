@@ -15,7 +15,7 @@ namespace Plevian
 {
     public class GameStats
     {
-        public static int AverageUnitCountPerVillage { get; private set; }
+        public static double AverageUnitCountPerVillage { get; private set; }
         public static int SumVillages { get; private set; }
         public static int SumUnits { get; private set; }
 
@@ -26,7 +26,7 @@ namespace Plevian
             if (counter --> 0)
                 return;
             counter = 10;
-            Logger.log("Collecting stats");
+            Logger.stats("Collecting stats");
 
             SumVillages = SumUnits = 0;
 
@@ -35,17 +35,14 @@ namespace Plevian
                 foreach (Village village in player.villages)
                 {
                     SumVillages++;
-                    foreach (Unit unit in village.army)
-                    {
-                        SumUnits += unit.quantity;
-                    }
+                    SumUnits += village.army.size();
                 }
             }
 
-            Logger.log("SumVillages = " + SumVillages);
-            Logger.log("SumUnits = " + SumUnits);
-            Logger.log("Avg = " + SumUnits / SumVillages);
-            AverageUnitCountPerVillage = SumUnits / SumVillages;
+            Logger.stats("SumVillages = " + SumVillages);
+            Logger.stats("SumUnits = " + SumUnits);
+            Logger.stats("Avg = " + SumUnits / SumVillages);
+            AverageUnitCountPerVillage = (double)SumUnits / (double)SumVillages;
         }
     }
 }
