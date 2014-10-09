@@ -107,25 +107,25 @@ namespace Plevian.Players
             if (relativeArmySize < 0.5d) // Do we have less than 50% of avg units per village?
             {
                 Logger.AI("army < 50%");
-                if (chance < 0.05d)
+                if (chance > 0.7d) // 30% chance of recruiting
                     return;
             }
             else if(relativeArmySize < 0.9d) // 90%?
             {
                 Logger.AI("army < 90%");
-                if (chance < 0.66d)
+                if (chance > 0.85d) // 15% chance of recruiting
                     return;
             }
             else if(relativeArmySize < 1.1d) // 110%?
             {
                 Logger.AI("army < 110%");
-                if (chance < 0.75d)
+                if (chance > 0.95d) // 5% chance of recruiting
                     return;
             }
             else // Do we have more than 110% of avg units per village?
             {
                 Logger.AI("army > 110%");
-                if (chance < 0.9d) // 10% chance of recruiting
+                if (chance > 0.99d) // 1% chance of recruiting
                     return;
             }
             

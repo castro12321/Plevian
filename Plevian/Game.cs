@@ -73,6 +73,14 @@ namespace Plevian
             //village3.getBuilding(BuildingType.BARRACKS).level = 1;
             //village3.recruit(new Warrior(1000));
             berlin.addUnit(new Warrior(10));
+
+            for (int i = 0; i < 10; ++i)
+                foreach (var pair in berlin.buildings)
+                {
+                    Building building = pair.Value;
+                    if(building.getMaxLevel() <= i)
+                        building.upgrade();
+                }
         }
 
         /// <summary>
