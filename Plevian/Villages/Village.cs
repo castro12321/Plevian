@@ -267,7 +267,7 @@ namespace Plevian.Villages
             foreach (KeyValuePair<BuildingType, Building> building in buildings)
             {
                 //Logger.village(building.Value.getDisplayName() + " produces " + building.Value.getProduction());
-                addResources(building.Value.getProduction() * diff.time);
+                addResources(building.Value.getProduction() * diff.time * 3); // TODO: Remove the "* 3" modifier
             }
         }
 
@@ -337,7 +337,7 @@ namespace Plevian.Villages
             newUnit.quantity = 1;
 
             float recruitTimeFromNow = 0;
-            float unitRecruitTime = unit.recruitTime;
+            float unitRecruitTime = unit.recruitTime / 10; // TODO: Remove recruit time modifier ("/ 10")
             foreach (Building b in buildings.Values)
                 unitRecruitTime *= b.getUnitTimeModifierFor(unit.unitType);
             int unitsToRecruit = unit.quantity;
