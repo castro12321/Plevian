@@ -18,6 +18,8 @@ namespace Plevian.Players
 
         public float get(Player player)
         {
+            if (!contains(player))
+                add(player);
             return relations[player];
         }
 
@@ -54,8 +56,8 @@ namespace Plevian.Players
 
         public void step()
         {
-            foreach(var pair in relations)
-                set(pair.Key, pair.Value * 0.999f);
+            foreach(Player player in Game.game.players)
+                set(player, get(player)*0.999f);
         }
     }
 }
