@@ -97,34 +97,35 @@ namespace Plevian.Players
             return UnitFactory.createUnit(type, quantityToRecruit);
         }
 
-        private void DoRecruiting(Village village)
+        private double RelativeArmySizeToAverage(Village village)
         {
             double armySize = village.army.size();
-            double relativeArmySize = armySize / GameStats.AverageUnitCountPerVillage;
+            return armySize / GameStats.AverageUnitCountPerVillage;
+        }
+
+        private void DoRecruiting(Village village)
+        {
+            double relativeArmySize = RelativeArmySizeToAverage(village);
             double chance = random.NextDouble();
 
             // TODO: profile <relativeArmySize> and <chance> values
             if (relativeArmySize < 0.5d) // Do we have less than 50% of avg units per village?
             {
-                Logger.AI("army < 50%");
                 if (chance < 0.5d) // 50% chance of recruiting
                     return;
             }
             else if(relativeArmySize < 0.9d) // 90%?
             {
-                Logger.AI("army < 90%");
                 if (chance < 0.66d) // 33% chance of recruiting
                     return;
             }
             else if(relativeArmySize < 1.1d) // 110%?
             {
-                Logger.AI("army < 110%");
                 if (chance < 0.85d) // 15% chance of recruiting
                     return;
             }
             else // Do we have more than 110% of avg units per village?
             {
-                Logger.AI("army > 110%");
                 if (chance < 0.95d) // 5% chance of recruiting
                     return;
             }
@@ -132,7 +133,7 @@ namespace Plevian.Players
             if (village.queues.recruitQueue.Count <= GameTime.speed)
             {
                 Unit toRecruit = RandomUnit(village);
-                Logger.AI("Trying recruit " + toRecruit);
+                
                 if (village.canRecruit(toRecruit) // First of all. Are we able to recruit it?
                 && random.NextDouble() < toRecruit.getAiImportance() // Some randomness
                 && village.resources.canAfford(toRecruit.getWholeUnitCost() * toRecruit.getAiResourceModifier())) // Do we have spare resources?
