@@ -1,5 +1,6 @@
 ﻿using Plevian.Buildings;
 using Plevian.Debugging;
+using Plevian.Orders;
 using Plevian.Resource;
 using Plevian.TechnologY;
 using Plevian.Units;
@@ -60,7 +61,6 @@ namespace Plevian.Players
             BuildingType toBuildType = RandomBuildingType();
 
             // Check if we are able to build it (requirements, resources, space, etc)
-            Logger.AI("Trying build " + toBuildType);
             if (village.canBuild(toBuildType))
             {
                 Resources basePrice = village.getPriceForNextLevel(toBuildType);
@@ -161,7 +161,6 @@ namespace Plevian.Players
             if (village.queues.researchQueue.Count == 0)
             {
                 Technology toResearch = RandomTechnology(village);
-                Logger.AI("Trying research " + toResearch);
                 if (village.canResearch(toResearch)
                 && village.resources.canAfford(toResearch.Price * toResearch.getAiResourceModifier()))
                 {
@@ -197,12 +196,58 @@ namespace Plevian.Players
 
         private void DoAttacks(Village village)
         {
-            ComputerPlayer owner = village.Owner as ComputerPlayer;
+            Logger.AI("Doing attacks");
+            double relativeArmySize = RelativeArmySizeToAverage(village);
+            double chance = random.NextDouble(); // Chance of attacking
 
-            foreach(var relation in relations.relations)
+            // TODO: profile <relativeArmySize> and <chance> values
+            if (relativeArmySize < 0.5d) // Do we have less than 50% of avg units per village?
             {
-
+                if (chance < 0.99d) // 1% chance of attacking
+                    return;
             }
+            else if (relativeArmySize < 0.9d) // 90%?
+            {
+                if (chance < 0.95d) // 5% chance of attacking
+                    return;
+            }
+            else if (relativeArmySize < 1.1d) // 110%?
+            {
+                if (chance < 0.85d) // 15% chance of attacking
+                    return;
+            }
+            else // Do we have more than 110% of avg units per village?
+            {
+                if (chance < 0.75d) // 25% chance of attacking
+                    return;
+            }
+            
+            // Didn't quit earlier? attack!
+            //ComputerPlayer owner = village.Owner as ComputerPlayer;
+            int randomized = random.Next(Game.game.players.Count);
+            Player toAttack = Game.game.players[randomized];
+
+            randomized = random.Next(-10, 10);
+            if (randomized < relations.get(toAttack)) // The better your relations
+                return; // The less chance being attacked
+
+            var villageArmy = village.army.getUnits();
+            Army attacking = new Army();
+            
+            foreach(var unit in villageArmy)
+            {
+                Unit toAdd = unit.Value.clone();
+                toAdd.quantity = random.Next(0, toAdd.quantity);
+                attacking.add(toAdd);
+            }
+
+            Village targetVillage = toAttack.villages[random.Next(0, toAttack.villages.Count)];
+            Order order = attacking.contains(UnitType.DUKE)
+                ? new CaptureOrder(village, targetVillage, attacking)
+                : new AttackOrder(village, targetVillage, attacking);
+            
+            village.addOrder(order);
+
         }
         #endregion
     }
