@@ -11,15 +11,6 @@ namespace Plevian.Save
     public class SaveWriter
     {
         private readonly String path;
-        private int messageCounter;
-        private int technologyCounter;
-        private int villageCounter;
-        private int buildingCounter;
-        private int armyCounter;
-        private int buildingQueueCounter;
-        private int queueCounter;
-        private int tilesCounter;
-        //private int playerCounter = 1;
 
         public SaveWriter(String path)
         {
@@ -32,86 +23,97 @@ namespace Plevian.Save
 
         public void savePlayer(List<Players.Player> players)
         {
+            int messageCounter;
+            int technologyCounter;
+            int villageCounter;
+            int buildingCounter;
+            int armyCounter;
+            int buildingQueueCounter;
+            int queueCounter;
+
             string playersPath = this.path + "players\\";
             string playersBasicInfo = playersPath + "basicInfo\\";
             string playersMessages = playersPath + "messages\\";
             string playersTechnologies = playersPath + "technologies\\";
             string playersVillages = playersPath + "villages\\";
+            string playersCounters = playersPath + "counters\\";
 
             Directory.CreateDirectory(playersPath);
             Directory.CreateDirectory(playersBasicInfo);
             Directory.CreateDirectory(playersMessages);
             Directory.CreateDirectory(playersTechnologies);
             Directory.CreateDirectory(playersVillages);
-            int playerCounter = 1;
+            Directory.CreateDirectory(playersCounters);
 
+            int playerCounter = 1;
             foreach (Players.Player player in players)
             {
+                StreamWriter counterFile = new StreamWriter(playersCounters + "counter" + playerCounter.ToString() + ".xml");
+                counterFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
+                counterFile.WriteLine("<counters>");
+
                 StreamWriter basicInfoFile = new StreamWriter(playersBasicInfo + "player" + playerCounter.ToString() + ".xml");
                 basicInfoFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
-                basicInfoFile.WriteLine("<name>" + player.name + "</name>");
-                basicInfoFile.WriteLine("<color>(" + player.color.ToString() + ")</color>");
+
+                basicInfoFile.WriteLine("<basicInfo>");
+                basicInfoFile.WriteLine("\t<name>" + player.name + "</name>");
+
+                basicInfoFile.WriteLine("\t<color>");
+                basicInfoFile.WriteLine("\t\t<A>" + player.color.A + "</A>");
+                basicInfoFile.WriteLine("\t\t<R>" + player.color.R + "</R>");
+                basicInfoFile.WriteLine("\t\t<G>" + player.color.G + "</G>");
+                basicInfoFile.WriteLine("\t\t<B>" + player.color.B + "</B>");
+                basicInfoFile.WriteLine("\t</color>");
+                basicInfoFile.WriteLine("</basicInfo>");
                 basicInfoFile.Close();
 
-                this.messageCounter = 0;
+                messageCounter = 0;
                 StreamWriter messagesFile = new StreamWriter(playersMessages + "player" + playerCounter.ToString() + ".xml");
                 messagesFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
                 messagesFile.WriteLine("<messages>");
                 foreach (Messages.Message message in player.messages)
                 {
-                    this.messageCounter++;
+                    messageCounter++;
                     messagesFile.WriteLine("\t<message" + messageCounter + ">");
-                    messagesFile.WriteLine("\t\t<date>" + message.Date + "</date>");
-                    messagesFile.WriteLine("\t\t<sender>" + message.Sender + "</sender>");
-                    messagesFile.WriteLine("\t\t<topic>" + message.Topic + "</topic>");
+                    messagesFile.WriteLine("\t\t<date>" + message.Date.Content + "</date>");
+                    messagesFile.WriteLine("\t\t<sender>" + message.Sender.Content + "</sender>");
+                    messagesFile.WriteLine("\t\t<topic>" + message.Topic.Content + "</topic>");
                     messagesFile.WriteLine("\t\t<text>" + message.message + "</text>");
                     messagesFile.WriteLine("\t</message" + messageCounter + ">");
                 }
                 messagesFile.WriteLine("</messages>");
                 messagesFile.Close();
+                counterFile.WriteLine("\t<messageCounter>" + messageCounter + "</messageCounter>");
 
-                this.technologyCounter = 0;
+                technologyCounter = 0;
                 StreamWriter techFile = new StreamWriter(playersTechnologies + "player" + playerCounter.ToString() + ".xml");
                 techFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
                 techFile.WriteLine("<technologies>");
                 foreach(TechnologY.Technology tech in player.technologies.technologies)
                 {
-                    this.technologyCounter++;
+                    technologyCounter++;
                     techFile.WriteLine("\t<technology" + technologyCounter + ">");
 
                     techFile.WriteLine("\t\t<name>" + tech.Name + "</name>");
 
-                    techFile.WriteLine("\t\t<price>");
-                    techFile.WriteLine("\t\t\t<food>" + tech.Price.food + "</food>");
-                    techFile.WriteLine("\t\t\t<iron>" + tech.Price.iron + "</iron>");
-                    techFile.WriteLine("\t\t\t<stone>" + tech.Price.stone + "</stone>");
-                    techFile.WriteLine("\t\t<wood>" + tech.Price.wood + "</wood>");
-                    techFile.WriteLine("\t\t</price>");
-
-                    techFile.WriteLine("\t\t<requirements>");
-                    foreach (RequirementS.Requirement requirement in tech.Requirements.RequirementsList)
-                    {
-                        techFile.WriteLine("\t\t\t" + requirement.ToString());
-                    }
-                    techFile.WriteLine("\t\t</requirements>");
-
-                    techFile.WriteLine("\t\t<research>");
-                    techFile.WriteLine("\t\t\t<researched>" + tech.researched.ToString() + "</researched>");
-                    techFile.WriteLine("\t\t\t<time>" + tech.ResearchTime.time + "</time>");
-                    techFile.WriteLine("\t\t<research>");
+                    techFile.WriteLine("\t\t<researched>" + tech.researched + "</researched>");
 
                     techFile.WriteLine("\t</technology" + technologyCounter + ">");
                 }
                 techFile.WriteLine("</technologies>");
                 techFile.Close();
+                counterFile.WriteLine("\t<technologyCounter>" + technologyCounter + "</technologyCounter>");
 
-                this.villageCounter = 0;
+                villageCounter = 0;
                 StreamWriter villagesFile = new StreamWriter(playersVillages + "player" + playerCounter.ToString() + ".xml");
                 villagesFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
                 villagesFile.WriteLine("<villages>");
                 foreach (Villages.Village village in player.villages)
                 {
-                    this.villageCounter++;
+                    villageCounter++;
+
+                    counterFile.WriteLine("\t<village" + villageCounter + ">");
+
                     villagesFile.WriteLine("\t<village" + villageCounter + ">");
 
                     if (player.Capital.name == village.name)
@@ -136,11 +138,12 @@ namespace Plevian.Save
                     villagesFile.WriteLine("\t\t\t<wood>" + village.resources.wood + "</wood>");
                     villagesFile.WriteLine("\t\t</resources>");
 
-                    this.buildingCounter = 0;
+                    buildingCounter = 0;
                     villagesFile.WriteLine("\t\t<buildings>");
                     foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> building in village.buildings)
                     {
-                        this.buildingCounter++;
+                        buildingCounter++;
+
                         villagesFile.WriteLine("\t\t\t<building" + buildingCounter + ">");
                         villagesFile.WriteLine("\t\t\t\t<key>" + building.Key + "</key>");
                         villagesFile.WriteLine("\t\t\t\t<level>" + building.Value.level + "</level>");
@@ -155,16 +158,17 @@ namespace Plevian.Save
                         villagesFile.WriteLine("\t\t\t\t<type>" + building.Value.type.ToString() + "</type>");
                         villagesFile.WriteLine("\t\t\t</building" + buildingCounter + ">");
                     }
+                    counterFile.WriteLine("\t\t<buildingCounter>" + buildingCounter + "</buildingCounter>");
                     villagesFile.WriteLine("\t\t</buildings>");
 
                     villagesFile.WriteLine("\t\t<builtTimeEnd>" + village.buildTimeEnd.time + "</builtTimeEnd>");
 
-                    this.armyCounter = 0;
+                    armyCounter = 0;
                     villagesFile.WriteLine("\t\t<armies>");
                     var unitType = Enum.GetValues(typeof(Units.UnitType));
                     foreach (Units.UnitType unit in unitType)
                     {
-                        this.armyCounter++;
+                        armyCounter++;
                         villagesFile.WriteLine("\t\t\t<army" + armyCounter + ">");
                         villagesFile.WriteLine("\t\t\t\t<attackStrength>" + village.army[unit].attackStrength + "</attackStrength>");
                         villagesFile.WriteLine("\t\t\t\t<defenseArchers>" + village.army[unit].defenseArchers + "</defenseArchers>");
@@ -211,13 +215,14 @@ namespace Plevian.Save
                         villagesFile.WriteLine("\t\t\t\t</upkeepCost>");
                         villagesFile.WriteLine("\t\t\t</army" + armyCounter + ">");
                     }
+                    counterFile.WriteLine("\t\t<armyCounter>" + armyCounter + "</armyCounter>");
                     villagesFile.WriteLine("\t\t</armies>");
 
-                    this.buildingQueueCounter = 0;
+                    buildingQueueCounter = 0;
                     villagesFile.WriteLine("\t\t<queues>");
                     foreach (Buildings.BuildingQueueItem queue in village.queues.buildingQueue)
                     {
-                        this.buildingQueueCounter++;
+                        buildingQueueCounter++;
                         villagesFile.WriteLine("\t\t\t<buildingQueue" + buildingQueueCounter + ">");
                         villagesFile.WriteLine("\t\t\t\t<name>" + queue.Name + "</name>");
                         villagesFile.WriteLine("\t\t\t\t<Start>" + queue.Start.time + "</Start>");
@@ -239,10 +244,12 @@ namespace Plevian.Save
                         villagesFile.WriteLine("\t\t\t</buildingQueue" + buildingQueueCounter + ">");
                     }
 
-                    this.queueCounter = 0;
+                    counterFile.WriteLine("\t\t<buildingQueueCounter>" + buildingQueueCounter + "</buildingQueueCounter>");
+
+                    queueCounter = 0;
                     foreach (Villages.Queues.QueueItem queue in village.queues.queue)
                     {
-                        this.queueCounter++;
+                        queueCounter++;
                         villagesFile.WriteLine("\t\t\t<queue" + queueCounter + ">");
                         villagesFile.WriteLine("\t\t\t\t<name>" + queue.Name + "</name>");
                         villagesFile.WriteLine("\t\t\t\t<Start>" + queue.Start.time + "</Start>");
@@ -250,15 +257,22 @@ namespace Plevian.Save
                         villagesFile.WriteLine("\t\t\t\t<Extra>" + queue.Extra + "</Extra>");
                         villagesFile.WriteLine("\t\t\t</queue" + queueCounter + ">");
                     }
+                    counterFile.WriteLine("\t\t<queueCounter>" + queueCounter + "</queueCounter>");
                     villagesFile.WriteLine("\t\t</queues>");
 
                     villagesFile.WriteLine("\t\t<recruitTimeEnd>" + village.recruitTimeEnd.time + "</recruitTimeEnd>");
                     //villagesFile.WriteLine("\t\t<researchTimeEnd>" + village.researchTimeEnd.time + "</researchTimeEnd>"); ERROR: Object reference not set to an instance of an object.
 
                     villagesFile.WriteLine("\t</village" + villageCounter + ">");
+
+                    counterFile.WriteLine("\t</village" + villageCounter + ">"); 
                 }
                 villagesFile.WriteLine("</villages>");
                 villagesFile.Close();
+
+                counterFile.WriteLine("\t<villageCounter>" + villageCounter + "</villageCounter>");
+                counterFile.WriteLine("</counters>");
+                counterFile.Close();
 
                 playerCounter++;
             }
@@ -266,6 +280,8 @@ namespace Plevian.Save
 
         public void saveMap(Maps.Map map)
         {
+            int tilesCounter;
+
             string mapPath = this.path + "map\\";
             Directory.CreateDirectory(mapPath);
 
@@ -280,12 +296,12 @@ namespace Plevian.Save
             mapFile.WriteLine("\t</size>");
 
             mapFile.WriteLine("\t<tiles>");
-            this.tilesCounter = 0;
+            tilesCounter = 0;
             for (int i = 0; i < tiles.GetLength(0); i++)
             {
                 for (int j = 0; j < tiles.GetLength(1); j++)
                 {
-                    this.tilesCounter++;
+                    tilesCounter++;
                     mapFile.WriteLine("\t\t<tile" + tilesCounter + ">");
                     mapFile.WriteLine("\t\t\t<index>" + i + " " + j + "</index>");
                     mapFile.WriteLine("\t\t\t<location>");
