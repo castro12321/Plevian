@@ -1,5 +1,6 @@
 ﻿using Plevian.Buildings;
 using Plevian.Debugging;
+using Plevian.Maps;
 using Plevian.Orders;
 using Plevian.Resource;
 using Plevian.TechnologY;
@@ -35,6 +36,7 @@ namespace Plevian.Players
                 DoRecruiting(village);
                 DoResearching(village);
                 DoAttacks(village);
+                EstablishVillages(village);
             }
         }
 
@@ -248,6 +250,28 @@ namespace Plevian.Players
             
             village.addOrder(order);
 
+        }
+        #endregion
+
+        #region villages
+        /* Idea outline:
+         * Do we have a settler? Send him to create a village! That's easy :P
+         */
+        private void EstablishVillages(Village village)
+        {
+            Logger.AI("Doing villages");
+
+            if(village.army.contains(UnitType.SETTLER))
+            {
+                Logger.AI("- Got settler. Looking for target");
+                Army settler = new Army();
+                settler.add(new Settler(1));
+
+                Tile target = Game.game.map.FindEmptyTile();
+                Logger.AI("- Will establish a village at " + target.location.x + "/" + target.location.y);
+                Order establishOrder = new CreateVillage(village, target, settler);
+                village.addOrder(establishOrder);
+            }
         }
         #endregion
     }
