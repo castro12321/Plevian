@@ -375,7 +375,7 @@ namespace Plevian.Save
             fs.Read(buffer, 0, 4);
             int gameTime = BitConverter.ToInt32(buffer, 0);
             fs.Close();
-            return new Seconds(gameTime);
+            return new GameTime(gameTime);
         }
     }
 }
