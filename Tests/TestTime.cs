@@ -13,10 +13,10 @@ namespace Tests.Units
             fakeTime(0);
 
             // acts & asserts
-            Assert.AreEqual(new Seconds(0), GameTime.now);
-            Assert.AreEqual(new Seconds(0), GameTime.now); // subsequent calls should return the same local time
+            Assert.AreEqual(new GameTime(0), GameTime.now);
+            Assert.AreEqual(new GameTime(0), GameTime.now); // subsequent calls should return the same local time
             addFakeTime(1);
-            Assert.AreEqual(new Seconds(0), GameTime.now); // even if the system time changed
+            Assert.AreEqual(new GameTime(0), GameTime.now); // even if the system time changed
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace Tests.Units
             
             // assert
             Assert.IsTrue(diff == 1);
-            Assert.IsTrue(GameTime.now == new Seconds(1));
+            Assert.IsTrue(GameTime.now == new GameTime(1));
         }
 
         [TestMethod]
@@ -41,9 +41,9 @@ namespace Tests.Units
             GameTime.init(50);
 
             // act
-            GameTime localMinute = new Seconds(60);
+            GameTime localMinute = new GameTime(60);
             GameTime added = GameTime.now + localMinute;
-            GameTime end = new Seconds(110);
+            GameTime end = new GameTime(110);
 
             // assert
             Assert.AreEqual(end, added);
@@ -53,9 +53,9 @@ namespace Tests.Units
         public void timeComparison()
         {
             // arrange
-            GameTime a = new Seconds(10);
-            GameTime b = new Seconds(10);
-            GameTime c = new Seconds(20);
+            GameTime a = new GameTime(10);
+            GameTime b = new GameTime(10);
+            GameTime c = new GameTime(20);
 
             // assert
             Assert.IsTrue(a == b);

@@ -130,7 +130,10 @@ namespace Plevian.Villages
 
         private void sort()
         {
-            queue.GroupBy(item => item.End);
+            var ordered = queue.OrderBy(item => item.End.time).ToList();
+            queue.Clear();
+            foreach (QueueItem item in ordered)
+                queue.Add(item);
             // Don't sort building/recruit/research queues on its own
             // They are sorted by default because they are finished in the same order they were placed
         }
@@ -237,12 +240,7 @@ namespace Plevian.Villages
         {
             collectProduction();
             OrdersTick();
-            //if(name == "Capital")
-                //Logger.log(name + " army " + army);
             queues.CompleteAvailableItems();
-            //if(name == "Capital")
-            //    Logger.log(name + " army " + army);
-            //Logger.village("village resources " + resources);
         }
 
         private void OrdersTick()
@@ -260,12 +258,16 @@ namespace Plevian.Villages
             }
         }
 
+        private GameTime lastCheck = GameTime.now;
         private void collectProduction()
         {
+            GameTime diff = GameTime.now.diffrence(lastCheck);
+            lastCheck = GameTime.now;
+
             foreach (KeyValuePair<BuildingType, Building> building in buildings)
             {
                 //Logger.village(building.Value.getDisplayName() + " produces " + building.Value.getProduction());
-                addResources(building.Value.getProduction());
+                addResources(building.Value.getProduction() * diff.time * 3); // TODO: Remove the "* 3" modifier
             }
         }
 
@@ -335,17 +337,17 @@ namespace Plevian.Villages
             newUnit.quantity = 1;
 
             float recruitTimeFromNow = 0;
-            float unitRecruitTime = unit.recruitTime;
+            float unitRecruitTime = unit.recruitTime / 10; // TODO: Remove recruit time modifier ("/ 10")
             foreach (Building b in buildings.Values)
                 unitRecruitTime *= b.getUnitTimeModifierFor(unit.unitType);
             int unitsToRecruit = unit.quantity;
             while(unitsToRecruit --> 0)
             {
                 recruitTimeFromNow += unitRecruitTime;
-                RecruitQueueItem queueItem = new RecruitQueueItem(startTime, recruitTimeEnd + new Seconds((int) recruitTimeFromNow), newUnit);
+                RecruitQueueItem queueItem = new RecruitQueueItem(startTime, recruitTimeEnd + new GameTime((int)recruitTimeFromNow), newUnit);
                 queues.Add(queueItem);
             }
-            recruitTimeEnd += new Seconds((int)recruitTimeFromNow);
+            recruitTimeEnd += new GameTime((int)recruitTimeFromNow);
         }
 
         public void research(Technology technology)
@@ -466,13 +468,15 @@ namespace Plevian.Villages
         {
             int level = getBuildingLevel(type, true);
             bool hasMaxLevel = (level >= buildings[type].getMaxLevel());
+            if (hasMaxLevel)
+                return false;
             bool requirementsFullfiled = buildings[type].requirements.isFullfilled(this);
-            bool hasResources = false;
-            if(hasMaxLevel == false)
-                hasResources = resources.canAfford(getPriceForNextLevel(type));
-            if (hasMaxLevel == false && requirementsFullfiled && hasResources)
-                return true;
-            return false;
+            if (!requirementsFullfiled)
+                return false;
+            bool hasResources = resources.canAfford(getPriceForNextLevel(type));
+            if(!hasResources)
+                return false;
+            return true;
         }
 
         public bool canRecruit(Unit unit)

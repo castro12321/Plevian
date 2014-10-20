@@ -65,16 +65,22 @@ namespace Plevian
             //enemy.addVillage(hamburger);
             addPlayer(enemy);
 
-            village1.addUnit(new Trader(3));
-            village1.addUnit(new Knight(100000));
             village1.build(BuildingType.TOWN_HALL);
-            village1.addUnit(new Duke(100));
+            village1.addUnit(new Warrior(10));
             //village2.addUnit(new Knight(200));
             //village2.addUnit(new Archer(500));
             //village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
             //village3.getBuilding(BuildingType.BARRACKS).level = 1;
             //village3.recruit(new Warrior(1000));
-            berlin.addUnit(new Knight(100));
+            berlin.addUnit(new Warrior(10));
+
+            for (int i = 0; i < 10; ++i)
+                foreach (var pair in berlin.buildings)
+                {
+                    Building building = pair.Value;
+                    if(building.getMaxLevel() <= i)
+                        building.upgrade();
+                }
         }
 
         /// <summary>
@@ -90,11 +96,12 @@ namespace Plevian
         public void tick()
         {
             ulong timediff = GameTime.update();
-            while (timediff --> 0)
+            if(timediff > 0)
             {
                 foreach (Player player in players)
                     player.tick();
             }
+            GameStats.collect();
         }
 
         public void addPlayer(Player player)

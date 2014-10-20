@@ -8,6 +8,7 @@ using System.Windows.Data;
 
 namespace Plevian
 {
+    /*
     public class SecondsToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType,
@@ -61,6 +62,6 @@ namespace Plevian
         {
             return new Seconds(this.seconds);
         }
-
     }
+    */
 }

@@ -103,7 +103,7 @@ namespace Tests.Integration
             Assert.AreEqual(2, village1.army.get(UnitType.TRADER).quantity);
 
             // Need 9 ticks for traders to go to the target
-            for(int i = 0;i < order.OverallTime.seconds; ++ i)
+            for(int i = 0;i < order.OverallTime.time; ++ i)
             {
                 order.tick(); 
             }
@@ -138,7 +138,7 @@ namespace Tests.Integration
             winnersVillage.addArmy(winner);
 
             Order losersOrder = new AttackOrder(testVillage, winnersVillage, loser);
-            for (int i = 0; i < losersOrder.OverallTime.seconds; ++i)
+            for (int i = 0; i < losersOrder.OverallTime.time; ++i)
                 testVillage.tick();
             Assert.IsTrue(testVillage.orders.Count == 0);
         }

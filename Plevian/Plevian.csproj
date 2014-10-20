@@ -82,6 +82,7 @@
     <Compile Include="Buildings\Mine.cs" />
     <Compile Include="Buildings\Wall.cs" />
     <Compile Include="events\VillageEvents.cs" />
+    <Compile Include="GameStats.cs" />
     <Compile Include="GUI\BetterLabel.cs" />
     <Compile Include="GUI\TradeWindow.xaml.cs">
       <DependentUpon>TradeWindow.xaml</DependentUpon>
@@ -133,6 +134,7 @@
     <Compile Include="Orders\OrderType.cs" />
     <Compile Include="Orders\CreateVillage.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
+    <Compile Include="Players\AiRelations.cs" />
     <Compile Include="Players\ComputerPlayer.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="RequirementS\TechnologyRequirement.cs" />

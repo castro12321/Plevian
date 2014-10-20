@@ -15,7 +15,7 @@ namespace Plevian.TechnologY
         public abstract Resources Price { get; }
         public abstract GameTime ResearchTime { get; }
         /// <summary>How important is this technology in the village? The lower the more important. 1 being the most important</summary>
-        public virtual int getAiImportance() { return 6; }
+        public virtual int getAiResourceModifier() { return 6; }
 
         public String Name
         {
