@@ -120,6 +120,14 @@ namespace Plevian.Villages
             }
         }
 
+        public bool isResearching(Technology technology)
+        {
+            foreach (ResearchQueueItem item in researchQueue)
+                if (item.researched == technology)
+                    return true;
+            return false;
+        }
+
         private void sort()
         {
             queue.GroupBy(item => item.End);
@@ -162,7 +170,7 @@ namespace Plevian.Villages
         {
             this.queues = new Queues(this);
             this.Owner = owner;
-            this.resources = new Resources(99999, 99999, 99999, 99999);
+            this.resources = new Resources(999, 999, 999, 999);
             this.recruitTimeEnd = GameTime.now;
             this.buildTimeEnd = GameTime.now;
             this.name = name;
@@ -229,6 +237,8 @@ namespace Plevian.Villages
         {
             collectProduction();
             OrdersTick();
+            //if(name == "Capital")
+                //Logger.log(name + " army " + army);
             queues.CompleteAvailableItems();
             //if(name == "Capital")
             //    Logger.log(name + " army " + army);
@@ -306,10 +316,8 @@ namespace Plevian.Villages
         /// </summary>
         public void recruit(Unit unit)
         {
-            if (unit.quantity == 0)
-                throw new Exception("Cannot recruit 0 units");
-            if (!unit.requirements.isFullfilled(this))
-                throw new Exception("Requirements not met for " + unit);
+            if (!canRecruit(unit))
+                throw new Exception("Cannot recruit " + unit);
 
             // Reset recruit counter if needed
             if (queues.recruitQueue.Count == 0)
@@ -467,9 +475,22 @@ namespace Plevian.Villages
             return false;
         }
 
+        public bool canRecruit(Unit unit)
+        {
+            if (unit.quantity == 0)
+                return false;
+            if (!unit.requirements.isFullfilled(this))
+                return false;
+            if (!resources.canAfford(unit.getWholeUnitCost()))
+                return false;
+            return true;
+        }
+
         public bool canResearch(Technology technology)
         {
-            return technology.Requirements.isFullfilled(this)
+            return !owner.technologies.isDiscovered(technology)
+                && !queues.isResearching(technology)
+                && technology.Requirements.isFullfilled(this)
                 && resources.canAfford(technology.Price);
         }
 

@@ -58,13 +58,12 @@
                             </StackPanel>
 
                             <Label Content="Resources:" FontWeight="ExtraBold"/>
-                            
                             <resource:ResourceControl x:Name="ResourcesControl" />
                         </StackPanel>
                     </Expander>
 
                     <!-- Military -->
-                    <Expander Name="Military" Header="Recruit" Margin="0,5,0,0">
+                    <Expander Name="Military" Header="Recruit" Margin="0,5,0,0" IsExpanded="True">
                         <StackPanel  Orientation="Vertical" HorizontalAlignment="Stretch" Name="UnitsRecruitStackPanel">
                             <units:UnitControl Unit="WARRIOR" />
                             <units:UnitControl Unit="KNIGHT" />
@@ -77,7 +76,7 @@
                     </Expander>
                     
                     <!-- Buildings -->
-                    <Expander Name="Buildings" Header="Buildings:" Margin="0,5,0,0">
+                    <Expander Name="Buildings" Header="Buildings:" Margin="0,5,0,0" IsExpanded="True">
                         <ItemsControl Name="BuildingsItemControl">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -94,7 +93,7 @@
                     </Expander>
                     
                     <!-- Technology -->
-                    <Expander Name="Technology" Header="Technology" Margin="0,5,0,0">
+                    <Expander Name="Technology" Header="Technology" Margin="0,5,0,0" IsExpanded="True">
                         <ItemsControl Name="TechnologyItemsControl">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -111,7 +110,7 @@
                     </Expander>
 
                     <!-- Orders -->
-                    <Expander Header="Orders" Margin="0,5,0,0">
+                    <Expander Header="Orders" Margin="0,5,0,0" IsExpanded="True">
                         <ItemsControl Name="OrdersItemControl">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -127,7 +126,8 @@
                             
                         </ItemsControl>
                     </Expander>
-
+                    
+                    <!-- Queues -->
                     <Expander Header="Queues" Margin="0,5,0,0" IsExpanded="True">
                         <ItemsControl Name="QueueControl">
                             <ItemsControl.ItemsPanel>
@@ -138,7 +138,7 @@
 
                             <ItemsControl.ItemTemplate >
                                 <DataTemplate>
-                                    <buildings:BuildingTask Name="QueueTemplate" />
+                                    <buildings:BuildingTask Name="QueueTemplate" Cancelled="BuildingTask_Cancelled" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

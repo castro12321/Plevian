@@ -81,7 +81,7 @@ namespace Plevian.Maps
                 owner.Content = village.Owner.name;
                 VillageName.Content = village.name;
                 VillageNameStackPanel.Visibility = System.Windows.Visibility.Visible;
-                if (village.Owner == Game.player)
+                if (village.Owner == Game.player || true) // Remove "|| true"
                 {
                     EnterVillageButton.IsEnabled = true;
                     EnterVillageButton.DataContext = tile;

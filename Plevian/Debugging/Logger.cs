@@ -8,10 +8,16 @@ namespace Plevian.Debugging
 {
     public class Logger
     {
+        private static bool ai = true;
         private static bool cas = false;
-        private static bool shot = true;
-        private static bool logVillage = true;
+        private static bool shot = false;
+        private static bool logVillage = false;
         private static bool logGraphics = false;
+
+        public static void AI(String msg)
+        {
+            if (ai) Console.WriteLine(msg);
+        }
 
         public static void c(String msg)
         {
@@ -47,12 +53,12 @@ namespace Plevian.Debugging
 
         public static void warn(String msg)
         {
-            log("Warn: " + msg);
+            Console.WriteLine("Warn: " + msg);
         }
 
         public static void turnOff()
         {
-            cas = shot = logVillage = logGraphics = false;
+            ai = cas = shot = logVillage = logGraphics = false;
         }
     }
 }
