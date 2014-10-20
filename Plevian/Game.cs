@@ -96,21 +96,12 @@ namespace Plevian
             SaveReader readSave = new SaveReader("test");
             players = readSave.getPlayers();
             map = readSave.getMap(players);
-
-            enemy = players[0];
-            System.Console.WriteLine(enemy.villages[0].name);
-            System.Console.WriteLine(enemy.villages[0].resources.food);
         }
 
         /// <summary>
         /// Initializes a game from save
         /// </summary>
         /// <param name="save">save to initialize from</param>
-        public Game(SaveWriter save)
-        {
-            gameTime = save.getGameTime();
-            map = new MapFileReader().read(save);
-        }
 
         public void tick()
         {

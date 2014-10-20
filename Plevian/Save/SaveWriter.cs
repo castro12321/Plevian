@@ -355,33 +355,5 @@ namespace Plevian.Save
             mapFile.WriteLine("</map>");
             mapFile.Close();
         }
-
-        // ----------------------------------------------------- 
-
-        public void writeSave(Maps.Map map, List<Players.Player> players)
-        {
-            this.saveMap(map);
-            this.savePlayers(players);
-        }
-
-        public String getMapFile()
-        {
-            return path + "map.txt";
-        }
-
-        private String getGameTimeFile()
-        {
-            return path + "time.txt";
-        }
-
-        public GameTime getGameTime()
-        {
-            FileStream fs = new FileStream(getGameTimeFile(), FileMode.Open, FileAccess.Read);
-            byte[] buffer = new byte[4]; // ulong is 64 bits = 8 bytes
-            fs.Read(buffer, 0, 4);
-            int gameTime = BitConverter.ToInt32(buffer, 0);
-            fs.Close();
-            return new GameTime(gameTime);
-        }
     }
 }
