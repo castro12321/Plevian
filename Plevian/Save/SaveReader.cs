@@ -19,7 +19,7 @@ namespace Plevian.Save
             Dictionary<string, Dictionary<string, int>> counters = new Dictionary<string, Dictionary<string, int>>();
 
             XDocument countersXml = XDocument.Load(path);
-            XElement counterRoot = countersXml.Element("counters");
+            XElement counterRoot = countersXml.Root;
 
             int villageCounter = int.Parse(counterRoot.Element("villageCounter").Value);
             for (int i = 0; i <= villageCounter; i++)
@@ -56,12 +56,13 @@ namespace Plevian.Save
             Dictionary<string, int> basicCounters = counters["basicCounters"];
 
             XDocument villagesXml = XDocument.Load(path);
-            XElement villagesRoot = villagesXml.Element("villages");
+            XElement villagesRoot = villagesXml.Root;
 
             for (int i = 1; i <= basicCounters["villageCounter"]; i++)
             {
                 Dictionary<string, int> villageCounters = counters["village" + i];
                 XElement villageRoot = villagesRoot.Element("village" + i);
+
                 int x = int.Parse(villageRoot.Element("location").Element("x").Value);
                 int y = int.Parse(villageRoot.Element("location").Element("y").Value);
 
@@ -202,7 +203,7 @@ namespace Plevian.Save
         {
             ObservableCollection<Messages.Message> messages = new ObservableCollection<Messages.Message>();
             XDocument messagesXml = XDocument.Load(path);
-            XElement messagesRoot = messagesXml.Element("messages");
+            XElement messagesRoot = messagesXml.Root;
 
             for (int i = 1; i <= messagesCounter; i++)
             {
@@ -220,7 +221,7 @@ namespace Plevian.Save
         private List<TechnologY.Technology> getTechnologies(string path, Dictionary<string, int> basicCounters, Players.Player player)
         {
             XDocument techXml = XDocument.Load(path);
-            XElement techRoot = techXml.Element("technologies");
+            XElement techRoot = techXml.Root;
 
             for (int i = 1; i <= basicCounters["technologyCounter"]; i++)
             {
@@ -267,7 +268,7 @@ namespace Plevian.Save
                 basicCounters = counters["basicCounters"];
 
                 XDocument basicInfoXml = XDocument.Load(basicInfoPaths[i]);
-                XElement basicInfoRoot = basicInfoXml.Element("basicInfo");
+                XElement basicInfoRoot = basicInfoXml.Root;
 
                 SFML.Graphics.Color color = new SFML.Graphics.Color(System.Byte.Parse(basicInfoRoot.Element("color").Element("R").Value),
                                                                     System.Byte.Parse(basicInfoRoot.Element("color").Element("G").Value),
