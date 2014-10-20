@@ -131,9 +131,9 @@ namespace Plevian.Save
                         TechnologY.Technology researched;
                         for (int m = 1; m <= basicCounters["technologyCounter"]; m++)
                         {
-                            if (player.technologies.technologies[m].Name == villageRoot.Element("queues").Element("researchQueue" + l).Element("name").Value)
+                            if (player.technologies.technologies[m - 1].Name == villageRoot.Element("queues").Element("researchQueue" + l).Element("name").Value)
                             {
-                                researched = player.technologies.technologies[m];
+                                researched = player.technologies.technologies[m - 1];
 
                                 GameTime start = GameTime.now;
                                 GameTime end = GameTime.now;
@@ -149,7 +149,7 @@ namespace Plevian.Save
                         }
                     }
 
-                    if (l <=villageCounters["recruitQueueCounter"])
+                    if (l <= villageCounters["recruitQueueCounter"])
                     {
                         Units.Unit toRecruit;
                         foreach (Units.UnitType unit in unitType)
@@ -275,7 +275,13 @@ namespace Plevian.Save
                                                                     System.Byte.Parse(basicInfoRoot.Element("color").Element("A").Value));
                 string name = basicInfoRoot.Element("name").Value;
 
-                Players.Player player = new Players.Player(name, color);
+                Players.Player player;
+
+                if(basicInfoRoot.Element("computer").Value == "true")
+                    player = new Players.ComputerPlayer(name, color);
+                else
+                    player = new Players.Player(name, color);
+
                 player.messages = this.getMessages(messagesPaths[i], basicCounters["messageCounter"]);
                 player.technologies.technologies = this.getTechnologies(technologiesPaths[i], basicCounters, player);
                 player.villages = this.getVillages(villagesPaths[i], counters, player);

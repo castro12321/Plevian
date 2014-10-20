@@ -60,12 +60,18 @@ namespace Plevian.Save
                 basicInfoFile.WriteLine("<basicInfo>");
                 basicInfoFile.WriteLine("\t<name>" + player.name + "</name>");
 
+                if (player.GetType().ToString() == "Plevian.Players.ComputerPlayer")
+                    basicInfoFile.WriteLine("\t<computer>true</computer>");
+                else
+                    basicInfoFile.WriteLine("\t<computer>false</computer>");
+
                 basicInfoFile.WriteLine("\t<color>");
                 basicInfoFile.WriteLine("\t\t<A>" + player.color.A + "</A>");
                 basicInfoFile.WriteLine("\t\t<R>" + player.color.R + "</R>");
                 basicInfoFile.WriteLine("\t\t<G>" + player.color.G + "</G>");
                 basicInfoFile.WriteLine("\t\t<B>" + player.color.B + "</B>");
                 basicInfoFile.WriteLine("\t</color>");
+
                 basicInfoFile.WriteLine("</basicInfo>");
                 basicInfoFile.Close();
 

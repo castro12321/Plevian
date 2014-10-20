@@ -51,7 +51,7 @@ namespace Plevian
             addPlayer(player);
 
             Player enemy = new ComputerPlayer("Hitler", SFML.Graphics.Color.Red);
-            player = enemy;
+            //player = enemy;
             Tile berlinTile    = map.FindEmptyTile();
             Tile frankfurtTile = map.FindEmptyTile();
             Tile hamburgTile   = map.FindEmptyTile();
@@ -83,18 +83,23 @@ namespace Plevian
                         building.upgrade();
                 }
 
+
             // player test
             players.Clear();
             players.Add(player);
             players.Add(enemy);
             System.Console.WriteLine("player save --------");
 
-            /*SaveWriter writeSave = new SaveWriter("save1");
+            /*SaveWriter writeSave = new SaveWriter("test");
             writeSave.writeSave(map, players);*/
 
-            /*SaveReader readSave = new SaveReader("save1");
+            SaveReader readSave = new SaveReader("test");
             players = readSave.getPlayers();
-            map = readSave.getMap(players);*/
+            map = readSave.getMap(players);
+
+            enemy = players[0];
+            System.Console.WriteLine(enemy.villages[0].name);
+            System.Console.WriteLine(enemy.villages[0].resources.food);
         }
 
         /// <summary>
