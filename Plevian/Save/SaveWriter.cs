@@ -21,7 +21,7 @@ namespace Plevian.Save
             Directory.CreateDirectory(this.path);
         }
 
-        public void savePlayer(List<Players.Player> players)
+        private void savePlayers(List<Players.Player> players)
         {
             int messageCounter;
             int technologyCounter;
@@ -29,7 +29,9 @@ namespace Plevian.Save
             int buildingCounter;
             int armyCounter;
             int buildingQueueCounter;
+            int researchQueueCounter;
             int queueCounter;
+            int recruitQueueCounter;
 
             string playersPath = this.path + "players\\";
             string playersBasicInfo = playersPath + "basicInfo\\";
@@ -154,7 +156,6 @@ namespace Plevian.Save
                             villagesFile.WriteLine("\t\t\t\t\t<requirement>" + requirement.ToString() + "</requirement>");
                         }
                         villagesFile.WriteLine("\t\t\t\t</requirements>");*/
-
                         villagesFile.WriteLine("\t\t\t\t<type>" + building.Value.type.ToString() + "</type>");
                         villagesFile.WriteLine("\t\t\t</building" + buildingCounter + ">");
                     }
@@ -220,19 +221,19 @@ namespace Plevian.Save
 
                     buildingQueueCounter = 0;
                     villagesFile.WriteLine("\t\t<queues>");
-                    foreach (Buildings.BuildingQueueItem queue in village.queues.buildingQueue)
+                    foreach (Buildings.BuildingQueueItem buildingQueue in village.queues.buildingQueue)
                     {
                         buildingQueueCounter++;
                         villagesFile.WriteLine("\t\t\t<buildingQueue" + buildingQueueCounter + ">");
-                        villagesFile.WriteLine("\t\t\t\t<name>" + queue.Name + "</name>");
-                        villagesFile.WriteLine("\t\t\t\t<Start>" + queue.Start.time + "</Start>");
-                        villagesFile.WriteLine("\t\t\t\t<End>" + queue.End.time + "</End>");
-                        villagesFile.WriteLine("\t\t\t\t<Extra>" + queue.Extra + "</Extra>");
-                        villagesFile.WriteLine("\t\t\t\t<level>" + queue.level + "</level>");
+                        villagesFile.WriteLine("\t\t\t\t<name>" + buildingQueue.Name + "</name>");
+                        villagesFile.WriteLine("\t\t\t\t<Start>" + buildingQueue.Start.time + "</Start>");
+                        villagesFile.WriteLine("\t\t\t\t<End>" + buildingQueue.End.time + "</End>");
+                        villagesFile.WriteLine("\t\t\t\t<Extra>" + buildingQueue.Extra + "</Extra>");
+                        villagesFile.WriteLine("\t\t\t\t<level>" + buildingQueue.level + "</level>");
 
                         villagesFile.WriteLine("\t\t\t\t<toBuild>");
-                        villagesFile.WriteLine("\t\t\t\t\t<level>" + queue.toBuild.level + "</level>");
-                        villagesFile.WriteLine("\t\t\t\t\t<type>" + queue.toBuild.type.ToString() + "</type>");
+                        villagesFile.WriteLine("\t\t\t\t\t<level>" + buildingQueue.toBuild.level + "</level>");
+                        villagesFile.WriteLine("\t\t\t\t\t<type>" + buildingQueue.toBuild.type.ToString() + "</type>");
 
                         /*villagesFile.WriteLine("\t\t\t\t\t<requirements>");
                         for (int i = 0; i < queue.toBuild.requirements.Count; i++)
@@ -243,8 +244,35 @@ namespace Plevian.Save
                         villagesFile.WriteLine("\t\t\t\t</toBuild>");
                         villagesFile.WriteLine("\t\t\t</buildingQueue" + buildingQueueCounter + ">");
                     }
-
                     counterFile.WriteLine("\t\t<buildingQueueCounter>" + buildingQueueCounter + "</buildingQueueCounter>");
+
+                    researchQueueCounter = 0;
+                    foreach (TechnologY.ResearchQueueItem researchQueue in village.queues.researchQueue)
+                    {
+                        researchQueueCounter++;
+                        villagesFile.WriteLine("\t\t\t<researchQueue" + researchQueueCounter + ">");
+                        villagesFile.WriteLine("\t\t\t\t<name>" + researchQueue.Name + "</name>");
+                        villagesFile.WriteLine("\t\t\t\t<Start>" + researchQueue.Start.time + "</Start>");
+                        villagesFile.WriteLine("\t\t\t\t<End>" + researchQueue.End.time + "</End>");
+                        villagesFile.WriteLine("\t\t\t\t<Extra>" + researchQueue.Extra + "</Extra>");
+                        villagesFile.WriteLine("\t\t\t\t<researched>" + researchQueue.researched.Name + "</researched>");
+                        villagesFile.WriteLine("\t\t\t</researchQueue" + researchQueueCounter + ">");
+                    }
+                    counterFile.WriteLine("\t\t<researchQueueCounter>" + researchQueueCounter + "</researchQueueCounter>");
+
+                    recruitQueueCounter = 0;
+                    foreach (Units.RecruitQueueItem recruitQueue in village.queues.recruitQueue)
+                    {
+                        recruitQueueCounter++;
+                        villagesFile.WriteLine("\t\t\t<recruitQueue" + recruitQueueCounter + ">");
+                        villagesFile.WriteLine("\t\t\t\t<name>" + recruitQueue.Name + "</name>");
+                        villagesFile.WriteLine("\t\t\t\t<Start>" + recruitQueue.Start.time + "</Start>");
+                        villagesFile.WriteLine("\t\t\t\t<End>" + recruitQueue.End.time + "</End>");
+                        villagesFile.WriteLine("\t\t\t\t<Extra>" + recruitQueue.Extra + "</Extra>");
+                        villagesFile.WriteLine("\t\t\t\t<toRecruit>" + recruitQueue.toRecruit.name + "</toRecruit>");
+                        villagesFile.WriteLine("\t\t\t</recruitQueue" + recruitQueueCounter + ">");
+                    }
+                    counterFile.WriteLine("\t\t<recruitQueueCounter>" + recruitQueueCounter + "</recruitQueueCounter>");
 
                     queueCounter = 0;
                     foreach (Villages.Queues.QueueItem queue in village.queues.queue)
@@ -261,7 +289,9 @@ namespace Plevian.Save
                     villagesFile.WriteLine("\t\t</queues>");
 
                     villagesFile.WriteLine("\t\t<recruitTimeEnd>" + village.recruitTimeEnd.time + "</recruitTimeEnd>");
-                    //villagesFile.WriteLine("\t\t<researchTimeEnd>" + village.researchTimeEnd.time + "</researchTimeEnd>"); ERROR: Object reference not set to an instance of an object.
+
+                    /*if (village.researchTimeEnd != null)
+                        villagesFile.WriteLine("\t\t<researchTimeEnd>" + village.researchTimeEnd.time + "</researchTimeEnd>");*/ //TODO: fix it
 
                     villagesFile.WriteLine("\t</village" + villageCounter + ">");
 
@@ -278,7 +308,7 @@ namespace Plevian.Save
             }
         }
 
-        public void saveMap(Maps.Map map)
+        private void saveMap(Maps.Map map)
         {
             int tilesCounter;
 
@@ -288,6 +318,7 @@ namespace Plevian.Save
             StreamWriter mapFile = new StreamWriter(mapPath + "map.xml");
             Plevian.Maps.Tile[,] tiles = map.getMap();
 
+            mapFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
             mapFile.WriteLine("<map>");
 
             mapFile.WriteLine("\t<size>");
@@ -314,8 +345,17 @@ namespace Plevian.Save
             }
             mapFile.WriteLine("\t</tiles>");
 
+            mapFile.WriteLine("\t<time>" + GameTime.now + "</time>");
             mapFile.WriteLine("</map>");
             mapFile.Close();
+        }
+
+        // ----------------------------------------------------- 
+
+        public void writeSave(Maps.Map map, List<Players.Player> players)
+        {
+            this.saveMap(map);
+            this.savePlayers(players);
         }
 
         public String getMapFile()

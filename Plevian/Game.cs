@@ -28,9 +28,6 @@ namespace Plevian
         /// </summary>
         public Game()
         {
-
-            players.Add(player); //<-----------
-
             Game.game = this;
             GameTime.init(0);
             map = new MapGenerator().Generate(30, 30);
@@ -52,7 +49,7 @@ namespace Plevian
             player.addVillage(village2);
             player.addVillage(village3);
             addPlayer(player);
-
+            
             Player enemy = new Player("Hitler", SFML.Graphics.Color.Red);
             Tile berlinTile    = map.FindEmptyTile();
             Tile frankfurtTile = map.FindEmptyTile();
@@ -79,10 +76,19 @@ namespace Plevian
             village3.recruit(new Warrior(1000));
             berlin.addUnit(new Knight(100));
 
-
+            // player test
+            
+            players.Clear();
+            players.Add(player);
+            players.Add(enemy);
             System.Console.WriteLine("player save --------");
-            SaveWriter save = new SaveWriter("playerTest");
-            save.savePlayer(players);
+
+            /*SaveWriter writeSave = new SaveWriter("save1");
+            writeSave.writeSave(map, players);*/
+
+            /*SaveReader readSave = new SaveReader("save1");
+            players = readSave.getPlayers();
+            map = readSave.getMap(players);*/
         }
 
         /// <summary>

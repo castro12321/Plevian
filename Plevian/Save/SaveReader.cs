@@ -36,6 +36,8 @@ namespace Plevian.Save
                     test.Add("buildingCounter", int.Parse(counterRoot.Element("village" + i).Element("buildingCounter").Value));
                     test.Add("armyCounter", int.Parse(counterRoot.Element("village" + i).Element("armyCounter").Value));
                     test.Add("buildingQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("buildingQueueCounter").Value));
+                    test.Add("researchQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("researchQueueCounter").Value));
+                    test.Add("recruitQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("recruitQueueCounter").Value));
                     test.Add("queueCounter", int.Parse(counterRoot.Element("village" + i).Element("queueCounter").Value));
                 }
 
@@ -48,17 +50,152 @@ namespace Plevian.Save
             return counters;
         }
 
-        private ObservableCollection<Villages.Village> getVillages(string path, Dictionary<string, Dictionary<string, int>> counters)
+        private ObservableCollection<Villages.Village> getVillages(string path, Dictionary<string, Dictionary<string, int>> counters, Players.Player player)
         {
             ObservableCollection<Villages.Village> villages = new ObservableCollection<Villages.Village>();
             Dictionary<string, int> basicCounters = counters["basicCounters"];
 
-            for (int i = 1; i < basicCounters["villageCounter"]; i++)
+            XDocument villagesXml = XDocument.Load(path);
+            XElement villagesRoot = villagesXml.Element("villages");
+
+            for (int i = 1; i <= basicCounters["villageCounter"]; i++)
             {
-                Dictionary<string, int> village = counters["village" + i];
+                Dictionary<string, int> villageCounters = counters["village" + i];
+                XElement villageRoot = villagesRoot.Element("village" + i);
+                int x = int.Parse(villageRoot.Element("location").Element("x").Value);
+                int y = int.Parse(villageRoot.Element("location").Element("y").Value);
+
+                Villages.Village village = new Villages.Village(new Maps.Location(x, y), player, villageRoot.Element("name").Value);
+
+                village.resources.food = int.Parse(villageRoot.Element("resources").Element("food").Value);
+                village.resources.iron = int.Parse(villageRoot.Element("resources").Element("iron").Value);
+                village.resources.stone = int.Parse(villageRoot.Element("resources").Element("stone").Value);
+                village.resources.wood = int.Parse(villageRoot.Element("resources").Element("wood").Value);
+                
+                int j = 1;
+                var unitType = Enum.GetValues(typeof(Units.UnitType));
+                foreach (Units.UnitType unit in unitType)
+                {
+                    if (village.army[unit].unitType.ToString() == villageRoot.Element("armies").Element("army" + j).Element("unitType").Value &&
+                        village.army[unit].name == villageRoot.Element("armies").Element("army" + j).Element("name").Value)
+                    {
+                        village.army[unit].quantity = int.Parse(villageRoot.Element("armies").Element("army" + j).Element("quantity").Value);
+                    }
+                    j++;
+                }
+
+                int k = 1;
+                foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> building in village.buildings)
+                {
+                    if (building.Key.ToString() == villageRoot.Element("buildings").Element("building" + k).Element("key").Value)
+                    {
+                        building.Value.level = int.Parse(villageRoot.Element("buildings").Element("building" + k).Element("level").Value);
+                    }
+                    k++;
+                }
+
+                for (int l = 1; l <= villageCounters["queueCounter"]; l++)
+                {
+                    if (l <= villageCounters["buildingQueueCounter"])
+                    {
+                        string type = villageRoot.Element("queues").Element("buildingQueue" + l).Element("toBuild").Element("type").Value;
+                        Buildings.Building toBuild;
+
+                        foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> building in village.buildings)
+                        {
+                            if (building.Key.ToString() == type)
+                            {
+                                toBuild = building.Value;
+                                toBuild.level = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("toBuild").Element("level").Value);
+
+                                GameTime start = GameTime.now;
+                                GameTime end = GameTime.now;
+                                start.time = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("Start").Value);
+                                end.time = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("End").Value);
+
+                                Villages.Queues.QueueItem buildingQueue = new Buildings.BuildingQueueItem(start,
+                                                                                                          end,
+                                                                                                          toBuild,
+                                                                                                          int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("level").Value));
+
+                                village.queues.queue.Add(buildingQueue);
+                                village.queues.buildingQueue.Add(buildingQueue as Buildings.BuildingQueueItem);
+
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (l <= villageCounters["researchQueueCounter"])
+                    {
+                        TechnologY.Technology researched;
+                        for (int m = 1; m <= basicCounters["technologyCounter"]; m++)
+                        {
+                            if (player.technologies.technologies[m].Name == villageRoot.Element("queues").Element("researchQueue" + l).Element("name").Value)
+                            {
+                                researched = player.technologies.technologies[m];
+
+                                GameTime start = GameTime.now;
+                                GameTime end = GameTime.now;
+                                start.time = int.Parse(villageRoot.Element("queues").Element("researchQueue" + l).Element("Start").Value);
+                                end.time = int.Parse(villageRoot.Element("queues").Element("researchQueue" + l).Element("End").Value);
+                                Villages.Queues.QueueItem researchQueue = new TechnologY.ResearchQueueItem(start, end, researched);
+
+                                village.queues.queue.Add(researchQueue);
+                                village.queues.researchQueue.Add(researchQueue as TechnologY.ResearchQueueItem);
+
+                                break;
+                            }
+                        }
+                    }
+
+                    if (l <=villageCounters["recruitQueueCounter"])
+                    {
+                        Units.Unit toRecruit;
+                        foreach (Units.UnitType unit in unitType)
+                        {
+                            if (village.army[unit].name == villageRoot.Element("queues").Element("recruitQueue" + l).Element("name").Value)
+                            {
+                                toRecruit = village.army[unit];
+                                toRecruit.quantity = 1;
+
+                                GameTime start = GameTime.now;
+                                GameTime end = GameTime.now;
+                                start.time = int.Parse(villageRoot.Element("queues").Element("recruitQueue" + l).Element("Start").Value);
+                                end.time = int.Parse(villageRoot.Element("queues").Element("recruitQueue" + l).Element("End").Value);
+
+                                Villages.Queues.QueueItem recruitQueue = new Units.RecruitQueueItem(start, end, toRecruit);
+
+                                village.queues.queue.Add(recruitQueue);
+                                village.queues.recruitQueue.Add(recruitQueue as Units.RecruitQueueItem);
+
+                                break;
+;                            }
+                        }
+                    }
+                }
+                village.buildTimeEnd.time = int.Parse(villageRoot.Element("builtTimeEnd").Value);
+                village.recruitTimeEnd.time = int.Parse(villageRoot.Element("recruitTimeEnd").Value);
+               // village.researchTimeEnd = int.Parse(villageRoot.Element("builtTimeEnd").Value); //ERROR in SaveWriter
+                
+                
+                villages.Add(village);
             }
 
-            return null;
+            for (int i = 0; i < villages.Count; i++)
+            {
+                if (villages[i].name == villagesRoot.Element("village" + (i + 1)).Element("name").Value &&
+                    villagesRoot.Element("village" + (i + 1)).Element("capital").Value == "true")
+                {
+                    Villages.Village buffer = villages[0];
+                    villages[0] = villages[i];
+                    villages[i] = buffer;
+
+                    return villages;
+                }
+            }
+
+            return villages;
         }
 
         private ObservableCollection<Messages.Message> getMessages(string path, int messagesCounter)
@@ -103,7 +240,7 @@ namespace Plevian.Save
             this.path = "Save\\" + name + "\\";
         }
 
-        public Players.Player getPlayer(int numberOfPlayer)
+        public List<Players.Player> getPlayers()
         {
             string playersPath = this.path + "players\\";
             string playersBasicInfo = playersPath + "basicInfo\\";
@@ -118,33 +255,77 @@ namespace Plevian.Save
             string[] villagesPaths = Directory.GetFiles(playersVillages);
             string[] countersPaths = Directory.GetFiles(playersCounters);
 
-            Dictionary<string, Dictionary<string, int>> counters = this.getCounters(playersCounters + "counter" + numberOfPlayer + ".xml");
-            Dictionary<string, int> basicCounters = counters["basicCounters"];
+            List<Players.Player> players = new List<Players.Player>();
 
-            //basic info ------------
-            XDocument basicInfoXml = XDocument.Load(playersBasicInfo + "player" + numberOfPlayer + ".xml");
-            XElement basicInfoRoot = basicInfoXml.Element("basicInfo");
-            
-            SFML.Graphics.Color color = new SFML.Graphics.Color(System.Byte.Parse(basicInfoRoot.Element("color").Element("R").Value),
-                                                                System.Byte.Parse(basicInfoRoot.Element("color").Element("R").Value),
-                                                                System.Byte.Parse(basicInfoRoot.Element("color").Element("R").Value),
-                                                                System.Byte.Parse(basicInfoRoot.Element("color").Element("R").Value));
-            string name = basicInfoRoot.Element("name").Value;
+            Dictionary<string, Dictionary<string, int>> counters;
+            Dictionary<string, int> basicCounters;
 
-            Players.Player player = new Players.Player(name, color);
-            player.messages = this.getMessages(playersMessages + "player" + numberOfPlayer + ".xml", basicCounters["messageCounter"]);
-            player.technologies.technologies = this.getTechnologies(playersTechnologies + "player" + numberOfPlayer + ".xml", basicCounters, player);
-            return null;
+            //test ----------
+            for (int i = 0; i < basicInfoPaths.Length; i++)
+            {
+                counters = this.getCounters(countersPaths[i]);
+                basicCounters = counters["basicCounters"];
+
+                XDocument basicInfoXml = XDocument.Load(basicInfoPaths[i]);
+                XElement basicInfoRoot = basicInfoXml.Element("basicInfo");
+
+                SFML.Graphics.Color color = new SFML.Graphics.Color(System.Byte.Parse(basicInfoRoot.Element("color").Element("R").Value),
+                                                                    System.Byte.Parse(basicInfoRoot.Element("color").Element("G").Value),
+                                                                    System.Byte.Parse(basicInfoRoot.Element("color").Element("B").Value),
+                                                                    System.Byte.Parse(basicInfoRoot.Element("color").Element("A").Value));
+                string name = basicInfoRoot.Element("name").Value;
+
+                Players.Player player = new Players.Player(name, color);
+                player.messages = this.getMessages(messagesPaths[i], basicCounters["messageCounter"]);
+                player.technologies.technologies = this.getTechnologies(technologiesPaths[i], basicCounters, player);
+                player.villages = this.getVillages(villagesPaths[i], counters, player);
+
+                players.Add(player);
+            }
+            return players;
         }
 
-        public void playerRestore()
+        public Maps.Map getMap(List<Players.Player> players)
         {
+            string mapPath = this.path + "map\\";
+            XDocument mapXml = XDocument.Load(mapPath + "map.xml");
+            XElement mapRoot = mapXml.Element("map");
 
-        }
+            Maps.Map map = new Maps.Map(int.Parse(mapRoot.Element("size").Element("x").Value), int.Parse(mapRoot.Element("size").Element("y").Value));
 
-        public void mapRestore()
-        {
-            
+            foreach(Players.Player player in players)
+                foreach (Villages.Village village in player.villages)
+                {
+                    map.place(village);
+                }
+
+            for (int i = 1; i <= (map.sizeX * map.sizeY); i++)
+            {
+                XElement mapTile = mapRoot.Element("tiles").Element("tile" + i);
+
+                switch (mapTile.Element("type").Value)
+                {
+                    case "MOUNTAINS":
+                        {
+                            Maps.Location loc = new Maps.Location(int.Parse(mapTile.Element("location").Element("x").Value),
+                                                                  int.Parse(mapTile.Element("location").Element("y").Value));
+                            map.place(new Maps.Tile(loc, Maps.TerrainType.MOUNTAINS));
+                            break;
+                        }
+                    case "LAKES":
+                        {
+                            Maps.Location loc = new Maps.Location(int.Parse(mapTile.Element("location").Element("x").Value),
+                                                                  int.Parse(mapTile.Element("location").Element("y").Value));
+                            map.place(new Maps.Tile(loc, Maps.TerrainType.LAKES));
+                            break;
+                        }
+                }
+            }
+
+            int time = int.Parse(mapRoot.Element("time").Value);
+            GameTime.init(time);
+
+            return map;
         }
     }
 }
