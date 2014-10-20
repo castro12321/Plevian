@@ -273,8 +273,6 @@
   <ItemGroup>
     <Compile Include="Maps\Location.cs" />
     <Compile Include="Maps\Map.cs" />
-    <Compile Include="Maps\MapFileReader.cs" />
-    <Compile Include="Maps\MapFileWriter.cs" />
     <Compile Include="Maps\MapGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
