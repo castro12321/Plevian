@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace Plevian.Players
 {
+    [Serializable]
     public class Player
     {
         public readonly string name;

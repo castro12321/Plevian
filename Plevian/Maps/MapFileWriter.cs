@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Plevian.Save;
 
 namespace Plevian.Maps
 {
@@ -12,7 +13,7 @@ namespace Plevian.Maps
     /// </summary>
     public class MapFileWriter
     {
-        public void save(Map map, Save save)
+        public void save(Map map, SaveWriter save)
         {
             FileStream fs = new FileStream(save.getMapFile(), FileMode.OpenOrCreate, FileAccess.Write);
 

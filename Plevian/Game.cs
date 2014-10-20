@@ -4,6 +4,7 @@ using Plevian.Maps;
 using Plevian.Messages;
 using Plevian.Players;
 using Plevian.RequirementS;
+using Plevian.Save;
 using Plevian.Units;
 using Plevian.Villages;
 using SFML.Graphics;
@@ -81,13 +82,26 @@ namespace Plevian
                     if(building.getMaxLevel() <= i)
                         building.upgrade();
                 }
+
+            // player test
+            players.Clear();
+            players.Add(player);
+            players.Add(enemy);
+            System.Console.WriteLine("player save --------");
+
+            /*SaveWriter writeSave = new SaveWriter("save1");
+            writeSave.writeSave(map, players);*/
+
+            /*SaveReader readSave = new SaveReader("save1");
+            players = readSave.getPlayers();
+            map = readSave.getMap(players);*/
         }
 
         /// <summary>
         /// Initializes a game from save
         /// </summary>
         /// <param name="save">save to initialize from</param>
-        public Game(Save save)
+        public Game(SaveWriter save)
         {
             gameTime = save.getGameTime();
             map = new MapFileReader().read(save);

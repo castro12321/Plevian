@@ -38,18 +38,15 @@
     <StartupObject>Plevian.Entry</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="sfmlnet-audio-2, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dependencies\SFML\lib\x32\sfmlnet-audio-2.dll</HintPath>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="sfmlnet-audio-2">
+      <HintPath>..\..\..\Biblioteki\C#\SFML\lib\x32\sfmlnet-audio-2.dll</HintPath>
     </Reference>
-    <Reference Include="sfmlnet-graphics-2, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dependencies\SFML\lib\x32\sfmlnet-graphics-2.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+    <Reference Include="sfmlnet-graphics-2">
+      <HintPath>..\..\..\Biblioteki\C#\SFML\lib\x32\sfmlnet-graphics-2.dll</HintPath>
     </Reference>
-    <Reference Include="sfmlnet-window-2, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dependencies\SFML\lib\x32\sfmlnet-window-2.dll</HintPath>
+    <Reference Include="sfmlnet-window-2">
+      <HintPath>..\..\..\Biblioteki\C#\SFML\lib\x32\sfmlnet-window-2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -147,6 +144,8 @@
     <Compile Include="Resource\ResourceControl.xaml.cs">
       <DependentUpon>ResourceControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Save\SaveReader.cs" />
+    <Compile Include="Save\SaveWriter.cs" />
     <Compile Include="TechnologY\ResearchQueueItem.cs" />
     <Compile Include="TechnologY\Technologies.cs" />
     <Compile Include="TechnologY\Technology.cs" />
@@ -169,7 +168,6 @@
     <Compile Include="Resource\Resources.cs" />
     <Compile Include="Resource\Stone.cs" />
     <Compile Include="Resource\Wood.cs" />
-    <Compile Include="Save.cs" />
     <Compile Include="Seconds.cs" />
     <Compile Include="Maps\TerrainType.cs" />
     <Compile Include="Units\Archer.cs" />
@@ -310,7 +308,9 @@
     <Resource Include="GFX\Stone.png" />
     <Resource Include="GFX\wood.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
