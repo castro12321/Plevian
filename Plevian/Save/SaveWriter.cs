@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using System.Xml.Linq;
 
 namespace Plevian.Save
 {
@@ -354,6 +354,12 @@ namespace Plevian.Save
             mapFile.WriteLine("\t<time>" + GameTime.now + "</time>");
             mapFile.WriteLine("</map>");
             mapFile.Close();
+        }
+
+        public void writeSave(Maps.Map map, List<Players.Player> players)
+        {
+            this.saveMap(map);
+            this.savePlayers(players);
         }
     }
 }
