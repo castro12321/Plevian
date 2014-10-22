@@ -182,9 +182,8 @@ namespace Plevian.Save
                 }
                 village.buildTimeEnd.time = int.Parse(villageRoot.Element("builtTimeEnd").Value);
                 village.recruitTimeEnd.time = int.Parse(villageRoot.Element("recruitTimeEnd").Value);
-               // village.researchTimeEnd = int.Parse(villageRoot.Element("builtTimeEnd").Value); //ERROR in SaveWriter
-                
-                
+                village.researchTimeEnd.time = int.Parse(villageRoot.Element("builtTimeEnd").Value);
+
                 villages.Add(village);
             }
 

@@ -299,8 +299,7 @@ namespace Plevian.Save
 
                     villagesFile.WriteLine("\t\t<recruitTimeEnd>" + village.recruitTimeEnd.time + "</recruitTimeEnd>");
 
-                    /*if (village.researchTimeEnd != null)
-                        villagesFile.WriteLine("\t\t<researchTimeEnd>" + village.researchTimeEnd.time + "</researchTimeEnd>");*/ //TODO: fix it
+                    villagesFile.WriteLine("\t\t<researchTimeEnd>" + village.researchTimeEnd.time + "</researchTimeEnd>");
 
                     villagesFile.WriteLine("\t</village" + villageCounter + ">");
 
