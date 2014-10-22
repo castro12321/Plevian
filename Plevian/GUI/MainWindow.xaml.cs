@@ -100,7 +100,7 @@ namespace Plevian
         public static void SwitchToVillage(Village to)
         {
             getInstance().villageTab.Village = to;
-            changeTab(TabType.VILLAGE);
+            changeTab(TabType.Village);
         }
 
         public static void changeTab(TabType type)
@@ -108,14 +108,19 @@ namespace Plevian
             TabControl tabs = getInstance().MainWindowTabs;
             switch(type)
             {
-                case TabType.MAP :
+                case TabType.Map:
                     {
                         tabs.SelectedItem = getInstance().mapTabItem;
                         break;
                     }
-                case TabType.VILLAGE :
+                case TabType.Village:
                     {
                         tabs.SelectedItem = getInstance().villageTabItem;
+                        break;
+                    }
+                case TabType.Message:
+                    {
+                        tabs.SelectedItem = getInstance().messagesTabItem;
                         break;
                     }
             }

@@ -8,8 +8,8 @@ namespace Plevian.GUI
 {
     public enum TabType
     {
-        MAP = 1,
-        VILLAGE = 2,
-        MESSAGES = 3
+        Map = 1,
+        Village = 2,
+        Message = 3,
     }
 }
