@@ -93,9 +93,11 @@ namespace Plevian
             /*SaveWriter writeSave = new SaveWriter("test");
             writeSave.writeSave(map, players);*/
 
+            /*
             SaveReader readSave = new SaveReader("test");
             players = readSave.getPlayers();
             map = readSave.getMap(players);
+            */
         }
 
         /// <summary>

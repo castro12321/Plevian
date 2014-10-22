@@ -185,5 +185,11 @@ namespace Plevian.Resource
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public override int GetHashCode()
+        {
+            // TODO: Better hashCode algorithm
+            return food.GetHashCode();
+        }
     }
 }

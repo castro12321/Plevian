@@ -8,7 +8,7 @@ namespace Plevian.Debugging
 {
     public class Logger
     {
-        private static bool ai = true;
+        private static bool ai = false;
         private static bool cas = false;
         private static bool shot = false;
         private static bool logVillage = false;

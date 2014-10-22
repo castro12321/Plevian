@@ -20,6 +20,9 @@
             <TabItem Name="messagesTabItem" Header="Wiadomości">
                 <!-- Moved to custom control. Created in constructor -->
             </TabItem>
+            <TabItem Name="settingsTabItem" Header="Ustawienia">
+                <!-- Moved to custom control. Created in constructor -->
+            </TabItem>
         </TabControl>
 
         <StatusBar Grid.Row="2">

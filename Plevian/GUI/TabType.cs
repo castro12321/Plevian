@@ -11,5 +11,6 @@ namespace Plevian.GUI
         Map = 1,
         Village = 2,
         Message = 3,
+        Settings = 4,
     }
 }

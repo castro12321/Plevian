@@ -29,6 +29,7 @@ namespace Plevian
         private MapTab mapTab;
         public VillageTab villageTab;
         private MessagesTab messagesTab;
+        private SettingsTab settingsTab;
 
         private static MainWindow instance;
 
@@ -50,6 +51,9 @@ namespace Plevian
            
             // Initialize messages tab
             messagesTabItem.Content = (messagesTab = new MessagesTab(Game.player));
+
+            // Initialize settings tab
+            settingsTabItem.Content = (settingsTab = new SettingsTab());
 
             // Listen to some events
             Closed += new EventHandler(OnClose);
