@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+// TODO: Save writer/reader
+// - Orders handling
+
 namespace Plevian.Save
 {
     public class SaveWriter
@@ -14,10 +17,10 @@ namespace Plevian.Save
 
         public SaveWriter(String path)
         {
-            Directory.CreateDirectory("Save\\");
-
-            this.path = "Save\\" + path + "\\";
+            //Directory.CreateDirectory("Save\\");
+            //this.path = "Save\\" + path + "\\";
             //if (!Directory.Exists(path))
+            this.path = path + "\\";
             Directory.CreateDirectory(this.path);
         }
 

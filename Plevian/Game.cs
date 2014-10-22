@@ -23,14 +23,10 @@ namespace Plevian
         public readonly GameTime gameTime;
         public readonly Map map;
         
-        /// <summary>
-        /// Initializes brand new game
-        /// </summary>
         public Game()
+            : this(null, null)
         {
             Game.game = this;
-            GameTime.init(0);
-            map = new MapGenerator().Generate(30, 30);
 
             player.SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
             player.SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
@@ -52,10 +48,10 @@ namespace Plevian
 
             Player enemy = new ComputerPlayer("Hitler", SFML.Graphics.Color.Red);
             //player = enemy;
-            Tile berlinTile    = map.FindEmptyTile();
+            Tile berlinTile = map.FindEmptyTile();
             Tile frankfurtTile = map.FindEmptyTile();
-            Tile hamburgTile   = map.FindEmptyTile();
-            Village berlin     = new Village(berlinTile.location, enemy, "Berlin");
+            Tile hamburgTile = map.FindEmptyTile();
+            Village berlin = new Village(berlinTile.location, enemy, "Berlin");
             //Village frankfurt  = new Village(frankfurtTile.location, enemy, "Frankfurt");
             //Village hamburger  = new Village(hamburgTile.location, enemy, "Hamburger");
             map.place(berlin);
@@ -79,25 +75,24 @@ namespace Plevian
                 foreach (var pair in berlin.buildings)
                 {
                     Building building = pair.Value;
-                    if(building.getMaxLevel() <= i)
+                    if (building.getMaxLevel() <= i)
                         building.upgrade();
                 }
+        }
+        
+        /// <summary>
+        /// Initializes brand new game
+        /// </summary>
+        public Game(List<Player> players, Map map)
+        {
+            GameTime.init(0);
+            if (map != null)
+                this.map = map;
+            else
+                this.map = new MapGenerator().Generate(30, 30);
 
-
-            // player test
-            players.Clear();
-            players.Add(player);
-            players.Add(enemy);
-            System.Console.WriteLine("player save --------");
-
-            /*SaveWriter writeSave = new SaveWriter("test");
-            writeSave.writeSave(map, players);*/
-
-            /*
-            SaveReader readSave = new SaveReader("test");
-            players = readSave.getPlayers();
-            map = readSave.getMap(players);
-            */
+            if (players != null)
+                this.players = players;
         }
 
         /// <summary>

@@ -14,6 +14,11 @@ namespace Plevian.Save
     {
         private string path;
 
+        public SaveReader(string name)
+        {
+            this.path = name + "\\";
+        }
+
         private Dictionary<string, Dictionary<string, int>> getCounters(string path)
         {
             Dictionary<string, Dictionary<string, int>> counters = new Dictionary<string, Dictionary<string, int>>();
@@ -234,11 +239,6 @@ namespace Plevian.Save
             }
 
             return player.technologies.technologies;
-        }
-
-        public SaveReader(string name)
-        {
-            this.path = "Save\\" + name + "\\";
         }
 
         public List<Players.Player> getPlayers()

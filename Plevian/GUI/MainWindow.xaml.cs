@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Plevian.GUI;
 using Plevian.Messages;
+using System.Collections.Generic;
+using Plevian.Players;
 
 // TODO: Plevian main TODO board
 // Known issues:
@@ -22,7 +24,7 @@ namespace Plevian
     /// </summary>
     public partial class MainWindow : System.Windows.Window
     {
-        private static bool running = true;
+        private bool running = true;
         private static Random random = new Random();
         private Game game;
 
@@ -33,14 +35,17 @@ namespace Plevian
 
         private static MainWindow instance;
 
-        public MainWindow()
+        public MainWindow(List<Player> players, Map map)
         {
             instance = this;
             // Initialize GUI
             InitializeComponent();
 
             // Initialize game
-            game = new Game();
+            if (players != null && map != null)
+                game = new Game(players, map);
+            else
+                game = new Game();
 
             // Initialize map tab
             mapTabItem.Content = (mapTab = new MapTab(game));
@@ -91,7 +96,7 @@ namespace Plevian
             }
         }
 
-        static void OnClose(object sender, EventArgs e)
+        private void OnClose(object sender, EventArgs e)
         {
             running = false;
         }
