@@ -35,7 +35,7 @@ namespace Plevian
 
         private static MainWindow instance;
 
-        public MainWindow(List<Player> players, Map map)
+        public MainWindow(List<Player> players, Map map, int time)
         {
             instance = this;
             // Initialize GUI
@@ -43,7 +43,7 @@ namespace Plevian
 
             // Initialize game
             if (players != null && map != null)
-                game = new Game(players, map);
+                game = new Game(players, map, time);
             else
                 game = new Game();
 

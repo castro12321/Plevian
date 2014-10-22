@@ -328,10 +328,20 @@ namespace Plevian.Save
                 }
             }
 
+            return map;
+        }
+
+        public int getGameTime()
+        {
+            string mapPath = this.path + "map\\";
+            XDocument mapXml = XDocument.Load(mapPath + "map.xml");
+            XElement mapRoot = mapXml.Element("map");
+
+
             int time = int.Parse(mapRoot.Element("time").Value);
             GameTime.init(time);
 
-            return map;
+            return time;
         }
     }
 }

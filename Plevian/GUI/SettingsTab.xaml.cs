@@ -63,6 +63,8 @@ namespace Plevian.GUI
 
             Entry.players = readSave.getPlayers();
             Entry.map = readSave.getMap(Entry.players);
+            Entry.time = readSave.getGameTime();
+
             MainWindow.getInstance().Close();
         }
     }

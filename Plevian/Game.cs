@@ -24,9 +24,10 @@ namespace Plevian
         public readonly Map map;
         
         public Game()
-            : this(null, null)
+            : this(null, null, 0)
         {
             Game.game = this;
+            GameTime.init(0);
 
             player.SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
             player.SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
@@ -83,9 +84,10 @@ namespace Plevian
         /// <summary>
         /// Initializes brand new game
         /// </summary>
-        public Game(List<Player> players, Map map)
+        public Game(List<Player> players, Map map, int time)
         {
-            GameTime.init(0);
+            GameTime.init(time);
+
             if (map != null)
                 this.map = map;
             else
