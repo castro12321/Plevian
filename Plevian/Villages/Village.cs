@@ -176,6 +176,7 @@ namespace Plevian.Villages
             this.resources = new Resources(999, 999, 999, 999);
             this.recruitTimeEnd = GameTime.now;
             this.buildTimeEnd = GameTime.now;
+            this.researchTimeEnd = GameTime.now;
             this.name = name;
             this.army = new Army();
 
