@@ -29,27 +29,27 @@ namespace Plevian.Save
             int villageCounter = int.Parse(counterRoot.Element("villageCounter").Value);
             for (int i = 0; i <= villageCounter; i++)
             {
-                Dictionary<string, int> test = new Dictionary<string, int>();
+                Dictionary<string, int> buffer = new Dictionary<string, int>();
                 if (i == 0)
                 {
-                    test.Add("messageCounter", int.Parse(counterRoot.Element("messageCounter").Value));
-                    test.Add("technologyCounter", int.Parse(counterRoot.Element("technologyCounter").Value));
-                    test.Add("villageCounter", villageCounter);
+                    buffer.Add("messageCounter", int.Parse(counterRoot.Element("messageCounter").Value));
+                    buffer.Add("technologyCounter", int.Parse(counterRoot.Element("technologyCounter").Value));
+                    buffer.Add("villageCounter", villageCounter);
                 }
                 else
                 {
-                    test.Add("buildingCounter", int.Parse(counterRoot.Element("village" + i).Element("buildingCounter").Value));
-                    test.Add("armyCounter", int.Parse(counterRoot.Element("village" + i).Element("armyCounter").Value));
-                    test.Add("buildingQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("buildingQueueCounter").Value));
-                    test.Add("researchQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("researchQueueCounter").Value));
-                    test.Add("recruitQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("recruitQueueCounter").Value));
-                    test.Add("queueCounter", int.Parse(counterRoot.Element("village" + i).Element("queueCounter").Value));
+                    buffer.Add("buildingCounter", int.Parse(counterRoot.Element("village" + i).Element("buildingCounter").Value));
+                    buffer.Add("armyCounter", int.Parse(counterRoot.Element("village" + i).Element("armyCounter").Value));
+                    buffer.Add("buildingQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("buildingQueueCounter").Value));
+                    buffer.Add("researchQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("researchQueueCounter").Value));
+                    buffer.Add("recruitQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("recruitQueueCounter").Value));
+                    buffer.Add("queueCounter", int.Parse(counterRoot.Element("village" + i).Element("queueCounter").Value));
                 }
 
                 if (i == 0)
-                    counters.Add("basicCounters", test);
+                    counters.Add("basicCounters", buffer);
                 else
-                    counters.Add("village" + i, test);
+                    counters.Add("village" + i, buffer);
             }
 
             return counters;
@@ -119,13 +119,13 @@ namespace Plevian.Save
                                 start.time = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("Start").Value);
                                 end.time = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("End").Value);
 
-                                Villages.Queues.QueueItem buildingQueue = new Buildings.BuildingQueueItem(start,
+                                Buildings.BuildingQueueItem buildingQueue = new Buildings.BuildingQueueItem(start,
                                                                                                           end,
                                                                                                           toBuild,
                                                                                                           int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("level").Value));
 
                                 village.queues.queue.Add(buildingQueue);
-                                village.queues.buildingQueue.Add(buildingQueue as Buildings.BuildingQueueItem);
+                                village.queues.buildingQueue.Add(buildingQueue);
 
                                 break;
                             }
@@ -145,10 +145,10 @@ namespace Plevian.Save
                                 GameTime end = GameTime.now;
                                 start.time = int.Parse(villageRoot.Element("queues").Element("researchQueue" + l).Element("Start").Value);
                                 end.time = int.Parse(villageRoot.Element("queues").Element("researchQueue" + l).Element("End").Value);
-                                Villages.Queues.QueueItem researchQueue = new TechnologY.ResearchQueueItem(start, end, researched);
+                                TechnologY.ResearchQueueItem researchQueue = new TechnologY.ResearchQueueItem(start, end, researched);
 
                                 village.queues.queue.Add(researchQueue);
-                                village.queues.researchQueue.Add(researchQueue as TechnologY.ResearchQueueItem);
+                                village.queues.researchQueue.Add(researchQueue);
 
                                 break;
                             }
@@ -157,11 +157,13 @@ namespace Plevian.Save
 
                     if (l <= villageCounters["recruitQueueCounter"])
                     {
-                        Units.Unit toRecruit;
                         foreach (Units.UnitType unit in unitType)
                         {
+                            Units.Unit toRecruit;
                             if (village.army[unit].name == villageRoot.Element("queues").Element("recruitQueue" + l).Element("name").Value)
                             {
+                                int buffer = village.army[unit].quantity;
+
                                 toRecruit = village.army[unit];
                                 toRecruit.quantity = 1;
 
@@ -170,16 +172,19 @@ namespace Plevian.Save
                                 start.time = int.Parse(villageRoot.Element("queues").Element("recruitQueue" + l).Element("Start").Value);
                                 end.time = int.Parse(villageRoot.Element("queues").Element("recruitQueue" + l).Element("End").Value);
 
-                                Villages.Queues.QueueItem recruitQueue = new Units.RecruitQueueItem(start, end, toRecruit);
+                                Units.RecruitQueueItem recruitQueue = new Units.RecruitQueueItem(start, end, toRecruit);
 
                                 village.queues.queue.Add(recruitQueue);
-                                village.queues.recruitQueue.Add(recruitQueue as Units.RecruitQueueItem);
+                                village.queues.recruitQueue.Add(recruitQueue);
+
+                                village.army[unit].quantity = buffer;
 
                                 break;
-;                            }
+                            }
                         }
                     }
                 }
+
                 village.buildTimeEnd.time = int.Parse(villageRoot.Element("builtTimeEnd").Value);
                 village.recruitTimeEnd.time = int.Parse(villageRoot.Element("recruitTimeEnd").Value);
                 village.researchTimeEnd.time = int.Parse(villageRoot.Element("builtTimeEnd").Value);
@@ -259,8 +264,7 @@ namespace Plevian.Save
 
             Dictionary<string, Dictionary<string, int>> counters;
             Dictionary<string, int> basicCounters;
-
-            //test ----------
+         
             for (int i = 0; i < basicInfoPaths.Length; i++)
             {
                 counters = this.getCounters(countersPaths[i]);
@@ -288,6 +292,7 @@ namespace Plevian.Save
 
                 players.Add(player);
             }
+
             return players;
         }
 

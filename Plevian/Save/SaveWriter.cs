@@ -227,7 +227,7 @@ namespace Plevian.Save
                     }
                     counterFile.WriteLine("\t\t<armyCounter>" + armyCounter + "</armyCounter>");
                     villagesFile.WriteLine("\t\t</armies>");
-
+                    
                     buildingQueueCounter = 0;
                     villagesFile.WriteLine("\t\t<queues>");
                     foreach (Buildings.BuildingQueueItem buildingQueue in village.queues.buildingQueue)
@@ -307,7 +307,7 @@ namespace Plevian.Save
                 }
                 villagesFile.WriteLine("</villages>");
                 villagesFile.Close();
-
+                
                 counterFile.WriteLine("\t<villageCounter>" + villageCounter + "</villageCounter>");
                 counterFile.WriteLine("</counters>");
                 counterFile.Close();
