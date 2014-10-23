@@ -239,7 +239,7 @@ namespace Plevian.Players
             foreach(var unit in villageArmy)
             {
                 Unit toAdd = unit.Value.clone();
-                toAdd.quantity = random.Next(0, toAdd.quantity);
+                toAdd.quantity = random.Next(toAdd.quantity/2, toAdd.quantity);
                 attacking.add(toAdd);
             }
 
