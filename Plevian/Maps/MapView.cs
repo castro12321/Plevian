@@ -29,21 +29,29 @@ namespace Plevian.Maps
         public event EventHandler<MouseMovedEventArgs>  PlevianMouseMovedEvent;
         public event EventHandler<MapDraggedEventArgs> PlevianMapDraggedEvent;
 
-
-
         private bool mouseDrag = false;
         private bool mouseLeftClicked = false;
         private Location previousMouseLocation = new Location(0, 0);
         private Location mouseDownStartLocation = new Location(0, 0);
         private int tileWidth, tileHeight;
 
-
         public Camera camera { get; private set; }
 
-
+        private Texture villageTex, lakeTex, plainsTex, mountainsTex;
+        private Sprite village, lake, plains, mountains;
         public MapView(Map map, System.Windows.Forms.Integration.WindowsFormsHost host)
         {
+            //villageTex = new Texture(@"village");
+            villageTex = new Texture(Properties.Resources.village);
+            lakeTex      = new Texture("GFX\\lake.png");
+            plainsTex    = new Texture("GFX\\plains.png");
+            mountainsTex = new Texture("GFX\\mountains.png");
+            village   = new Sprite(new Texture("GFX\\village.png"));
+            lake      = new Sprite(new Texture("GFX\\lake.png"));
+            plains    = new Sprite(new Texture("GFX\\plains.png"));
+            mountains = new Sprite(new Texture("GFX\\mountains.png"));
             this.map = map;
+            //Properties.Resources.
             
             renderer = new RenderWindow(Handle); // Only to avoid nulls. Will be recreated in next control resize (which is sent automatically when the window initializes)
 
@@ -192,34 +200,32 @@ namespace Plevian.Maps
                     if (x < 0 || x >= map.sizeX) continue;
                     if (y < 0 || y >= map.sizeY) continue;
                     Tile tile = map.tileAt(new Location(x, y));
-                    Shape tileShape = getShapeFor(tile);
-                    tileShape.Position = camera.translate(new Vector2f(x * tileSizeInPixels, y * tileSizeInPixels));
-                    renderer.Draw(tileShape);
+                    Sprite tileSprite = getShapeFor(tile);
+                    tileSprite.Position = camera.translate(new Vector2f(x * tileSizeInPixels, y * tileSizeInPixels));
+                    renderer.Draw(tileSprite);
                 }
            renderer.Display();
         }
 
-        private Shape shape = new RectangleShape(new SFML.Window.Vector2f(tileSizeInPixels, tileSizeInPixels));
-        private Shape getShapeFor(Tile tile)
+        private Sprite getShapeFor(Tile tile)
         {
             TerrainType type = tile.type;
             switch(type)
             {
-                case TerrainType.LAKES: shape.FillColor = Color.Blue; break;
-                case TerrainType.MOUNTAINS: shape.FillColor = Color.White; break;
-                case TerrainType.PLAINS: shape.FillColor = Color.Green; break;
+                case TerrainType.LAKES: return lake;
+                case TerrainType.MOUNTAINS: return mountains;
+                case TerrainType.PLAINS: return plains;
                 case TerrainType.VILLAGE:
                     {
-                        shape.FillColor = Color.Red;
                         if (tile is Village)
                         {
                             Village village = tile as Village;
-                            shape.FillColor = village.Owner.color;
+                            this.village.Color = village.Owner.color;
                         }
-                        break;
+                        return this.village;
                     }
             }
-            return shape;
+            return null;
         }
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
