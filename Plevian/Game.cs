@@ -60,7 +60,8 @@ namespace Plevian
             enemy.addVillage(berlin);
             //enemy.addVillage(frankfurt);
             //enemy.addVillage(hamburger);
-            addPlayer(enemy);
+            
+            //addPlayer(enemy);
 
             village1.build(BuildingType.TOWN_HALL);
             village1.addUnit(new Warrior(10));
@@ -85,10 +86,7 @@ namespace Plevian
         /// </summary>
         public Game(List<Player> players, Map map, int time)
         {
-            if (time != 0)
-                GameTime.init(time);
-            else
-                GameTime.init(0);
+            GameTime.init(time);
 
             if (map != null)
                 this.map = map;

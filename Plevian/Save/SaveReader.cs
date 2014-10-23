@@ -7,6 +7,13 @@ using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
+using Plevian.Buildings;
+using Plevian.Villages;
+using Plevian.Players;
+using Plevian.Maps;
+using Plevian.Units;
+using Plevian.Messages;
+using Plevian.TechnologY;
 
 namespace Plevian.Save
 {
@@ -55,9 +62,9 @@ namespace Plevian.Save
             return counters;
         }
 
-        private ObservableCollection<Villages.Village> getVillages(string path, Dictionary<string, Dictionary<string, int>> counters, Players.Player player)
+        private ObservableCollection<Village> getVillages(string path, Dictionary<string, Dictionary<string, int>> counters, Player player)
         {
-            ObservableCollection<Villages.Village> villages = new ObservableCollection<Villages.Village>();
+            ObservableCollection<Village> villages = new ObservableCollection<Village>();
             Dictionary<string, int> basicCounters = counters["basicCounters"];
 
             XDocument villagesXml = XDocument.Load(path);
@@ -71,7 +78,7 @@ namespace Plevian.Save
                 int x = int.Parse(villageRoot.Element("location").Element("x").Value);
                 int y = int.Parse(villageRoot.Element("location").Element("y").Value);
 
-                Villages.Village village = new Villages.Village(new Maps.Location(x, y), player, villageRoot.Element("name").Value);
+                Village village = new Village(new Location(x, y), player, villageRoot.Element("name").Value);
 
                 village.resources.food = int.Parse(villageRoot.Element("resources").Element("food").Value);
                 village.resources.iron = int.Parse(villageRoot.Element("resources").Element("iron").Value);
@@ -79,8 +86,8 @@ namespace Plevian.Save
                 village.resources.wood = int.Parse(villageRoot.Element("resources").Element("wood").Value);
                 
                 int j = 1;
-                var unitType = Enum.GetValues(typeof(Units.UnitType));
-                foreach (Units.UnitType unit in unitType)
+                var unitType = Enum.GetValues(typeof(UnitType));
+                foreach (UnitType unit in unitType)
                 {
                     if (village.army[unit].unitType.ToString() == villageRoot.Element("armies").Element("army" + j).Element("unitType").Value &&
                         village.army[unit].name == villageRoot.Element("armies").Element("army" + j).Element("name").Value)
@@ -91,7 +98,7 @@ namespace Plevian.Save
                 }
 
                 int k = 1;
-                foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> building in village.buildings)
+                foreach (KeyValuePair<BuildingType, Building> building in village.buildings)
                 {
                     if (building.Key.ToString() == villageRoot.Element("buildings").Element("building" + k).Element("key").Value)
                     {
@@ -105,9 +112,9 @@ namespace Plevian.Save
                     if (l <= villageCounters["buildingQueueCounter"])
                     {
                         string type = villageRoot.Element("queues").Element("buildingQueue" + l).Element("toBuild").Element("type").Value;
-                        Buildings.Building toBuild;
+                        Building toBuild;
 
-                        foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> building in village.buildings)
+                        foreach (KeyValuePair<BuildingType, Building> building in village.buildings)
                         {
                             if (building.Key.ToString() == type)
                             {
@@ -118,14 +125,10 @@ namespace Plevian.Save
                                 GameTime end = GameTime.now;
                                 start.time = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("Start").Value);
                                 end.time = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("End").Value);
+                                int level = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("level").Value);
+                                BuildingQueueItem buildingQueue = new BuildingQueueItem(start, end, toBuild, level);
 
-                                Buildings.BuildingQueueItem buildingQueue = new Buildings.BuildingQueueItem(start,
-                                                                                                          end,
-                                                                                                          toBuild,
-                                                                                                          int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("level").Value));
-
-                                village.queues.queue.Add(buildingQueue);
-                                village.queues.buildingQueue.Add(buildingQueue);
+                                village.queues.Add(buildingQueue);
 
                                 break;
                             }
@@ -134,7 +137,7 @@ namespace Plevian.Save
                     
                     if (l <= villageCounters["researchQueueCounter"])
                     {
-                        TechnologY.Technology researched;
+                        Technology researched;
                         for (int m = 1; m <= basicCounters["technologyCounter"]; m++)
                         {
                             if (player.technologies.technologies[m - 1].Name == villageRoot.Element("queues").Element("researchQueue" + l).Element("name").Value)
@@ -145,11 +148,9 @@ namespace Plevian.Save
                                 GameTime end = GameTime.now;
                                 start.time = int.Parse(villageRoot.Element("queues").Element("researchQueue" + l).Element("Start").Value);
                                 end.time = int.Parse(villageRoot.Element("queues").Element("researchQueue" + l).Element("End").Value);
-                                TechnologY.ResearchQueueItem researchQueue = new TechnologY.ResearchQueueItem(start, end, researched);
+                                ResearchQueueItem researchQueue = new ResearchQueueItem(start, end, researched);
 
-                                village.queues.queue.Add(researchQueue);
-                                village.queues.researchQueue.Add(researchQueue);
-
+                                village.queues.Add(researchQueue);
                                 break;
                             }
                         }
@@ -157,14 +158,12 @@ namespace Plevian.Save
 
                     if (l <= villageCounters["recruitQueueCounter"])
                     {
-                        foreach (Units.UnitType unit in unitType)
+                        foreach (UnitType unit in unitType)
                         {
-                            Units.Unit toRecruit;
+                            Unit toRecruit;
                             if (village.army[unit].name == villageRoot.Element("queues").Element("recruitQueue" + l).Element("name").Value)
                             {
-                                int buffer = village.army[unit].quantity;
-
-                                toRecruit = village.army[unit];
+                                toRecruit = village.army[unit].clone();
                                 toRecruit.quantity = 1;
 
                                 GameTime start = GameTime.now;
@@ -172,13 +171,9 @@ namespace Plevian.Save
                                 start.time = int.Parse(villageRoot.Element("queues").Element("recruitQueue" + l).Element("Start").Value);
                                 end.time = int.Parse(villageRoot.Element("queues").Element("recruitQueue" + l).Element("End").Value);
 
-                                Units.RecruitQueueItem recruitQueue = new Units.RecruitQueueItem(start, end, toRecruit);
+                                RecruitQueueItem recruitQueue = new RecruitQueueItem(start, end, toRecruit);
 
-                                village.queues.queue.Add(recruitQueue);
-                                village.queues.recruitQueue.Add(recruitQueue);
-
-                                village.army[unit].quantity = buffer;
-
+                                village.queues.Add(recruitQueue);
                                 break;
                             }
                         }
@@ -197,7 +192,7 @@ namespace Plevian.Save
                 if (villages[i].name == villagesRoot.Element("village" + (i + 1)).Element("name").Value &&
                     villagesRoot.Element("village" + (i + 1)).Element("capital").Value == "true")
                 {
-                    Villages.Village buffer = villages[0];
+                    Village buffer = villages[0];
                     villages[0] = villages[i];
                     villages[i] = buffer;
 
@@ -208,16 +203,16 @@ namespace Plevian.Save
             return villages;
         }
 
-        private ObservableCollection<Messages.Message> getMessages(string path, int messagesCounter)
+        private ObservableCollection<Message> getMessages(string path, int messagesCounter)
         {
-            ObservableCollection<Messages.Message> messages = new ObservableCollection<Messages.Message>();
+            ObservableCollection<Message> messages = new ObservableCollection<Message>();
             XDocument messagesXml = XDocument.Load(path);
             XElement messagesRoot = messagesXml.Root;
 
             for (int i = 1; i <= messagesCounter; i++)
             {
-                System.DateTime date = System.DateTime.Parse(messagesRoot.Element("message" + i).Element("date").Value);
-                Messages.Message message = new Messages.Message(messagesRoot.Element("message" + i).Element("sender").Value,
+                DateTime date = DateTime.Parse(messagesRoot.Element("message" + i).Element("date").Value);
+                Message message = new Message(messagesRoot.Element("message" + i).Element("sender").Value,
                                                                 messagesRoot.Element("message" + i).Element("topic").Value,
                                                                 messagesRoot.Element("message" + i).Element("text").Value,
                                                                 date);
@@ -227,7 +222,7 @@ namespace Plevian.Save
             return messages;
         }
 
-        private List<TechnologY.Technology> getTechnologies(string path, Dictionary<string, int> basicCounters, Players.Player player)
+        private List<Technology> getTechnologies(string path, Dictionary<string, int> basicCounters, Player player)
         {
             XDocument techXml = XDocument.Load(path);
             XElement techRoot = techXml.Root;
@@ -245,7 +240,7 @@ namespace Plevian.Save
             return player.technologies.technologies;
         }
 
-        public List<Players.Player> getPlayers()
+        public List<Player> getPlayers()
         {
             string playersPath = this.path + "players\\";
             string playersBasicInfo = playersPath + "basicInfo\\";
@@ -260,7 +255,7 @@ namespace Plevian.Save
             string[] villagesPaths = Directory.GetFiles(playersVillages);
             string[] countersPaths = Directory.GetFiles(playersCounters);
 
-            List<Players.Player> players = new List<Players.Player>();
+            List<Player> players = new List<Player>();
 
             Dictionary<string, Dictionary<string, int>> counters;
             Dictionary<string, int> basicCounters;
@@ -273,18 +268,18 @@ namespace Plevian.Save
                 XDocument basicInfoXml = XDocument.Load(basicInfoPaths[i]);
                 XElement basicInfoRoot = basicInfoXml.Root;
 
-                SFML.Graphics.Color color = new SFML.Graphics.Color(System.Byte.Parse(basicInfoRoot.Element("color").Element("R").Value),
-                                                                    System.Byte.Parse(basicInfoRoot.Element("color").Element("G").Value),
-                                                                    System.Byte.Parse(basicInfoRoot.Element("color").Element("B").Value),
-                                                                    System.Byte.Parse(basicInfoRoot.Element("color").Element("A").Value));
+                SFML.Graphics.Color color = new SFML.Graphics.Color(Byte.Parse(basicInfoRoot.Element("color").Element("R").Value),
+                                                                    Byte.Parse(basicInfoRoot.Element("color").Element("G").Value),
+                                                                    Byte.Parse(basicInfoRoot.Element("color").Element("B").Value),
+                                                                    Byte.Parse(basicInfoRoot.Element("color").Element("A").Value));
                 string name = basicInfoRoot.Element("name").Value;
 
-                Players.Player player;
+                Player player;
 
                 if(basicInfoRoot.Element("computer").Value == "true")
                     player = new Players.ComputerPlayer(name, color);
                 else
-                    player = new Players.Player(name, color);
+                    player = new Player(name, color);
 
                 player.messages = this.getMessages(messagesPaths[i], basicCounters["messageCounter"]);
                 player.technologies.technologies = this.getTechnologies(technologiesPaths[i], basicCounters, player);
@@ -296,16 +291,16 @@ namespace Plevian.Save
             return players;
         }
 
-        public Maps.Map getMap(List<Players.Player> players)
+        public Map getMap(List<Player> players)
         {
             string mapPath = this.path + "map\\";
             XDocument mapXml = XDocument.Load(mapPath + "map.xml");
             XElement mapRoot = mapXml.Element("map");
 
-            Maps.Map map = new Maps.Map(int.Parse(mapRoot.Element("size").Element("x").Value), int.Parse(mapRoot.Element("size").Element("y").Value));
+            Map map = new Map(int.Parse(mapRoot.Element("size").Element("x").Value), int.Parse(mapRoot.Element("size").Element("y").Value));
 
-            foreach(Players.Player player in players)
-                foreach (Villages.Village village in player.villages)
+            foreach(Player player in players)
+                foreach (Village village in player.villages)
                 {
                     map.place(village);
                 }
@@ -318,16 +313,16 @@ namespace Plevian.Save
                 {
                     case "MOUNTAINS":
                         {
-                            Maps.Location loc = new Maps.Location(int.Parse(mapTile.Element("location").Element("x").Value),
-                                                                  int.Parse(mapTile.Element("location").Element("y").Value));
-                            map.place(new Maps.Tile(loc, Maps.TerrainType.MOUNTAINS));
+                            Location loc = new Location(int.Parse(mapTile.Element("location").Element("x").Value),
+                                                        int.Parse(mapTile.Element("location").Element("y").Value));
+                            map.place(new Tile(loc, TerrainType.MOUNTAINS));
                             break;
                         }
                     case "LAKES":
                         {
-                            Maps.Location loc = new Maps.Location(int.Parse(mapTile.Element("location").Element("x").Value),
-                                                                  int.Parse(mapTile.Element("location").Element("y").Value));
-                            map.place(new Maps.Tile(loc, Maps.TerrainType.LAKES));
+                            Location loc = new Location(int.Parse(mapTile.Element("location").Element("x").Value),
+                                                        int.Parse(mapTile.Element("location").Element("y").Value));
+                            map.place(new Tile(loc, TerrainType.LAKES));
                             break;
                         }
                 }

@@ -5,6 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Plevian.Players;
+using Plevian.TechnologY;
+using Plevian.Units;
+using Plevian.Maps;
 
 // TODO: Save writer/reader
 // - Orders handling
@@ -24,7 +28,7 @@ namespace Plevian.Save
             Directory.CreateDirectory(this.path);
         }
 
-        private void savePlayers(List<Players.Player> players)
+        private void savePlayers(List<Player> players)
         {
             int messageCounter;
             int technologyCounter;
@@ -51,7 +55,7 @@ namespace Plevian.Save
             Directory.CreateDirectory(playersCounters);
 
             int playerCounter = 1;
-            foreach (Players.Player player in players)
+            foreach (Player player in players)
             {
                 StreamWriter counterFile = new StreamWriter(playersCounters + "counter" + playerCounter.ToString() + ".xml");
                 counterFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
@@ -100,7 +104,7 @@ namespace Plevian.Save
                 StreamWriter techFile = new StreamWriter(playersTechnologies + "player" + playerCounter.ToString() + ".xml");
                 techFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
                 techFile.WriteLine("<technologies>");
-                foreach(TechnologY.Technology tech in player.technologies.technologies)
+                foreach(Technology tech in player.technologies.technologies)
                 {
                     technologyCounter++;
                     techFile.WriteLine("\t<technology" + technologyCounter + ">");
@@ -175,8 +179,8 @@ namespace Plevian.Save
 
                     armyCounter = 0;
                     villagesFile.WriteLine("\t\t<armies>");
-                    var unitType = Enum.GetValues(typeof(Units.UnitType));
-                    foreach (Units.UnitType unit in unitType)
+                    var unitType = Enum.GetValues(typeof(UnitType));
+                    foreach (UnitType unit in unitType)
                     {
                         armyCounter++;
                         villagesFile.WriteLine("\t\t\t<army" + armyCounter + ">");
@@ -256,7 +260,7 @@ namespace Plevian.Save
                     counterFile.WriteLine("\t\t<buildingQueueCounter>" + buildingQueueCounter + "</buildingQueueCounter>");
 
                     researchQueueCounter = 0;
-                    foreach (TechnologY.ResearchQueueItem researchQueue in village.queues.researchQueue)
+                    foreach (ResearchQueueItem researchQueue in village.queues.researchQueue)
                     {
                         researchQueueCounter++;
                         villagesFile.WriteLine("\t\t\t<researchQueue" + researchQueueCounter + ">");
@@ -270,7 +274,7 @@ namespace Plevian.Save
                     counterFile.WriteLine("\t\t<researchQueueCounter>" + researchQueueCounter + "</researchQueueCounter>");
 
                     recruitQueueCounter = 0;
-                    foreach (Units.RecruitQueueItem recruitQueue in village.queues.recruitQueue)
+                    foreach (RecruitQueueItem recruitQueue in village.queues.recruitQueue)
                     {
                         recruitQueueCounter++;
                         villagesFile.WriteLine("\t\t\t<recruitQueue" + recruitQueueCounter + ">");
@@ -316,7 +320,7 @@ namespace Plevian.Save
             }
         }
 
-        private void saveMap(Maps.Map map)
+        private void saveMap(Map map)
         {
             int tilesCounter;
 
@@ -324,7 +328,7 @@ namespace Plevian.Save
             Directory.CreateDirectory(mapPath);
 
             StreamWriter mapFile = new StreamWriter(mapPath + "map.xml");
-            Plevian.Maps.Tile[,] tiles = map.getMap();
+            Tile[,] tiles = map.getMap();
 
             mapFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
             mapFile.WriteLine("<map>");
@@ -358,7 +362,7 @@ namespace Plevian.Save
             mapFile.Close();
         }
 
-        public void writeSave(Maps.Map map, List<Players.Player> players)
+        public void writeSave(Map map, List<Player> players)
         {
             this.saveMap(map);
             this.savePlayers(players);
