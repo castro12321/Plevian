@@ -17,35 +17,36 @@ namespace Plevian
     public class Game
     {
         /// <summary>The main human-player that is playing the game right now</summary>
-        public static Player player  = new Player("Magnus", new Color(255, 106, 0));
+        private Player mainPlayer = new Player("Magnus", new Color(255, 106, 0));
+        public static Player Player { get { return game.mainPlayer; } }
         public static Game game;
         public readonly List<Player> players = new List<Player>();
-        public readonly GameTime gameTime;
+        //public readonly GameTime gameTime;
         public readonly Map map;
-        
+
         public Game()
-            : this(null, null, 0)
         {
             Game.game = this;
             GameTime.init(0);
-
-            player.SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
-            player.SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
-            player.SendMessage(new Message("Hitler", "Message to you", "I'll kill you", DateTime.Now));
+            this.map = new MapGenerator().Generate(30, 30);
+            
+            mainPlayer.SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
+            mainPlayer.SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
+            mainPlayer.SendMessage(new Message("Hitler", "Message to you", "I'll kill you", DateTime.Now));
 
             Tile village1Tile = map.FindEmptyTile();
             Tile village2Tile = map.FindEmptyTile();
             Tile village3Tile = map.FindEmptyTile();
-            Village village1 = new Village(village1Tile.location, player, "Capital");
+            Village village1 = new Village(village1Tile.location, mainPlayer, "Capital");
             //Village village2 = new Village(village2Tile.location, player, "Luxemburg");
             //Village village3 = new Village(village3Tile.location, player, "Warszawa" );
             map.place(village1);
             //map.place(village2);
             //map.place(village3);
-            player.addVillage(village1);
+            mainPlayer.addVillage(village1);
             //player.addVillage(village2);
             //player.addVillage(village3);
-            addPlayer(player);
+            addPlayer(mainPlayer);
 
             Player enemy = new ComputerPlayer("Hitler", SFML.Graphics.Color.Red);
             //player = enemy;
@@ -61,7 +62,8 @@ namespace Plevian
             enemy.addVillage(berlin);
             //enemy.addVillage(frankfurt);
             //enemy.addVillage(hamburger);
-            addPlayer(enemy);
+            
+            //addPlayer(enemy);
 
             village1.build(BuildingType.TOWN_HALL);
             village1.addUnit(new Warrior(10));
@@ -84,17 +86,13 @@ namespace Plevian
         /// <summary>
         /// Initializes brand new game
         /// </summary>
-        public Game(List<Player> players, Map map, int time)
+        public Game(SaveReader save)
         {
-            GameTime.init(time);
-
-            if (map != null)
-                this.map = map;
-            else
-                this.map = new MapGenerator().Generate(30, 30);
-
-            if (players != null)
-                this.players = players;
+            Game.game = this;
+            GameTime.init(save.getGameTime());
+            this.players = save.getPlayers();
+            this.mainPlayer = players[0];
+            this.map = save.getMap(players);
         }
 
         /// <summary>

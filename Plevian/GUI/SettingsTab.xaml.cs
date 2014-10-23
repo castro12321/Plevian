@@ -59,12 +59,7 @@ namespace Plevian.GUI
         private void LoadButtonClick(object sender, RoutedEventArgs e)
         {
             String loadPath = SelectDirectory("Select load folder", "");
-            SaveReader readSave = new SaveReader(loadPath);
-
-            Entry.players = readSave.getPlayers();
-            Entry.map = readSave.getMap(Entry.players);
-            Entry.time = readSave.getGameTime();
-
+            Entry.save = new SaveReader(loadPath);
             MainWindow.getInstance().Close();
         }
     }

@@ -338,7 +338,7 @@ namespace Plevian.Villages
             newUnit.quantity = 1;
 
             float recruitTimeFromNow = 0;
-            float unitRecruitTime = unit.recruitTime / 10; // TODO: Remove recruit time modifier ("/ 10")
+            float unitRecruitTime = unit.recruitTime;
             foreach (Building b in buildings.Values)
                 unitRecruitTime *= b.getUnitTimeModifierFor(unit.unitType);
             int unitsToRecruit = unit.quantity;

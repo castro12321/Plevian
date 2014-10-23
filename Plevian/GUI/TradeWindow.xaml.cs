@@ -37,7 +37,7 @@ namespace Plevian.GUI
 
             InitializeComponent();
 
-            villagePicker.SetPlayer(Game.player);
+            villagePicker.SetPlayer(Game.Player);
             villagePicker.SelectedVillage += villagePicker_SelectedVillage;
             SelectedVillage(villagePicker.CurrentlySelectedVillage);
         }

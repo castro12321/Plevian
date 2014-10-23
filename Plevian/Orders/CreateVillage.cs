@@ -26,12 +26,12 @@ namespace Plevian.Orders
             // Somebody taken over this tile? abort
             if (Destination.type != TerrainType.PLAINS)
             {
-                Game.player.SendMessage("System", "Failed to create village", "The village has been created by someone else");
+                Game.Player.SendMessage("System", "Failed to create village", "The village has been created by someone else");
                 turnBack();
                 return;
             }
 
-            Player player = Game.player;
+            Player player = Game.Player;
             Map map = Game.game.map;
 
             Village newVillage = new Village(Destination.location, player, "New village");
@@ -46,7 +46,7 @@ namespace Plevian.Orders
             newVillage.addArmy(army);
             */
 
-            Game.player.SendMessage("System", "Created village", newVillage.name + " created at " + newVillage.location);
+            Game.Player.SendMessage("System", "Created village", newVillage.name + " created at " + newVillage.location);
 
             completed = true;
         }
