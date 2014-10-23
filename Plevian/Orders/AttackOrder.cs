@@ -63,7 +63,7 @@ namespace Plevian.Orders
                         onFightLose(afterReport);
                     }
 
-                    Game.player.SendMessage(new Message("Battle report : " + village.name, "Report", afterReport.ToString(), DateTime.Now));
+                    Game.Player.SendMessage(new Message("Battle report : " + village.name, "Report", afterReport.ToString(), DateTime.Now));
                 }
                 else
                 {

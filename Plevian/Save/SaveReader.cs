@@ -17,7 +17,7 @@ using Plevian.TechnologY;
 
 namespace Plevian.Save
 {
-    class SaveReader
+    public class SaveReader
     {
         private string path;
 

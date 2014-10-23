@@ -7,14 +7,13 @@ using Plevian.Debugging;
 using Plevian.Players;
 using Plevian.Maps;
 using System.Threading;
+using Plevian.Save;
 
 namespace Plevian
 {
     public class Entry
     {
-        public static List<Player> players;
-        public static Map map;
-        public static int time;
+        public static SaveReader save;
 
         [STAThread]
         public static void Main(string[] args)
@@ -29,20 +28,16 @@ namespace Plevian
             //app.InitializeComponent();
             //app.Run();
 
-            MainWindow main = new MainWindow(null, null, 0);
-            main.InitializeComponent();
-            main.Show();
-            main.run();
-            main.Close();
-            while(players != null && map != null)
+            do
             {
-                MainWindow newMain = new MainWindow(players, map, time);
-                players = null;
-                map = null;
-                newMain.Show();
-                newMain.run();
-                newMain.Close();
+                MainWindow main = new MainWindow(save);
+                save = null;
+                main.InitializeComponent();
+                main.Show();
+                main.run();
+                main.Close();
             }
+            while (save != null);
 
         }
     }

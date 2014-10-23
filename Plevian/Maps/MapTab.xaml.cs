@@ -81,7 +81,7 @@ namespace Plevian.Maps
                 owner.Content = village.Owner.name;
                 VillageName.Content = village.name;
                 VillageNameStackPanel.Visibility = System.Windows.Visibility.Visible;
-                if (village.Owner == Game.player || true) // Remove "|| true"
+                if (village.Owner == Game.Player || true) // Remove "|| true"
                 {
                     EnterVillageButton.IsEnabled = true;
                     EnterVillageButton.DataContext = tile;
@@ -116,7 +116,7 @@ namespace Plevian.Maps
 
         private void OnSendUnitsClick(object sender, RoutedEventArgs e)
         {
-            SendUnitsWindow window = new SendUnitsWindow(Game.player, clickedTile);
+            SendUnitsWindow window = new SendUnitsWindow(Game.Player, clickedTile);
             WindowMgr.Show(window);
         }
 

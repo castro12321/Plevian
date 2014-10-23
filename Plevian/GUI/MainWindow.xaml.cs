@@ -8,6 +8,7 @@ using Plevian.GUI;
 using Plevian.Messages;
 using System.Collections.Generic;
 using Plevian.Players;
+using Plevian.Save;
 
 // TODO: Plevian main TODO board
 // Known issues:
@@ -35,15 +36,15 @@ namespace Plevian
 
         private static MainWindow instance;
 
-        public MainWindow(List<Player> players, Map map, int time)
+        public MainWindow(SaveReader save)
         {
             instance = this;
             // Initialize GUI
             InitializeComponent();
 
             // Initialize game
-            if (players != null && map != null)
-                game = new Game(players, map, time);
+            if (save != null)
+                game = new Game(save);
             else
                 game = new Game();
 
@@ -52,10 +53,10 @@ namespace Plevian
 
             // Initialize village tab
             villageTabItem.Content = (villageTab = new VillageTab(game));
-            villageTab.Village = Game.player.Capital;
+            villageTab.Village = Game.Player.Capital;
            
             // Initialize messages tab
-            messagesTabItem.Content = (messagesTab = new MessagesTab(Game.player));
+            messagesTabItem.Content = (messagesTab = new MessagesTab(Game.Player));
 
             // Initialize settings tab
             settingsTabItem.Content = (settingsTab = new SettingsTab());
