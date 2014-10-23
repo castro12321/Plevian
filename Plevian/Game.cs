@@ -21,7 +21,7 @@ namespace Plevian
         public static Player Player { get { return game.mainPlayer; } }
         public static Game game;
         public readonly List<Player> players = new List<Player>();
-        public readonly GameTime gameTime;
+        //public readonly GameTime gameTime;
         public readonly Map map;
 
         public Game()
@@ -88,6 +88,7 @@ namespace Plevian
         /// </summary>
         public Game(SaveReader save)
         {
+            Game.game = this;
             GameTime.init(save.getGameTime());
             this.players = save.getPlayers();
             this.mainPlayer = players[0];
