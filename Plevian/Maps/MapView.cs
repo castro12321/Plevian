@@ -19,7 +19,7 @@ namespace Plevian.Maps
     // - Po kliknieciu otwierac okienko powiazane z danym tilem
     public class MapView : System.Windows.Forms.UserControl
     {
-        private const int tileSizeInPixels = 28;
+        private const int tileSizeInPixels = 32;
         private const float MouseDragStart = 2f;
 
         private RenderWindow renderer;
@@ -37,19 +37,26 @@ namespace Plevian.Maps
 
         public Camera camera { get; private set; }
 
-        private Texture villageTex, lakeTex, plainsTex, mountainsTex;
-        private Sprite village, lake, plains, mountains;
+        private Texture
+            mountainsTex = Utils.ToSFMLTexture(Properties.Resources.mountains),
+            villageTex = Utils.ToSFMLTexture(Properties.Resources.village),
+            plainsTex = Utils.ToSFMLTexture(Properties.Resources.plains),
+            lakeTex = Utils.ToSFMLTexture(Properties.Resources.lake);
+        private Sprite
+            //village = new Sprite(villageTex);
+            village, lake, plains, mountains;
         public MapView(Map map, System.Windows.Forms.Integration.WindowsFormsHost host)
         {
             //villageTex = new Texture(@"village");
-            villageTex = new Texture(Properties.Resources.village);
-            lakeTex      = new Texture("GFX\\lake.png");
-            plainsTex    = new Texture("GFX\\plains.png");
-            mountainsTex = new Texture("GFX\\mountains.png");
-            village   = new Sprite(new Texture("GFX\\village.png"));
-            lake      = new Sprite(new Texture("GFX\\lake.png"));
-            plains    = new Sprite(new Texture("GFX\\plains.png"));
-            mountains = new Sprite(new Texture("GFX\\mountains.png"));
+            //villageTex = new Texture(Properties.Resources.village);
+            village   = new Sprite(villageTex);
+            lake      = new Sprite(lakeTex);
+            plains    = new Sprite(plainsTex);
+            mountains = new Sprite(mountainsTex);
+            village.Scale = new Vector2f(0.333f, 0.333f);
+            lake.Scale = new Vector2f(0.333f, 0.333f);
+            plains.Scale = new Vector2f(0.333f, 0.333f);
+            mountains.Scale = new Vector2f(0.333f, 0.333f);
             this.map = map;
             //Properties.Resources.
             
