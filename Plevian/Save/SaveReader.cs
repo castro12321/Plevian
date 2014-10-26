@@ -123,8 +123,8 @@ namespace Plevian.Save
 
                                 GameTime start = GameTime.now;
                                 GameTime end = GameTime.now;
-                                start.time = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("Start").Value);
-                                end.time = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("End").Value);
+                                start.time = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("start").Value);
+                                end.time = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("end").Value);
                                 int level = int.Parse(villageRoot.Element("queues").Element("buildingQueue" + l).Element("level").Value);
                                 BuildingQueueItem buildingQueue = new BuildingQueueItem(start, end, toBuild, level);
 
@@ -146,8 +146,8 @@ namespace Plevian.Save
 
                                 GameTime start = GameTime.now;
                                 GameTime end = GameTime.now;
-                                start.time = int.Parse(villageRoot.Element("queues").Element("researchQueue" + l).Element("Start").Value);
-                                end.time = int.Parse(villageRoot.Element("queues").Element("researchQueue" + l).Element("End").Value);
+                                start.time = int.Parse(villageRoot.Element("queues").Element("researchQueue" + l).Element("start").Value);
+                                end.time = int.Parse(villageRoot.Element("queues").Element("researchQueue" + l).Element("end").Value);
                                 ResearchQueueItem researchQueue = new ResearchQueueItem(start, end, researched);
 
                                 village.queues.Add(researchQueue);
@@ -168,8 +168,8 @@ namespace Plevian.Save
 
                                 GameTime start = GameTime.now;
                                 GameTime end = GameTime.now;
-                                start.time = int.Parse(villageRoot.Element("queues").Element("recruitQueue" + l).Element("Start").Value);
-                                end.time = int.Parse(villageRoot.Element("queues").Element("recruitQueue" + l).Element("End").Value);
+                                start.time = int.Parse(villageRoot.Element("queues").Element("recruitQueue" + l).Element("start").Value);
+                                end.time = int.Parse(villageRoot.Element("queues").Element("recruitQueue" + l).Element("end").Value);
 
                                 RecruitQueueItem recruitQueue = new RecruitQueueItem(start, end, toRecruit);
 
@@ -180,9 +180,9 @@ namespace Plevian.Save
                     }
                 }
 
-                village.buildTimeEnd.time = int.Parse(villageRoot.Element("builtTimeEnd").Value);
+                village.buildTimeEnd.time = int.Parse(villageRoot.Element("buildTimeEnd").Value);
                 village.recruitTimeEnd.time = int.Parse(villageRoot.Element("recruitTimeEnd").Value);
-                village.researchTimeEnd.time = int.Parse(villageRoot.Element("builtTimeEnd").Value);
+                village.researchTimeEnd.time = int.Parse(villageRoot.Element("researchTimeEnd").Value);
 
                 villages.Add(village);
             }
@@ -336,7 +336,6 @@ namespace Plevian.Save
             string mapPath = this.path + "map\\";
             XDocument mapXml = XDocument.Load(mapPath + "map.xml");
             XElement mapRoot = mapXml.Element("map");
-
 
             int time = int.Parse(mapRoot.Element("time").Value);
             GameTime.init(time);

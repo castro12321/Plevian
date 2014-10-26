@@ -9,6 +9,8 @@ using Plevian.Players;
 using Plevian.TechnologY;
 using Plevian.Units;
 using Plevian.Maps;
+using System.Xml;
+using Plevian.Villages;
 
 // TODO: Save writer/reader
 // - Orders handling
@@ -57,309 +59,441 @@ namespace Plevian.Save
             int playerCounter = 1;
             foreach (Player player in players)
             {
-                StreamWriter counterFile = new StreamWriter(playersCounters + "counter" + playerCounter.ToString() + ".xml");
-                counterFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
-                counterFile.WriteLine("<counters>");
+                XmlDocument countersXml = new XmlDocument();
+                XmlDeclaration countersDeclaration = countersXml.CreateXmlDeclaration("1.0", "UTF-8", null);
+                countersXml.AppendChild(countersDeclaration);
 
-                StreamWriter basicInfoFile = new StreamWriter(playersBasicInfo + "player" + playerCounter.ToString() + ".xml");
-                basicInfoFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
+                XmlNode countersRoot = countersXml.CreateElement("counters");
+                countersXml.AppendChild(countersRoot);
 
-                basicInfoFile.WriteLine("<basicInfo>");
-                basicInfoFile.WriteLine("\t<name>" + player.name + "</name>");
+                #region basicInfoXml
 
+                XmlDocument basicInfoXml = new XmlDocument();
+                XmlDeclaration basicInfoDeclaration = basicInfoXml.CreateXmlDeclaration("1.0", "UTF-8", null);
+                basicInfoXml.AppendChild(basicInfoDeclaration);
+
+                XmlNode basicInfoRoot = basicInfoXml.CreateElement("basicInfo");
+                basicInfoXml.AppendChild(basicInfoRoot);
+
+                XmlNode playerName = basicInfoXml.CreateElement("name");
+                playerName.AppendChild(basicInfoXml.CreateTextNode(player.name));
+                basicInfoRoot.AppendChild(playerName);
+
+                XmlNode computer = basicInfoXml.CreateElement("computer");
                 if (player.GetType().ToString() == "Plevian.Players.ComputerPlayer")
-                    basicInfoFile.WriteLine("\t<computer>true</computer>");
+                    computer.AppendChild(basicInfoXml.CreateTextNode("true"));
                 else
-                    basicInfoFile.WriteLine("\t<computer>false</computer>");
+                    computer.AppendChild(basicInfoXml.CreateTextNode("false"));
+                basicInfoRoot.AppendChild(computer);
 
-                basicInfoFile.WriteLine("\t<color>");
-                basicInfoFile.WriteLine("\t\t<A>" + player.color.A + "</A>");
-                basicInfoFile.WriteLine("\t\t<R>" + player.color.R + "</R>");
-                basicInfoFile.WriteLine("\t\t<G>" + player.color.G + "</G>");
-                basicInfoFile.WriteLine("\t\t<B>" + player.color.B + "</B>");
-                basicInfoFile.WriteLine("\t</color>");
+                XmlNode playerColor = basicInfoXml.CreateElement("color");
+                XmlNode A = basicInfoXml.CreateElement("A");
+                A.AppendChild(basicInfoXml.CreateTextNode(player.color.A.ToString()));
+                playerColor.AppendChild(A);
 
-                basicInfoFile.WriteLine("</basicInfo>");
-                basicInfoFile.Close();
+                XmlNode R = basicInfoXml.CreateElement("R");
+                R.AppendChild(basicInfoXml.CreateTextNode(player.color.R.ToString()));
+                playerColor.AppendChild(R);
+
+                XmlNode G = basicInfoXml.CreateElement("G");
+                G.AppendChild(basicInfoXml.CreateTextNode(player.color.G.ToString()));
+                playerColor.AppendChild(G);
+
+                XmlNode B = basicInfoXml.CreateElement("B");
+                B.AppendChild(basicInfoXml.CreateTextNode(player.color.B.ToString()));
+                playerColor.AppendChild(B);
+                basicInfoRoot.AppendChild(playerColor);
+
+                basicInfoXml.Save(playersBasicInfo + "player" + playerCounter.ToString() + ".xml");
+
+                #endregion
+                
+                #region message
+                
+                XmlDocument messagesXml = new XmlDocument();
+                XmlDeclaration messagesDeclaration = messagesXml.CreateXmlDeclaration("1.0", "UTF-8", null);
+                messagesXml.AppendChild(messagesDeclaration);
+
+                XmlNode messagesRoot = messagesXml.CreateElement("messages");
+                messagesXml.AppendChild(messagesRoot);
 
                 messageCounter = 0;
-                StreamWriter messagesFile = new StreamWriter(playersMessages + "player" + playerCounter.ToString() + ".xml");
-                messagesFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
-                messagesFile.WriteLine("<messages>");
                 foreach (Messages.Message message in player.messages)
                 {
                     messageCounter++;
-                    messagesFile.WriteLine("\t<message" + messageCounter + ">");
-                    messagesFile.WriteLine("\t\t<date>" + message.Date.Content + "</date>");
-                    messagesFile.WriteLine("\t\t<sender>" + message.Sender.Content + "</sender>");
-                    messagesFile.WriteLine("\t\t<topic>" + message.Topic.Content + "</topic>");
-                    messagesFile.WriteLine("\t\t<text>" + message.message + "</text>");
-                    messagesFile.WriteLine("\t</message" + messageCounter + ">");
+                    XmlNode messageNode = messagesXml.CreateElement("message" + messageCounter);
+                    XmlNode messageDate = messagesXml.CreateElement("date");
+                    messageDate.AppendChild(messagesXml.CreateTextNode(message.Date.Content.ToString()));
+                    messageNode.AppendChild(messageDate);
+
+                    XmlNode messageSender = messagesXml.CreateElement("sender");
+                    messageSender.AppendChild(messagesXml.CreateTextNode(message.Sender.Content.ToString()));
+                    messageNode.AppendChild(messageSender);
+
+                    XmlNode messageTopic = messagesXml.CreateElement("topic");
+                    messageTopic.AppendChild(messagesXml.CreateTextNode(message.Topic.Content.ToString()));
+                    messageNode.AppendChild(messageTopic);
+
+                    XmlNode messageText = messagesXml.CreateElement("text");
+                    messageText.AppendChild(messagesXml.CreateTextNode(message.message));
+                    messageNode.AppendChild(messageText);
+                    messagesRoot.AppendChild(messageNode);
                 }
-                messagesFile.WriteLine("</messages>");
-                messagesFile.Close();
-                counterFile.WriteLine("\t<messageCounter>" + messageCounter + "</messageCounter>");
+
+                messagesXml.Save(playersMessages + "player" + playerCounter.ToString() + ".xml");
+
+                #endregion
+
+                XmlNode messageCount = countersXml.CreateElement("messageCounter");
+                messageCount.AppendChild(countersXml.CreateTextNode(messageCounter.ToString()));
+                countersRoot.AppendChild(messageCount);
+
+                #region technology
+
+                XmlDocument technologiesXml = new XmlDocument();
+                XmlDeclaration technologiesDeclaration = technologiesXml.CreateXmlDeclaration("1.0", "UTF-8", null);
+                technologiesXml.AppendChild(technologiesDeclaration);
+
+                XmlNode technologiesRoot = technologiesXml.CreateElement("technologies");
+                technologiesXml.AppendChild(technologiesRoot);
 
                 technologyCounter = 0;
-                StreamWriter techFile = new StreamWriter(playersTechnologies + "player" + playerCounter.ToString() + ".xml");
-                techFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
-                techFile.WriteLine("<technologies>");
-                foreach(Technology tech in player.technologies.technologies)
+                foreach (Technology tech in player.technologies.technologies)
                 {
                     technologyCounter++;
-                    techFile.WriteLine("\t<technology" + technologyCounter + ">");
+                    XmlNode technologyNode = technologiesXml.CreateElement("technology" + technologyCounter);
+                    XmlNode technologyName = technologiesXml.CreateElement("name");
+                    technologyName.AppendChild(technologiesXml.CreateTextNode(tech.Name));
+                    technologyNode.AppendChild(technologyName);
 
-                    techFile.WriteLine("\t\t<name>" + tech.Name + "</name>");
-
-                    techFile.WriteLine("\t\t<researched>" + tech.researched + "</researched>");
-
-                    techFile.WriteLine("\t</technology" + technologyCounter + ">");
+                    XmlNode researched = technologiesXml.CreateElement("researched");
+                    researched.AppendChild(technologiesXml.CreateTextNode(tech.researched.ToString()));
+                    technologyNode.AppendChild(researched);
+                    technologiesRoot.AppendChild(technologyNode);
                 }
-                techFile.WriteLine("</technologies>");
-                techFile.Close();
-                counterFile.WriteLine("\t<technologyCounter>" + technologyCounter + "</technologyCounter>");
+
+                technologiesXml.Save(playersTechnologies + "player" + playerCounter.ToString() + ".xml");
+
+                #endregion
+
+                XmlNode technologyCount = countersXml.CreateElement("technologyCounter");
+                technologyCount.AppendChild(countersXml.CreateTextNode(technologyCounter.ToString()));
+                countersRoot.AppendChild(technologyCount);
+
+                #region village
+
+                XmlDocument villagesXml = new XmlDocument();
+                XmlDeclaration villagesDeclaration = villagesXml.CreateXmlDeclaration("1.0", "UTF-8", null);
+                villagesXml.AppendChild(villagesDeclaration);
+
+                XmlNode villagesRoot = villagesXml.CreateElement("villages");
+                villagesXml.AppendChild(villagesRoot);
 
                 villageCounter = 0;
-                StreamWriter villagesFile = new StreamWriter(playersVillages + "player" + playerCounter.ToString() + ".xml");
-                villagesFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
-                villagesFile.WriteLine("<villages>");
-                foreach (Villages.Village village in player.villages)
+                foreach (Village village in player.villages)
                 {
                     villageCounter++;
 
-                    counterFile.WriteLine("\t<village" + villageCounter + ">");
+                    XmlNode villageCounters = countersXml.CreateElement("village" + villageCounter);
+                    countersRoot.AppendChild(villageCounters);
 
-                    villagesFile.WriteLine("\t<village" + villageCounter + ">");
+                    XmlNode villageNode = villagesXml.CreateElement("village" + villageCounter);
+                    XmlNode villageName = villagesXml.CreateElement("name");
+                    villageName.AppendChild(villagesXml.CreateTextNode(village.name));
+                    villageNode.AppendChild(villageName);
 
+                    XmlNode villageType = villagesXml.CreateElement("type");
+                    villageType.AppendChild(villagesXml.CreateTextNode(village.type.ToString()));
+                    villageNode.AppendChild(villageType);
+
+                    XmlNode capital = villagesXml.CreateElement("capital");
                     if (player.Capital.name == village.name)
-                        villagesFile.WriteLine("\t\t<capital>true</capital>");
+                        capital.AppendChild(villagesXml.CreateTextNode("true"));
                     else
-                        villagesFile.WriteLine("\t\t<capital>false</capital>");
+                        capital.AppendChild(villagesXml.CreateTextNode("false"));
+                    villageNode.AppendChild(capital);
 
-                    villagesFile.WriteLine("\t\t<name>" + village.name + "</name>");
-                    villagesFile.WriteLine("\t\t<type>" + village.type + "</type>");
+                    XmlNode VilageLocation = villagesXml.CreateElement("location");
+                    XmlNode x = villagesXml.CreateElement("x");
+                    x.AppendChild(villagesXml.CreateTextNode(village.location.x.ToString()));
+                    XmlNode y = villagesXml.CreateElement("y");
+                    y.AppendChild(villagesXml.CreateTextNode(village.location.y.ToString()));
+                    VilageLocation.AppendChild(x);
+                    VilageLocation.AppendChild(y);
+                    villageNode.AppendChild(VilageLocation);
 
-                    villagesFile.WriteLine("\t\t<location>");
-                    villagesFile.WriteLine("\t\t\t<x>" + village.location.x + "</x>");
-                    villagesFile.WriteLine("\t\t\t<y>" + village.location.y + "</y>");
-                    villagesFile.WriteLine("\t\t</location>");
+                    XmlNode villageOwner = villagesXml.CreateElement("owner");
+                    villageOwner.AppendChild(villagesXml.CreateTextNode(village.Owner.name));
+                    villageNode.AppendChild(villageOwner);
 
-                    villagesFile.WriteLine("\t\t<owner>" + village.Owner.name + "</owner>");
+                    XmlNode villageResources = villagesXml.CreateElement("resources");
+                    XmlNode food = villagesXml.CreateElement("food");
+                    food.AppendChild(villagesXml.CreateTextNode(village.resources.food.ToString()));
+                    villageResources.AppendChild(food);
 
-                    villagesFile.WriteLine("\t\t<resources>");
-                    villagesFile.WriteLine("\t\t\t<food>" + village.resources.food + "</food>");
-                    villagesFile.WriteLine("\t\t\t<iron>" + village.resources.iron + "</iron>");
-                    villagesFile.WriteLine("\t\t\t<stone>" + village.resources.stone + "</stone>");
-                    villagesFile.WriteLine("\t\t\t<wood>" + village.resources.wood + "</wood>");
-                    villagesFile.WriteLine("\t\t</resources>");
+                    XmlNode iron = villagesXml.CreateElement("iron");
+                    iron.AppendChild(villagesXml.CreateTextNode(village.resources.iron.ToString()));
+                    villageResources.AppendChild(iron);
 
+                    XmlNode stone = villagesXml.CreateElement("stone");
+                    stone.AppendChild(villagesXml.CreateTextNode(village.resources.stone.ToString()));
+                    villageResources.AppendChild(stone);
+
+                    XmlNode wood = villagesXml.CreateElement("wood");
+                    wood.AppendChild(villagesXml.CreateTextNode(village.resources.wood.ToString()));
+                    villageResources.AppendChild(wood);
+                    villageNode.AppendChild(villageResources);
+
+                    XmlNode buildings = villagesXml.CreateElement("buildings");
                     buildingCounter = 0;
-                    villagesFile.WriteLine("\t\t<buildings>");
-                    foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> building in village.buildings)
+                    foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> build in village.buildings)
                     {
                         buildingCounter++;
 
-                        villagesFile.WriteLine("\t\t\t<building" + buildingCounter + ">");
-                        villagesFile.WriteLine("\t\t\t\t<key>" + building.Key + "</key>");
-                        villagesFile.WriteLine("\t\t\t\t<level>" + building.Value.level + "</level>");
+                        XmlNode building = villagesXml.CreateElement("building" + buildingCounter);
 
-                        /*villagesFile.WriteLine("\t\t\t\t<requirements>");
-                        foreach (RequirementS.Requirement requirement in building.Value.requirements)
-                        {
-                            villagesFile.WriteLine("\t\t\t\t\t<requirement>" + requirement.ToString() + "</requirement>");
-                        }
-                        villagesFile.WriteLine("\t\t\t\t</requirements>");*/
-                        villagesFile.WriteLine("\t\t\t\t<type>" + building.Value.type.ToString() + "</type>");
-                        villagesFile.WriteLine("\t\t\t</building" + buildingCounter + ">");
+                        XmlNode key = villagesXml.CreateElement("key");
+                        key.AppendChild(villagesXml.CreateTextNode(build.Key.ToString()));
+                        building.AppendChild(key);
+
+                        XmlNode level = villagesXml.CreateElement("level");
+                        level.AppendChild(villagesXml.CreateTextNode(build.Value.level.ToString()));
+                        building.AppendChild(level);
+
+                        buildings.AppendChild(building);
                     }
-                    counterFile.WriteLine("\t\t<buildingCounter>" + buildingCounter + "</buildingCounter>");
-                    villagesFile.WriteLine("\t\t</buildings>");
+                    villageNode.AppendChild(buildings);
 
-                    villagesFile.WriteLine("\t\t<builtTimeEnd>" + village.buildTimeEnd.time + "</builtTimeEnd>");
+                    // buildingCounter write
+                    XmlNode buildingCount = countersXml.CreateElement("buildingCounter");
+                    buildingCount.AppendChild(countersXml.CreateTextNode(buildingCounter.ToString()));
+                    villageCounters.AppendChild(buildingCount);
+                    // -----------
 
-                    armyCounter = 0;
-                    villagesFile.WriteLine("\t\t<armies>");
+                    XmlNode buildTimeEnd = villagesXml.CreateElement("buildTimeEnd");
+                    buildTimeEnd.AppendChild(villagesXml.CreateTextNode(village.buildTimeEnd.time.ToString()));
+                    villageNode.AppendChild(buildTimeEnd);
+
+                    XmlNode armies = villagesXml.CreateElement("armies");
                     var unitType = Enum.GetValues(typeof(UnitType));
+                    armyCounter = 0;
                     foreach (UnitType unit in unitType)
                     {
                         armyCounter++;
-                        villagesFile.WriteLine("\t\t\t<army" + armyCounter + ">");
-                        villagesFile.WriteLine("\t\t\t\t<attackStrength>" + village.army[unit].attackStrength + "</attackStrength>");
-                        villagesFile.WriteLine("\t\t\t\t<defenseArchers>" + village.army[unit].defenseArchers + "</defenseArchers>");
-                        villagesFile.WriteLine("\t\t\t\t<defenseCavalry>" + village.army[unit].defenseCavalry + "</defenseCavalry>");
-                        villagesFile.WriteLine("\t\t\t\t<defenseInfantry>" + village.army[unit].defenseInfantry + "</defenseInfantry>");
 
-                        /*villagesFile.WriteLine("\t\t\t\t<DependencyObjectType>");
-                        villagesFile.WriteLine("\t\t\t\t\t<BaseType>" + village.army[unit].DependencyObjectType.BaseType + "</BaseType>");
-                        villagesFile.WriteLine("\t\t\t\t\t<Id>" + village.army[unit].DependencyObjectType.Id + "</Id>");
-                        villagesFile.WriteLine("\t\t\t\t\t<Name>" + village.army[unit].DependencyObjectType.Name + "</Name>");
-                        villagesFile.WriteLine("\t\t\t\t\t<SystemType>" + village.army[unit].DependencyObjectType.SystemType + "</SystemType>");
-                        villagesFile.WriteLine("\t\t\t\t</DependencyObjectType>");*/
+                        XmlNode army = villagesXml.CreateElement("army" + armyCounter);
+                        XmlNode armyType = villagesXml.CreateElement("unitType");
+                        armyType.AppendChild(villagesXml.CreateTextNode(village.army[unit].unitType.ToString()));
+                        army.AppendChild(armyType);
 
-                        villagesFile.WriteLine("\t\t\t\t<IsSealed>" + village.army[unit].IsSealed + "</IsSealed>");
-                        villagesFile.WriteLine("\t\t\t\t<lootCapacity>" + village.army[unit].lootCapacity + "</lootCapacity>");
-                        villagesFile.WriteLine("\t\t\t\t<movementSpeed>" + village.army[unit].movementSpeed + "</movementSpeed>");
-                        villagesFile.WriteLine("\t\t\t\t<name>" + village.army[unit].name + "</name>");
-                        villagesFile.WriteLine("\t\t\t\t<quantity>" + village.army[unit].quantity + "</quantity>");
+                        XmlNode armyName = villagesXml.CreateElement("name");
+                        armyName.AppendChild(villagesXml.CreateTextNode(village.army[unit].name));
+                        army.AppendChild(armyName);
 
-                        villagesFile.WriteLine("\t\t\t\t<recruitCost>");
-                        villagesFile.WriteLine("\t\t\t\t\t<food>" + village.army[unit].recruitCost.food + "</food>");
-                        villagesFile.WriteLine("\t\t\t\t\t<iron>" + village.army[unit].recruitCost.iron + "</iron>");
-                        villagesFile.WriteLine("\t\t\t\t\t<stone>" + village.army[unit].recruitCost.stone + "</stone>");
-                        villagesFile.WriteLine("\t\t\t\t\t<wood>" + village.army[unit].recruitCost.wood + "</wood>");
-                        villagesFile.WriteLine("\t\t\t\t</recruitCost>");
+                        XmlNode armyQuantity = villagesXml.CreateElement("quantity");
+                        armyQuantity.AppendChild(villagesXml.CreateTextNode(village.army[unit].quantity.ToString()));
+                        army.AppendChild(armyQuantity);
 
-                        villagesFile.WriteLine("\t\t\t\t<recruitTime>" + village.army[unit].recruitTime + "</recruitTime>");
-
-                        /*villagesFile.WriteLine("\t\t\t\t<requirements>");
-                        for (int i = 0; i < village.army[unit].requirements.Count; i++)
-                        {
-                            villagesFile.WriteLine("\t\t\t\t\t<requirement>" + village.army[unit].requirements[i] + "</requirement>");
-                        }
-                        villagesFile.WriteLine("\t\t\t\t<requirements>");*/
-
-                        villagesFile.WriteLine("\t\t\t\t<unitClass>" + village.army[unit].unitClass.ToString() + "</unitClass>");
-                        villagesFile.WriteLine("\t\t\t\t<unitType>" + village.army[unit].unitType.ToString() + "</unitType>");
-
-                        villagesFile.WriteLine("\t\t\t\t<upkeepCost>");
-                        villagesFile.WriteLine("\t\t\t\t\t<food>" + village.army[unit].upkeepCost.food + "</food>");
-                        villagesFile.WriteLine("\t\t\t\t\t<iron>" + village.army[unit].upkeepCost.iron + "</iron>");
-                        villagesFile.WriteLine("\t\t\t\t\t<stone>" + village.army[unit].upkeepCost.stone + "</stone>");
-                        villagesFile.WriteLine("\t\t\t\t\t<wood>" + village.army[unit].upkeepCost.wood + "</wood>");
-                        villagesFile.WriteLine("\t\t\t\t</upkeepCost>");
-                        villagesFile.WriteLine("\t\t\t</army" + armyCounter + ">");
+                        armies.AppendChild(army);
                     }
-                    counterFile.WriteLine("\t\t<armyCounter>" + armyCounter + "</armyCounter>");
-                    villagesFile.WriteLine("\t\t</armies>");
-                    
+                    villageNode.AppendChild(armies);
+
+                    //armyCounter write
+                    XmlNode armyCount = countersXml.CreateElement("armyCounter");
+                    armyCount.AppendChild(countersXml.CreateTextNode(armyCounter.ToString()));
+                    villageCounters.AppendChild(armyCount);
+                    //-----------
+
+                    XmlNode recruitTimeEnd = villagesXml.CreateElement("recruitTimeEnd");
+                    recruitTimeEnd.AppendChild(villagesXml.CreateTextNode(village.recruitTimeEnd.time.ToString()));
+                    villageNode.AppendChild(recruitTimeEnd);
+
+                    XmlNode queues = villagesXml.CreateElement("queues");
                     buildingQueueCounter = 0;
-                    villagesFile.WriteLine("\t\t<queues>");
-                    foreach (Buildings.BuildingQueueItem buildingQueue in village.queues.buildingQueue)
+                    foreach (Buildings.BuildingQueueItem queue in village.queues.buildingQueue)
                     {
                         buildingQueueCounter++;
-                        villagesFile.WriteLine("\t\t\t<buildingQueue" + buildingQueueCounter + ">");
-                        villagesFile.WriteLine("\t\t\t\t<name>" + buildingQueue.Name + "</name>");
-                        villagesFile.WriteLine("\t\t\t\t<Start>" + buildingQueue.Start.time + "</Start>");
-                        villagesFile.WriteLine("\t\t\t\t<End>" + buildingQueue.End.time + "</End>");
-                        villagesFile.WriteLine("\t\t\t\t<Extra>" + buildingQueue.Extra + "</Extra>");
-                        villagesFile.WriteLine("\t\t\t\t<level>" + buildingQueue.level + "</level>");
 
-                        villagesFile.WriteLine("\t\t\t\t<toBuild>");
-                        villagesFile.WriteLine("\t\t\t\t\t<level>" + buildingQueue.toBuild.level + "</level>");
-                        villagesFile.WriteLine("\t\t\t\t\t<type>" + buildingQueue.toBuild.type.ToString() + "</type>");
+                        XmlNode buildingQueue = villagesXml.CreateElement("buildingQueue" + buildingQueueCounter);
+                        XmlNode name = villagesXml.CreateElement("name");
+                        name.AppendChild(villagesXml.CreateTextNode(queue.Name));
+                        buildingQueue.AppendChild(name);
 
-                        /*villagesFile.WriteLine("\t\t\t\t\t<requirements>");
-                        for (int i = 0; i < queue.toBuild.requirements.Count; i++)
-                        {
-                            villagesFile.WriteLine("\t\t\t\t\t\t<requirement>" + queue.toBuild.requirements[i].ToString() + "</requirement>");
-                        }
-                        villagesFile.WriteLine("\t\t\t\t\t</requirements>");*/
-                        villagesFile.WriteLine("\t\t\t\t</toBuild>");
-                        villagesFile.WriteLine("\t\t\t</buildingQueue" + buildingQueueCounter + ">");
+                        XmlNode start = villagesXml.CreateElement("start");
+                        start.AppendChild(villagesXml.CreateTextNode(queue.Start.time.ToString()));
+                        buildingQueue.AppendChild(start);
+
+                        XmlNode end = villagesXml.CreateElement("end");
+                        end.AppendChild(villagesXml.CreateTextNode(queue.End.time.ToString()));
+                        buildingQueue.AppendChild(end);
+
+                        XmlNode level = villagesXml.CreateElement("level");
+                        level.AppendChild(villagesXml.CreateTextNode(queue.level.ToString()));
+                        buildingQueue.AppendChild(level);
+
+                        XmlNode toBuild = villagesXml.CreateElement("toBuild");
+                        XmlNode toBuildLevel = villagesXml.CreateElement("level");
+                        toBuildLevel.AppendChild(villagesXml.CreateTextNode(queue.toBuild.level.ToString()));
+                        toBuild.AppendChild(toBuildLevel);
+
+                        XmlNode toBuildType = villagesXml.CreateElement("type");
+                        toBuildType.AppendChild(villagesXml.CreateTextNode(queue.toBuild.type.ToString()));
+                        toBuild.AppendChild(toBuildType);
+                        buildingQueue.AppendChild(toBuild);
+
+                        queues.AppendChild(buildingQueue);
                     }
-                    counterFile.WriteLine("\t\t<buildingQueueCounter>" + buildingQueueCounter + "</buildingQueueCounter>");
+
+                    //buildingQueueCounter write
+                    XmlNode buildingQueueCount = countersXml.CreateElement("buildingQueueCounter");
+                    buildingQueueCount.AppendChild(countersXml.CreateTextNode(buildingQueueCounter.ToString()));
+                    villageCounters.AppendChild(buildingQueueCount);
+                    //-----------
 
                     researchQueueCounter = 0;
-                    foreach (ResearchQueueItem researchQueue in village.queues.researchQueue)
+                    foreach (ResearchQueueItem queue in village.queues.researchQueue)
                     {
                         researchQueueCounter++;
-                        villagesFile.WriteLine("\t\t\t<researchQueue" + researchQueueCounter + ">");
-                        villagesFile.WriteLine("\t\t\t\t<name>" + researchQueue.Name + "</name>");
-                        villagesFile.WriteLine("\t\t\t\t<Start>" + researchQueue.Start.time + "</Start>");
-                        villagesFile.WriteLine("\t\t\t\t<End>" + researchQueue.End.time + "</End>");
-                        villagesFile.WriteLine("\t\t\t\t<Extra>" + researchQueue.Extra + "</Extra>");
-                        villagesFile.WriteLine("\t\t\t\t<researched>" + researchQueue.researched.Name + "</researched>");
-                        villagesFile.WriteLine("\t\t\t</researchQueue" + researchQueueCounter + ">");
+
+                        XmlNode researchQueue = villagesXml.CreateElement("researchQueue" + researchQueueCounter);
+                        XmlNode name = villagesXml.CreateElement("name");
+                        name.AppendChild(villagesXml.CreateTextNode(queue.Name));
+                        researchQueue.AppendChild(name);
+
+                        XmlNode start = villagesXml.CreateElement("start");
+                        start.AppendChild(villagesXml.CreateTextNode(queue.Start.time.ToString()));
+                        researchQueue.AppendChild(start);
+
+                        XmlNode end = villagesXml.CreateElement("end");
+                        end.AppendChild(villagesXml.CreateTextNode(queue.End.time.ToString()));
+                        researchQueue.AppendChild(end);
+
+                        queues.AppendChild(researchQueue);
                     }
-                    counterFile.WriteLine("\t\t<researchQueueCounter>" + researchQueueCounter + "</researchQueueCounter>");
+
+                    //recruitQueueCounter write
+                    XmlNode researchQueueCount = countersXml.CreateElement("researchQueueCounter");
+                    researchQueueCount.AppendChild(countersXml.CreateTextNode(researchQueueCounter.ToString()));
+                    villageCounters.AppendChild(researchQueueCount);
+                    //-----------
 
                     recruitQueueCounter = 0;
-                    foreach (RecruitQueueItem recruitQueue in village.queues.recruitQueue)
+                    foreach (RecruitQueueItem queue in village.queues.recruitQueue)
                     {
                         recruitQueueCounter++;
-                        villagesFile.WriteLine("\t\t\t<recruitQueue" + recruitQueueCounter + ">");
-                        villagesFile.WriteLine("\t\t\t\t<name>" + recruitQueue.Name + "</name>");
-                        villagesFile.WriteLine("\t\t\t\t<Start>" + recruitQueue.Start.time + "</Start>");
-                        villagesFile.WriteLine("\t\t\t\t<End>" + recruitQueue.End.time + "</End>");
-                        villagesFile.WriteLine("\t\t\t\t<Extra>" + recruitQueue.Extra + "</Extra>");
-                        villagesFile.WriteLine("\t\t\t\t<toRecruit>" + recruitQueue.toRecruit.name + "</toRecruit>");
-                        villagesFile.WriteLine("\t\t\t</recruitQueue" + recruitQueueCounter + ">");
+
+                        XmlNode recruitQueue = villagesXml.CreateElement("recruitQueue" + recruitQueueCounter);
+                        XmlNode name = villagesXml.CreateElement("name");
+                        name.AppendChild(villagesXml.CreateTextNode(queue.Name));
+                        recruitQueue.AppendChild(name);
+
+                        XmlNode start = villagesXml.CreateElement("start");
+                        start.AppendChild(villagesXml.CreateTextNode(queue.Start.time.ToString()));
+                        recruitQueue.AppendChild(start);
+
+                        XmlNode end = villagesXml.CreateElement("end");
+                        end.AppendChild(villagesXml.CreateTextNode(queue.End.time.ToString()));
+                        recruitQueue.AppendChild(end);
+
+                        queues.AppendChild(recruitQueue);
                     }
-                    counterFile.WriteLine("\t\t<recruitQueueCounter>" + recruitQueueCounter + "</recruitQueueCounter>");
+
+                    //recruitQueueCounter write
+                    XmlNode recruitQueueCount = countersXml.CreateElement("recruitQueueCounter");
+                    recruitQueueCount.AppendChild(countersXml.CreateTextNode(recruitQueueCounter.ToString()));
+                    villageCounters.AppendChild(recruitQueueCount);
+                    //-----------
 
                     queueCounter = 0;
                     foreach (Villages.Queues.QueueItem queue in village.queues.queue)
                     {
                         queueCounter++;
-                        villagesFile.WriteLine("\t\t\t<queue" + queueCounter + ">");
-                        villagesFile.WriteLine("\t\t\t\t<name>" + queue.Name + "</name>");
-                        villagesFile.WriteLine("\t\t\t\t<Start>" + queue.Start.time + "</Start>");
-                        villagesFile.WriteLine("\t\t\t\t<End>" + queue.End.time + "</End>");
-                        villagesFile.WriteLine("\t\t\t\t<Extra>" + queue.Extra + "</Extra>");
-                        villagesFile.WriteLine("\t\t\t</queue" + queueCounter + ">");
                     }
-                    counterFile.WriteLine("\t\t<queueCounter>" + queueCounter + "</queueCounter>");
-                    villagesFile.WriteLine("\t\t</queues>");
+                    villageNode.AppendChild(queues);
 
-                    villagesFile.WriteLine("\t\t<recruitTimeEnd>" + village.recruitTimeEnd.time + "</recruitTimeEnd>");
+                    //queueCounter write
+                    XmlNode queueCount = countersXml.CreateElement("queueCounter");
+                    queueCount.AppendChild(countersXml.CreateTextNode(queueCounter.ToString()));
+                    villageCounters.AppendChild(queueCount);
+                    //-----------
 
-                    villagesFile.WriteLine("\t\t<researchTimeEnd>" + village.researchTimeEnd.time + "</researchTimeEnd>");
+                    XmlNode researchTimeEnd = villagesXml.CreateElement("researchTimeEnd");
+                    researchTimeEnd.AppendChild(villagesXml.CreateTextNode(village.researchTimeEnd.time.ToString()));
+                    villageNode.AppendChild(researchTimeEnd);
 
-                    villagesFile.WriteLine("\t</village" + villageCounter + ">");
-
-                    counterFile.WriteLine("\t</village" + villageCounter + ">"); 
+                    villagesRoot.AppendChild(villageNode);
+                    villagesXml.Save(playersVillages + "player" + playerCounter.ToString() + ".xml");
                 }
-                villagesFile.WriteLine("</villages>");
-                villagesFile.Close();
-                
-                counterFile.WriteLine("\t<villageCounter>" + villageCounter + "</villageCounter>");
-                counterFile.WriteLine("</counters>");
-                counterFile.Close();
+
+                #endregion
+
+                XmlNode villageCount = countersXml.CreateElement("villageCounter");
+                villageCount.AppendChild(countersXml.CreateTextNode(villageCounter.ToString()));
+                countersRoot.AppendChild(villageCount);
+
+                countersXml.Save(playersCounters + "counter" + playerCounter + ".xml");
 
                 playerCounter++;
             }
+
         }
 
         private void saveMap(Map map)
         {
             int tilesCounter;
+            Tile[,] tiles = map.getMap();
 
             string mapPath = this.path + "map\\";
             Directory.CreateDirectory(mapPath);
 
-            StreamWriter mapFile = new StreamWriter(mapPath + "map.xml");
-            Tile[,] tiles = map.getMap();
+            XmlDocument mapXml = new XmlDocument();
+            XmlDeclaration mapDeclaration = mapXml.CreateXmlDeclaration("1.0", "UTF-8", null);
+            mapXml.AppendChild(mapDeclaration);
 
-            mapFile.WriteLine("<?xml version=\"1.0\" encoding=\"ISO-8859-2\" standalone=\"no\" ?>");
-            mapFile.WriteLine("<map>");
+            XmlNode mapRoot = mapXml.CreateElement("map");
+            mapXml.AppendChild(mapRoot);
 
-            mapFile.WriteLine("\t<size>");
-            mapFile.WriteLine("\t\t<x>" + map.sizeX + "</x>");
-            mapFile.WriteLine("\t\t<y>" + map.sizeY + "</y>");
-            mapFile.WriteLine("\t</size>");
+            XmlNode mapSize = mapXml.CreateElement("size");
+            XmlNode sizeX = mapXml.CreateElement("x");
+            sizeX.AppendChild(mapXml.CreateTextNode(map.sizeX.ToString()));
+            mapSize.AppendChild(sizeX);
 
-            mapFile.WriteLine("\t<tiles>");
+            XmlNode sizeY = mapXml.CreateElement("y");
+            sizeY.AppendChild(mapXml.CreateTextNode(map.sizeY.ToString()));
+            mapSize.AppendChild(sizeY);
+            mapRoot.AppendChild(mapSize);
+
+            XmlNode tilesNode = mapXml.CreateElement("tiles");
             tilesCounter = 0;
             for (int i = 0; i < tiles.GetLength(0); i++)
             {
                 for (int j = 0; j < tiles.GetLength(1); j++)
                 {
                     tilesCounter++;
-                    mapFile.WriteLine("\t\t<tile" + tilesCounter + ">");
-                    mapFile.WriteLine("\t\t\t<index>" + i + " " + j + "</index>");
-                    mapFile.WriteLine("\t\t\t<location>");
-                    mapFile.WriteLine("\t\t\t\t<x>" + tiles[i, j].location.x + "</x>");
-                    mapFile.WriteLine("\t\t\t\t<y>" + tiles[i, j].location.y + "</y>");
-                    mapFile.WriteLine("\t\t\t</location>");
-                    mapFile.WriteLine("\t\t\t<type>" + tiles[i, j].type + "</type>");
-                    mapFile.WriteLine("\t\t</tile" + tilesCounter + ">");
+                    XmlNode tile = mapXml.CreateElement("tile" + tilesCounter);
+                    XmlNode type = mapXml.CreateElement("type");
+                    type.AppendChild(mapXml.CreateTextNode(tiles[i, j].type.ToString()));
+                    tile.AppendChild(type);
+
+                    XmlNode tileLocation = mapXml.CreateElement("location");
+                    XmlNode x = mapXml.CreateElement("x");
+                    x.AppendChild(mapXml.CreateTextNode(tiles[i, j].location.x.ToString()));
+                    tileLocation.AppendChild(x);
+
+                    XmlNode y = mapXml.CreateElement("y");
+                    y.AppendChild(mapXml.CreateTextNode(tiles[i, j].location.y.ToString()));
+                    tileLocation.AppendChild(y);
+                    tile.AppendChild(tileLocation);
+                    tilesNode.AppendChild(tile);
                 }
             }
-            mapFile.WriteLine("\t</tiles>");
+            mapRoot.AppendChild(tilesNode);
 
-            mapFile.WriteLine("\t<time>" + GameTime.now + "</time>");
-            mapFile.WriteLine("</map>");
-            mapFile.Close();
+            XmlNode time = mapXml.CreateElement("time");
+            time.AppendChild(mapXml.CreateTextNode(GameTime.now.time.ToString()));
+            mapRoot.AppendChild(time);
+
+            mapXml.Save(mapPath + "map.xml");
         }
 
         public void writeSave(Map map, List<Player> players)
