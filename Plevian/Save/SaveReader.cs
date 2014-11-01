@@ -46,7 +46,6 @@ namespace Plevian.Save
                 else
                 {
                     buffer.Add("buildingCounter", int.Parse(counterRoot.Element("village" + i).Element("buildingCounter").Value));
-                    buffer.Add("armyCounter", int.Parse(counterRoot.Element("village" + i).Element("armyCounter").Value));
                     buffer.Add("buildingQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("buildingQueueCounter").Value));
                     buffer.Add("researchQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("researchQueueCounter").Value));
                     buffer.Add("recruitQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("recruitQueueCounter").Value));
@@ -85,16 +84,13 @@ namespace Plevian.Save
                 village.resources.stone = int.Parse(villageRoot.Element("resources").Element("stone").Value);
                 village.resources.wood = int.Parse(villageRoot.Element("resources").Element("wood").Value);
                 
-                int j = 1;
                 var unitType = Enum.GetValues(typeof(UnitType));
                 foreach (UnitType unit in unitType)
                 {
-                    if (village.army[unit].unitType.ToString() == villageRoot.Element("armies").Element("army" + j).Element("unitType").Value &&
-                        village.army[unit].name == villageRoot.Element("armies").Element("army" + j).Element("name").Value)
+                    if (village.army[unit].name == villageRoot.Element("armies").Element(unit.ToString()).Element("name").Value)
                     {
-                        village.army[unit].quantity = int.Parse(villageRoot.Element("armies").Element("army" + j).Element("quantity").Value);
+                        village.army[unit].quantity = int.Parse(villageRoot.Element("armies").Element(unit.ToString()).Element("quantity").Value);
                     }
-                    j++;
                 }
 
                 int k = 1;
@@ -106,6 +102,8 @@ namespace Plevian.Save
                     }
                     k++;
                 }
+
+                //TODO: download orders from file
 
                 for (int l = 1; l <= villageCounters["queueCounter"]; l++)
                 {

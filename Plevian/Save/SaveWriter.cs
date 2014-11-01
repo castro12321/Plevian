@@ -11,6 +11,7 @@ using Plevian.Units;
 using Plevian.Maps;
 using System.Xml;
 using Plevian.Villages;
+using Plevian.Orders;
 
 // TODO: Save writer/reader
 // - Orders handling
@@ -41,6 +42,7 @@ namespace Plevian.Save
             int researchQueueCounter;
             int queueCounter;
             int recruitQueueCounter;
+            int orderCounter;
 
             string playersPath = this.path + "players\\";
             string playersBasicInfo = playersPath + "basicInfo\\";
@@ -281,10 +283,7 @@ namespace Plevian.Save
                     {
                         armyCounter++;
 
-                        XmlNode army = villagesXml.CreateElement("army" + armyCounter);
-                        XmlNode armyType = villagesXml.CreateElement("unitType");
-                        armyType.AppendChild(villagesXml.CreateTextNode(village.army[unit].unitType.ToString()));
-                        army.AppendChild(armyType);
+                        XmlNode army = villagesXml.CreateElement(unit.ToString());
 
                         XmlNode armyName = villagesXml.CreateElement("name");
                         armyName.AppendChild(villagesXml.CreateTextNode(village.army[unit].name));
@@ -298,15 +297,81 @@ namespace Plevian.Save
                     }
                     villageNode.AppendChild(armies);
 
-                    //armyCounter write
-                    XmlNode armyCount = countersXml.CreateElement("armyCounter");
-                    armyCount.AppendChild(countersXml.CreateTextNode(armyCounter.ToString()));
-                    villageCounters.AppendChild(armyCount);
-                    //-----------
-
                     XmlNode recruitTimeEnd = villagesXml.CreateElement("recruitTimeEnd");
                     recruitTimeEnd.AppendChild(villagesXml.CreateTextNode(village.recruitTimeEnd.time.ToString()));
                     villageNode.AppendChild(recruitTimeEnd);
+
+
+                    XmlNode orders = villagesXml.CreateElement("orders");
+                    orderCounter = 0;
+                    foreach (Order order in village.orders)
+                    {
+                        //TODO: add orders to write in xml file
+                        orderCounter++;
+
+                        XmlNode orderNode = villagesXml.CreateElement("order" + orderCounter);
+                        XmlNode orderType = villagesXml.CreateElement("type");
+                        orderType.AppendChild(villagesXml.CreateTextNode(order.Type.ToString()));
+                        orderNode.AppendChild(orderType);
+
+                        XmlNode completed = villagesXml.CreateElement("completed");
+                        completed.AppendChild(villagesXml.CreateTextNode(order.completed.ToString()));
+                        orderNode.AppendChild(completed);
+
+                        XmlNode orderArmies = villagesXml.CreateElement("armies");
+                        foreach (UnitType unit in unitType)
+                        {
+                            XmlNode army = villagesXml.CreateElement(unit.ToString());
+
+                            XmlNode armyName = villagesXml.CreateElement("name");
+                            armyName.AppendChild(villagesXml.CreateTextNode(order.army[unit].name));
+                            army.AppendChild(armyName);
+
+                            XmlNode armyQuantity = villagesXml.CreateElement("quantity");
+                            armyQuantity.AppendChild(villagesXml.CreateTextNode(order.army[unit].quantity.ToString()));
+                            army.AppendChild(armyQuantity);
+
+                            orderArmies.AppendChild(army);
+                        }
+                        orderNode.AppendChild(orderArmies);
+
+                        XmlNode orderDestination = villagesXml.CreateElement("destination");
+                        XmlNode destinationLocation = villagesXml.CreateElement("location");
+                        XmlNode locationX = villagesXml.CreateElement("x");
+                        locationX.AppendChild(villagesXml.CreateTextNode(order.Destination.location.x.ToString()));
+                        destinationLocation.AppendChild(locationX);
+
+                        XmlNode locationY = villagesXml.CreateElement("y");
+                        locationY.AppendChild(villagesXml.CreateTextNode(order.Destination.location.y.ToString()));
+                        destinationLocation.AppendChild(locationY);
+                        orderDestination.AppendChild(destinationLocation);
+
+                        XmlNode destinationType = villagesXml.CreateElement("type");
+                        destinationType.AppendChild(villagesXml.CreateTextNode(order.Destination.type.ToString()));
+                        orderDestination.AppendChild(destinationType);
+                        orderNode.AppendChild(orderDestination);
+
+                        XmlNode orderDuration = villagesXml.CreateElement("duration");
+                        orderDuration.AppendChild(villagesXml.CreateTextNode(order.Duration.time.ToString()));
+                        orderNode.AppendChild(orderDuration);
+
+                        XmlNode orderBack = villagesXml.CreateElement("back");
+                        orderBack.AppendChild(villagesXml.CreateTextNode(order.isGoingBack.ToString()));
+                        orderNode.AppendChild(orderBack);
+
+                        XmlNode orderOverallTime = villagesXml.CreateElement("overallTime");
+                        orderOverallTime.AppendChild(villagesXml.CreateTextNode(order.OverallTime.time.ToString()));
+                        orderNode.AppendChild(orderOverallTime);
+
+                        orders.AppendChild(orderNode);
+                    }
+                    villageNode.AppendChild(orders);
+
+                    // orderCounter write
+                    XmlNode orderCount = countersXml.CreateElement("orderCounter");
+                    orderCount.AppendChild(countersXml.CreateTextNode(orderCounter.ToString()));
+                    villageCounters.AppendChild(orderCount);
+                    // -----------
 
                     XmlNode queues = villagesXml.CreateElement("queues");
                     buildingQueueCounter = 0;
