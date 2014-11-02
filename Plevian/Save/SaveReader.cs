@@ -201,7 +201,7 @@ namespace Plevian.Save
                     string type = orderRoot.Element("type").Value;
                     switch (type)
                     {
-                        case "ATTACK": order = new AttackOrder(village, destination, army); System.Console.Write("ok"); break;
+                        case "ATTACK": order = new AttackOrder(village, destination, army); break;
                         case "CAPTURE": order = new CaptureOrder(village, destination, army); break;
                         //case "SUPPORT": order = new SupportOrder(village, destination, army); break;  <---- in the near future :)
                     }
