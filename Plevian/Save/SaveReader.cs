@@ -14,6 +14,7 @@ using Plevian.Maps;
 using Plevian.Units;
 using Plevian.Messages;
 using Plevian.TechnologY;
+using Plevian.Orders;
 
 namespace Plevian.Save
 {
@@ -50,6 +51,7 @@ namespace Plevian.Save
                     buffer.Add("researchQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("researchQueueCounter").Value));
                     buffer.Add("recruitQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("recruitQueueCounter").Value));
                     buffer.Add("queueCounter", int.Parse(counterRoot.Element("village" + i).Element("queueCounter").Value));
+                    buffer.Add("orderCounter", int.Parse(counterRoot.Element("village" + i).Element("orderCounter").Value));
                 }
 
                 if (i == 0)
@@ -102,8 +104,6 @@ namespace Plevian.Save
                     }
                     k++;
                 }
-
-                //TODO: download orders from file
 
                 for (int l = 1; l <= villageCounters["queueCounter"]; l++)
                 {
@@ -176,6 +176,46 @@ namespace Plevian.Save
                             }
                         }
                     }
+                }
+
+                for (int m = 1; m <= villageCounters["orderCounter"]; m++)
+                {
+                    XElement orderRoot = villageRoot.Element("orders").Element("order" + m);
+
+                    Army army = new Army();
+                    foreach (UnitType unit in unitType)
+                    {
+                        if (army[unit].name == orderRoot.Element("armies").Element(unit.ToString()).Element("name").Value)
+                        {
+                            army[unit].quantity = int.Parse(orderRoot.Element("armies").Element(unit.ToString()).Element("quantity").Value);
+                        }
+                    }
+
+                    Location location = new Location(int.Parse(orderRoot.Element("destination").Element("location").Element("x").Value),
+                                                     int.Parse(orderRoot.Element("destination").Element("location").Element("y").Value));
+
+                    Tile destination = null;
+                    switch (orderRoot.Element("destination").Element("type").Value)
+                    {
+                        case "LAKES": destination = new Tile(location, TerrainType.LAKES); break;
+                        case "MOUNTAINS": destination = new Tile(location, TerrainType.MOUNTAINS); break;
+                        case "PLAINS": destination = new Tile(location, TerrainType.PLAINS); break;
+                        case "VILLAGE": destination = new Tile(location, TerrainType.VILLAGE); break;
+                    }
+
+                    Order order = null;
+                    string type = orderRoot.Element("type").Value;
+                    switch (type)
+                    {
+                        case "ATTACK": order = new AttackOrder(village, destination, army); System.Console.Write("ok"); break;
+                        case "CAPTURE": order = new CaptureOrder(village, destination, army); break;
+                        //case "SUPPORT": order = new SupportOrder(village, destination, army); break;  <---- in the near future :)
+                    }
+
+                    order.Duration.time = int.Parse(orderRoot.Element("duration").Value);
+                    order.OverallTime.time = int.Parse(orderRoot.Element("overallTime").Value);
+
+                    village.orders.Add(order);
                 }
 
                 village.buildTimeEnd.time = int.Parse(villageRoot.Element("buildTimeEnd").Value);

@@ -306,7 +306,6 @@ namespace Plevian.Save
                     orderCounter = 0;
                     foreach (Order order in village.orders)
                     {
-                        //TODO: add orders to write in xml file
                         orderCounter++;
 
                         XmlNode orderNode = villagesXml.CreateElement("order" + orderCounter);
@@ -362,7 +361,7 @@ namespace Plevian.Save
                         XmlNode orderOverallTime = villagesXml.CreateElement("overallTime");
                         orderOverallTime.AppendChild(villagesXml.CreateTextNode(order.OverallTime.time.ToString()));
                         orderNode.AppendChild(orderOverallTime);
-
+                        
                         orders.AppendChild(orderNode);
                     }
                     villageNode.AppendChild(orders);
