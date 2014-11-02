@@ -46,7 +46,6 @@ namespace Plevian.Save
                 }
                 else
                 {
-                    buffer.Add("buildingCounter", int.Parse(counterRoot.Element("village" + i).Element("buildingCounter").Value));
                     buffer.Add("buildingQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("buildingQueueCounter").Value));
                     buffer.Add("researchQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("researchQueueCounter").Value));
                     buffer.Add("recruitQueueCounter", int.Parse(counterRoot.Element("village" + i).Element("recruitQueueCounter").Value));
@@ -95,14 +94,9 @@ namespace Plevian.Save
                     }
                 }
 
-                int k = 1;
                 foreach (KeyValuePair<BuildingType, Building> building in village.buildings)
                 {
-                    if (building.Key.ToString() == villageRoot.Element("buildings").Element("building" + k).Element("key").Value)
-                    {
-                        building.Value.level = int.Parse(villageRoot.Element("buildings").Element("building" + k).Element("level").Value);
-                    }
-                    k++;
+                    building.Value.level = int.Parse(villageRoot.Element("buildings").Element(building.Key.ToString()).Element("level").Value);
                 }
 
                 for (int l = 1; l <= villageCounters["queueCounter"]; l++)

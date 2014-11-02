@@ -36,7 +36,6 @@ namespace Plevian.Save
             int messageCounter;
             int technologyCounter;
             int villageCounter;
-            int buildingCounter;
             int armyCounter;
             int buildingQueueCounter;
             int researchQueueCounter;
@@ -247,16 +246,9 @@ namespace Plevian.Save
                     villageNode.AppendChild(villageResources);
 
                     XmlNode buildings = villagesXml.CreateElement("buildings");
-                    buildingCounter = 0;
                     foreach (KeyValuePair<Buildings.BuildingType, Buildings.Building> build in village.buildings)
                     {
-                        buildingCounter++;
-
-                        XmlNode building = villagesXml.CreateElement("building" + buildingCounter);
-
-                        XmlNode key = villagesXml.CreateElement("key");
-                        key.AppendChild(villagesXml.CreateTextNode(build.Key.ToString()));
-                        building.AppendChild(key);
+                        XmlNode building = villagesXml.CreateElement(build.Key.ToString());
 
                         XmlNode level = villagesXml.CreateElement("level");
                         level.AppendChild(villagesXml.CreateTextNode(build.Value.level.ToString()));
@@ -265,12 +257,6 @@ namespace Plevian.Save
                         buildings.AppendChild(building);
                     }
                     villageNode.AppendChild(buildings);
-
-                    // buildingCounter write
-                    XmlNode buildingCount = countersXml.CreateElement("buildingCounter");
-                    buildingCount.AppendChild(countersXml.CreateTextNode(buildingCounter.ToString()));
-                    villageCounters.AppendChild(buildingCount);
-                    // -----------
 
                     XmlNode buildTimeEnd = villagesXml.CreateElement("buildTimeEnd");
                     buildTimeEnd.AppendChild(villagesXml.CreateTextNode(village.buildTimeEnd.time.ToString()));
@@ -313,10 +299,6 @@ namespace Plevian.Save
                         orderType.AppendChild(villagesXml.CreateTextNode(order.Type.ToString()));
                         orderNode.AppendChild(orderType);
 
-                        XmlNode completed = villagesXml.CreateElement("completed");
-                        completed.AppendChild(villagesXml.CreateTextNode(order.completed.ToString()));
-                        orderNode.AppendChild(completed);
-
                         XmlNode orderArmies = villagesXml.CreateElement("armies");
                         foreach (UnitType unit in unitType)
                         {
@@ -353,10 +335,6 @@ namespace Plevian.Save
                         XmlNode orderDuration = villagesXml.CreateElement("duration");
                         orderDuration.AppendChild(villagesXml.CreateTextNode(order.Duration.time.ToString()));
                         orderNode.AppendChild(orderDuration);
-
-                        XmlNode orderBack = villagesXml.CreateElement("back");
-                        orderBack.AppendChild(villagesXml.CreateTextNode(order.isGoingBack.ToString()));
-                        orderNode.AppendChild(orderBack);
 
                         XmlNode orderOverallTime = villagesXml.CreateElement("overallTime");
                         orderOverallTime.AppendChild(villagesXml.CreateTextNode(order.OverallTime.time.ToString()));
