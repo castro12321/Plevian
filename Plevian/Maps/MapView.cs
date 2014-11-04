@@ -19,7 +19,7 @@ namespace Plevian.Maps
     // - Po kliknieciu otwierac okienko powiazane z danym tilem
     public class MapView : System.Windows.Forms.UserControl
     {
-        private const int tileSizeInPixels = 28;
+        private const int tileSizeInPixels = 32;
         private const float MouseDragStart = 2f;
 
         private RenderWindow renderer;
@@ -29,21 +29,36 @@ namespace Plevian.Maps
         public event EventHandler<MouseMovedEventArgs>  PlevianMouseMovedEvent;
         public event EventHandler<MapDraggedEventArgs> PlevianMapDraggedEvent;
 
-
-
         private bool mouseDrag = false;
         private bool mouseLeftClicked = false;
         private Location previousMouseLocation = new Location(0, 0);
         private Location mouseDownStartLocation = new Location(0, 0);
         private int tileWidth, tileHeight;
 
-
         public Camera camera { get; private set; }
 
-
+        private Texture
+            mountainsTex = Utils.ToSFMLTexture(Properties.Resources.mountains),
+            villageTex = Utils.ToSFMLTexture(Properties.Resources.village),
+            plainsTex = Utils.ToSFMLTexture(Properties.Resources.plains),
+            lakeTex = Utils.ToSFMLTexture(Properties.Resources.lake);
+        private Sprite
+            //village = new Sprite(villageTex);
+            village, lake, plains, mountains;
         public MapView(Map map, System.Windows.Forms.Integration.WindowsFormsHost host)
         {
+            //villageTex = new Texture(@"village");
+            //villageTex = new Texture(Properties.Resources.village);
+            village   = new Sprite(villageTex);
+            lake      = new Sprite(lakeTex);
+            plains    = new Sprite(plainsTex);
+            mountains = new Sprite(mountainsTex);
+            village.Scale = new Vector2f(0.333f, 0.333f);
+            lake.Scale = new Vector2f(0.333f, 0.333f);
+            plains.Scale = new Vector2f(0.333f, 0.333f);
+            mountains.Scale = new Vector2f(0.333f, 0.333f);
             this.map = map;
+            //Properties.Resources.
             
             renderer = new RenderWindow(Handle); // Only to avoid nulls. Will be recreated in next control resize (which is sent automatically when the window initializes)
 
@@ -192,34 +207,32 @@ namespace Plevian.Maps
                     if (x < 0 || x >= map.sizeX) continue;
                     if (y < 0 || y >= map.sizeY) continue;
                     Tile tile = map.tileAt(new Location(x, y));
-                    Shape tileShape = getShapeFor(tile);
-                    tileShape.Position = camera.translate(new Vector2f(x * tileSizeInPixels, y * tileSizeInPixels));
-                    renderer.Draw(tileShape);
+                    Sprite tileSprite = getShapeFor(tile);
+                    tileSprite.Position = camera.translate(new Vector2f(x * tileSizeInPixels, y * tileSizeInPixels));
+                    renderer.Draw(tileSprite);
                 }
            renderer.Display();
         }
 
-        private Shape shape = new RectangleShape(new SFML.Window.Vector2f(tileSizeInPixels, tileSizeInPixels));
-        private Shape getShapeFor(Tile tile)
+        private Sprite getShapeFor(Tile tile)
         {
             TerrainType type = tile.type;
             switch(type)
             {
-                case TerrainType.LAKES: shape.FillColor = Color.Blue; break;
-                case TerrainType.MOUNTAINS: shape.FillColor = Color.White; break;
-                case TerrainType.PLAINS: shape.FillColor = Color.Green; break;
+                case TerrainType.LAKES: return lake;
+                case TerrainType.MOUNTAINS: return mountains;
+                case TerrainType.PLAINS: return plains;
                 case TerrainType.VILLAGE:
                     {
-                        shape.FillColor = Color.Red;
                         if (tile is Village)
                         {
                             Village village = tile as Village;
-                            shape.FillColor = village.Owner.color;
+                            this.village.Color = village.Owner.color;
                         }
-                        break;
+                        return this.village;
                     }
             }
-            return shape;
+            return null;
         }
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
