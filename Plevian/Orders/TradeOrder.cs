@@ -16,8 +16,8 @@ namespace Plevian.Orders
         public readonly Resources sentResources;
         public readonly Army sentArmy;
 
-        public TradeOrder(Tile origin, Tile destination, Army traders, Resources sentResources, Army sentArmy)
-            : base(origin, destination, traders, OrderType.SUPPORT)
+        public TradeOrder(Village owner, Tile origin, Tile destination, Army traders, Resources sentResources, Army sentArmy)
+            : base(owner, origin, destination, traders, OrderType.SUPPORT)
         {
             this.sentResources = sentResources;
             this.sentArmy = sentArmy;

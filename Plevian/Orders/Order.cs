@@ -13,16 +13,15 @@ namespace Plevian.Orders
 {
     public abstract class Order : INotifyPropertyChanged
     {
-        public Army army { get; protected set; }
-        /// <summary>
-        /// After setting it to true order will be deleted from orders list in village
-        /// </summary>
-        public Tile Destination { get; private set; }
-        public OrderType Type { get; protected set; }
+        public readonly Village owner;
+        public readonly OrderType Type;
+        public readonly Army army;
+        /// <summary>After setting it to true order will be deleted from orders list in village</summary>
         public bool completed { get; protected set; }
         public bool isGoingBack { get; protected set; }
         public GameTime OverallTime { get; private set; }
         protected Tile origin { get; set; }
+        public Tile Destination { get; private set; }
         protected GameTime endTime { get; set; }
 
         protected abstract void onEnd();
@@ -35,8 +34,10 @@ namespace Plevian.Orders
             }
         }
 
-        public Order(Tile origin, Tile destination, Army army, OrderType type)
+        public Order(Village owner, Tile origin, Tile destination, Army army, OrderType type)
         {
+            if (owner == null)
+                throw new ArgumentException("Owner is null");
             if (origin == null)
                 throw new ArgumentException("origin is null");
             if (destination == null)
@@ -44,6 +45,7 @@ namespace Plevian.Orders
             if (army == null)
                 throw new ArgumentException("army is null");
 
+            this.owner = owner;
             this.origin = origin;
             Destination = destination;
             this.army = army;

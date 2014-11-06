@@ -12,8 +12,8 @@ namespace Plevian.Orders
 {
     class CreateVillage : Order
     {
-        public CreateVillage(Tile origin, Tile destination, Army army)
-            : base(origin, destination, army, OrderType.CAPTURE)
+        public CreateVillage(Village owner, Tile origin, Tile destination, Army army)
+            : base(owner, origin, destination, army, OrderType.CAPTURE)
         {
             if (destination.type != TerrainType.PLAINS)
                 throw new Exception("You can create villages only on PLAINS tiles");

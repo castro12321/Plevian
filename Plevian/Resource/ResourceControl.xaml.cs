@@ -23,7 +23,7 @@ namespace Plevian.Resource
         public static readonly DependencyProperty ResourcesProperty = DependencyProperty.Register(
     "Resources", typeof(Resources), typeof(ResourceControl));
 
-        public Resources Resources
+        public new Resources Resources
         {
             get
             {

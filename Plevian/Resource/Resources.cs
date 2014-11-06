@@ -138,6 +138,14 @@ namespace Plevian.Resource
                 && lh.stone == rh.stone;
         }
 
+        public override bool Equals(object obj)
+        {
+            Resources rh = obj as Resources;
+            if(rh != null)
+                return this == rh;
+            return false;
+        }
+
         public static bool operator != (Resources lh, Resources rh)
         {
             return !(lh == rh);

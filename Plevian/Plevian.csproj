@@ -38,7 +38,6 @@
     <StartupObject>Plevian.Entry</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="sfmlnet-audio-2">
       <HintPath>..\..\..\Biblioteki\C#\SFML\lib\x32\sfmlnet-audio-2.dll</HintPath>
     </Reference>

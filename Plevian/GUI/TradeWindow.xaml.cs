@@ -99,7 +99,7 @@ namespace Plevian.GUI
             Army trader = new Army();
             trader.add(UnitFactory.createUnit(UnitType.TRADER, 1));
 
-            Order order = new TradeOrder(selectedVillage, target, trader, toSend, null);
+            Order order = new TradeOrder(selectedVillage, selectedVillage, target, trader, toSend, null);
             selectedVillage.addOrder(order);
 
             this.Close();

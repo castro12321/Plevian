@@ -12,12 +12,11 @@ namespace Plevian.Orders
 {
     public class CaptureOrder : AttackOrder
     {
-        public CaptureOrder(Tile origin, Tile destination, Army army)
-            : base(origin, destination, army)
+        public CaptureOrder(Village owner, Tile origin, Tile destination, Army army)
+            : base(owner, origin, destination, army, OrderType.CAPTURE)
         {
             if (!army.contains(UnitType.DUKE))
                 throw new Exception("CaptureOrder without duke!");
-            this.Type = OrderType.CAPTURE;
         }
 
         protected override void onFightWin(Battles.Report report)

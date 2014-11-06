@@ -19,10 +19,13 @@ namespace Plevian.Orders
 
         Resources loot = new Resources();
 
-        public AttackOrder(Tile origin, Tile destination, Army army)
-            : base(origin, destination, army, OrderType.ATTACK)
+        protected AttackOrder(Village owner, Tile origin, Tile destination, Army army, OrderType type)
+            : base(owner, origin, destination, army, type)
         {
-
+        }
+        public AttackOrder(Village owner, Tile origin, Tile destination, Army army)
+            : this(owner, origin, destination, army, OrderType.ATTACK)
+        {
         }
 
         protected override void onEnd()

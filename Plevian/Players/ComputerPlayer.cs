@@ -245,8 +245,8 @@ namespace Plevian.Players
 
             Village targetVillage = toAttack.villages[random.Next(0, toAttack.villages.Count)];
             Order order = attacking.contains(UnitType.DUKE)
-                ? new CaptureOrder(village, targetVillage, attacking)
-                : new AttackOrder(village, targetVillage, attacking);
+                ? new CaptureOrder(village, village, targetVillage, attacking)
+                : new AttackOrder(village, village, targetVillage, attacking);
             
             village.addOrder(order);
 
@@ -269,7 +269,7 @@ namespace Plevian.Players
 
                 Tile target = Game.game.map.FindEmptyTile();
                 Logger.AI("- Will establish a village at " + target.location.x + "/" + target.location.y);
-                Order establishOrder = new CreateVillage(village, target, settler);
+                Order establishOrder = new CreateVillage(village, village, target, settler);
                 village.addOrder(establishOrder);
             }
         }
