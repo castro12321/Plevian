@@ -42,35 +42,35 @@ namespace Tests.Integration
         [ExpectedException(typeof(ArgumentException))]
         public void SourceNullThrowsException()
         {
-            new TradeOrder(null, village2, trader, testResources, null);
+            new TradeOrder(null, null, village2, trader, testResources, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void TargetNullThrowsException()
         {
-            new TradeOrder(village1, null, trader, testResources, null);
+            new TradeOrder(village1, village1, null, trader, testResources, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ArmyNullThrowsException()
         {
-            new TradeOrder(village1, village2, null, testResources, null);
+            new TradeOrder(village1, village1, village2, null, testResources, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "Target tile must be village")]
         public void TargetNotVillageThrowsException()
         {
-            new TradeOrder(village1, plains, trader, testResources, null);
+            new TradeOrder(village1, village1, plains, trader, testResources, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(KeyNotFoundException))]
         public void NoTradersInArmyThrowsException()
         {
-            new TradeOrder(village1, plains, new Army(), testResources, null);
+            new TradeOrder(village1, village1, plains, new Army(), testResources, null);
         }
 
         [TestMethod]
@@ -96,7 +96,7 @@ namespace Tests.Integration
             Assert.AreEqual(3, village1.army.get(UnitType.TRADER).quantity);
 
             Resources toSend = new Resources(50, 100, 150, 200);
-            Order order = new TradeOrder(village1, village2, trader, toSend, null);
+            Order order = new TradeOrder(village1, village1, village2, trader, toSend, null);
             village1.addOrder(order);
 
             // After sending one trader, village should have 2 traders
@@ -137,7 +137,7 @@ namespace Tests.Integration
             Village winnersVillage = new Village(new Location(10,10), null, "");
             winnersVillage.addArmy(winner);
 
-            Order losersOrder = new AttackOrder(testVillage, winnersVillage, loser);
+            Order losersOrder = new AttackOrder(testVillage, testVillage, winnersVillage, loser);
             for (int i = 0; i < losersOrder.OverallTime.time; ++i)
                 testVillage.tick();
             Assert.IsTrue(testVillage.orders.Count == 0);

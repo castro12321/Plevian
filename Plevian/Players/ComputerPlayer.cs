@@ -228,6 +228,8 @@ namespace Plevian.Players
             //ComputerPlayer owner = village.Owner as ComputerPlayer;
             int randomized = random.Next(Game.game.players.Count);
             Player toAttack = Game.game.players[randomized];
+            if (toAttack == this)
+                return; // Don't attack ourselves xD
 
             randomized = random.Next(-10, 10);
             if (randomized < relations.get(toAttack)) // The better your relations

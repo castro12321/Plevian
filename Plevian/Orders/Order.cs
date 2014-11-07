@@ -13,9 +13,9 @@ namespace Plevian.Orders
 {
     public abstract class Order : INotifyPropertyChanged
     {
-        public readonly Village owner;
-        public readonly OrderType Type;
-        public readonly Army army;
+        public Village owner { get; private set; }
+        public OrderType Type { get; private set; }
+        public Army army { get; private set; }
         /// <summary>After setting it to true order will be deleted from orders list in village</summary>
         public bool completed { get; protected set; }
         public bool isGoingBack { get; protected set; }
