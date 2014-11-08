@@ -127,14 +127,12 @@
       <DependentUpon>MessagesTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Orders\AttackOrder.cs" />
-    <Compile Include="Orders\CaptureOrder.cs" />
     <Compile Include="Orders\TradeOrder.cs" />
     <Compile Include="Orders\Order.cs" />
     <Compile Include="Orders\OrderControl.xaml.cs">
       <DependentUpon>OrderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Orders\OrderType.cs" />
-    <Compile Include="Orders\CreateVillage.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
     <Compile Include="Players\AiRelations.cs" />
     <Compile Include="Players\ComputerPlayer.cs" />

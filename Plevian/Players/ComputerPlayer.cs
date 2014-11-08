@@ -16,6 +16,7 @@ namespace Plevian.Players
 {
     public class ComputerPlayer : Player
     {
+        private static bool disabled = true;
         private static Random random = new Random();
         private AiRelations relations = new AiRelations();
 
@@ -27,6 +28,8 @@ namespace Plevian.Players
         public override void tick()
         {
             base.tick();
+            if (disabled)
+                return;
             relations.step();
 
             foreach (Village village in villages)
@@ -246,12 +249,8 @@ namespace Plevian.Players
             }
 
             Village targetVillage = toAttack.villages[random.Next(0, toAttack.villages.Count)];
-            Order order = attacking.contains(UnitType.DUKE)
-                ? new CaptureOrder(village, village, targetVillage, attacking)
-                : new AttackOrder(village, village, targetVillage, attacking);
-            
+            Order order = new AttackOrder(village, village, targetVillage, attacking);
             village.addOrder(order);
-
         }
         #endregion
 
@@ -271,7 +270,7 @@ namespace Plevian.Players
 
                 Tile target = Game.game.map.FindEmptyTile();
                 Logger.AI("- Will establish a village at " + target.location.x + "/" + target.location.y);
-                Order establishOrder = new CreateVillage(village, village, target, settler);
+                Order establishOrder = new AttackOrder(village, village, target, settler);
                 village.addOrder(establishOrder);
             }
         }

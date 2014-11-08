@@ -18,11 +18,10 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,7,0,5">
             <ComboBox SelectedIndex="0" Margin="0,0,25,0">
-                <ComboBoxItem Name="lootOrderItem">Grabież</ComboBoxItem>
+                <ComboBoxItem Name="attackOrderItem">Atak</ComboBoxItem>
                 <ComboBoxItem Name="supportOrderItem">Wsparcie</ComboBoxItem>
-                <ComboBoxItem Name="takeOverOrderItem">Zajmij</ComboBoxItem>
             </ComboBox>
-            <Button Grid.Row="2" x:Name="SendButton" Content="Send!!!" VerticalContentAlignment="Center" Padding="10,1,11,1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="sendArmy" />
+            <Button Grid.Row="2" x:Name="SendButton" Content="Wyślij" VerticalContentAlignment="Center" Padding="10,1,11,1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="sendArmy" />
         </StackPanel>
     </Grid>
  

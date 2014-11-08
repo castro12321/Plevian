@@ -139,17 +139,10 @@ namespace Plevian.GUI
                 Village origin = selectedVillage;
 
                 Order order = null;
-                if (lootOrderItem.IsSelected)
+                if(attackOrderItem.IsSelected)
                     order = new AttackOrder(origin, origin, tileToAttack, army);
-                else if (supportOrderItem.IsSelected)
+                else if(supportOrderItem.IsSelected)
                     throw new NotSupportedException("Support orders not supported");
-                else if (takeOverOrderItem.IsSelected)
-                {
-                    if (tileToAttack.type == TerrainType.VILLAGE)
-                        order = new CaptureOrder(origin, origin, tileToAttack, army);
-                    else
-                        order = new CreateVillage(origin, origin, tileToAttack, army);
-                }
                 else
                     throw new KeyNotFoundException("Cannot recognize selected order type");
 

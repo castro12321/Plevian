@@ -2,6 +2,7 @@
 using Plevian.Debugging;
 using Plevian.Maps;
 using Plevian.Messages;
+using Plevian.Players;
 using Plevian.Resource;
 using Plevian.Units;
 using Plevian.Villages;
@@ -30,7 +31,36 @@ namespace Plevian.Orders
 
         protected override void onEnd()
         {
-            if (isGoingBack == true)
+            if (Destination.type == TerrainType.PLAINS
+            && army.contains(UnitType.SETTLER))
+            {
+                // Somebody taken over this tile? abort
+                if (Destination.type != TerrainType.PLAINS)
+                {
+                    Game.Player.SendMessage("System", "Failed to create village", "The village has been created by someone else");
+                    turnBack();
+                    return;
+                }
+
+                Player player = Game.Player;
+                Map map = Game.game.map;
+
+                Village newVillage = new Village(Destination.location, player, "New village");
+                map.place(newVillage);
+                player.addVillage(newVillage);
+
+                /* TODO: doesn't work
+                Army settler = new Army();
+                settler += UnitFactory.createUnit(UnitType.SETTLER, 1);
+                army -= settler;
+                newVillage.addArmy(army);
+                */
+
+                Game.Player.SendMessage("System", "Created village", newVillage.name + " created at " + newVillage.location);
+
+                completed = true;
+            }
+            else if (isGoingBack == true)
             {
                 if (!(Destination is Village))
                     throw new Exception("Army returned to tile which is not Village!");
@@ -58,13 +88,9 @@ namespace Plevian.Orders
                     Report afterReport = makeBattle();
 
                     if (afterReport.battleResult == BattleState.AttackerVictory)
-                    {
                         onFightWin(afterReport);
-                        
-                    } else
-                    {
+                    else
                         onFightLose(afterReport);
-                    }
 
                     Game.Player.SendMessage(new Message("Battle report : " + village.name, "Report", afterReport.ToString(), DateTime.Now));
                 }
@@ -84,12 +110,24 @@ namespace Plevian.Orders
             return battle.makeBattle();
         }
 
-        protected virtual void onFightWin(Report report)
+        protected void onFightWin(Report report)
         {
-
-            gatherLoot(Destination as Village);
-            report.loot = loot;
-            turnBack();
+            if (army.contains(UnitType.DUKE))
+            {
+                Village village = Destination as Village;
+                Village attVillage = origin as Village;
+                Player attacker = attVillage.Owner;
+                attacker.CaptureVillage(village);
+                completed = true;
+                village.addArmy(army);
+                report.villageCaptured = true;
+            }
+            else
+            {
+                gatherLoot(Destination as Village);
+                report.loot = loot;
+                turnBack();
+            }
         }
 
         protected virtual void onFightLose(Report report)
@@ -199,9 +237,7 @@ namespace Plevian.Orders
         {
             string tooltip =  base.getTooltipText();
             if(isGoingBack)
-            {
                 tooltip += "\n" + loot.ToString();
-            }
             return tooltip;
         }
 
