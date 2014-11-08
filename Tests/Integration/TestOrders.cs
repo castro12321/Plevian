@@ -142,5 +142,33 @@ namespace Tests.Integration
                 testVillage.tick();
             Assert.IsTrue(testVillage.orders.Count == 0);
         }
+
+        [TestMethod]
+        public void testLootGathering()
+        {
+            testLootPart(new Resources(0, 0, 0, 0), new Resources(0, 0, 0, 0));
+            testLootPart(new Resources(100, 0, 0, 0), new Resources(100, 0, 0, 0));
+            testLootPart(new Resources(0, 100, 0, 0), new Resources(0, 100, 0, 0));
+            testLootPart(new Resources(0, 0, 100, 0), new Resources(0, 0, 100, 0));
+            testLootPart(new Resources(0, 0, 0, 100), new Resources(0, 0, 0, 100));
+            testLootPart(new Resources(25, 25, 25, 25), new Resources(25, 25, 25, 25));
+            testLootPart(new Resources(100, 100, 100, 100), new Resources(25, 25, 25, 25));
+            testLootPart(new Resources(400, 400, 100, 100), new Resources(40, 40, 10, 10));
+            testLootPart(new Resources(500, 300, 150, 50), new Resources(50, 30, 15, 5));
+            testLootPart(new Resources(50, 150, 300, 500), new Resources(5, 15, 30, 50));
+        }
+
+        private void testLootPart(Resources startResources, Resources toLoot)
+        {
+            Village attackerVillage = new Village(new Location(0, 0), null, "");
+            Village defenderVillage = new Village(new Location(0, 1), null, "");
+            Army attacker = new Army().add(new Warrior(2));
+            attackerVillage.addArmy(attacker);
+
+            AttackOrder order = new AttackOrder(attackerVillage, attackerVillage, defenderVillage, attacker);
+            for (int i = 0; i < order.OverallTime.time; ++i)
+                attackerVillage.tick();
+            Assert.IsTrue(order.loot == toLoot);
+        }
     }
 }

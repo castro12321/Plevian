@@ -36,14 +36,15 @@ namespace Plevian
 
             Tile village1Tile = map.FindEmptyTile();
             Village village1 = new Village(village1Tile.location, mainPlayer, "Capital");
-            village1.build(BuildingType.TOWN_HALL);
-            village1.addUnit(new Warrior(10));
+            village1.addResources(new Resource.Resources(1, 501, 1001, 1501));
+            //village1.build(BuildingType.TOWN_HALL);
+            //village1.addUnit(new Warrior(10));
             map.place(village1);
-            mainPlayer.addVillage(village1);
+            //mainPlayer.addVillage(village1);
             addPlayer(mainPlayer);
 
             Player enemy = new ComputerPlayer("Hitler", SFML.Graphics.Color.Red);
-            //player = enemy;
+            mainPlayer = enemy;
             Tile berlinTile = map.FindEmptyTile();
             Village berlin = new Village(berlinTile.location, enemy, "Berlin");
             berlin.addUnit(new Warrior(10));

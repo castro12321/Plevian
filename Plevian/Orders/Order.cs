@@ -91,17 +91,7 @@ namespace Plevian.Orders
 
         public virtual String getTooltipText()
         {
-            int sum = 0;
-            string tooltip = "";
-            foreach (var pair in army.getUnits())
-            {
-                string unitName = Enum.GetName(typeof(UnitType), pair.Key);
-                tooltip += "\n" + pair.Value.ToString();
-                sum += pair.Value.quantity;
-            }
-
-            tooltip = "Units : " + sum + tooltip;
-            return tooltip;
+            return army.toString();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

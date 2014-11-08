@@ -30,7 +30,7 @@ namespace Plevian.Units
         public override int defenseArchers { get { return 5; } }
 
         public override int movementSpeed { get { return 1; } }
-        public override int lootCapacity { get { return 75; } }
+        public override int lootCapacity { get { return 50; } }
 
         public override Resources recruitCost { get { return new Food(50) + new Wood(50); } }
 
