@@ -244,14 +244,14 @@ namespace Plevian.Villages
             {
                 Order order = orders[i];
                 
-                if(order.completed)
+                if (order.owner == this)
+                    order.tick();
+
+                if (order.completed)
                 {
                     orders.RemoveAt(i);
                     continue;
                 }
-
-                if (order.owner == this)
-                    order.tick();
             }
         }
 

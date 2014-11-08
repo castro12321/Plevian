@@ -51,7 +51,7 @@ namespace Plevian.Orders
                 Village village = Destination as Village;
                 village.addArmy(army);
                 completed = true;
-                Game.Player.SendMessage("System", "Trader returned", "Trader returned to the village " + Destination);
+                owner.Owner.SendMessage("System", "Trader returned", "Trader returned to the village " + Destination);
             }
             else
             {
@@ -62,7 +62,7 @@ namespace Plevian.Orders
                     destinationVillage.addArmy(sentArmy);
 
                 turnBack();
-                Game.Player.SendMessage("System", "Trade completed", sentResources + " and " + army + " have beed transferred to " + destinationVillage);
+                owner.Owner.SendMessage("System", "Trade completed", sentResources + " and " + army + " have beed transferred to " + destinationVillage);
             }
         }
     }

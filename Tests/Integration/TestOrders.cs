@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Plevian;
 using Plevian.Debugging;
 using Plevian.Maps;
 using Plevian.Orders;
@@ -18,7 +19,7 @@ namespace Tests.Integration
     [TestClass]
     public class TestOrders : TestWithTime
     {
-        Player player;
+        Player player1, player2;
         Village village1, village2;
         Tile plains;
         Army trader, traders;
@@ -27,10 +28,11 @@ namespace Tests.Integration
         public TestOrders()
         {
             fakeTime(0);
-            player = new Player("test", Color.Blue);
+            player1 = new Player("test1", Color.Blue);
+            player2 = new Player("test2", Color.Red);
             plains = new Tile(new Location(0, 0), TerrainType.PLAINS);
-            village1 = new Village(new Location(0, 0), player, "village1");
-            village2 = new Village(new Location(0, 3), player, "village2");
+            village1 = new Village(new Location(0, 0), player1, "village1");
+            village2 = new Village(new Location(0, 3), player2, "village2");
             trader = new Army();
             trader.add(UnitFactory.createUnit(UnitType.TRADER, 1));
             traders = new Army();
@@ -76,6 +78,9 @@ namespace Tests.Integration
         [TestMethod]
         public void Trading()
         {
+            Logger.log(GameTime.now + " --> " + FakeGameTime.now);
+            addFakeTime(10);
+            Logger.log(GameTime.now + " ==> " + FakeGameTime.now);
             village1.resources.Clear();
             village1.resources.Add(new Resources(100, 200, 300, 400));
             village1.addArmy(traders);
@@ -102,11 +107,9 @@ namespace Tests.Integration
             // After sending one trader, village should have 2 traders
             Assert.AreEqual(2, village1.army.get(UnitType.TRADER).quantity);
 
-            // Need 9 ticks for traders to go to the target
-            for(int i = 0;i < order.OverallTime.time; ++ i)
-            {
-                order.tick(); 
-            }
+            addFakeTime(order.OverallTime.time);
+            GameTime.update();
+            order.tick();
 
             Assert.AreEqual(50, village1.resources.food);
             Assert.AreEqual(100, village1.resources.wood);
@@ -117,10 +120,9 @@ namespace Tests.Integration
             Assert.AreEqual(150, village2.resources.iron);
             Assert.AreEqual(200, village2.resources.stone);
 
-            // Need 9 ticks for traders to go back to the source
-            order.tick(); order.tick(); order.tick();
-            order.tick(); order.tick(); order.tick();
-            order.tick(); order.tick(); order.tick();
+            addFakeTime(order.OverallTime.time);
+            GameTime.update();
+            order.tick();
 
             // Now source village should contain 3 traders again
             Assert.AreEqual(3, village1.army.get(UnitType.TRADER).quantity);
@@ -138,8 +140,17 @@ namespace Tests.Integration
             winnersVillage.addArmy(winner);
 
             Order losersOrder = new AttackOrder(testVillage, testVillage, winnersVillage, loser);
-            for (int i = 0; i < losersOrder.OverallTime.time; ++i)
-                testVillage.tick();
+            Assert.IsTrue(testVillage.orders.Count == 0);
+            testVillage.addOrder(losersOrder);
+            Assert.IsTrue(testVillage.orders.Count == 1);
+            
+            addFakeTime(losersOrder.OverallTime.time);
+            GameTime.update();
+            testVillage.tick();
+            addFakeTime(losersOrder.OverallTime.time);
+            GameTime.update();
+            testVillage.tick();
+            
             Assert.IsTrue(testVillage.orders.Count == 0);
         }
 
@@ -160,15 +171,27 @@ namespace Tests.Integration
 
         private void testLootPart(Resources startResources, Resources toLoot)
         {
-            Village attackerVillage = new Village(new Location(0, 0), null, "");
-            Village defenderVillage = new Village(new Location(0, 1), null, "");
+            Village attackerVillage = new Village(new Location(0, 0), player1, "");
+            Village defenderVillage = new Village(new Location(0, 1), player2, "");
+            defenderVillage.takeResources(defenderVillage.resources);
+            defenderVillage.addResources(startResources);
             Army attacker = new Army().add(new Warrior(2));
             attackerVillage.addArmy(attacker);
-
+            
             AttackOrder order = new AttackOrder(attackerVillage, attackerVillage, defenderVillage, attacker);
-            for (int i = 0; i < order.OverallTime.time; ++i)
-                attackerVillage.tick();
-            Assert.IsTrue(order.loot == toLoot);
+            attackerVillage.addOrder(order);
+            
+            addFakeTime(order.OverallTime.time);
+            GameTime.update();
+            attackerVillage.tick();
+            addFakeTime(order.OverallTime.time);
+            GameTime.update();
+            attackerVillage.tick();
+            addFakeTime(order.OverallTime.time);
+            GameTime.update();
+            attackerVillage.tick();
+            
+            Assert.AreEqual(toLoot, order.loot);
         }
     }
 }
