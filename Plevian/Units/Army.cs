@@ -216,12 +216,18 @@ namespace Plevian.Units
             return (IEnumerator)this;
         }
 
+        public string ToStringMinimal()
+        {
+            return toString().Replace("\n", "; ");
+        }
+
         public override string ToString()
         {
-            String s = "army: ";
+            String army = "Army (" + size() + " units):\n";
             foreach (Unit unit in units.Values)
-                s += unit.name + "=" + unit.quantity + "; ";
-            return s;
+                //army += unit.name + "=" + unit.quantity + "\n";
+                army += unit.ToString() + "\n";
+            return army;
         }
     }
 }

@@ -190,21 +190,15 @@ namespace Plevian.Villages
 
             BuildingQueueItem buildingQueueItem = item as BuildingQueueItem;
             if(buildingQueueItem != null)
-            {
                 buildingQueueItem.toBuild.upgrade();
-            }
 
             RecruitQueueItem recruitQueueITem = item as RecruitQueueItem;
             if(recruitQueueITem != null)
-            {
                 army.add(recruitQueueITem.toRecruit);
-            }
 
             ResearchQueueItem researchQueueItem = item as ResearchQueueItem;
             if(researchQueueItem != null)
-            {
                 owner.technologies.discover(researchQueueItem.researched);
-            }
         }
 
         public void setBuildings(Dictionary<BuildingType, Building> buildings)
@@ -249,13 +243,15 @@ namespace Plevian.Villages
             for(int i = 0; i < orders.Count; ++i)
             {
                 Order order = orders[i];
-                if(order.completed)
+                
+                if (order.owner == this)
+                    order.tick();
+
+                if (order.completed)
                 {
                     orders.RemoveAt(i);
                     continue;
                 }
-
-                order.tick();
             }
         }
 
@@ -375,15 +371,18 @@ namespace Plevian.Villages
 
         public void addOrder(Order order)
         {
-            if (army.canRemove(order.army))
+            if(order.owner == this)
             {
-                orders.Add(order);
+                if (!army.canRemove(order.army))
+                    throw new Exception("Army not big enough!");
                 army.remove(order.army);
+                
+                Village destination = order.Destination as Village;
+                if (destination != null)
+                    destination.addOrder(order);
             }
-            else
-            {
-                throw new Exception("Army not big enough!");
-            }
+
+            orders.Add(order);
         }
 
         public void addArmy(Army army)

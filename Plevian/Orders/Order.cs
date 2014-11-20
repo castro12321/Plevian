@@ -13,9 +13,9 @@ namespace Plevian.Orders
 {
     public abstract class Order : INotifyPropertyChanged
     {
-        public readonly Village owner;
-        public readonly OrderType Type;
-        public readonly Army army;
+        public Village owner { get; private set; }
+        public OrderType Type { get; private set; }
+        public Army army { get; private set; }
         /// <summary>After setting it to true order will be deleted from orders list in village</summary>
         public bool completed { get; protected set; }
         public bool isGoingBack { get; protected set; }
@@ -91,17 +91,7 @@ namespace Plevian.Orders
 
         public virtual String getTooltipText()
         {
-            int sum = 0;
-            string tooltip = "";
-            foreach (var pair in army.getUnits())
-            {
-                string unitName = Enum.GetName(typeof(UnitType), pair.Key);
-                tooltip += "\n" + pair.Value.ToString();
-                sum += pair.Value.quantity;
-            }
-
-            tooltip = "Units : " + sum + tooltip;
-            return tooltip;
+            return army.toString();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

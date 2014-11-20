@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Plevian.Battles;
 using Plevian.Units;
 using Plevian.Debugging;
+using Plevian.Resource;
 namespace Tests.Battles
 {
     [TestClass]
@@ -83,10 +84,7 @@ namespace Tests.Battles
                     Assert.IsTrue(current_losses >= losses || current_losses == report.defenderArmy[UnitType.WARRIOR]);
                     losses = current_losses;
                 }
-
             }
-
         }
-
     }
 }

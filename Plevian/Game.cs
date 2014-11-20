@@ -35,44 +35,23 @@ namespace Plevian
             mainPlayer.SendMessage(new Message("Hitler", "Message to you", "I'll kill you", DateTime.Now));
 
             Tile village1Tile = map.FindEmptyTile();
-            Tile village2Tile = map.FindEmptyTile();
-            Tile village3Tile = map.FindEmptyTile();
             Village village1 = new Village(village1Tile.location, mainPlayer, "Capital");
-            //Village village2 = new Village(village2Tile.location, player, "Luxemburg");
-            //Village village3 = new Village(village3Tile.location, player, "Warszawa" );
+            village1.addResources(new Resource.Resources(1, 501, 1001, 1501));
+            //village1.build(BuildingType.TOWN_HALL);
+            //village1.addUnit(new Warrior(10));
             map.place(village1);
-            //map.place(village2);
-            //map.place(village3);
-            mainPlayer.addVillage(village1);
-            //player.addVillage(village2);
-            //player.addVillage(village3);
+            //mainPlayer.addVillage(village1);
             addPlayer(mainPlayer);
 
             Player enemy = new ComputerPlayer("Hitler", SFML.Graphics.Color.Red);
-            //player = enemy;
+            mainPlayer = enemy;
             Tile berlinTile = map.FindEmptyTile();
-            Tile frankfurtTile = map.FindEmptyTile();
-            Tile hamburgTile = map.FindEmptyTile();
             Village berlin = new Village(berlinTile.location, enemy, "Berlin");
-            //Village frankfurt  = new Village(frankfurtTile.location, enemy, "Frankfurt");
-            //Village hamburger  = new Village(hamburgTile.location, enemy, "Hamburger");
-            map.place(berlin);
-            //map.place(frankfurt);
-            //map.place(hamburger);
-            enemy.addVillage(berlin);
-            //enemy.addVillage(frankfurt);
-            //enemy.addVillage(hamburger);
-            
-            //addPlayer(enemy);
-
-            village1.build(BuildingType.TOWN_HALL);
-            village1.addUnit(new Warrior(10));
-            //village2.addUnit(new Knight(200));
-            //village2.addUnit(new Archer(500));
-            //village3.addResources(new Resource.Resources(999999, 999999, 999999, 999999));
-            //village3.getBuilding(BuildingType.BARRACKS).level = 1;
-            //village3.recruit(new Warrior(1000));
             berlin.addUnit(new Warrior(10));
+            map.place(berlin);
+            enemy.addVillage(berlin);
+            
+            addPlayer(enemy);
 
             for (int i = 0; i < 10; ++i)
                 foreach (var pair in berlin.buildings)

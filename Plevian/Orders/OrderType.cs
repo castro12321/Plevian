@@ -9,8 +9,8 @@ namespace Plevian.Orders
     public enum OrderType
     {
         ATTACK = 1,
-        CAPTURE,
         SUPPORT,
+        TRADE,
         ERROR
     };
 }

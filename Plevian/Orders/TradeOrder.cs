@@ -17,7 +17,7 @@ namespace Plevian.Orders
         public readonly Army sentArmy;
 
         public TradeOrder(Village owner, Tile origin, Tile destination, Army traders, Resources sentResources, Army sentArmy)
-            : base(owner, origin, destination, traders, OrderType.SUPPORT)
+            : base(owner, origin, destination, traders, OrderType.TRADE)
         {
             this.sentResources = sentResources;
             this.sentArmy = sentArmy;
@@ -51,7 +51,7 @@ namespace Plevian.Orders
                 Village village = Destination as Village;
                 village.addArmy(army);
                 completed = true;
-                Game.Player.SendMessage("System", "Trader returned", "Trader returned to the village " + Destination);
+                owner.Owner.SendMessage("System", "Trader returned", "Trader returned to the village " + Destination);
             }
             else
             {
@@ -62,7 +62,7 @@ namespace Plevian.Orders
                     destinationVillage.addArmy(sentArmy);
 
                 turnBack();
-                Game.Player.SendMessage("System", "Trade completed", sentResources + " and " + army + " have beed transferred to " + destinationVillage);
+                owner.Owner.SendMessage("System", "Trade completed", sentResources + " and " + army + " have beed transferred to " + destinationVillage);
             }
         }
     }
