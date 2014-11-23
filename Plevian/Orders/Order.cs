@@ -20,7 +20,7 @@ namespace Plevian.Orders
         public bool completed { get; protected set; }
         public bool isGoingBack { get; protected set; }
         public GameTime OverallTime { get; private set; }
-        protected Tile origin { get; set; }
+        public Tile origin { get; set; }
         public Tile Destination { get; private set; }
         protected GameTime endTime { get; set; }
 

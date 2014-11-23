@@ -185,27 +185,36 @@ namespace Plevian.Save
                         }
                     }
 
-                    Location location = new Location(int.Parse(orderRoot.Element("destination").Element("location").Element("x").Value),
-                                                     int.Parse(orderRoot.Element("destination").Element("location").Element("y").Value));
+                    Location destinationLocation = new Location(int.Parse(orderRoot.Element("destination").Element("location").Element("x").Value),
+                                                                int.Parse(orderRoot.Element("destination").Element("location").Element("y").Value));
+
+                    Location originLocation = new Location(int.Parse(orderRoot.Element("origin").Element("location").Element("x").Value),
+                                                           int.Parse(orderRoot.Element("origin").Element("location").Element("y").Value));
 
                     Tile destination = null;
                     switch (orderRoot.Element("destination").Element("type").Value)
                     {
-                        case "LAKES": destination = new Tile(location, TerrainType.LAKES); break;
-                        case "MOUNTAINS": destination = new Tile(location, TerrainType.MOUNTAINS); break;
-                        case "PLAINS": destination = new Tile(location, TerrainType.PLAINS); break;
-                        case "VILLAGE": destination = new Tile(location, TerrainType.VILLAGE); break;
+                        case "LAKES": destination = new Tile(destinationLocation, TerrainType.LAKES); break;
+                        case "MOUNTAINS": destination = new Tile(destinationLocation, TerrainType.MOUNTAINS); break;
+                        case "PLAINS": destination = new Tile(destinationLocation, TerrainType.PLAINS); break;
+                        case "VILLAGE": destination = new Tile(destinationLocation, TerrainType.VILLAGE); break;
+                    }
+
+                    Tile origin = null;
+                    switch (orderRoot.Element("origin").Element("type").Value)
+                    {
+                        case "LAKES": origin = new Tile(originLocation, TerrainType.LAKES); break;
+                        case "MOUNTAINS": origin = new Tile(originLocation, TerrainType.MOUNTAINS); break;
+                        case "PLAINS": origin = new Tile(originLocation, TerrainType.PLAINS); break;
+                        case "VILLAGE": origin = new Tile(originLocation, TerrainType.VILLAGE); break;
                     }
 
                     Order order = null;
                     string type = orderRoot.Element("type").Value;
                     switch (type)
                     {
-                            /*
-                             * TODO: Add order's owner saving/restoring
-                        case "ATTACK": order = new AttackOrder(village, destination, army); break;
-                        case "CAPTURE": order = new CaptureOrder(village, destination, army); break;
-                             */
+                        case "ATTACK": order = new AttackOrder(village, origin, destination, army); break;
+                        //case "TRADE": order = new TradeOrder(village, origin, destination, army); break;
                         //case "SUPPORT": order = new SupportOrder(village, destination, army); break;  <---- in the near future :)
                     }
 

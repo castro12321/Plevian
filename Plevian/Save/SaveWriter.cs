@@ -318,19 +318,37 @@ namespace Plevian.Save
 
                         XmlNode orderDestination = villagesXml.CreateElement("destination");
                         XmlNode destinationLocation = villagesXml.CreateElement("location");
-                        XmlNode locationX = villagesXml.CreateElement("x");
-                        locationX.AppendChild(villagesXml.CreateTextNode(order.Destination.location.x.ToString()));
-                        destinationLocation.AppendChild(locationX);
+                        XmlNode desLocationX = villagesXml.CreateElement("x");
+                        desLocationX.AppendChild(villagesXml.CreateTextNode(order.Destination.location.x.ToString()));
+                        destinationLocation.AppendChild(desLocationX);
 
-                        XmlNode locationY = villagesXml.CreateElement("y");
-                        locationY.AppendChild(villagesXml.CreateTextNode(order.Destination.location.y.ToString()));
-                        destinationLocation.AppendChild(locationY);
+                        XmlNode desLocationY = villagesXml.CreateElement("y");
+                        desLocationY.AppendChild(villagesXml.CreateTextNode(order.Destination.location.y.ToString()));
+                        destinationLocation.AppendChild(desLocationY);
                         orderDestination.AppendChild(destinationLocation);
 
                         XmlNode destinationType = villagesXml.CreateElement("type");
                         destinationType.AppendChild(villagesXml.CreateTextNode(order.Destination.type.ToString()));
                         orderDestination.AppendChild(destinationType);
                         orderNode.AppendChild(orderDestination);
+
+                        //origin order
+
+                        XmlNode orderOrigin = villagesXml.CreateElement("origin");
+                        XmlNode originLocation = villagesXml.CreateElement("location");
+                        XmlNode originLocationX = villagesXml.CreateElement("x");
+                        originLocationX.AppendChild(villagesXml.CreateTextNode(order.origin.location.x.ToString()));
+                        originLocation.AppendChild(originLocationX);
+
+                        XmlNode originLocationY = villagesXml.CreateElement("y");
+                        originLocationY.AppendChild(villagesXml.CreateTextNode(order.origin.location.y.ToString()));
+                        originLocation.AppendChild(originLocationY);
+                        orderOrigin.AppendChild(originLocation);
+
+                        XmlNode originType = villagesXml.CreateElement("type");
+                        originType.AppendChild(villagesXml.CreateTextNode(order.origin.type.ToString()));
+                        orderOrigin.AppendChild(originType);
+                        orderNode.AppendChild(orderOrigin);
 
                         XmlNode orderDuration = villagesXml.CreateElement("duration");
                         orderDuration.AppendChild(villagesXml.CreateTextNode(order.Duration.time.ToString()));
