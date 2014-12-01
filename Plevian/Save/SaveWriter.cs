@@ -294,10 +294,52 @@ namespace Plevian.Save
                     {
                         orderCounter++;
 
+                        TradeOrder tradeOrder;
+
                         XmlNode orderNode = villagesXml.CreateElement("order" + orderCounter);
                         XmlNode orderType = villagesXml.CreateElement("type");
                         orderType.AppendChild(villagesXml.CreateTextNode(order.Type.ToString()));
                         orderNode.AppendChild(orderType);
+
+                        if(order.Type.ToString() == "TRADE") // <--------Start trade
+                        {
+                            tradeOrder = order as TradeOrder;
+
+                            XmlNode sentResources = villagesXml.CreateElement("sentResources");
+                            XmlNode resourcesFood = villagesXml.CreateElement("food");
+                            resourcesFood.AppendChild(villagesXml.CreateTextNode(tradeOrder.sentResources.food.ToString()));
+                            sentResources.AppendChild(resourcesFood);
+
+                            XmlNode resourcesStone = villagesXml.CreateElement("stone");
+                            resourcesStone.AppendChild(villagesXml.CreateTextNode(tradeOrder.sentResources.stone.ToString()));
+                            sentResources.AppendChild(resourcesStone);
+
+                            XmlNode resourcesWood = villagesXml.CreateElement("wood");
+                            resourcesWood.AppendChild(villagesXml.CreateTextNode(tradeOrder.sentResources.wood.ToString()));
+                            sentResources.AppendChild(resourcesWood);
+
+                            XmlNode resourcesIron = villagesXml.CreateElement("iron");
+                            resourcesIron.AppendChild(villagesXml.CreateTextNode(tradeOrder.sentResources.iron.ToString()));
+                            sentResources.AppendChild(resourcesIron);
+                            orderNode.AppendChild(sentResources);
+
+                            XmlNode sentArmy = villagesXml.CreateElement("sentArmy");
+                            foreach (UnitType unit in unitType)
+                            {
+                                XmlNode army = villagesXml.CreateElement(unit.ToString());
+
+                                XmlNode armyName = villagesXml.CreateElement("name");
+                                armyName.AppendChild(villagesXml.CreateTextNode(tradeOrder.sentArmy[unit].name));
+                                army.AppendChild(armyName);
+
+                                XmlNode armyQuantity = villagesXml.CreateElement("quantity");
+                                armyQuantity.AppendChild(villagesXml.CreateTextNode(tradeOrder.sentArmy[unit].quantity.ToString()));
+                                army.AppendChild(armyQuantity);
+
+                                sentArmy.AppendChild(army);
+                            }
+                            orderNode.AppendChild(sentArmy);
+                        } // <--------Stop trade
 
                         XmlNode orderArmies = villagesXml.CreateElement("armies");
                         foreach (UnitType unit in unitType)
