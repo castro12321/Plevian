@@ -15,6 +15,7 @@ using Plevian.Units;
 using Plevian.Messages;
 using Plevian.TechnologY;
 using Plevian.Orders;
+using Plevian.Resource;
 
 namespace Plevian.Save
 {
@@ -214,7 +215,27 @@ namespace Plevian.Save
                     switch (type)
                     {
                         case "ATTACK": order = new AttackOrder(village, origin, destination, army); break;
-                        //case "TRADE": order = new TradeOrder(village, origin, destination, army); break;
+
+                        case "TRADE":
+                            {
+                                Resources sentResources = new Resource.Resources(int.Parse(orderRoot.Element("sentResources").Element("food").Value),
+                                                                                 int.Parse(orderRoot.Element("sentResources").Element("wood").Value),
+                                                                                 int.Parse(orderRoot.Element("sentResources").Element("iron").Value),
+                                                                                 int.Parse(orderRoot.Element("sentResources").Element("stone").Value));
+
+                                Army sentArmy = new Army();
+                                foreach (UnitType unit in unitType)
+                                {
+                                    if (sentArmy[unit].name == orderRoot.Element("sentArmy").Element(unit.ToString()).Element("name").Value)
+                                    {
+                                        sentArmy[unit].quantity = int.Parse(orderRoot.Element("sentArmy").Element(unit.ToString()).Element("quantity").Value);
+                                    }
+                                }
+
+                                order = new TradeOrder(village, origin, destination, army, sentResources, sentArmy);
+                                break;
+                            }
+
                         //case "SUPPORT": order = new SupportOrder(village, destination, army); break;  <---- in the near future :)
                     }
 
