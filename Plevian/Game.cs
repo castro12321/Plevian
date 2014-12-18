@@ -52,7 +52,7 @@ namespace Plevian
             enemy.addVillage(berlin);
             
             addPlayer(enemy);
-
+            /*
             for (int i = 0; i < 10; ++i)
                 foreach (var pair in berlin.buildings)
                 {
@@ -60,6 +60,7 @@ namespace Plevian
                     if (building.getMaxLevel() <= i)
                         building.upgrade();
                 }
+             */
         }
         
         /// <summary>
