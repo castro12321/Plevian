@@ -38,9 +38,9 @@ namespace Plevian
             Village village1 = new Village(village1Tile.location, mainPlayer, "Capital");
             village1.addResources(new Resource.Resources(1, 501, 1001, 1501));
             //village1.build(BuildingType.TOWN_HALL);
-            //village1.addUnit(new Warrior(10));
+            village1.addUnit(new Warrior(3));
             map.place(village1);
-            //mainPlayer.addVillage(village1);
+            mainPlayer.addVillage(village1);
             addPlayer(mainPlayer);
 
             Player enemy = new ComputerPlayer("Hitler", SFML.Graphics.Color.Red);

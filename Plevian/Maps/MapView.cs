@@ -113,6 +113,8 @@ namespace Plevian.Maps
                 {
                     Location clickedTileLocation = PixelToTile(mouseLocationPixels);
                     Tile clickedTile = map.tileAt(clickedTileLocation);
+                    if (clickedTile == null)
+                        return;
 
                     EventHandler<TileClickedEventArgs> handler = PlevianTileClickedEvent;
                     if (handler != null)

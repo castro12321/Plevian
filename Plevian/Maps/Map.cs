@@ -38,7 +38,14 @@ namespace Plevian.Maps
 
         public Tile tileAt(Location where)
         {
-            return fields[where.x, where.y];
+            try
+            {
+                return fields[where.x, where.y];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return null;
+            }
         }
 
 
