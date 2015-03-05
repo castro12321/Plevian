@@ -66,6 +66,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Battles\TestBattles.cs" />
+    <Compile Include="Battles\TestBattles2.cs" />
     <Compile Include="FakeGameTime.cs" />
     <Compile Include="Integration\TestOrders.cs" />
     <Compile Include="Integration\TestSavingGame.cs" />

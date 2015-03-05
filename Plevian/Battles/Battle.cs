@@ -42,7 +42,7 @@ namespace Plevian.Battles
             listUnits();
         }
 
-        public Report makeBattle()
+        public Report makeBattle() // tworzy bitwe -> attackOrder class
         {
             if (battleState == BattleState.Error)
                 throw new Exception("Battle error");
