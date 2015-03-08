@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Plevian.Debugging;
 
 namespace Plevian.Buildings
 {
@@ -28,10 +29,10 @@ namespace Plevian.Buildings
     public partial class BuildingControl : UserControl
     {
         ViewModel model = new ViewModel();
+
         public BuildingControl()
         {
             InitializeComponent();
-
             this.DataContextChanged += BuildingControl_DataContextChanged;
         }
 
@@ -44,16 +45,21 @@ namespace Plevian.Buildings
                 Village village = MainWindow.getInstance().villageTab.Village;
 
                 setData(pair.Value, village);
-
             }
         }
-
 
         public void setData(Building data, Village village)
         {
             this.DataContext = model;
             stackPanel.DataContext = model;
+            model.PropertyChanged += model_PropertyChanged;
             model.setData(data, village);
+        }
+
+        void model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Level")
+                upgradeButton.Content = (model.Level == 0) ? "Build" : "Upgrade";
         }
 
         public Building getData()
@@ -68,9 +74,7 @@ namespace Plevian.Buildings
         private void OnUpgradeClick(object sender, RoutedEventArgs e)
         {
             if(Upgrade != null)
-            {
                 Upgrade(sender, getData());
-            }
         }
     }
 
@@ -217,6 +221,7 @@ namespace Plevian.Buildings
             NotifyPropertyChanged("Level");
             NotifyPropertyChanged("CanBuild");
             NotifyPropertyChanged("HaveTechnology");
+            NotifyPropertyChanged("showResources");
         }
     }
 }
