@@ -239,6 +239,8 @@ namespace Plevian.Players
             Player toAttack = Game.game.players[randomized];
             if (toAttack == this)
                 return; // Don't attack ourselves xD
+            if (toAttack.villages.Count == 0)
+                return; // Well, shit happens. TODO: Remove players with no villages? (they actually lost the game, so no need to keep them)
 
             randomized = random.Next(-10, 10);
             if (randomized < relations.get(toAttack)) // The better your relations
