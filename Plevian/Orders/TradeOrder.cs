@@ -16,6 +16,7 @@ namespace Plevian.Orders
         public readonly Resources sentResources;
         public readonly Army sentArmy;
 
+        // TODO: "Army traders" Is it really needed? The traders will be taken from the village anyway so no need for that parameter
         public TradeOrder(Village owner, Tile origin, Tile destination, Army traders, Resources sentResources, Army sentArmy)
             : base(owner, origin, destination, traders, OrderType.TRADE)
         {

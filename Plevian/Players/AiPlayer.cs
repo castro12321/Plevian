@@ -257,7 +257,7 @@ namespace Plevian.Players
             }
 
             if (attacking.size() < 10)
-                return; // Don't send (almost) empty armies lol, that's dumb
+                return; // Don't send (almost) empty armies lol, that's dumb. Hey, AI! Don't be dumb!
 
             Village targetVillage = toAttack.villages[random.Next(0, toAttack.villages.Count)];
             Order order = new AttackOrder(village, village, targetVillage, attacking);

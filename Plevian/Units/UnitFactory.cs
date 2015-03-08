@@ -8,6 +8,14 @@ namespace Plevian.Units
 {
     public static class UnitFactory
     {
+        public static Army createArmy(UnitType type, int quantity)
+        {
+            Army army = new Army();
+            army.add(createUnit(type, quantity));
+            return army;
+        }
+
+
         public static Unit createUnit(UnitType type, int quantity)
         {
             switch(type)

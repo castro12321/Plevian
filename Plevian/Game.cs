@@ -28,7 +28,7 @@ namespace Plevian
         {
             Game.game = this;
             GameTime.init(0);
-            GameTime.setSpeed(31);
+            GameTime.setSpeed(GameTime.setSpeedToAfterGameStarted);
             this.map = new MapGenerator().Generate(30, 30);
             
             mainPlayer.SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
