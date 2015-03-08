@@ -342,7 +342,7 @@ namespace Plevian.Save
                 Player player;
 
                 if(basicInfoRoot.Element("computer").Value == "true")
-                    player = new Players.ComputerPlayer(name, color);
+                    player = new Players.AiPlayer(name, color);
                 else
                     player = new Player(name, color);
 

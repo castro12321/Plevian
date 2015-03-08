@@ -26,6 +26,7 @@ namespace Plevian
 
         public Game()
         {
+            GameTime.speed = 5; // This statement being here, won't affect tests and allow us to test things faster. Adjust to your needs
             Game.game = this;
             GameTime.init(0);
             this.map = new MapGenerator().Generate(30, 30);
@@ -43,8 +44,8 @@ namespace Plevian
             mainPlayer.addVillage(village1);
             addPlayer(mainPlayer);
 
-            Player enemy = new ComputerPlayer("Hitler", SFML.Graphics.Color.Red);
-            mainPlayer = enemy;
+            Player enemy = new AiPlayer("Hitler", SFML.Graphics.Color.Red);
+            //mainPlayer = enemy;
             Tile berlinTile = map.FindEmptyTile();
             Village berlin = new Village(berlinTile.location, enemy, "Berlin");
             berlin.addUnit(new Warrior(10));
@@ -87,8 +88,9 @@ namespace Plevian
             {
                 foreach (Player player in players)
                     player.tick();
+                GameStats.collect();
+                Logger.tick();
             }
-            GameStats.collect();
         }
 
         public void addPlayer(Player player)
