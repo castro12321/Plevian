@@ -1,20 +1,21 @@
-﻿using Plevian.Buildings;
-using Plevian.Debugging;
-using Plevian.Resource;
-using Plevian.TechnologY;
-using Plevian.Units;
-using Plevian.Villages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plevian.Orders;
+using Plevian.Villages;
 
 namespace Plevian.Players
 {
-    public class AiRelations
+    public class AiModuleRelations : AiModule
     {
         public Dictionary<Player, float> relations = new Dictionary<Player, float>();
+
+        public AiModuleRelations(AiPlayer ai)
+            : base(ai)
+        {
+        }
 
         public float get(Player player)
         {
@@ -54,10 +55,24 @@ namespace Plevian.Players
             set(player, get(player) + increase);
         }
 
-        public void step()
+        public override void tick()
         {
-            foreach(Player player in Game.game.players)
-                set(player, get(player)*0.999f);
+            // Time heals all wounds
+            foreach (Player player in Game.game.players)
+                set(player, get(player) * 0.999f);
+
+            // Set -10 relations for those who attack us
+            foreach(Village village in ai.villages)
+            {
+                foreach(Order order in village.orders)
+                {
+                    if (order.owner == village)
+                        continue;
+
+                    if (order.Type == OrderType.ATTACK)
+                        set(order.owner.Owner, -10f);
+                }
+            }
         }
     }
 }

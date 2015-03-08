@@ -134,8 +134,9 @@
     </Compile>
     <Compile Include="Orders\OrderType.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
-    <Compile Include="Players\AiRelations.cs" />
-    <Compile Include="Players\ComputerPlayer.cs" />
+    <Compile Include="Players\AiModuleRelations.cs" />
+    <Compile Include="Players\AiPlayer.cs" />
+    <Compile Include="Players\AiModule.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="RequirementS\TechnologyRequirement.cs" />
     <Compile Include="RequirementS\BuildingRequirement.cs" />

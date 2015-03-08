@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plevian.Players;
 
 namespace Plevian.Debugging
 {
@@ -39,5 +40,30 @@ namespace Plevian.Debugging
         {
             ai = cas = shot = logVillage = logGraphics = false;
         }
+
+        /// <summary>
+        /// Called every tick from Game. It's just a place to collect most temporary logs easily in one place
+        /// </summary>
+        public static void tick()
+        {
+            logRelations();
+        }
+
+        #region logRelations
+        public static void logRelations()
+        {
+            log("Relations:");
+            foreach (Player p in Game.game.players)
+            {
+                AiPlayer player = p as AiPlayer;
+                if (player == null)
+                    continue;
+
+                log("- " + player.name);
+                foreach (KeyValuePair<Player, float> relation in player.relations.relations)
+                    log("    - " + relation.Key + " --> " + relation.Value);
+            }
+        }
+        #endregion
     }
 }

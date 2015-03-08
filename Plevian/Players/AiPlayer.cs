@@ -14,15 +14,17 @@ using System.Threading.Tasks;
 
 namespace Plevian.Players
 {
-    public class ComputerPlayer : Player
+    public class AiPlayer : Player
     {
-        private static bool disabled = true;
+        private static bool disabled = false;
         private static Random random = new Random();
-        private AiRelations relations = new AiRelations();
 
-        public ComputerPlayer(String name, SFML.Graphics.Color color)
+        public AiModuleRelations relations;
+
+        public AiPlayer(String name, SFML.Graphics.Color color)
             : base(name, color)
         {
+            relations = new AiModuleRelations(this);
         }
 
         public override void tick()
@@ -30,7 +32,10 @@ namespace Plevian.Players
             base.tick();
             if (disabled)
                 return;
-            relations.step();
+
+            Logger.AI("AI tick " + name);
+            relations.tick();
+
 
             foreach (Village village in villages)
             {
@@ -114,6 +119,7 @@ namespace Plevian.Players
             double chance = random.NextDouble();
 
             // TODO: profile <relativeArmySize> and <chance> values
+            // Also add some function of region 'safety'. Safe regions don't need that much army
             if (relativeArmySize < 0.5d) // Do we have less than 50% of avg units per village?
             {
                 if (chance < 0.5d) // 50% chance of recruiting
@@ -247,6 +253,9 @@ namespace Plevian.Players
                 toAdd.quantity = random.Next(toAdd.quantity/2, toAdd.quantity);
                 attacking.add(toAdd);
             }
+
+            if (attacking.size() < 10)
+                return; // Don't send (almost) empty armies lol, that's dumb
 
             Village targetVillage = toAttack.villages[random.Next(0, toAttack.villages.Count)];
             Order order = new AttackOrder(village, village, targetVillage, attacking);
