@@ -47,6 +47,11 @@
                     <Expander Header="Village Info" IsExpanded="True" >
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
+                                <Label Content="Time:"/>
+                                <Label Name="time"/>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal">
                                 <Label Content="Coords:"/>
                                 <Label Name="coords"/>
                             </StackPanel>

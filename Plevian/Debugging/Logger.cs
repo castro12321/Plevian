@@ -46,7 +46,8 @@ namespace Plevian.Debugging
         /// </summary>
         public static void tick()
         {
-            logRelations();
+            //logRelations();
+            //log("Speed: " + GameTime.speed + "; " + GameTime.uspeed);
         }
 
         #region logRelations

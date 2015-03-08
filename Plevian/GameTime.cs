@@ -17,7 +17,7 @@ namespace Plevian
     public class GameTime
     {
         public static int speed = 1;
-        public static ulong uspeed = Convert.ToUInt32(speed);
+        public static ulong uspeed = 1;
         private static ulong lastSystemTime;
         private static GameTime gameTime;
 
@@ -36,6 +36,12 @@ namespace Plevian
             this.time = time;
         }
         
+        public static void setSpeed(int speed)
+        {
+            GameTime.speed = speed;
+            uspeed = Convert.ToUInt32(speed);
+        }
+
         // Conversions from-to GameTime
         public static implicit operator int(GameTime time) { return time.time; }
         public static implicit operator GameTime(int time) { return new GameTime(time); }

@@ -45,5 +45,25 @@ namespace Plevian.Util
         {
             return new SFML.Graphics.Texture(ToSFMLImage(bmp));
         }
+
+        public static String secondsToHumanTime(int seconds)
+        {
+            int hours = seconds / 3600;
+            seconds %= 3600;
+            int minutes = seconds / 60;
+            seconds %= 60;
+
+            String sHours = hours.ToString();
+            if (hours < 10)
+                sHours = "0" + sHours;
+            String sMinutes = minutes.ToString();
+            if (minutes < 10)
+                sMinutes = "0" + sMinutes;
+            String sSeconds = seconds.ToString();
+            if (seconds < 10)
+                sSeconds = "0" + sSeconds;
+
+            return sHours + ":" + sMinutes + ":" + sSeconds;
+        }
     }
 }

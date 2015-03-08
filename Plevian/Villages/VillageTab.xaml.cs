@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Plevian.Util;
 
 namespace Plevian.Villages
 {
@@ -79,7 +80,8 @@ namespace Plevian.Villages
         public void render()
         {
             coords.Content = "X:" + Village.location.x + " Y:" + Village.location.y;
-            
+            time.Content = Utils.secondsToHumanTime(GameTime.now);
+
             // Render SFML
             villageView.render();
         }
