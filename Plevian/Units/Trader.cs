@@ -22,6 +22,7 @@ namespace Plevian.Units
             return new Trader(quantity);
         }
 
+        public override double chanceOfInjury { get { return 0.6; } }
         public override int attackStrength { get { return 5; } }
 
         public override int defenseInfantry { get { return 1; } }

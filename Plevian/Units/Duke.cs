@@ -22,7 +22,7 @@ namespace Plevian.Units
         {
             return new Duke(quantity);
         }
-
+        public override double chanceOfInjury { get { return 0.6; } }
         public override int attackStrength { get { return 100; } }
 
         public override int defenseInfantry { get { return 150; } }

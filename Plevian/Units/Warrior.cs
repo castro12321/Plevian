@@ -22,12 +22,14 @@ namespace Plevian.Units
         {
             return new Warrior(quantity);
         }
-
+        public override double chanceOfInjury { get { return 0.6; } }
         public override int attackStrength { get { return 10; } }
 
         public override int defenseInfantry { get { return 25; } }
         public override int defenseCavalry { get { return 4; } }
         public override int defenseArchers { get { return 5; } }
+
+        //TODO: usunąć ^^^
 
         public override int movementSpeed { get { return 1; } }
         public override int lootCapacity { get { return 50; } }

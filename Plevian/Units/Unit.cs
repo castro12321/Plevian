@@ -32,6 +32,7 @@ namespace Plevian.Units
         }
 
 #region abstract properties
+        public abstract double chanceOfInjury { get; }
         public abstract int attackStrength { get; }
         
         public abstract int defenseInfantry { get; }

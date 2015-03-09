@@ -23,7 +23,7 @@ namespace Plevian.Units
         {
             return new Archer(quantity);
         }
-
+        public override double chanceOfInjury { get { return 0.25; } }
         public override int attackStrength { get { return 35; } }
 
         public override int defenseInfantry { get { return 5; } }

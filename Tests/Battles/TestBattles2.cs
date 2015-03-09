@@ -18,7 +18,7 @@ namespace Tests.Battles
             Army attacker = new Army();
             Army defender = new Army();
 
-            attacker.add(new Knight(2000));
+            attacker.add(new Knight(19));
             defender.add(new Knight(20));
 
             Battle battle = new Battle(attacker, defender, 0, 1f, 0);
