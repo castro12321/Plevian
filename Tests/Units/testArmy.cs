@@ -14,7 +14,7 @@ namespace Tests.Units
             Army army = new Army();
             Unit knight = new Knight(100);
             Unit archer = new Archer(200);
-            int capacity = (knight.lootCapacity * 100) + (archer.lootCapacity * 200);
+            int capacity = (knight.baseLootCapacity * 100) + (archer.baseLootCapacity * 200);
             army.add(knight);
             army.add(archer);
             Assert.IsTrue(capacity == army.getLootCapacity());
