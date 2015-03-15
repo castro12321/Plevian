@@ -16,7 +16,7 @@ namespace Plevian
     /// </summary>
     public class GameTime
     {
-        public static int setSpeedToAfterGameStarted = 7; // Used in Game.cs ctor for tests
+        public static int setSpeedToAfterGameStarted = 5; // Used in Game.cs ctor for tests
         public static int speed = 1;
         public static ulong uspeed = 1;
         private static ulong lastSystemTime;

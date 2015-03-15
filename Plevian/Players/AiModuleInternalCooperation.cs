@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plevian.Debugging;
 using Plevian.Orders;
 using Plevian.Resource;
 using Plevian.Units;
@@ -44,22 +45,43 @@ namespace Plevian.Players
         {
             foreach(Village village in ai.villages)
             {
-                if (!village.army.contains(Units.UnitType.TRADER))
-                    continue; // No traders, then cannot send resources, simple
+                tickResourcesCooperation(village);
+                // TODO: similarly add military cooperation
+            }
+        }
 
-                Resources expected = getExpectedResourcesFor(village);
-                Resources toSend = village.resources - expected;
-                if (toSend.food + toSend.wood + toSend.iron + toSend.stone <= 500)
-                    return; // Don't send negligible amounts of resources
+        private void tickResourcesCooperation(Village village)
+        {
+            // No traders, then cannot send resources, simple
+            if (!village.army.contains(Units.UnitType.TRADER))
+                return;
 
-                Village randomAiVillage = ai.villages[random.Next(ai.villages.Count)];
-                Resources randomExpected = getExpectedResourcesFor(randomAiVillage);
-                if (!randomAiVillage.resources.canAfford(randomExpected * 0.5f))
-                {
-                    Army trader = UnitFactory.createArmy(UnitType.TRADER, 1);
-                    Order order = new TradeOrder(village, village, randomAiVillage, trader, toSend, null);
-                    village.addOrder(order);
-                }
+            // Do we have more resources than we need?
+            Resources expected = getExpectedResourcesFor(village);
+            Resources toSend = village.resources - expected;
+            if (toSend.food + toSend.wood + toSend.iron + toSend.stone <= 500)
+                return; // Don't send negligible amounts of resources
+
+            // Check how much does the random village need
+            Village randomAiVillage = ai.villages[random.Next(ai.villages.Count)];
+            if (village == randomAiVillage)
+                return;
+            Resources randomExpected = getExpectedResourcesFor(randomAiVillage);
+            if (!randomAiVillage.resources.canAfford(randomExpected * 0.5f))
+            {
+                // Don't send too much resources though
+                if (toSend.food > randomExpected.food)
+                    toSend.food = randomExpected.food;
+                if (toSend.wood > randomExpected.wood)
+                    toSend.wood = randomExpected.wood;
+                if (toSend.iron > randomExpected.iron)
+                    toSend.iron = randomExpected.iron;
+                if (toSend.stone > randomExpected.stone)
+                    toSend.stone = randomExpected.stone;
+
+                Army trader = UnitFactory.createArmy(UnitType.TRADER, 1); // We have a trader inside the village (checked above) so it should be safe
+                Order order = new TradeOrder(village, village, randomAiVillage, trader, toSend, null);
+                village.addOrder(order);
             }
         }
 

@@ -17,7 +17,7 @@ namespace Plevian
     public class Game
     {
         /// <summary>The main human-player that is playing the game right now</summary>
-        private Player mainPlayer = new Player("Magnus", new Color(255, 106, 0));
+        private Player mainPlayer;
         public static Player Player { get { return game.mainPlayer; } }
         public static Game game;
         public readonly List<Player> players = new List<Player>();
@@ -31,28 +31,24 @@ namespace Plevian
             GameTime.setSpeed(GameTime.setSpeedToAfterGameStarted);
             this.map = new MapGenerator().Generate(30, 30);
             
+            mainPlayer = createPlayer("Magnus", new Color(255, 106, 0));
             mainPlayer.SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
             mainPlayer.SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
             mainPlayer.SendMessage(new Message("Hitler", "Message to you", "I'll kill you", DateTime.Now));
 
-            Tile village1Tile = map.FindEmptyTile();
-            Village village1 = new Village(village1Tile.location, mainPlayer, "Capital");
+            Village village1 = createVillage(mainPlayer, "Capital");
             village1.addResources(new Resource.Resources(1, 501, 1001, 1501));
             //village1.build(BuildingType.TOWN_HALL);
             village1.addUnit(new Warrior(3));
-            map.place(village1);
-            mainPlayer.addVillage(village1);
-            addPlayer(mainPlayer);
 
-            Player enemy = new AiPlayer("Hitler", SFML.Graphics.Color.Red);
+            Player enemy = createPlayer("Hitler", SFML.Graphics.Color.Red, true);
             //mainPlayer = enemy;
-            Tile berlinTile = map.FindEmptyTile();
-            Village berlin = new Village(berlinTile.location, enemy, "Berlin");
+            Village berlin = createVillage(enemy, "Berlin");
             berlin.addUnit(new Warrior(10));
-            map.place(berlin);
-            enemy.addVillage(berlin);
-            
-            addPlayer(enemy);
+
+            Village hamburger = createVillage(enemy, "Hamburg[er]");
+            hamburger.takeResources(hamburger.resources);
+
             /*
             for (int i = 0; i < 10; ++i)
                 foreach (var pair in berlin.buildings)
@@ -93,9 +89,19 @@ namespace Plevian
             }
         }
 
-        public void addPlayer(Player player)
+        public Player createPlayer(String nick, SFML.Graphics.Color color, bool ai = false)
         {
+            Player player = ai ? new AiPlayer(nick, color) : new Player(nick, color);
             players.Add(player);
+            return player;
+        }
+
+        public Village createVillage(Player owner, String name)
+        {
+            Village village = new Village(map.FindEmptyTile().location, owner, name);
+            map.place(village);
+            owner.addVillage(village);
+            return village;
         }
     }
 }

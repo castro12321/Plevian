@@ -20,11 +20,13 @@ namespace Plevian.Players
         private static Random random = new Random();
 
         public AiModuleRelations relations;
+        public AiModuleInternalCooperation internalCooperation;
 
         public AiPlayer(String name, SFML.Graphics.Color color)
             : base(name, color)
         {
             relations = new AiModuleRelations(this);
+            internalCooperation = new AiModuleInternalCooperation(this);
         }
 
         public override void tick()
@@ -35,6 +37,7 @@ namespace Plevian.Players
 
             Logger.AI("AI tick " + name);
             relations.tick();
+            internalCooperation.tick();
 
 
             foreach (Village village in villages)
