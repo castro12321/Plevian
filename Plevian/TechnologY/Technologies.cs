@@ -19,6 +19,12 @@ namespace Plevian.TechnologY
             technologies.Add(new TechnologyFoo());
             technologies.Add(new TechnologyLasers());
             technologies.Add(new TechnologyNukes());
+
+            // ArmorTechnologies.cs
+            technologies.Add(new TechnologyLeatherArmors());
+            technologies.Add(new TechnologyChainArmors());
+            technologies.Add(new TechnologyPlateArmors());
+
         }
 
         private Technology find(Technology technology)
