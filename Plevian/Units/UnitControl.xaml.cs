@@ -193,7 +193,7 @@ namespace Plevian.Units
                     if (village == null || data == null)
                         return 0;
                     Resources vilResources = village.resources;
-                    Resources neededResources = data.recruitCost;
+                    Resources neededResources = data.baseRecruitCost;
                     int quant = vilResources.howMuchAfford(neededResources);
                     return vilResources.howMuchAfford(neededResources);
                 }

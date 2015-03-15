@@ -7,6 +7,7 @@ using Plevian.Resource;
 using Plevian.RequirementS;
 using System.Windows;
 using System.ComponentModel;
+using Plevian.Players;
 
 namespace Plevian.Units
 {
@@ -28,23 +29,23 @@ namespace Plevian.Units
 
         public Resources getWholeUnitCost()
         {
-            return recruitCost * quantity;
+            return baseRecruitCost * quantity;
         }
 
 #region abstract properties
-        public abstract int attackStrength { get; }
+        public abstract int baseAttackStrength { get; }
         
-        public abstract int defenseInfantry { get; }
-        public abstract int defenseCavalry { get; }
-        public abstract int defenseArchers { get; }
+        public abstract int baseDefenseInfantry { get; }
+        public abstract int baseDefenseCavalry { get; }
+        public abstract int baseDefenseArchers { get; }
 
-        public abstract int movementSpeed { get;  }
-        public abstract int lootCapacity { get; }
+        public abstract int baseMovementSpeed { get;  }
+        public abstract int baseLootCapacity { get; }
 
-        public abstract Resources recruitCost { get;  }
+        public abstract Resources baseRecruitCost { get;  }
 
-        public abstract float recruitTime { get; }
-        public abstract Resources upkeepCost { get; }
+        public abstract float baseRecruitTime { get; }
+        public abstract Resources baseUpkeepCost { get; }
 
         public abstract UnitType unitType { get; }
         public abstract UnitClass unitClass { get;  }

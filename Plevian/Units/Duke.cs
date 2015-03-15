@@ -23,19 +23,19 @@ namespace Plevian.Units
             return new Duke(quantity);
         }
 
-        public override int attackStrength { get { return 100; } }
+        public override int baseAttackStrength { get { return 100; } }
 
-        public override int defenseInfantry { get { return 150; } }
-        public override int defenseCavalry { get { return 50; } }
-        public override int defenseArchers { get { return 100; } }
+        public override int baseDefenseInfantry { get { return 150; } }
+        public override int baseDefenseCavalry { get { return 50; } }
+        public override int baseDefenseArchers { get { return 100; } }
 
-        public override int movementSpeed { get { return 3; } }
-        public override int lootCapacity { get { return 0; } }
+        public override int baseMovementSpeed { get { return 3; } }
+        public override int baseLootCapacity { get { return 0; } }
 
-        public override Resources recruitCost { get { return new Iron(100) + new Food(50) + new Wood(25); } }
+        public override Resources baseRecruitCost { get { return new Iron(100) + new Food(50) + new Wood(25); } }
 
-        public override float recruitTime { get { return 60f; } }
-        public override Resources upkeepCost { get { return new Iron(1) + new Food(5); } }
+        public override float baseRecruitTime { get { return 60f; } }
+        public override Resources baseUpkeepCost { get { return new Iron(1) + new Food(5); } }
 
         public override UnitType unitType { get { return UnitType.DUKE; } }
         public override UnitClass unitClass { get { return UnitClass.INFANTRY; } }

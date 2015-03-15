@@ -67,7 +67,7 @@ namespace Plevian.Units
         {
             int attackStrength = 0;
             foreach (var pair in units)
-                attackStrength += pair.Value.attackStrength * pair.Value.quantity;
+                attackStrength += pair.Value.baseAttackStrength * pair.Value.quantity;
             return attackStrength;
         }
 
@@ -75,7 +75,7 @@ namespace Plevian.Units
         {
             int defenseInfantry = 0;
             foreach (var pair in units)
-                defenseInfantry += pair.Value.defenseInfantry * pair.Value.quantity;
+                defenseInfantry += pair.Value.baseDefenseInfantry * pair.Value.quantity;
             return defenseInfantry;
         }
 
@@ -83,7 +83,7 @@ namespace Plevian.Units
         {
             int defenseCavalry = 0;
             foreach (var pair in units)
-                defenseCavalry += pair.Value.defenseCavalry * pair.Value.quantity;
+                defenseCavalry += pair.Value.baseDefenseCavalry * pair.Value.quantity;
             return defenseCavalry;
         }
 
@@ -91,7 +91,7 @@ namespace Plevian.Units
         {
             int defenseArchers = 0;
             foreach (var pair in units)
-                defenseArchers += pair.Value.defenseArchers * pair.Value.quantity;
+                defenseArchers += pair.Value.baseDefenseArchers * pair.Value.quantity;
             return defenseArchers;
         }
 
@@ -100,7 +100,7 @@ namespace Plevian.Units
             float slowest = 0f;
             foreach(var pair in units)
             {
-                float speed = (float)pair.Value.movementSpeed;
+                float speed = (float)pair.Value.baseMovementSpeed;
                 if (speed > slowest)
                     slowest = speed;
             }
@@ -151,7 +151,7 @@ namespace Plevian.Units
             int capacity = 0;
             foreach(var pair in units)
             {
-                capacity += pair.Value.lootCapacity * pair.Value.quantity;
+                capacity += pair.Value.baseLootCapacity * pair.Value.quantity;
             }
             return capacity;
         }

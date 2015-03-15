@@ -22,19 +22,19 @@ namespace Plevian.Units
             return new Ram(quantity);
         }
 
-        public override int attackStrength { get { return 1; } }
+        public override int baseAttackStrength { get { return 1; } }
 
-        public override int defenseInfantry { get { return 2; } }
-        public override int defenseCavalry { get { return 2; } }
-        public override int defenseArchers { get { return 5; } }
+        public override int baseDefenseInfantry { get { return 2; } }
+        public override int baseDefenseCavalry { get { return 2; } }
+        public override int baseDefenseArchers { get { return 5; } }
 
-        public override int movementSpeed { get { return 1; } }
-        public override int lootCapacity { get { return 0; } }
+        public override int baseMovementSpeed { get { return 1; } }
+        public override int baseLootCapacity { get { return 0; } }
 
-        public override Resources recruitCost { get { return new Food(100) + new Wood(500); } }
+        public override Resources baseRecruitCost { get { return new Food(100) + new Wood(500); } }
 
-        public override float recruitTime { get { return 15f; } }
-        public override Resources upkeepCost { get { return new Wood(50) + new Food(15); } }
+        public override float baseRecruitTime { get { return 15f; } }
+        public override Resources baseUpkeepCost { get { return new Wood(50) + new Food(15); } }
 
         public override UnitType unitType { get { return UnitType.RAM; } }
         public override UnitClass unitClass { get { return UnitClass.SUPPORT; } }
