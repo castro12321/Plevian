@@ -145,11 +145,11 @@ namespace Tests.Integration
             Assert.IsTrue(testVillage.orders.Count == 1);
             
             addFakeTime(losersOrder.OverallTime.time);
-            GameTime.update();
-            testVillage.tick();
+            ulong ticks = GameTime.update();
+            testVillage.tick(ticks);
             addFakeTime(losersOrder.OverallTime.time);
-            GameTime.update();
-            testVillage.tick();
+            ticks = GameTime.update();
+            testVillage.tick(ticks);
             
             Assert.IsTrue(testVillage.orders.Count == 0);
         }
@@ -182,14 +182,14 @@ namespace Tests.Integration
             attackerVillage.addOrder(order);
             
             addFakeTime(order.OverallTime.time);
-            GameTime.update();
-            attackerVillage.tick();
+            ulong ticks = GameTime.update();
+            attackerVillage.tick(ticks);
             addFakeTime(order.OverallTime.time);
-            GameTime.update();
-            attackerVillage.tick();
+            ticks = GameTime.update();
+            attackerVillage.tick(ticks);
             addFakeTime(order.OverallTime.time);
-            GameTime.update();
-            attackerVillage.tick();
+            ticks = GameTime.update();
+            attackerVillage.tick(ticks);
             
             Assert.AreEqual(toLoot, order.loot);
         }

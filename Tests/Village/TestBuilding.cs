@@ -48,8 +48,8 @@ namespace Tests.Integration
             Assert.IsFalse(village.isBuilt(BuildingType.TOWN_HALL));
 
             addFakeTime(new TownHall().getConstructionTimeFor(1).time);
-            GameTime.update();
-            village.tick();
+            ulong ticks = GameTime.update();
+            village.tick(ticks);
 
             Assert.IsTrue(village.isBuilt(BuildingType.TOWN_HALL));
         }

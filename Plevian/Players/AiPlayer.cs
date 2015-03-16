@@ -29,9 +29,9 @@ namespace Plevian.Players
             internalCooperation = new AiModuleInternalCooperation(this);
         }
 
-        public override void tick()
+        public override void tick(ulong timediff)
         {
-            base.tick();
+            base.tick(timediff);
             if (disabled)
                 return;
 

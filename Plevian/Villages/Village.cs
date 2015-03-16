@@ -112,9 +112,19 @@ namespace Plevian.Villages
         /// <summary>
         /// Village tick called every second
         /// </summary>
-        public void tick()
+        public void tick(ulong ticks)
         {
-            collectProduction();
+            Resources income = currentIncome(ticks);
+            resources.Add(income);
+
+            Resources expenses = currentExpenses(ticks);
+            resources.Substract(expenses);
+
+            //Logger.log("Name: " + name);
+            //Logger.log("Income: " + income);
+            //Logger.log("Expenses: " + expenses);
+            //Logger.log("");
+
             OrdersTick();
             queues.CompleteAvailableItems();
         }
@@ -136,17 +146,24 @@ namespace Plevian.Villages
             }
         }
 
-        private GameTime lastCheck = GameTime.now;
-        private void collectProduction()
+        private Resources currentIncome(ulong ticks)
         {
-            GameTime diff = GameTime.now.diffrence(lastCheck);
-            lastCheck = GameTime.now;
-
+            Resources production = new Resources();
             foreach (KeyValuePair<BuildingType, Building> building in buildings)
             {
                 //Logger.village(building.Value.getDisplayName() + " produces " + building.Value.getProduction());
-                addResources(building.Value.getProduction() * diff.time * 3); // TODO: Remove the "* 3" modifier
+                production += building.Value.getProduction() * ticks;
             }
+            return production;
+        }
+
+        private Resources currentExpenses(ulong ticks)
+        {
+            return 
+                (army.Upkeep * ticks)
+            //+ (buildings.Upkeep * ticks)
+            //+ ...
+            ;
         }
 
         public bool isBuilt(BuildingType type)

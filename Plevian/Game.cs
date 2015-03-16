@@ -79,11 +79,13 @@ namespace Plevian
 
         public void tick()
         {
-            ulong timediff = GameTime.update();
-            if(timediff > 0)
+            // We assume that a tick = 1 second
+            ulong ticks = GameTime.update();
+
+            if(ticks > 0)
             {
                 foreach (Player player in players)
-                    player.tick();
+                    player.tick(ticks);
                 GameStats.collect();
                 Logger.tick();
             }
