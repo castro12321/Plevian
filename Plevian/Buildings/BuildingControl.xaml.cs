@@ -157,7 +157,7 @@ namespace Plevian.Buildings
             allChanged();
         }
 
-        void queues_queueItemAdded(Village village, Queues.QueueItem item)
+        void queues_queueItemAdded(Village village, VillageQueues.QueueItem item)
         {
             //if(item is BuildingQueueItem
             //|| item is ResearchQueueItem)
@@ -165,7 +165,7 @@ namespace Plevian.Buildings
             NotifyPropertyChanged("Price");
         }
 
-        void queues_queueItemFinished(Village village, Queues.QueueItem item)
+        void queues_queueItemFinished(Village village, VillageQueues.QueueItem item)
         {
             NotifyPropertyChanged("CanBuild");
             NotifyPropertyChanged("Price");

@@ -507,7 +507,7 @@ namespace Plevian.Save
                     //-----------
 
                     queueCounter = 0;
-                    foreach (Villages.Queues.QueueItem queue in village.queues.queue)
+                    foreach (Villages.VillageQueues.QueueItem queue in village.queues.queue)
                     {
                         queueCounter++;
                     }

@@ -28,7 +28,7 @@ namespace Plevian.Buildings
     {
         BuildingTaskModel model = new BuildingTaskModel();
 
-        public delegate void cancelEventHandler(Queues.QueueItem queueItem);
+        public delegate void cancelEventHandler(VillageQueues.QueueItem queueItem);
         public event cancelEventHandler Cancelled;
 
         public BuildingTask()
@@ -41,10 +41,10 @@ namespace Plevian.Buildings
         void BuildingTask_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             Object newValue = e.NewValue;
-            setData(newValue as Queues.QueueItem);
+            setData(newValue as VillageQueues.QueueItem);
         }
 
-        public void setData(Queues.QueueItem data)
+        public void setData(VillageQueues.QueueItem data)
         {
             if (data == null)
                 Logger.warn("QueueItem in QueueTask.xaml.cs is null!");
@@ -52,7 +52,7 @@ namespace Plevian.Buildings
             model.setData(data);
         }
 
-        public Queues.QueueItem getData()
+        public VillageQueues.QueueItem getData()
         {
             return model.data;
         }
@@ -66,7 +66,7 @@ namespace Plevian.Buildings
 
     public class BuildingTaskModel : INotifyPropertyChanged
     {
-        public Queues.QueueItem data;
+        public VillageQueues.QueueItem data;
 
         public GameTime RemainingTime
         {
@@ -115,7 +115,7 @@ namespace Plevian.Buildings
             }
         }
 
-        public void setData(Queues.QueueItem data)
+        public void setData(VillageQueues.QueueItem data)
         {
             this.data = data;
             allChanged();

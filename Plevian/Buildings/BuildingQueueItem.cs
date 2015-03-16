@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Buildings
 {
-    public class BuildingQueueItem : Plevian.Villages.Queues.QueueItem
+    public class BuildingQueueItem : Plevian.Villages.VillageQueues.QueueItem
     {
         public readonly Building toBuild;
         public int level;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.TechnologY
 {
-    public class ResearchQueueItem : Plevian.Villages.Queues.QueueItem
+    public class ResearchQueueItem : Plevian.Villages.VillageQueues.QueueItem
     {
         public readonly Technology researched;
 

@@ -133,7 +133,7 @@ namespace Plevian.Villages
             VillageTextBoxHide();
         }
 
-        private void BuildingTask_Cancelled(Queues.QueueItem queueItem)
+        private void BuildingTask_Cancelled(VillageQueues.QueueItem queueItem)
         {
             activeVillage.queues.Remove(queueItem);
             /* Don't allow refunds? >:D

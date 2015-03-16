@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="Units\UnitFactory.cs" />
     <Compile Include="Util\Utils.cs" />
+    <Compile Include="Villages\VillageQueues.cs" />
     <Compile Include="Villages\VillageRenderer.cs">
       <SubType>Component</SubType>
     </Compile>

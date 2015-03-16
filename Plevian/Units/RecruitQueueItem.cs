@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Plevian.Units
 {
-    public class RecruitQueueItem : Plevian.Villages.Queues.QueueItem
+    public class RecruitQueueItem : Plevian.Villages.VillageQueues.QueueItem
     {
         public readonly Unit toRecruit;
 
