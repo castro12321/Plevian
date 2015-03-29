@@ -120,10 +120,10 @@ namespace Plevian.Villages
             Resources expenses = currentExpenses(ticks);
             resources.Substract(expenses);
 
-            //Logger.log("Name: " + name);
-            //Logger.log("Income: " + income);
-            //Logger.log("Expenses: " + expenses);
-            //Logger.log("");
+            Logger.log("Name: " + name);
+            Logger.log("Income: " + income);
+            Logger.log("Expenses: " + expenses);
+            Logger.log("");
 
             OrdersTick();
             queues.CompleteAvailableItems();

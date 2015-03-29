@@ -134,8 +134,13 @@
     </Compile>
     <Compile Include="Orders\OrderType.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
+    <Compile Include="Players\AiModuleAttacks.cs" />
+    <Compile Include="Players\AiModuleBuilding.cs" />
+    <Compile Include="Players\AiModuleExpansion.cs" />
     <Compile Include="Players\AiModuleInternalCooperation.cs" />
+    <Compile Include="Players\AiModuleRecruiting.cs" />
     <Compile Include="Players\AiModuleRelations.cs" />
+    <Compile Include="Players\AiModuleResearch.cs" />
     <Compile Include="Players\AiPlayer.cs" />
     <Compile Include="Players\AiModule.cs" />
     <Compile Include="Players\Player.cs" />
