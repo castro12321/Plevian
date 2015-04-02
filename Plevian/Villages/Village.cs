@@ -114,10 +114,10 @@ namespace Plevian.Villages
         /// </summary>
         public void tick(ulong ticks)
         {
-            Resources income = currentIncome(ticks);
+            Resources income = TotalIncome(ticks);
             resources.Add(income);
 
-            Resources expenses = currentExpenses(ticks);
+            Resources expenses = TotalExpenses(ticks);
             resources.Substract(expenses);
 
             Logger.log("Name: " + name);
@@ -146,7 +146,12 @@ namespace Plevian.Villages
             }
         }
 
-        private Resources currentIncome(ulong ticks)
+        public Resources NetIncome(ulong ticks)
+        {
+            return TotalIncome(ticks) - TotalExpenses(ticks);
+        }
+
+        public Resources TotalIncome(ulong ticks)
         {
             Resources production = new Resources();
             foreach (KeyValuePair<BuildingType, Building> building in buildings)
@@ -157,7 +162,7 @@ namespace Plevian.Villages
             return production;
         }
 
-        private Resources currentExpenses(ulong ticks)
+        public Resources TotalExpenses(ulong ticks)
         {
             return 
                 (army.Upkeep * ticks)

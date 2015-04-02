@@ -166,6 +166,7 @@
       <DependentUpon>UnitControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Units\UnitFactory.cs" />
+    <Compile Include="Units\UnitPurpose.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="Villages\VillageQueues.cs" />
     <Compile Include="Villages\VillageRenderer.cs">

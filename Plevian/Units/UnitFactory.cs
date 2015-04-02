@@ -32,11 +32,11 @@ namespace Plevian.Units
             throw new NotSupportedException("UnitFactory cannot create " + type + "; " + quantity);
         }
 
-        public static List<Unit> createAllUnits()
+        public static List<Unit> createAllUnits(int unitQuantityPerUnitType = 0)
         {
             List<Unit> allUnits = new List<Unit>();
             foreach (UnitType type in (UnitType[])Enum.GetValues(typeof(UnitType)))
-                allUnits.Add(createUnit(type, 0));
+                allUnits.Add(createUnit(type, unitQuantityPerUnitType));
             return allUnits;
         }
     }
