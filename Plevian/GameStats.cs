@@ -15,7 +15,9 @@ namespace Plevian
 {
     public class GameStats
     {
-        public static double AverageUnitCountPerVillage { get; private set; }
+        private static Random random = new Random();
+
+        public static float AverageUnitCountPerVillage { get; private set; }
         public static int SumVillages { get; private set; }
         public static int SumUnits { get; private set; }
 
@@ -42,7 +44,25 @@ namespace Plevian
             Logger.stats("SumVillages = " + SumVillages);
             Logger.stats("SumUnits = " + SumUnits);
             Logger.stats("Avg = " + SumUnits / SumVillages);
-            AverageUnitCountPerVillage = (double)SumUnits / (double)SumVillages;
+            AverageUnitCountPerVillage = (float)SumUnits / (float)SumVillages;
+        }
+
+        /// <param name="village">Village to check the dangerous level against</param>
+        /// <returns>Dangerous level from 0.0f to 1.0f</returns>
+        public static float HowDangerousTheAreaIsFor(Village village)
+        {
+            if (AverageUnitCountPerVillage <= 0)
+                return 0;
+            float relativeArmySizeToGlobalAverage = (float)village.army.size() / AverageUnitCountPerVillage;
+
+            // TODO: Think of some better algorithm?
+            float danger = 1 - relativeArmySizeToGlobalAverage;
+
+            if (danger < 0)
+                danger = 0;
+            else if (danger > 1) // In case of magic
+                danger = 1;
+            return danger;
         }
     }
 }
