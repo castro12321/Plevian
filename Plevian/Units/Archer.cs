@@ -41,8 +41,7 @@ namespace Plevian.Units
 
         public override UnitType unitType { get { return UnitType.ARCHER; } }
         public override UnitClass unitClass { get { return UnitClass.ARCHER; } }
-
-        public override double getAiImportance() { return 0.7d; }
+        public override UnitPurpose unitPurpose { get { return UnitPurpose.MILITARY; } }
 
         public override string name { get { return "Lucznik"; } }
 

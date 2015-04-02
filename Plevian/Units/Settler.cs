@@ -38,6 +38,7 @@ namespace Plevian.Units
 
         public override UnitType unitType { get { return UnitType.SETTLER; } }
         public override UnitClass unitClass { get { return UnitClass.SUPPORT; } }
+        public override UnitPurpose unitPurpose { get { return UnitPurpose.ECONOMIC; } }
 
         public override string name { get { return "Osadnik"; } }
 

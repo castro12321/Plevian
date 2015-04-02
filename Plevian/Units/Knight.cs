@@ -38,8 +38,7 @@ namespace Plevian.Units
 
         public override UnitType unitType { get { return UnitType.KNIGHT; } }
         public override UnitClass unitClass { get { return UnitClass.CAVALRY; } }
-
-        public override double getAiImportance() { return 0.5d; }
+        public override UnitPurpose unitPurpose { get { return UnitPurpose.MILITARY; } }
 
         public override string name { get { return "Rycerz"; } }
 

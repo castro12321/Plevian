@@ -39,6 +39,7 @@ namespace Plevian.Units
 
         public override UnitType unitType { get { return UnitType.DUKE; } }
         public override UnitClass unitClass { get { return UnitClass.INFANTRY; } }
+        public override UnitPurpose unitPurpose { get { return UnitPurpose.MILITARY; } }
 
         public override string name { get { return "Wojewoda XD?"; } }
 
