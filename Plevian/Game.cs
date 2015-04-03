@@ -31,33 +31,38 @@ namespace Plevian
             GameTime.setSpeed(GameTime.setSpeedToAfterGameStarted);
             this.map = new MapGenerator().Generate(30, 30);
             
-            mainPlayer = createPlayer("Magnus", new Color(255, 106, 0));
+            mainPlayer = createPlayer("Player", new Color(255, 106, 0));
             mainPlayer.SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
             mainPlayer.SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
-            mainPlayer.SendMessage(new Message("Hitler", "Message to you", "I'll kill you", DateTime.Now));
+            mainPlayer.SendMessage(new Message("Enemy", "Message to you", "I'll kill you", DateTime.Now));
 
-            Village village1 = createVillage(mainPlayer, "Capital");
-            village1.addResources(new Resource.Resources(1, 501, 1001, 1501));
-            //village1.build(BuildingType.TOWN_HALL);
-            village1.addUnit(new Warrior(3));
+            Village playerCapital = createVillage(mainPlayer, "Capital");
+            playerCapital.addResources(new Resource.Resources(9999, 9999, 9999, 9999));
+            //playerCapital.build(BuildingType.TOWN_HALL);
+            //playerCapital.addUnit(new Warrior(9));
 
-            Player enemy = createPlayer("Hitler", SFML.Graphics.Color.Red, true);
-            //mainPlayer = enemy;
-            Village berlin = createVillage(enemy, "Berlin");
-            berlin.addUnit(new Warrior(10));
+            Player enemy = createPlayer("Enemy", SFML.Graphics.Color.Red, true);
+            Village enemyCapital = createVillage(enemy, "EnemyLand");
+            //enemyCapital.addUnit(new Warrior(10));
 
-            Village hamburger = createVillage(enemy, "Hamburg[er]");
+            /**
+            Village hamburger = createVillage(enemy, "Hamburger");
             hamburger.takeResources(hamburger.resources);
+            /**/
 
-            /*
-            for (int i = 0; i < 10; ++i)
-                foreach (var pair in berlin.buildings)
-                {
-                    Building building = pair.Value;
-                    if (building.getMaxLevel() <= i)
-                        building.upgrade();
-                }
-             */
+            //mainPlayer = enemy;
+
+            /**
+            for (int i = 0; i < 3; ++i)
+                foreach (Player p in players)
+                    foreach (Village v in p.villages)
+                        foreach (var pair in v.buildings)
+                        {
+                            Building building = pair.Value;
+                            if (building.getMaxLevel() >= i)
+                                building.upgrade();
+                        }
+             /**/
         }
         
         /// <summary>
