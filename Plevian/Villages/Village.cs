@@ -125,7 +125,7 @@ namespace Plevian.Villages
             Logger.log("Income: " + income);
             Logger.log("Expenses: " + expenses);
             Logger.log("");
-            */
+            /**/
 
             OrdersTick();
             queues.CompleteAvailableItems();

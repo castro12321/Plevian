@@ -8,7 +8,7 @@ namespace Plevian.Resource
 {
     public class Stone : Resources
     {
-        public Stone(int stone)
+        public Stone(long stone)
             : base(0, 0, 0, stone)
         {
         }
