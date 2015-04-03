@@ -64,13 +64,14 @@ namespace Plevian
 
             // Ignore negligible differences
             if (relativeArmySizeToGlobalAverage >= 0.95)
-                return 1.0f;
+                return 0.0f;
 
             // TODO: Think of some better algorithm?
             // enemy power = 5 nearest enemy villages army power
             // our power = this village + nearest our villages (not further away than enemy ones)
             // ally power = nearest ally villages (not further away than enemy villages)
             // danger = enemy power - our power - (ally power / some_magic_number like 4)
+            // Differ military from economy units
             float safe = relativeArmySizeToGlobalAverage;
             if (relativeArmySizeToGlobalAverage < 0.9)
                 safe *= relativeArmySizeToGlobalAverage * relativeArmySizeToGlobalAverage;

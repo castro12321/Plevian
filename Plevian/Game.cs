@@ -39,7 +39,7 @@ namespace Plevian
             Village playerCapital = createVillage(mainPlayer, "Capital");
             playerCapital.addResources(new Resource.Resources(9999, 9999, 9999, 9999));
             //playerCapital.build(BuildingType.TOWN_HALL);
-            //playerCapital.addUnit(new Warrior(9));
+            //playerCapital.addUnit(new Warrior(10));
 
             Player enemy = createPlayer("Enemy", SFML.Graphics.Color.Red, true);
             Village enemyCapital = createVillage(enemy, "EnemyLand");

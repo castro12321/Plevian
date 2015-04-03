@@ -36,50 +36,53 @@ namespace Plevian.Players
 
         private void tick(Village village)
         {
+            Logger.log("\n[r] tick " + village.name);
             // Don't recruit too many units simultanously. Too long queue may lower our response capabilities
             if (village.queues.recruitQueue.Count > GameTime.speed)
                 return;
 
-            // 1) What kind of units do we need?
-            // 1.1) Well... We need all of them! We'll filter out them below
+            // What kind of units do we need? All of them! We'll filter out them below
             List<Unit> toRecruit = UnitFactory.createAllUnits(1);
-
-            // 2) Check our budget
-            // 2.1) Don't recruit units if we are poor
-            int townHallLevel = village.getBuildingLevel(Buildings.BuildingType.TOWN_HALL);
-            if (!village.resources.canAfford(minimumDepositForRecruitingByTownHallLevel[townHallLevel]))
-                return;
-            // 2.2) Make sure that we can technically recruit the unit (cost, technology requirements, etc)
-            foreach (Unit unit in toRecruit)
-                if (!village.canRecruit(unit))
-                    toRecruit.Remove(unit);
-            // 2.3) Don't recruit units that we cannot afford (budget is usually smaller than the resources stored in the village)
+            
+            // Make sure that we can technically recruit the unit (cost, technology requirements, etc)
+            toRecruit.RemoveAll(unit => !village.canRecruit(unit));
+            
+            // Don't recruit units that we cannot afford (budget is usually smaller than the resources stored in the village)
             float danger = GameStats.HowDangerousTheAreaIsFor(village); // Moved up to here to avoid rechecking it multiple times in functions below
+            
             Resources budget = getBudgetForRecruiting(village, danger);
-            foreach (Unit unit in toRecruit)
-                if (!budget.canAfford(unit.getWholeUnitCost()))
-                    toRecruit.Remove(unit);
-            // 2.4) Don't recruit units that we cannot upkeep (well, units need to eat. Can we provide enough resources for them and they fit in our budget?)
+            toRecruit.RemoveAll(unit => !budget.canAfford(unit.getWholeUnitCost()));
+            
+            // Don't recruit units that we cannot upkeep (well, units need to eat, and we also have an upkeep budget)
             Resources upkeepBudget = getBudgetForUpkeep(village, danger);
-            foreach (Unit unit in toRecruit)
-                if (!upkeepBudget.canAfford(unit.baseUpkeepCost))
-                    toRecruit.Remove(unit);
-
-            // 3) From the list of available to recruit units, choose only that, wchich is the most important now
+            toRecruit.RemoveAll(unit => !upkeepBudget.canAfford(unit.baseUpkeepCost));
+            
+            // We filtered out units that we cannot recruit. Now choose that one wchich is the most important for us
             Unit toRecruitUnit = chooseTheMostImportantUnit(village, toRecruit, danger);
-
-            village.recruit(toRecruitUnit);
+            if(toRecruitUnit != null)
+                ;// village.recruit(toRecruitUnit);
         }
 
         // Require to have at least 'X' resources stored in the village for given town hall level
         private static Resources[] minimumDepositForRecruitingByTownHallLevel = 
         {
-            new Resources(250, 250, 250, 250), // Level 0
-            new Resources(1000, 1000, 500, 500), // Level 1
-            new Resources(2000, 2000, 2000, 1000), // Level 2
-            new Resources(6000, 6000, 3000, 2000), // Level 3
-            new Resources(12*k, 12*k, 8*k, 8*k), // 4
-            new Resources(20*k, 20*k, 20*k, 20*k), // 5
+            new Resources(100, 100, 100, 100), // Level 0
+            new Resources(300, 300, 200, 150), // Level 1
+            new Resources(1000, 1000, 500, 400), // Level 2
+            new Resources(2000, 2000, 1000, 800), // Level 3
+            new Resources(4*k, 4*k, 3*k, 2*k), // 4
+            new Resources(6*k, 6*k, 4*k, 3*k), // 5
+        };
+
+        // Require to have at least 'X' production in the village for given town hall level
+        private static Resources[] minimumProductionForRecruitingByTownHallLevel = 
+        {
+            new Resources(1, 1, 1, 1), // Level 0
+            new Resources(3, 3, 2, 2), // Level 1
+            new Resources(6, 6, 4, 4), // Level 2
+            new Resources(15, 15, 10, 10), // Level 3
+            new Resources(30, 30, 20, 20), // 4
+            new Resources(50, 50, 35, 35), // 5
         };
 
         // This block calculates how much of the stored resources can we spend on recruting. 1% precision is enough IMO
@@ -88,12 +91,17 @@ namespace Plevian.Players
         private Resources getBudgetForRecruiting(Village village, float danger)
         {
             Resources storedResources = village.resources;
-
+            
+            // Always leave some spare coin for other things
+            // Require at least 'X' resources to be present
+            int townHallLevel = village.getBuildingLevel(Buildings.BuildingType.TOWN_HALL);
+            storedResources -= minimumDepositForRecruitingByTownHallLevel[townHallLevel];
+            
             // Budget for the army is based on the surrounding area. If we are safe, the budget is lower. If we have a war, the budget is higher
             Resources budgetPercent = Interpolate(peaceResourcesBudgetForArmy, warResourcesBudgetForArmy, (float)danger);
-
+            
             // This is the budget for army. It's internally represented in '%' so we have to convert it to the real Resources
-            return (storedResources * 100) / budgetPercent;
+            return (storedResources * budgetPercent) / 100;
         }
 
         // This block calculates how much of the current production can we spend on upkeep
@@ -106,11 +114,15 @@ namespace Plevian.Players
         private Resources getBudgetForUpkeep(Village village, float danger)
         {
             Resources production = village.TotalIncome(1);
+            
+            // Always leave some spare coin for other things
+            // Require at least 'X' resources to be present
+            int townHallLevel = village.getBuildingLevel(Buildings.BuildingType.TOWN_HALL);
+            production -= minimumProductionForRecruitingByTownHallLevel[townHallLevel];
 
             // Budget for the army is based on the surrounding area. If we are safe, the budget is lower. If we have a war, the budget is higher
             Resources budgetPercent = Interpolate(peaceUpkeepBudget, warUpkeepBudget, (float)danger);
-
-            Resources productionBudget = (production * 100) / budgetPercent;
+            Resources productionBudget = (production * budgetPercent) / 100;
 
             // Part of the production may already be in use by the army upkeep (well, units need to eat)
             // So to get remaining budget, we need to substract current upkeep
@@ -165,11 +177,21 @@ namespace Plevian.Players
 
         private Unit chooseTheMostImportantUnit(Village village, List<Unit> toRecruit, float danger)
         {
+            if (toRecruit.Count == 0)
+                return null;
+
             List<double> toRecruitProbability = new List<double>();
             double probabilitySum = 0.0d;
             foreach (Unit unit in toRecruit)
                 toRecruitProbability.Add(probabilitySum += getAiImportanceFor(village, unit, danger));
             double randomized = random.NextDouble() * probabilitySum;
+
+            /*foreach (Unit unit in toRecruit)
+            {
+                float importance = getAiImportanceFor(village, unit, danger);
+                Logger.log(" - " + unit.name + "; " + importance + "; " + (importance / probabilitySum));
+            }*/
+
             for (int i = 0; i < toRecruitProbability.Count; ++i)
                 if (toRecruitProbability[i] > randomized)
                     return toRecruit[i];
@@ -193,9 +215,9 @@ namespace Plevian.Players
             float importanceRatio = importance / sumImportance;
             float sizeRatio = (float)villageArmy.get(unit.unitType).quantity / (float)villageArmy.size();
 
-            // For each 10% of 'too much', lower AiImportance by 10%
-            while ((sizeRatio -= 0.1f) > 0.0f)
-                importance *= 0.9f;
+            // For each 1% of 'too much', lower AiImportance by 1%
+            while ((sizeRatio -= 0.01f) > 0.0f)
+                importance *= 0.99f;
 
             return importance;
         }
@@ -205,7 +227,7 @@ namespace Plevian.Players
         {
             float min = Math.Min(pointA, pointB);
             float max = Math.Max(pointA, pointB);
-            float interpolated = ((max - min) / betweenPercent) + min;
+            float interpolated = ((max - min) * betweenPercent) + min;
             return interpolated;
         }
 
