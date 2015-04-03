@@ -27,7 +27,7 @@ namespace Plevian
             // Don't collect stats every tick
             if (counter --> 0)
                 return;
-            counter = 10;
+            counter = 0; // Delay stats collecting (Maybe delay for 1 tick every 10 villages are created up to 10 ticks?)
             Logger.stats("Collecting stats");
 
             SumVillages = SumUnits = 0;
@@ -53,10 +53,33 @@ namespace Plevian
         {
             if (AverageUnitCountPerVillage <= 0)
                 return 0;
-            float relativeArmySizeToGlobalAverage = (float)village.army.size() / AverageUnitCountPerVillage;
+
+            // First of all, we must remove our village from calculations
+            int SumUnits2 = SumUnits - village.army.size();
+            int SumVillages2 = SumVillages - 1;
+            float AverageUnitCountPerVillage2 = (float)SumUnits2 / (float)SumVillages2;
+
+            // Now we can assess our strength
+            float relativeArmySizeToGlobalAverage = (float)village.army.size() / AverageUnitCountPerVillage2;
+
+            // Ignore negligible differences
+            if (relativeArmySizeToGlobalAverage >= 0.95)
+                return 1.0f;
 
             // TODO: Think of some better algorithm?
-            float danger = 1 - relativeArmySizeToGlobalAverage;
+            // enemy power = 5 nearest enemy villages army power
+            // our power = this village + nearest our villages (not further away than enemy ones)
+            // ally power = nearest ally villages (not further away than enemy villages)
+            // danger = enemy power - our power - (ally power / some_magic_number like 4)
+            float safe = relativeArmySizeToGlobalAverage;
+            if (relativeArmySizeToGlobalAverage < 0.9)
+                safe *= relativeArmySizeToGlobalAverage * relativeArmySizeToGlobalAverage;
+            if (relativeArmySizeToGlobalAverage < 0.83)
+                safe *= relativeArmySizeToGlobalAverage * relativeArmySizeToGlobalAverage;
+            if (relativeArmySizeToGlobalAverage < 0.75)
+                safe *= relativeArmySizeToGlobalAverage * relativeArmySizeToGlobalAverage;
+
+            float danger = 1 - safe;
 
             if (danger < 0)
                 danger = 0;

@@ -185,7 +185,7 @@ namespace Plevian.Resource
 
         public override string ToString()
         {
-            return "F: " + food + " W:" + wood + " S:" + stone + " I: " + iron;
+            return "F:" + food + " W:" + wood + " S:" + stone + " I:" + iron;
         }
 
         /// <summary>
