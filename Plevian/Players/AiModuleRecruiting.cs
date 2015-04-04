@@ -60,7 +60,7 @@ namespace Plevian.Players
             // We filtered out units that we cannot recruit. Now choose that one wchich is the most important for us
             Unit toRecruitUnit = chooseTheMostImportantUnit(village, toRecruit, danger);
             if(toRecruitUnit != null)
-                ;// village.recruit(toRecruitUnit);
+                village.recruit(toRecruitUnit);
         }
 
         // Require to have at least 'X' resources stored in the village for given town hall level
