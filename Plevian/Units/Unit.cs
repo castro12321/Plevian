@@ -34,6 +34,7 @@ namespace Plevian.Units
 
 #region abstract properties
         public abstract int baseAttackStrength { get; }
+        public abstract double chanceOfInjury { get; }
         
         public abstract int baseDefenseInfantry { get; }
         public abstract int baseDefenseCavalry { get; }

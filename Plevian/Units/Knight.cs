@@ -21,8 +21,9 @@ namespace Plevian.Units
         {
             return new Knight(quantity);
         }
-
+        
         public override int baseAttackStrength { get { return 40; } }
+        public override double chanceOfInjury { get { return 0.3 ; } }
 
         public override int baseDefenseInfantry { get { return 50; } }
         public override int baseDefenseCavalry { get { return 5; } }

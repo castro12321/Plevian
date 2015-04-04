@@ -22,7 +22,7 @@ namespace Plevian
 
         public MapTab mapTab;
         public VillageTab villageTab;
-        public TechnologiesTab technologiesTab;
+        //public TechnologiesTab technologiesTab;
         public MessagesTab messagesTab;
         public SettingsTab settingsTab;
 

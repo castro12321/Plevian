@@ -24,6 +24,7 @@ namespace Plevian.Units
         }
 
         public override int baseAttackStrength { get { return 10; } }
+        public override double chanceOfInjury { get { return 0.6; } }
 
         public override int baseDefenseInfantry { get { return 25; } }
         public override int baseDefenseCavalry { get { return 4; } }
