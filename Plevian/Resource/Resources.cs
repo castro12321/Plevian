@@ -12,35 +12,35 @@ namespace Plevian.Resource
     // TODO: przerobic na ten drugi system z notify zamiast dependencyproperty + overrideowac gethashcode()
     public class Resources : INotifyPropertyChanged
     {
-        private int _food;
-        public int food
+        private long _food;
+        public long food
         {
             get { return _food; }
             set { _food = value; NotifyPropertyChanged(); }
         }
 
-        private int _wood;
-        public int wood
+        private long _wood;
+        public long wood
         {
             get { return _wood; }
             set { _wood = value; NotifyPropertyChanged(); }
         }
 
-        private int _iron;
-        public int iron
+        private long _iron;
+        public long iron
         {
             get { return _iron; }
             set { _iron = value; NotifyPropertyChanged(); }
         }
 
-        private int _stone;
-        public int stone
+        private long _stone;
+        public long stone
         {
             get { return _stone; }
             set { _stone = value; NotifyPropertyChanged(); }
         }
-        
-        public Resources(int food, int wood, int iron, int stone)
+
+        public Resources(long food, long wood, long iron, long stone)
         {
             this.food = food;
             this.wood = wood;
@@ -78,19 +78,19 @@ namespace Plevian.Resource
 
         public static Resources operator +(Resources lh, Resources rh)
         {
-            int food = lh.food + rh.food;
-            int wood = lh.wood + rh.wood;
-            int iron = lh.iron + rh.iron;
-            int stone = lh.stone + rh.stone;
+            long food = lh.food + rh.food;
+            long wood = lh.wood + rh.wood;
+            long iron = lh.iron + rh.iron;
+            long stone = lh.stone + rh.stone;
             return new Resources(food, wood, iron, stone);
         }
 
         public static Resources operator -(Resources lh, Resources rh)
         {
-            int food = lh.food - rh.food;
-            int wood = lh.wood - rh.wood;
-            int iron = lh.iron - rh.iron;
-            int stone = lh.stone - rh.stone;
+            long food = lh.food - rh.food;
+            long wood = lh.wood - rh.wood;
+            long iron = lh.iron - rh.iron;
+            long stone = lh.stone - rh.stone;
             return new Resources(food, wood, iron, stone);
         }
 
@@ -114,18 +114,50 @@ namespace Plevian.Resource
             return (lh.food <= rh.food || lh.stone <= rh.stone || lh.wood <= rh.wood || lh.iron <= rh.iron);
         }
 
-        public static Resources operator *(Resources lh, float rh)
+        public static Resources operator *(Resources lh, Resources rh)
         {
-            int wood  = (int)(lh.wood * rh);
-            int food = (int)(lh.food * rh);
-            int iron = (int)(lh.iron * rh);
-            int stone = (int)(lh.stone * rh);
+            long wood = (long)(lh.wood * rh.wood);
+            long food = (long)(lh.food * rh.food);
+            long iron = (long)(lh.iron * rh.iron);
+            long stone = (long)(lh.stone * rh.stone);
             return new Resources(food, wood, iron, stone);
         }
 
-        public static Resources operator *(Resources lh, int rh)
+        public static Resources operator *(Resources lh, float rh)
+        {
+            long wood = (long)(lh.wood * rh);
+            long food = (long)(lh.food * rh);
+            long iron = (long)(lh.iron * rh);
+            long stone = (long)(lh.stone * rh);
+            return new Resources(food, wood, iron, stone);
+        }
+
+        public static Resources operator *(Resources lh, long rh)
         {
             return lh * (float)rh;
+        }
+
+        public static Resources operator /(Resources lh, Resources rh)
+        {
+            long wood = (long)(lh.wood / rh.wood);
+            long food = (long)(lh.food / rh.food);
+            long iron = (long)(lh.iron / rh.iron);
+            long stone = (long)(lh.stone / rh.stone);
+            return new Resources(food, wood, iron, stone);
+        }
+
+        public static Resources operator /(Resources lh, float rh)
+        {
+            long wood = (long)(lh.wood / rh);
+            long food = (long)(lh.food / rh);
+            long iron = (long)(lh.iron / rh);
+            long stone = (long)(lh.stone / rh);
+            return new Resources(food, wood, iron, stone);
+        }
+
+        public static Resources operator /(Resources lh, long rh)
+        {
+            return lh / (float)rh;
         }
 
         public static bool operator == (Resources lh, Resources rh)
@@ -153,21 +185,21 @@ namespace Plevian.Resource
 
         public override string ToString()
         {
-            return "F: " + food + " W:" + wood + " S:" + stone + " I: " + iron;
+            return "F:" + food + " W:" + wood + " S:" + stone + " I:" + iron;
         }
 
         /// <summary>
         /// Sums all resources
         /// </summary>
         /// <returns>Return food+iron+wood+stone</returns>
-        public int sumResources()
+        public long sumResources()
         {
             return food + iron + wood + stone;
         }
 
         public int howMuchAfford(Resources cost)
         {
-            int q = 24000000;
+            long q = 24000000; // wut?
             if(cost.wood != 0)
                 q = wood / cost.wood;
             if (cost.food != 0 && food / cost.food < q)
@@ -178,7 +210,7 @@ namespace Plevian.Resource
                 q = stone / cost.stone;
             if(q == 24000000)
                 return 0;
-            return q;
+            return (int)q;
         }
 
         public void Clear()

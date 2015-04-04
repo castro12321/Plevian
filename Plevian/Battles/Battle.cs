@@ -17,7 +17,10 @@ namespace Plevian.Battles
         Dictionary<UnitType, int> attLosses = new Dictionary<UnitType,int>();
         Dictionary<UnitType, int> defLosses = new Dictionary<UnitType,int>();
 
-        int attackStrength, defenseInf, defenseCav, defenseArch;
+        //int attackStrength, defenseInf, defenseCav, defenseArch;
+        int attInfSize, attArchSize, attCavSize;
+        int defInfSize, defArchSize, defCavSize;
+
         int attSize, attInf, attCav, attArch;
         int defSize, defInf, defCav, defArch;
         float infP, archP, cavP;
@@ -40,9 +43,200 @@ namespace Plevian.Battles
             defenderBaseDefense = baseDefense;
 
             listUnits();
+            armySize();
+            countAttack();
+            countDefense();
         }
 
-        public Report makeBattle() // tworzy bitwe -> attackOrder class
+        public Report makeBattle()
+        {
+            if (battleState == BattleState.Error)
+                throw new Exception("Battle error");
+            if (battleState != BattleState.Draw)
+                throw new Exception("You cannot make same battle twice!");
+
+            if (defSize < attSize)  //nie uwzglednilem obrony miasta, mur itp.
+            {
+                foreach (var pair in defender.getUnits())
+                {
+                    defLosses.Add(pair.Key, pair.Value.quantity);
+                }
+                defender.clear();
+
+                int i = 0;
+                foreach (var pair in attacker.getUnits())
+                {
+                    if (attInf < defInf && pair.Key == UnitType.WARRIOR)
+                    {
+                        int killInf = Convert.ToInt32((pair.Value.chanceOfInjury + 0.1) * attInfSize);
+                        attLosses.Add(pair.Key, killInf);
+                        pair.Value.quantity -= killInf;
+                    }
+                    else if (pair.Key == UnitType.WARRIOR)
+                    {
+                        int killInf = Convert.ToInt32(pair.Value.chanceOfInjury * attInfSize);
+                        attLosses.Add(pair.Key, killInf);
+                        pair.Value.quantity -= killInf;
+                    }
+
+                    if (attCav < defCav && pair.Key == UnitType.KNIGHT)
+                    {
+                        int killCav = Convert.ToInt32((pair.Value.chanceOfInjury + 0.1) * attCavSize);
+                        attLosses.Add(pair.Key, killCav);
+                        pair.Value.quantity -= killCav;
+                    }
+                    else if (pair.Key == UnitType.KNIGHT)
+                    {
+                        int killCav = Convert.ToInt32(pair.Value.chanceOfInjury * attCavSize);
+                        attLosses.Add(pair.Key, killCav);
+                        pair.Value.quantity -= killCav;
+                    }
+
+                    if (attArch < defArch && pair.Key == UnitType.ARCHER)
+                    {
+                        int killArch = Convert.ToInt32((pair.Value.chanceOfInjury + 0.1) * attArchSize);
+                        attLosses.Add(pair.Key, killArch);
+                        pair.Value.quantity -= killArch;
+                    }
+                    else if (pair.Key == UnitType.ARCHER)
+                    {
+                        int killArch = Convert.ToInt32(pair.Value.chanceOfInjury * attArchSize);
+                        attLosses.Add(pair.Key, killArch);
+                        pair.Value.quantity -= killArch;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var pair in attacker.getUnits())
+                {
+                    attLosses.Add(pair.Key, pair.Value.quantity);
+                }
+                attacker.clear();
+
+                foreach (var pair in defender.getUnits())
+                {
+                    if (defInf < attInf && pair.Key == UnitType.WARRIOR)
+                    {
+                        int killInf = Convert.ToInt32((pair.Value.chanceOfInjury + 0.1) * defInfSize);
+                        defLosses.Add(pair.Key, killInf);
+                        pair.Value.quantity -= killInf;
+                    }
+                    else if (pair.Key == UnitType.WARRIOR)
+                    {
+                        int killInf = Convert.ToInt32(pair.Value.chanceOfInjury * defInfSize);
+                        defLosses.Add(pair.Key, killInf);
+                        pair.Value.quantity -= killInf;
+                    }
+
+                    if (defCav < attCav && pair.Key == UnitType.KNIGHT)
+                    {
+                        int killCav = Convert.ToInt32((pair.Value.chanceOfInjury + 0.1) * defCavSize);
+                        defLosses.Add(pair.Key, killCav);
+                        pair.Value.quantity -= killCav;
+                    }
+                    else if (pair.Key == UnitType.KNIGHT)
+                    {
+                        int killCav = Convert.ToInt32(pair.Value.chanceOfInjury * defCavSize);
+                        defLosses.Add(pair.Key, killCav);
+                        pair.Value.quantity -= killCav;
+                    }
+
+                    if (defArch < attArch && pair.Key == UnitType.ARCHER)
+                    {
+                        int killArch = Convert.ToInt32((pair.Value.chanceOfInjury + 0.1) * defArchSize);
+                        defLosses.Add(pair.Key, killArch);
+                        pair.Value.quantity -= killArch;
+                    }
+                    else if (pair.Key == UnitType.ARCHER)
+                    {
+                        int killArch = Convert.ToInt32(pair.Value.chanceOfInjury * defArchSize);
+                        defLosses.Add(pair.Key, killArch);
+                        pair.Value.quantity -= killArch;
+                    }
+                }
+            }
+
+            battleState = chooseWinner();
+            return new Report(attArmy, defArmy, attLosses, defLosses, defenderPercentageDefense, battleState);
+        }
+
+        private BattleState chooseWinner()
+        {
+            if (attacker.size() == 0)
+            {
+                return BattleState.DefenderVictory;
+            }
+            else
+            {
+                return BattleState.AttackerVictory;
+            }
+        }
+
+        private void listUnits() //pobiera jednostki do listy
+        {
+            foreach (var pair in attacker.getUnits())
+            {
+                attArmy.Add(pair.Key, pair.Value.quantity);
+            }
+
+            foreach (var pair in defender.getUnits())
+            {
+                defArmy.Add(pair.Key, pair.Value.quantity);
+            }
+        }
+
+        private void armySize()
+        {
+            foreach (var pair in attArmy)
+            {
+                switch (pair.Key)
+                {
+                    case UnitType.ARCHER: attArchSize += pair.Value; break;
+                    case UnitType.KNIGHT: attCavSize += pair.Value; break;
+                    case UnitType.WARRIOR: attInfSize += pair.Value; break;
+                }
+            }
+
+            foreach (var pair in defArmy)
+            {
+                switch (pair.Key)
+                {
+                    case UnitType.ARCHER: defArchSize += pair.Value; break;
+                    case UnitType.KNIGHT: defCavSize += pair.Value; break;
+                    case UnitType.WARRIOR: defInfSize += pair.Value; break;
+                }
+            }
+        }
+
+        private void countAttack()
+        {
+            foreach (var pair in attacker.getUnits())
+            {
+                switch (pair.Key)
+                {
+                    case UnitType.ARCHER: attArch += pair.Value.baseAttackStrength * pair.Value.quantity; break;
+                    case UnitType.KNIGHT: attCav += pair.Value.baseAttackStrength * pair.Value.quantity; break;
+                    case UnitType.WARRIOR: attInf += pair.Value.baseAttackStrength * pair.Value.quantity; break;
+                }
+            }
+
+            attSize = attArch + attCav + attInf;
+        }
+
+        private void countDefense()
+        {
+            foreach (var pair in defender.getUnits())
+            {
+                defArch += pair.Value.baseDefenseArchers * pair.Value.quantity;  //łucznicy
+                defCav += pair.Value.baseDefenseCavalry * pair.Value.quantity;  //kawaleria
+                defInf += pair.Value.baseDefenseInfantry * pair.Value.quantity; //piechaota
+            }
+
+            defSize = defArch + defCav + defInf;
+        }
+
+        /*public Report makeBattle() // tworzy bitwe -> attackOrder class
         {
             if (battleState == BattleState.Error)
                 throw new Exception("Battle error");
@@ -99,7 +293,7 @@ namespace Plevian.Battles
             return new Report(attArmy, defArmy, attLosses, defLosses, attackerLuck, defenderPercentageDefense, battleState);
         }
 
-        private void listUnits()
+        private void listUnits() //pobiera jednostki do listy
         {
             foreach (var pair in attacker.getUnits())
             {
@@ -123,7 +317,7 @@ namespace Plevian.Battles
                 return BattleState.AttackerVictory;
             }
         }
-
+/*
         private void getBasicParams()
         {
             attackStrength = attacker.getAttackStrength();
@@ -154,7 +348,6 @@ namespace Plevian.Battles
             defenseInf = (int)((float)defenseInf * infP);
             defenseCav = (int)((float)defenseCav * cavP);
             defenseArch = (int)((float)defenseArch * archP);
-        }
-
+        }*/
     }
 }

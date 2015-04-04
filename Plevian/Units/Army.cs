@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Plevian.Exceptions;
 using System.Collections;
 using Plevian.Debugging;
+using Plevian.Resource;
 
 namespace Plevian.Units
 {
@@ -154,6 +155,20 @@ namespace Plevian.Units
                 capacity += pair.Value.baseLootCapacity * pair.Value.quantity;
             }
             return capacity;
+        }
+
+        public Resources Upkeep
+        {
+            get
+            {
+                Resources upkeep = new Resources();
+                foreach (var pair in units)
+                {
+                    //Logger.log("(" + pair.Value.quantity + ") " + pair.Key + " --> " + pair.Value.baseUpkeepCost);
+                    upkeep += pair.Value.baseUpkeepCost * pair.Value.quantity;
+                }
+                return upkeep;
+            }
         }
 
         public string toString()

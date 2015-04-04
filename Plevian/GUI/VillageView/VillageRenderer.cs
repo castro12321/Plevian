@@ -61,9 +61,11 @@ namespace Plevian.Maps
             {
                 return new Texture(texturePath());
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                Logger.warn("Exception: " + e.Message + "; " + e.StackTrace);
+                //Logger.warn(e.Message);
+                Logger.warn("[VillageRenderer] Can't load '" + texturePath() + "'");
+                //Logger.warn("Exception: " + e.Message + "; " + e.StackTrace);
                 return new Texture(defaultTexturePath());
             }
         }

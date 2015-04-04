@@ -132,8 +132,8 @@ namespace Plevian.Orders
         private void gatherLoot(Village village)
         {
             Resources villageResources = village.resources;
-            int sumResources = villageResources.sumResources();
-            int capacity = army.getLootCapacity();
+            long sumResources = villageResources.sumResources();
+            long capacity = army.getLootCapacity();
             if (capacity >= sumResources)
             {
                 loot = villageResources;
@@ -152,10 +152,10 @@ namespace Plevian.Orders
             Logger.log("% " + foodP + "; " + woodP + "; " + ironP + "; " + stoneP + " sum: " + (foodP+woodP+ironP+stoneP));
             
             // Take resources accordingly to the percents above
-            int food = (int)(capacity * foodP);
-            int wood = (int)(capacity * woodP);
-            int iron = (int)(capacity * ironP);
-            int stone = (int)(capacity * stoneP);
+            long food = (int)(capacity * foodP);
+            long wood = (int)(capacity * woodP);
+            long iron = (int)(capacity * ironP);
+            long stone = (int)(capacity * stoneP);
             Logger.log("loot1: " + food + "; " + wood + "; " + iron + "; " + stone);
 
             // Check if we took more resources than the village have
@@ -165,7 +165,7 @@ namespace Plevian.Orders
                 retry = false;
                 if (food > villageResources.food)
                 {
-                    int free = food - villageResources.food;
+                    long free = food - villageResources.food;
                     food -= free;
                     wood += free / 3;
                     iron += free / 3;
@@ -174,7 +174,7 @@ namespace Plevian.Orders
                 }
                 if (wood > villageResources.wood)
                 {
-                    int free = wood - villageResources.wood;
+                    long free = wood - villageResources.wood;
                     food += free / 3;
                     wood -= free;
                     iron += free / 3;
@@ -183,7 +183,7 @@ namespace Plevian.Orders
                 }
                 if(iron > villageResources.iron)
                 {
-                    int free = iron - villageResources.iron;
+                    long free = iron - villageResources.iron;
                     food += free / 3;
                     wood += free / 3;
                     iron -= free;
@@ -192,7 +192,7 @@ namespace Plevian.Orders
                 }
                 if (stone > villageResources.stone)
                 {
-                    int free = stone - villageResources.stone;
+                    long free = stone - villageResources.stone;
                     food += free / 3;
                     wood += free / 3;
                     iron += free / 3;

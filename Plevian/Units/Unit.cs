@@ -34,6 +34,7 @@ namespace Plevian.Units
 
 #region abstract properties
         public abstract int baseAttackStrength { get; }
+        public abstract double chanceOfInjury { get; }
         
         public abstract int baseDefenseInfantry { get; }
         public abstract int baseDefenseCavalry { get; }
@@ -49,12 +50,12 @@ namespace Plevian.Units
 
         public abstract UnitType unitType { get; }
         public abstract UnitClass unitClass { get;  }
+        public abstract UnitPurpose unitPurpose { get; }
 
         public abstract Requirements requirements { get;  }
         /// <summary>How important is this unit in the village? The lower the more important. 1 being the most important</summary>
         public virtual int getAiResourceModifier() { return 15; }
         /// <summary>Chance of the unit being recruit (in % where 0=0%; 1=100%)</summary>
-        public virtual double getAiImportance() { return 0.1d; }
 
         public abstract string name { get; }
 

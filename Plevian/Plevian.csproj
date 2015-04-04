@@ -70,10 +70,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Buildings\Workshop.cs" />
-    <Compile Include="Buildings\BuildingControl.xaml.cs">
+    <Compile Include="GUI\VillageView\BuildingControl.xaml.cs">
       <DependentUpon>BuildingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Buildings\BuildingTask.xaml.cs">
+    <Compile Include="GUI\VillageView\BuildingTask.xaml.cs">
       <DependentUpon>BuildingTask.xaml</DependentUpon>
     </Compile>
     <Compile Include="Buildings\LumberMill.cs" />
@@ -83,25 +83,25 @@
     <Compile Include="events\VillageEvents.cs" />
     <Compile Include="GameStats.cs" />
     <Compile Include="GUI\BetterLabel.cs" />
-    <Compile Include="GUI\SettingsTab.xaml.cs">
+    <Compile Include="GUI\SettingsView\SettingsTab.xaml.cs">
       <DependentUpon>SettingsTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\TradeWindow.xaml.cs">
+    <Compile Include="GUI\MapView\TradeWindow.xaml.cs">
       <DependentUpon>TradeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\SendUnitsWindow.xaml.cs">
+    <Compile Include="GUI\MapView\SendUnitsWindow.xaml.cs">
       <DependentUpon>SendUnitsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\UnitSelector.xaml.cs">
+    <Compile Include="GUI\MapView\UnitSelector.xaml.cs">
       <DependentUpon>UnitSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\UpgradeTechnology.xaml.cs">
+    <Compile Include="GUI\VillageView\UpgradeTechnology.xaml.cs">
       <DependentUpon>UpgradeTechnology.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\VillagePicker.xaml.cs">
       <DependentUpon>VillagePicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\VillageRecord.xaml.cs">
+    <Compile Include="GUI\MapView\VillageRecord.xaml.cs">
       <DependentUpon>VillageRecord.xaml</DependentUpon>
     </Compile>
     <Compile Include="Game.cs" />
@@ -112,30 +112,35 @@
     <Compile Include="GUI\WindowMgr.cs" />
     <Compile Include="Maps\Camera.cs" />
     <Compile Include="Maps\Events.cs" />
-    <Compile Include="Maps\MapTab.xaml.cs">
+    <Compile Include="GUI\MapView\MapTab.xaml.cs">
       <DependentUpon>MapTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Maps\MapView.cs">
+    <Compile Include="GUI\MapView\MapView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Messages\DataGridElement.cs" />
-    <Compile Include="Messages\MessageWindow.xaml.cs">
+    <Compile Include="GUI\MessagesView\DataGridElement.cs" />
+    <Compile Include="GUI\MessagesView\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Messages\Message.cs" />
-    <Compile Include="Messages\MessagesTab.xaml.cs">
+    <Compile Include="GUI\MessagesView\MessagesTab.xaml.cs">
       <DependentUpon>MessagesTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Orders\AttackOrder.cs" />
     <Compile Include="Orders\TradeOrder.cs" />
     <Compile Include="Orders\Order.cs" />
-    <Compile Include="Orders\OrderControl.xaml.cs">
+    <Compile Include="GUI\VillageView\OrderControl.xaml.cs">
       <DependentUpon>OrderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Orders\OrderType.cs" />
     <Compile Include="Orders\SupportOrder.cs" />
+    <Compile Include="Players\AiModuleAttacks.cs" />
+    <Compile Include="Players\AiModuleBuilding.cs" />
+    <Compile Include="Players\AiModuleExpansion.cs" />
     <Compile Include="Players\AiModuleInternalCooperation.cs" />
+    <Compile Include="Players\AiModuleRecruiting.cs" />
     <Compile Include="Players\AiModuleRelations.cs" />
+    <Compile Include="Players\AiModuleResearch.cs" />
     <Compile Include="Players\AiPlayer.cs" />
     <Compile Include="Players\AiModule.cs" />
     <Compile Include="Players\Player.cs" />
@@ -143,11 +148,11 @@
     <Compile Include="RequirementS\BuildingRequirement.cs" />
     <Compile Include="RequirementS\Requirement.cs" />
     <Compile Include="RequirementS\Requirements.cs" />
-    <Compile Include="Resource\ResourceControl.xaml.cs">
+    <Compile Include="GUI\VillageView\ResourceControl.xaml.cs">
       <DependentUpon>ResourceControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Save\SaveReader.cs" />
-    <Compile Include="Save\SaveWriter.cs" />
+    <Compile Include="Util\SaveReader.cs" />
+    <Compile Include="Util\SaveWriter.cs" />
     <Compile Include="TechnologY\ArmorTechnologies.cs" />
     <Compile Include="TechnologY\ResearchQueueItem.cs" />
     <Compile Include="TechnologY\Technologies.cs" />
@@ -157,13 +162,14 @@
     <Compile Include="Units\Duke.cs" />
     <Compile Include="Units\Trader.cs" />
     <Compile Include="Units\Settler.cs" />
-    <Compile Include="Units\UnitControl.xaml.cs">
+    <Compile Include="GUI\VillageView\UnitControl.xaml.cs">
       <DependentUpon>UnitControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Units\UnitFactory.cs" />
+    <Compile Include="Units\UnitPurpose.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="Villages\VillageQueues.cs" />
-    <Compile Include="Villages\VillageRenderer.cs">
+    <Compile Include="GUI\VillageView\VillageRenderer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Maps\Tile.cs" />
@@ -184,34 +190,34 @@
     <Compile Include="Units\Warrior.cs" />
     <Compile Include="Util\Functions.cs" />
     <Compile Include="Villages\Village.cs" />
-    <Compile Include="Villages\VillageTab.xaml.cs">
+    <Compile Include="GUI\VillageView\VillageTab.xaml.cs">
       <DependentUpon>VillageTab.xaml</DependentUpon>
     </Compile>
-    <Page Include="Buildings\BuildingControl.xaml">
+    <Page Include="GUI\VillageView\BuildingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Buildings\BuildingTask.xaml">
+    <Page Include="GUI\VillageView\BuildingTask.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\SettingsTab.xaml">
+    <Page Include="GUI\SettingsView\SettingsTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\TradeWindow.xaml">
+    <Page Include="GUI\MapView\TradeWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\SendUnitsWindow.xaml">
+    <Page Include="GUI\MapView\SendUnitsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\UnitSelector.xaml">
+    <Page Include="GUI\MapView\UnitSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\UpgradeTechnology.xaml">
+    <Page Include="GUI\VillageView\UpgradeTechnology.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -219,7 +225,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\VillageRecord.xaml">
+    <Page Include="GUI\MapView\VillageRecord.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,40 +246,40 @@
     <Compile Include="Buildings\BuildingType.cs" />
     <Compile Include="Buildings\Stable.cs" />
     <Compile Include="Buildings\TownHall.cs" />
-    <Compile Include="Debugging\Logger.cs" />
-    <Compile Include="Debugging\NativeMethods.cs" />
-    <Compile Include="Exceptions\ArmyExceptions.cs" />
-    <Compile Include="Exceptions\BuildingExceptions.cs" />
-    <Compile Include="Loaders\GraphicLoader.cs" />
+    <Compile Include="Util\Logger.cs" />
+    <Compile Include="Util\NativeMethods.cs" />
+    <Compile Include="Util\ArmyExceptions.cs" />
+    <Compile Include="Util\BuildingExceptions.cs" />
+    <Compile Include="Util\GraphicLoader.cs" />
     <Compile Include="GUI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Maps\MapTab.xaml">
+    <Page Include="GUI\MapView\MapTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Messages\MessageWindow.xaml">
+    <Page Include="GUI\MessagesView\MessageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Messages\MessagesTab.xaml">
+    <Page Include="GUI\MessagesView\MessagesTab.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Orders\OrderControl.xaml">
+    <Page Include="GUI\VillageView\OrderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resource\ResourceControl.xaml">
+    <Page Include="GUI\VillageView\ResourceControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Units\UnitControl.xaml">
+    <Page Include="GUI\VillageView\UnitControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Villages\VillageTab.xaml">
+    <Page Include="GUI\VillageView\VillageTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -323,6 +329,10 @@
     <Resource Include="GFX\mountains.png" />
     <Resource Include="GFX\plains.png" />
     <Resource Include="GFX\village.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GUI\Controls\" />
+    <Folder Include="GUI\TechnologiesView\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

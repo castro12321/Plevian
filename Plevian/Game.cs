@@ -36,28 +36,33 @@ namespace Plevian
             mainPlayer.SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
             mainPlayer.SendMessage(new Message("Enemy", "Message to you", "I'll kill you", DateTime.Now));
 
-            Village village1 = createVillage(mainPlayer, "Capital");
-            village1.addResources(new Resource.Resources(1, 501, 1001, 1501));
-            //village1.build(BuildingType.TOWN_HALL);
-            village1.addUnit(new Warrior(3));
+            Village playerCapital = createVillage(mainPlayer, "Capital");
+            playerCapital.addResources(new Resource.Resources(9999, 9999, 9999, 9999));
+            //playerCapital.build(BuildingType.TOWN_HALL);
+            //playerCapital.addUnit(new Warrior(10));
 
             Player enemy = createPlayer("Enemy", SFML.Graphics.Color.Red, true);
-            //mainPlayer = enemy;
-            Village enemyLand = createVillage(enemy, "EnemyLand");
-            enemyLand.addUnit(new Warrior(10));
+            Village enemyCapital = createVillage(enemy, "EnemyLand");
+            //enemyCapital.addUnit(new Warrior(10));
 
+            /**
             Village hamburger = createVillage(enemy, "Hamburger");
             hamburger.takeResources(hamburger.resources);
+            /**/
 
-            /*
-            for (int i = 0; i < 10; ++i)
-                foreach (var pair in berlin.buildings)
-                {
-                    Building building = pair.Value;
-                    if (building.getMaxLevel() <= i)
-                        building.upgrade();
-                }
-             */
+            //mainPlayer = enemy;
+
+            /**
+            for (int i = 0; i < 3; ++i)
+                foreach (Player p in players)
+                    foreach (Village v in p.villages)
+                        foreach (var pair in v.buildings)
+                        {
+                            Building building = pair.Value;
+                            if (building.getMaxLevel() >= i)
+                                building.upgrade();
+                        }
+             /**/
         }
         
         /// <summary>
@@ -79,11 +84,13 @@ namespace Plevian
 
         public void tick()
         {
-            ulong timediff = GameTime.update();
-            if(timediff > 0)
+            // We assume that a tick = 1 second
+            ulong ticks = GameTime.update();
+
+            if(ticks > 0)
             {
                 foreach (Player player in players)
-                    player.tick();
+                    player.tick(ticks);
                 GameStats.collect();
                 Logger.tick();
             }

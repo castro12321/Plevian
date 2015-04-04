@@ -8,7 +8,7 @@ namespace Plevian.Resource
 {
     public class Wood : Resources
     {
-        public Wood(int wood)
+        public Wood(long wood)
             : base(0, wood, 0, 0)
         {
         }

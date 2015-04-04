@@ -24,6 +24,7 @@ namespace Plevian.Units
         }
 
         public override int baseAttackStrength { get { return 10; } }
+        public override double chanceOfInjury { get { return 0.6; } }
 
         public override int baseDefenseInfantry { get { return 25; } }
         public override int baseDefenseCavalry { get { return 4; } }
@@ -39,8 +40,7 @@ namespace Plevian.Units
 
         public override UnitType unitType { get { return UnitType.WARRIOR; } }
         public override UnitClass unitClass { get { return UnitClass.INFANTRY; } }
-
-        public override double getAiImportance() { return 0.8d; }
+        public override UnitPurpose unitPurpose { get { return UnitPurpose.MILITARY; } }
 
         public override string name { get { return "Wojownik"; } }
 

@@ -70,10 +70,10 @@ namespace Plevian.Players
             messages.Remove(message);
         }
 
-        public virtual void tick()
+        public virtual void tick(ulong ticks)
         {
             for (int i = 0; i < villages.Count; ++i)
-                villages[i].tick();
+                villages[i].tick(ticks);
         }
 
         public override string ToString()

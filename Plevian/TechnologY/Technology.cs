@@ -17,7 +17,7 @@ namespace Plevian.TechnologY
         /// <summary>How important is this technology in the village? The lower the more important. 1 being the most important</summary>
         public virtual int getAiResourceModifier() { return 6; }
 
-        public String Name
+        public virtual String Name
         {
             get
             {

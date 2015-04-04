@@ -8,7 +8,7 @@ namespace Plevian.Resource
 {
     public class Food : Resources
     {
-        public Food(int food)
+        public Food(long food)
             : base(food, 0, 0, 0)
         {
         }

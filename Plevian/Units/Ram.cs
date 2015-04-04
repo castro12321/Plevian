@@ -23,6 +23,8 @@ namespace Plevian.Units
         }
 
         public override int baseAttackStrength { get { return 1; } }
+        public override double chanceOfInjury { get { return 0.6; } }
+        
 
         public override int baseDefenseInfantry { get { return 2; } }
         public override int baseDefenseCavalry { get { return 2; } }
@@ -38,6 +40,7 @@ namespace Plevian.Units
 
         public override UnitType unitType { get { return UnitType.RAM; } }
         public override UnitClass unitClass { get { return UnitClass.SUPPORT; } }
+        public override UnitPurpose unitPurpose { get { return UnitPurpose.MILITARY; } }
 
         public override string name { get { return "Taran"; } }
 

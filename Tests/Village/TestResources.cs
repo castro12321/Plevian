@@ -6,7 +6,7 @@ namespace Tests.Units
     [TestClass]
     public class TestResources
     {
-        private void assertresources(Resources resources, int food, int wood, int iron, int stone)
+        private void assertresources(Resources resources, long food, long wood, long iron, long stone)
         {
             Assert.IsTrue(resources.food == food);
             Assert.IsTrue(resources.wood == wood);

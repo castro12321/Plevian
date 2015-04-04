@@ -10,14 +10,6 @@ using System.Collections.Generic;
 using Plevian.Players;
 using Plevian.Save;
 
-// TODO: Plevian main TODO board
-// Known issues:
-// - Skok w przyszlosc; Przykład:
-//      - W game ticku, gracz A robi tick swoich wiosek; Wywolano tick dla wioski A
-//      - Nastepnie podczas ticku dla gracza B wywolano tick wioski B, ktora zajela wioske A
-//      - W tym momencie, do listy wiosek gracza B, dodano wioske A, przez co pod koniec petli tick dla wioski A wywola sie drugi raz
-//      - Ergo wioska A zrobila tick w przyszlosc!
-
 namespace Plevian
 {
     /// <summary>
@@ -27,12 +19,12 @@ namespace Plevian
     {
         private bool running = true;
         private static Random random = new Random();
-        private Game game;
 
-        private MapTab mapTab;
+        public MapTab mapTab;
         public VillageTab villageTab;
-        private MessagesTab messagesTab;
-        private SettingsTab settingsTab;
+        //public TechnologiesTab technologiesTab;
+        public MessagesTab messagesTab;
+        public SettingsTab settingsTab;
 
         private static MainWindow instance;
 
@@ -43,6 +35,7 @@ namespace Plevian
             InitializeComponent();
 
             // Initialize game
+            Game game;
             if (save != null)
                 game = new Game(save);
             else
@@ -62,8 +55,8 @@ namespace Plevian
             settingsTabItem.Content = (settingsTab = new SettingsTab());
 
             // Listen to some events
-            Closed += new EventHandler(OnClose);
-            PreviewKeyDown += KeyDownHandler;
+            Closed += (x, y) => running = false;
+            //PreviewKeyDown += (x, y) => Logger.c("Pressed " + y.Key);
 
             //get keyboard focus :F
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(MainWindow.getInstance());
@@ -71,13 +64,7 @@ namespace Plevian
             statusText.DataContext = villageTab.Village;
         }
 
-        void KeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            //Logger.c("Pressed12");
-            Logger.c("Pressed " + e.Key);
-        }
-
-      public void run()
+        public void run()
         {
             while (running)
             {
@@ -89,17 +76,12 @@ namespace Plevian
                 villageTab.handleEvents();
 
                 // Do the logic
-                game.tick();
+                Game.game.tick();
 
                 // Render
                 mapTab.render();
                 villageTab.render();
             }
-        }
-
-        private void OnClose(object sender, EventArgs e)
-        {
-            running = false;
         }
 
         public static MainWindow getInstance()

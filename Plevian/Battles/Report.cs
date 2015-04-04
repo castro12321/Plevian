@@ -27,14 +27,13 @@ namespace Plevian.Battles
         /// <param name="luck">luck</param>
         /// <param name="defense">defense</param>
         /// <param name="result">result</param>
-        public Report(Dictionary<UnitType, int> atA, Dictionary<UnitType, int> defA, Dictionary<UnitType, int> atL, Dictionary<UnitType, int> defL, float luck, float defencePercentage, BattleState result)
+        public Report(Dictionary<UnitType, int> atA, Dictionary<UnitType, int> defA, Dictionary<UnitType, int> atL, Dictionary<UnitType, int> defL, float defencePercentage, BattleState result)
         {
             attackerArmy = atA;
             defenderArmy = defA;
             attackerLosses = atL;
             defenderLosses = defL;
 
-            attackerLuck = luck;
             defenderPercentageDefense = defencePercentage;
             battleResult = result;
         }

@@ -46,8 +46,5 @@ namespace Plevian.Loaders
         {
             return textures[name]; //May throw exception when texture is not loaded into memory.
         }
-
-
-
     }
 }

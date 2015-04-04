@@ -38,8 +38,8 @@ namespace Tests.Units
 
             GameTime wait = testVillage.recruitTimeEnd.diffrence(GameTime.now);
             addFakeTime(wait.time);
-            GameTime.update();
-            testVillage.tick();
+            ulong ticks = GameTime.update();
+            testVillage.tick(ticks);
 
             Assert.IsTrue(testVillage.army.get(UnitType.ARCHER).quantity == ARCH_QUANTITY);
             Assert.IsTrue(testVillage.army.get(UnitType.KNIGHT).quantity == KNIG_QUANTITY);
