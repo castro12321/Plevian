@@ -31,22 +31,22 @@ namespace Plevian
             GameTime.setSpeed(GameTime.setSpeedToAfterGameStarted);
             this.map = new MapGenerator().Generate(30, 30);
             
-            mainPlayer = createPlayer("Magnus", new Color(255, 106, 0));
+            mainPlayer = createPlayer("Player", new Color(255, 106, 0));
             mainPlayer.SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
             mainPlayer.SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
-            mainPlayer.SendMessage(new Message("Hitler", "Message to you", "I'll kill you", DateTime.Now));
+            mainPlayer.SendMessage(new Message("Enemy", "Message to you", "I'll kill you", DateTime.Now));
 
             Village village1 = createVillage(mainPlayer, "Capital");
             village1.addResources(new Resource.Resources(1, 501, 1001, 1501));
             //village1.build(BuildingType.TOWN_HALL);
             village1.addUnit(new Warrior(3));
 
-            Player enemy = createPlayer("Hitler", SFML.Graphics.Color.Red, true);
+            Player enemy = createPlayer("Enemy", SFML.Graphics.Color.Red, true);
             //mainPlayer = enemy;
-            Village berlin = createVillage(enemy, "Berlin");
-            berlin.addUnit(new Warrior(10));
+            Village enemyLand = createVillage(enemy, "EnemyLand");
+            enemyLand.addUnit(new Warrior(10));
 
-            Village hamburger = createVillage(enemy, "Hamburg[er]");
+            Village hamburger = createVillage(enemy, "Hamburger");
             hamburger.takeResources(hamburger.resources);
 
             /*
