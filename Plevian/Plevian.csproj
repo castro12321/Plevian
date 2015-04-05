@@ -70,6 +70,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Buildings\Workshop.cs" />
+    <Compile Include="GUI\MapView\MapView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\TechnologiesView\TechnologiesTab.xaml.cs">
+      <DependentUpon>TechnologiesTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\VillageView\BuildingControl.xaml.cs">
       <DependentUpon>BuildingControl.xaml</DependentUpon>
     </Compile>
@@ -115,9 +121,6 @@
     <Compile Include="GUI\MapView\MapTab.xaml.cs">
       <DependentUpon>MapTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\MapView\MapView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="GUI\MessagesView\DataGridElement.cs" />
     <Compile Include="GUI\MessagesView\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
@@ -151,6 +154,7 @@
     <Compile Include="GUI\VillageView\ResourceControl.xaml.cs">
       <DependentUpon>ResourceControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TechnologY\TechnologyTile.cs" />
     <Compile Include="Util\SaveReader.cs" />
     <Compile Include="Util\SaveWriter.cs" />
     <Compile Include="TechnologY\ArmorTechnologies.cs" />
@@ -193,6 +197,10 @@
     <Compile Include="GUI\VillageView\VillageTab.xaml.cs">
       <DependentUpon>VillageTab.xaml</DependentUpon>
     </Compile>
+    <Page Include="GUI\TechnologiesView\TechnologiesTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\VillageView\BuildingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -332,7 +340,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\Controls\" />
-    <Folder Include="GUI\TechnologiesView\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

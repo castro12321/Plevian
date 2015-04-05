@@ -26,7 +26,7 @@ namespace Plevian.Maps
         private readonly Map map;
 
         public event EventHandler<TileClickedEventArgs> PlevianTileClickedEvent;
-        public event EventHandler<MouseMovedEventArgs>  PlevianMouseMovedEvent;
+        public event EventHandler<MouseMovedEventArgs> PlevianMouseMovedEvent;
         public event EventHandler<MapDraggedEventArgs> PlevianMapDraggedEvent;
 
         private bool mouseDrag = false;
@@ -49,9 +49,9 @@ namespace Plevian.Maps
         {
             //villageTex = new Texture(@"village");
             //villageTex = new Texture(Properties.Resources.village);
-            village   = new Sprite(villageTex);
-            lake      = new Sprite(lakeTex);
-            plains    = new Sprite(plainsTex);
+            village = new Sprite(villageTex);
+            lake = new Sprite(lakeTex);
+            plains = new Sprite(plainsTex);
             mountains = new Sprite(mountainsTex);
             village.Scale = new Vector2f(0.333f, 0.333f);
             lake.Scale = new Vector2f(0.333f, 0.333f);
@@ -59,12 +59,12 @@ namespace Plevian.Maps
             mountains.Scale = new Vector2f(0.333f, 0.333f);
             this.map = map;
             //Properties.Resources.
-            
+
             renderer = new RenderWindow(Handle); // Only to avoid nulls. Will be recreated in next control resize (which is sent automatically when the window initializes)
 
             camera = new Camera(Size.Width, Size.Height, tileSizeInPixels * map.sizeX, tileSizeInPixels * map.sizeY);
 
-            MouseMove  += MapRenderer_MouseMove;
+            MouseMove += MapRenderer_MouseMove;
             MouseDown += MapRenderer_MouseDown;
             MouseUp += MapRenderer_MouseUp;
             Resize += MapView_Resize;
@@ -85,7 +85,7 @@ namespace Plevian.Maps
         {
             tileWidth = Size.Width / tileSizeInPixels + 2;
             tileHeight = Size.Height / tileSizeInPixels + 2;
-          
+
         }
 
         void MapRenderer_MouseDown(object sender, MouseEventArgs e)
@@ -94,11 +94,11 @@ namespace Plevian.Maps
             int mousePositionY = e.Y;
             Location mouseLocationPixels = new Location(mousePositionX, mousePositionY);
 
-            if(e.Button == MouseButtons.Left )    
+            if (e.Button == MouseButtons.Left)
             {
                 mouseDownStartLocation = mouseLocationPixels;
                 mouseLeftClicked = true;
-            }       
+            }
         }
 
         void MapRenderer_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -146,7 +146,7 @@ namespace Plevian.Maps
             Location mouseLocationPixels = new Location(mousePositionX, mousePositionY);
             Location mouseLocationTile = PixelToTile(mouseLocationPixels);
 
-           
+
             EventHandler<MouseMovedEventArgs> movedHandler = PlevianMouseMovedEvent;
             if (movedHandler != null)
                 movedHandler(this, new MouseMovedEventArgs(mouseLocationTile));
@@ -201,7 +201,7 @@ namespace Plevian.Maps
             int startX = (int)camera.x / tileSizeInPixels;
             int startY = (int)camera.y / tileSizeInPixels;
 
-            for (int i = 0; i < tileHeight ; ++i)
+            for (int i = 0; i < tileHeight; ++i)
                 for (int j = 0; j < tileWidth; ++j)
                 {
                     int x = j + startX;
@@ -213,13 +213,13 @@ namespace Plevian.Maps
                     tileSprite.Position = camera.translate(new Vector2f(x * tileSizeInPixels, y * tileSizeInPixels));
                     renderer.Draw(tileSprite);
                 }
-           renderer.Display();
+            renderer.Display();
         }
 
         private Sprite getShapeFor(Tile tile)
         {
             TerrainType type = tile.type;
-            switch(type)
+            switch (type)
             {
                 case TerrainType.LAKES: return lake;
                 case TerrainType.MOUNTAINS: return mountains;

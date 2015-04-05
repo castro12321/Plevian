@@ -23,6 +23,7 @@ namespace Plevian.Maps
             {
                 if (terType == TerrainType.PLAINS) continue;
                 if (terType == TerrainType.VILLAGE) continue; // They are loaded later when loading villages
+                if (terType == TerrainType.TEHNOLOGY) continue; // They are not generated...
 
                 for(int i = 0;i < 10;++i)
                 {

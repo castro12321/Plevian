@@ -25,7 +25,7 @@ namespace Tests.Units
             const int KNIG_QUANTITY = 500;
             const int WARR_QUANTITY = 500;
 
-            Game game = new Game();
+            Game game = new Game(null);
             Village testVillage = new Village(null, new Player("", Color.Blue), "test");
             testVillage.addResources(new Resources(1000000, 1000000, 1000000, 1000000));
             testVillage.buildings[BuildingType.BARRACKS].level = 2;

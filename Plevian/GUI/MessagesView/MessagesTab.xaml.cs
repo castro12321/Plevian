@@ -14,9 +14,9 @@ namespace Plevian.Messages
     {
         private readonly Player recipient;
         
-        public MessagesTab(Player recipient)
+        public MessagesTab()
         {
-            this.recipient = recipient;
+            this.recipient = Game.Player;
 
             InitializeComponent();
             addColumn("Sender");

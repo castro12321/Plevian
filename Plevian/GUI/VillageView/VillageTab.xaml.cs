@@ -63,12 +63,14 @@ namespace Plevian.Villages
                Village.recruit(UnitFactory.createUnit(type, quantity));
         }
 
-        public VillageTab(Game game)
+        public VillageTab()
         {
             InitializeComponent();
 
-            villageView = new VillageView(game);
+            villageView = new VillageView();
             sfml_village.Child = villageView;
+
+            Village = Game.Player.Capital;
         }
 
         public void handleEvents()

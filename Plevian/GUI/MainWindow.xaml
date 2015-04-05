@@ -17,6 +17,9 @@
             <TabItem Name="mapTabItem" Header="Mapa">
                 <!-- Moved to custom control. Created in constructor -->
             </TabItem>
+            <TabItem Name="technologiesTabItem" Header="Technologie">
+                <!-- Moved to custom control. Created in constructor -->
+            </TabItem>
             <TabItem Name="messagesTabItem" Header="Wiadomości">
                 <!-- Moved to custom control. Created in constructor -->
             </TabItem>

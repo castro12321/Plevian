@@ -29,10 +29,10 @@ namespace Plevian.Maps
         private int currentX = 0, currentY = 0;
         private Tile clickedTile = null;
 
-        public MapTab(Game game)
+        public MapTab()
         {
             InitializeComponent();
-            this.game = game;
+            this.game = Game.game;
         }
         
         public void handleEvents()

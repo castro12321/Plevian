@@ -11,6 +11,7 @@ namespace Plevian.Maps
         VILLAGE = 1,
         PLAINS,
         MOUNTAINS,
-        LAKES
+        LAKES,
+        TEHNOLOGY,
     };
 }

@@ -103,7 +103,7 @@ namespace Plevian.Maps
         private RenderWindow renderer;
         public Village village { get; set; }
 
-        public VillageView(Game game)
+        public VillageView()
         {
             Size = new System.Drawing.Size(400, 400);
             Location = new System.Drawing.Point(100, 100);

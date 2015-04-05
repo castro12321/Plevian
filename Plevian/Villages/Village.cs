@@ -18,8 +18,6 @@ using Plevian.TechnologY;
 
 namespace Plevian.Villages
 {
-    
-
     public class Village : Tile, INotifyPropertyChanged
     {
         public Dictionary<BuildingType, Building> buildings = Building.getEmptyBuildingsList();

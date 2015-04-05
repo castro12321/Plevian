@@ -22,11 +22,11 @@ namespace Plevian
         public static Game game;
         public readonly List<Player> players = new List<Player>();
         //public readonly GameTime gameTime;
-        public readonly Map map;
+        public Map map { get; private set; }
+        public Map technologiesMap { get; private set; }
 
-        public Game()
+        private void newGame()
         {
-            Game.game = this;
             GameTime.init(0);
             GameTime.setSpeed(GameTime.setSpeedToAfterGameStarted);
             this.map = new MapGenerator().Generate(30, 30);
@@ -71,10 +71,16 @@ namespace Plevian
         public Game(SaveReader save)
         {
             Game.game = this;
-            GameTime.init(save.getGameTime());
-            this.players = save.getPlayers();
-            this.mainPlayer = players[0];
-            this.map = save.getMap(players);
+
+            if (save == null)
+                newGame();
+            else
+            {
+                GameTime.init(save.getGameTime());
+                this.players = save.getPlayers();
+                this.mainPlayer = players[0];
+                this.map = save.getMap(players);
+            }
         }
 
         /// <summary>

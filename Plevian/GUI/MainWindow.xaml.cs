@@ -9,6 +9,7 @@ using Plevian.Messages;
 using System.Collections.Generic;
 using Plevian.Players;
 using Plevian.Save;
+using Plevian.GUI.TechnologiesView;
 
 namespace Plevian
 {
@@ -22,7 +23,7 @@ namespace Plevian
 
         public MapTab mapTab;
         public VillageTab villageTab;
-        //public TechnologiesTab technologiesTab;
+        public TechnologiesTab technologiesTab;
         public MessagesTab messagesTab;
         public SettingsTab settingsTab;
 
@@ -31,34 +32,23 @@ namespace Plevian
         public MainWindow(SaveReader save)
         {
             instance = this;
-            // Initialize GUI
             InitializeComponent();
 
             // Initialize game
-            Game game;
-            if (save != null)
-                game = new Game(save);
-            else
-                game = new Game();
-
-            // Initialize map tab
-            mapTabItem.Content = (mapTab = new MapTab(game));
-
-            // Initialize village tab
-            villageTabItem.Content = (villageTab = new VillageTab(game));
-            villageTab.Village = Game.Player.Capital;
-           
-            // Initialize messages tab
-            messagesTabItem.Content = (messagesTab = new MessagesTab(Game.Player));
-
-            // Initialize settings tab
+            Game game = new Game(save);
+            
+            // Initialize tabs
+            villageTabItem.Content = (villageTab = new VillageTab());
+            mapTabItem.Content = (mapTab = new MapTab());
+            technologiesTabItem.Content = (technologiesTab = new TechnologiesTab());
+            messagesTabItem.Content = (messagesTab = new MessagesTab());
             settingsTabItem.Content = (settingsTab = new SettingsTab());
 
             // Listen to some events
             Closed += (x, y) => running = false;
             //PreviewKeyDown += (x, y) => Logger.c("Pressed " + y.Key);
 
-            //get keyboard focus :F
+            // Get keyboard focus :F
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(MainWindow.getInstance());
 
             statusText.DataContext = villageTab.Village;
@@ -74,6 +64,7 @@ namespace Plevian
                 // Process events
                 mapTab.handleEvents();
                 villageTab.handleEvents();
+                technologiesTab.render();
 
                 // Do the logic
                 Game.game.tick();
@@ -81,6 +72,7 @@ namespace Plevian
                 // Render
                 mapTab.render();
                 villageTab.render();
+                technologiesTab.render();
             }
         }
 
