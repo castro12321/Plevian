@@ -21,8 +21,6 @@ namespace Plevian.Maps
     // - Po kliknieciu otwierac okienko powiazane z danym tilem
     public class MapView : System.Windows.Forms.UserControl
     {
-        //var cache = CacheFactory.CreateMultiResourceCache<string>();
-
         private const int tileSizeInPixels = 32;
         private const float MouseDragStart = 2f;
 
@@ -42,28 +40,26 @@ namespace Plevian.Maps
         public Camera camera { get; private set; }
 
         private Texture
+            technologyTex = Utils.ToSFMLTexture(Properties.Resources.technology),
             mountainsTex = Utils.ToSFMLTexture(Properties.Resources.mountains),
             villageTex = Utils.ToSFMLTexture(Properties.Resources.village),
             plainsTex = Utils.ToSFMLTexture(Properties.Resources.plains),
             lakeTex = Utils.ToSFMLTexture(Properties.Resources.lake);
         private Sprite
             //village = new Sprite(villageTex);
-            village, lake, plains, mountains;
+            village, lake, plains, mountains, technology;
         public MapView(Map map, System.Windows.Forms.Integration.WindowsFormsHost host)
         {
             //villageTex = new Texture(@"village");
             //villageTex = new Texture(Properties.Resources.village);
-            village = new Sprite(villageTex);
-            lake = new Sprite(lakeTex);
-            plains = new Sprite(plainsTex);
-            mountains = new Sprite(mountainsTex);
-            village.Scale = new Vector2f(0.333f, 0.333f);
-            lake.Scale = new Vector2f(0.333f, 0.333f);
-            plains.Scale = new Vector2f(0.333f, 0.333f);
-            mountains.Scale = new Vector2f(0.333f, 0.333f);
+            village = setupSprite(villageTex);
+            village = setupSprite(villageTex);
+            lake = setupSprite(lakeTex);
+            plains = setupSprite(plainsTex);
+            mountains = setupSprite(mountainsTex);
+            technology = setupSprite(technologyTex);
             this.map = map;
-            //Properties.Resources.
-
+            
             renderer = new RenderWindow(Handle); // Only to avoid nulls. Will be recreated in next control resize (which is sent automatically when the window initializes)
 
             camera = new Camera(Size.Width, Size.Height, tileSizeInPixels * map.sizeX, tileSizeInPixels * map.sizeY);
@@ -73,6 +69,15 @@ namespace Plevian.Maps
             MouseUp += MapRenderer_MouseUp;
             Resize += MapView_Resize;
             setTileBounds();
+        }
+
+        private Sprite setupSprite(Texture texture)
+        {
+            Sprite sprite = new Sprite(texture);
+            sprite.Origin = new Vector2f(texture.Size.X / 2, texture.Size.Y / 2); // Just center the origin
+            sprite.Scale = new Vector2f(1.0f/3.0f, 1.0f/3.0f); // We are using 96x96px textures but 32x32 sprites, so we need to rescale it. No idea why it's hardcoded here, but maybe someone change it in the future
+            sprite.Rotation = 90; // For some reason, SFML loads sprites rotated -90* lol
+            return sprite;
         }
 
 
@@ -214,7 +219,7 @@ namespace Plevian.Maps
                     if (y < 0 || y >= map.sizeY) continue;
                     Tile tile = map.tileAt(new Location(x, y));
                     Sprite tileSprite = getShapeFor(tile);
-                    tileSprite.Position = camera.translate(new Vector2f(x * tileSizeInPixels, y * tileSizeInPixels));
+                    tileSprite.Position = camera.translate(new Vector2f(x * tileSizeInPixels + (tileWidth / 2), y * tileSizeInPixels + (tileHeight / 2)));
                     renderer.Draw(tileSprite);
                 }
             renderer.Display();
@@ -239,8 +244,8 @@ namespace Plevian.Maps
                     }
                 case TerrainType.TEHNOLOGY:
                     {
+                        return technology;
                         //return ((TechnologyTile)tile).technology.icon;
-                        break;
                     }
             }
             return null;
