@@ -64,7 +64,7 @@ namespace Plevian
                 // Process events
                 mapTab.handleEvents();
                 villageTab.handleEvents();
-                technologiesTab.render();
+                technologiesTab.handleEvents();
 
                 // Do the logic
                 Game.game.tick();

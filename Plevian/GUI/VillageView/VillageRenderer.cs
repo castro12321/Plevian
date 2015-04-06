@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
 using Plevian.Buildings;
 using System.IO;
+using SFML.System;
 
 namespace Plevian.Maps
 {
@@ -90,7 +91,7 @@ namespace Plevian.Maps
                 positionPath = bt.defaultTexturePath() + ".txt";
             String positionText = File.ReadAllText(positionPath);
             String[] positionSplit = positionText.Split(' ');
-            sprite.Position = new SFML.Window.Vector2f(float.Parse(positionSplit[0]), float.Parse(positionSplit[1]));
+            sprite.Position = new Vector2f(float.Parse(positionSplit[0]), float.Parse(positionSplit[1]));
             return sprite;
         }
     }

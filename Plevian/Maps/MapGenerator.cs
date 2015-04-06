@@ -8,6 +8,8 @@ namespace Plevian.Maps
 {
     public class MapGenerator
     {
+        private static Random rand = new Random();
+
         public MapGenerator()
         {
             init(); // it can be deleted in future.
@@ -18,7 +20,6 @@ namespace Plevian.Maps
         public Map Generate(int x, int y)
         {
             Map map = new Map(x, y);
-            Random rand = new Random();
             foreach (TerrainType terType in (TerrainType[])Enum.GetValues(typeof(TerrainType)))
             {
                 if (terType == TerrainType.PLAINS) continue;

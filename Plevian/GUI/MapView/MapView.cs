@@ -11,6 +11,8 @@ using Plevian.Debugging;
 using Plevian.Util;
 using SFML.Window;
 using Plevian.Villages;
+using Plevian.TechnologY;
+using SFML.System;
 
 namespace Plevian.Maps
 {
@@ -19,6 +21,8 @@ namespace Plevian.Maps
     // - Po kliknieciu otwierac okienko powiazane z danym tilem
     public class MapView : System.Windows.Forms.UserControl
     {
+        //var cache = CacheFactory.CreateMultiResourceCache<string>();
+
         private const int tileSizeInPixels = 32;
         private const float MouseDragStart = 2f;
 
@@ -232,6 +236,11 @@ namespace Plevian.Maps
                             this.village.Color = village.Owner.color;
                         }
                         return this.village;
+                    }
+                case TerrainType.TEHNOLOGY:
+                    {
+                        //return ((TechnologyTile)tile).technology.icon;
+                        break;
                     }
             }
             return null;
