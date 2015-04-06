@@ -80,6 +80,7 @@
     <Compile Include="GUI\MapView\MapView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="GUI\TechnologiesView\TechnologiesMapLoader.cs" />
     <Compile Include="GUI\TechnologiesView\TechnologiesTab.xaml.cs">
       <DependentUpon>TechnologiesTab.xaml</DependentUpon>
     </Compile>

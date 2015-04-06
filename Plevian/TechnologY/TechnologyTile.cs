@@ -10,9 +10,10 @@ namespace Plevian.TechnologY
     public class TechnologyTile : Tile
     {
         public readonly Technology technology;
+        public bool hovered = false;
 
         public TechnologyTile(Location location, Technology technology)
-            : base(location, TerrainType.VILLAGE)
+            : base(location, TerrainType.TEHNOLOGY)
         {
             this.technology = technology;
         }

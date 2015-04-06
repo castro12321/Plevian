@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Plevian.TechnologY;
 
 namespace Plevian.GUI.TechnologiesView
 {
@@ -32,13 +33,18 @@ namespace Plevian.GUI.TechnologiesView
         {
             InitializeComponent();
             this.game = Game.game;
+
+            tooltipWindow = new Window();
+            tooltipWindow.WindowStyle = WindowStyle.None;
+            tooltipWindow.Hide();
+            tooltipWindow.MouseEnter += (x, y) => tooltipWindow.Hide();
         }
         
         public void handleEvents()
         {
             if(mapView == null)
             {
-                mapView = new MapView(game.technologiesMap, sfml_map);
+                mapView = new MapView(new TechnologiesMapLoader().map, sfml_map);
                 sfml_map.Child = mapView;
 
                 mapView.PlevianMouseMovedEvent += mapView_PlevianMouseMovedEvent;
@@ -62,13 +68,57 @@ namespace Plevian.GUI.TechnologiesView
             
             if(tile.type == TerrainType.TEHNOLOGY)
             {
-                //fire event Technology upgrade: tile.technology;
+                TechnologyTile techTile = tile as TechnologyTile;
+                if(techTile == null)
+                    throw new ArgumentException("Tile is not technology tile");
+
+                Village village = MainWindow.getInstance().villageTab.Village;
+
+                if (village.canResearch(techTile.technology))
+                    village.research(techTile.technology);
             }
         }
 
+        private class Wpf32Window : System.Windows.Forms.IWin32Window
+        {
+            public IntPtr Handle { get; private set; }
+
+            public Wpf32Window(Window wpfWindow)
+            {
+                Handle = new System.Windows.Interop.WindowInteropHelper(wpfWindow).Handle;
+            }
+        }
+
+        private Window tooltipWindow;
+        private TechnologyTile hoveredTechnologyTile;
         void mapView_PlevianMouseMovedEvent(object sender, MouseMovedEventArgs e)
         {
             Plevian.Debugging.Logger.c("event move to " + e.mouseLocation.x + " " + e.mouseLocation.y);
+            
+            Tile tile = e.hoveredTile;
+            TechnologyTile tech = tile as TechnologyTile;
+            if (tech == null)
+            {
+                if (hoveredTechnologyTile != null)
+                    hoveredTechnologyTile.hovered = false;
+                hoveredTechnologyTile = null;
+                tooltipWindow.Hide();
+            }
+            else
+            {
+                tech.hovered = true;
+                hoveredTechnologyTile = tech;
+
+                TextBox winContent = new TextBox();
+                winContent.Text = tech.technology.Name;
+                tooltipWindow.Content = winContent;
+                tooltipWindow.Show();
+                tooltipWindow.SizeToContent = SizeToContent.WidthAndHeight;
+                System.Drawing.Point mousePos = System.Windows.Forms.Cursor.Position;
+                tooltipWindow.Left = mousePos.X - tooltipWindow.Width - 15;
+                tooltipWindow.Top = mousePos.Y - tooltipWindow.Height - 15;
+            }
+            
             //coords.Content = "X:" + e.mouseLocation.x + " Y:" + e.mouseLocation.y;
             // TODO: Modify tile, add animation for tile or sth to highlight selected tile
         }

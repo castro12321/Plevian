@@ -158,7 +158,7 @@ namespace Plevian.Maps
 
             EventHandler<MouseMovedEventArgs> movedHandler = PlevianMouseMovedEvent;
             if (movedHandler != null)
-                movedHandler(this, new MouseMovedEventArgs(mouseLocationTile));
+                movedHandler(this, new MouseMovedEventArgs(mouseLocationTile, map.tileAt(mouseLocationTile)));
 
             if (MouseButtons != MouseButtons.Left)
             {
@@ -235,17 +235,32 @@ namespace Plevian.Maps
                 case TerrainType.PLAINS: return plains;
                 case TerrainType.VILLAGE:
                     {
-                        if (tile is Village)
-                        {
-                            Village village = tile as Village;
-                            this.village.Color = village.Owner.color;
-                        }
+                        if (!(tile is Village))
+                            throw new ArgumentException("Tile has wrong type");
+
+                        Village village = tile as Village;
+                        this.village.Color = village.Owner.color;
                         return this.village;
                     }
                 case TerrainType.TEHNOLOGY:
                     {
+                        if (!(tile is TechnologyTile))
+                            throw new ArgumentException("Tile has wrong type");
+
+                        TechnologyTile techTile = tile as TechnologyTile;
+                        Village village = MainWindow.getInstance().villageTab.Village;
+                        if (village.Owner.technologies.isDiscovered(techTile.technology))
+                            technology.Color = SFML.Graphics.Color.Green;
+                        else if (village.canResearch(techTile.technology))
+                        {
+                            if (techTile.hovered)
+                                technology.Color = new SFML.Graphics.Color(192, 192, 192);
+                            else
+                                technology.Color = SFML.Graphics.Color.White;
+                        }
+                        else
+                            technology.Color = SFML.Graphics.Color.Red;
                         return technology;
-                        //return ((TechnologyTile)tile).technology.icon;
                     }
             }
             return null;

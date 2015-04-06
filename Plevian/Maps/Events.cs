@@ -21,10 +21,12 @@ namespace Plevian.Maps
     public class MouseMovedEventArgs
     {
         public Location mouseLocation { get; private set; }
+        public Tile hoveredTile { get; private set; }
 
-        public MouseMovedEventArgs(Location mouseLocation)
+        public MouseMovedEventArgs(Location mouseLocation, Tile hovered)
         {
             this.mouseLocation = mouseLocation;
+            this.hoveredTile = hovered;
         }
     }
 
