@@ -23,12 +23,12 @@ namespace Plevian.Units
             return new Duke(quantity);
         }
 
-        public override int baseAttackStrength { get { return 100; } }
+        public override int baseAttackStrength { get { return 75; } }
         public override double chanceOfInjury { get { return 0.6; } }
         
-        public override int baseDefenseInfantry { get { return 150; } }
-        public override int baseDefenseCavalry { get { return 50; } }
-        public override int baseDefenseArchers { get { return 100; } }
+        public override int baseDefenseInfantry { get { return 200; } }
+        public override int baseDefenseCavalry { get { return 200; } }
+        public override int baseDefenseArchers { get { return 200; } }
 
         public override int baseMovementSpeed { get { return 3; } }
         public override int baseLootCapacity { get { return 0; } }

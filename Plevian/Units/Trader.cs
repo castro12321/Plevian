@@ -22,12 +22,12 @@ namespace Plevian.Units
             return new Trader(quantity);
         }
 
-        public override int baseAttackStrength { get { return 5; } }
+        public override int baseAttackStrength { get { return 50; } }
         public override double chanceOfInjury { get { return 0.6; } }
 
-        public override int baseDefenseInfantry { get { return 1; } }
-        public override int baseDefenseCavalry { get { return 1; } }
-        public override int baseDefenseArchers { get { return 1; } }
+        public override int baseDefenseInfantry { get { return 50; } }
+        public override int baseDefenseCavalry { get { return 50; } }
+        public override int baseDefenseArchers { get { return 50; } }
 
         public override int baseMovementSpeed { get { return 3; } }
         public override int baseLootCapacity { get { return 500; } }

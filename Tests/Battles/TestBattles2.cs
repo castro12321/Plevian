@@ -15,6 +15,8 @@ namespace Tests.Battles
         [TestMethod]
         public void TestMethod1()
         {
+            Assert.Inconclusive();
+            /*
             Army attacker = new Army();
             Army defender = new Army();
 
@@ -57,7 +59,7 @@ namespace Tests.Battles
             Debug.WriteLine("Battle result: " + report.battleResult.ToString());
             Debug.WriteLine("Attacker luck: " + report.attackerLuck.ToString());
             Debug.WriteLine("***************************************");
-
+            */
             /*Assert.IsTrue(report.battleResult == BattleState.AttackerVictory);
             Assert.IsTrue(report.attackerLuck == 0);*/
         }

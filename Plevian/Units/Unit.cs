@@ -39,6 +39,7 @@ namespace Plevian.Units
         public abstract int baseDefenseInfantry { get; }
         public abstract int baseDefenseCavalry { get; }
         public abstract int baseDefenseArchers { get; }
+        //public abstract int getDefenseAgains(UnitType unitType);
 
         public abstract int baseMovementSpeed { get;  }
         public abstract int baseLootCapacity { get; }

@@ -7,8 +7,20 @@ using Plevian.Players;
 
 namespace Plevian.Debugging
 {
+    public enum LogType
+    {
+        Trace,
+        UnitTest,
+        AI,
+        Village,
+        GUI,
+        Render,
+        Stats
+    }
+
     public class Logger
     {
+
         private static bool ai = false;
         private static bool cas = false;
         private static bool shot = false;
@@ -22,6 +34,14 @@ namespace Plevian.Debugging
         public static void village(String msg) { if (logVillage) Console.WriteLine(msg); }
         public static void graphics(String msg) { if (logGraphics) Console.WriteLine(msg); }
         public static void stats(String msg) { if (logStats) Console.WriteLine(msg); }
+
+        public static void Trace(String message, LogType type = LogType.Trace,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+        {
+            log("[" + type + "] " + message + " (" + sourceFilePath + ":" + sourceLineNumber);
+        }
 
         /// <summary>
         /// Always output as debug message

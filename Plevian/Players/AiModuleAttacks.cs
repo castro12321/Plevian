@@ -94,7 +94,7 @@ namespace Plevian.Players
             if (randomized < ai.relations.get(toAttack)) // The better your relations
                 return; // The less chance being attacked
 
-            var villageArmy = village.army.getUnits();
+            var villageArmy = village.army.getUnitsByType();
             Army attacking = new Army();
 
             foreach (var unit in villageArmy)

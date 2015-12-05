@@ -23,12 +23,12 @@ namespace Plevian.Units
             return new Warrior(quantity);
         }
 
-        public override int baseAttackStrength { get { return 10; } }
+        public override int baseAttackStrength { get { return 100; } }
         public override double chanceOfInjury { get { return 0.6; } }
 
-        public override int baseDefenseInfantry { get { return 25; } }
-        public override int baseDefenseCavalry { get { return 4; } }
-        public override int baseDefenseArchers { get { return 5; } }
+        public override int baseDefenseInfantry { get { return 100; } }
+        public override int baseDefenseCavalry { get { return 200; } }
+        public override int baseDefenseArchers { get { return 50; } }
 
         public override int baseMovementSpeed { get { return 1; } }
         public override int baseLootCapacity { get { return 50; } }

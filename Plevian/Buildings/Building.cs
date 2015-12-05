@@ -110,8 +110,5 @@ namespace Plevian.Buildings
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        
-
     }
 }

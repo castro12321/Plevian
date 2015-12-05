@@ -80,7 +80,7 @@ namespace Plevian.Orders
                     }
 
                     Report afterReport = makeBattle();
-                    if (afterReport.battleResult == BattleState.AttackerVictory)
+                    if (afterReport.result == Report.BattleResult.AttackerVictory)
                         onFightWin(afterReport);
                     else
                         onFightLose(afterReport);
@@ -100,8 +100,7 @@ namespace Plevian.Orders
             float luck = 0.5f + (float)rand.NextDouble();
             int defendingBaseDefense = defending.getBaseDefense();
             float defendingDefense = defending.getDefense();
-            Battle battle = new Battle(army, defenders, luck, defendingDefense, defendingBaseDefense);
-            return battle.makeBattle();
+            return BattleResolver.Fight(army, defenders);
         }
 
         protected void onFightWin(Report report)

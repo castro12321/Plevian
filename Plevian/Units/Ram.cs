@@ -22,13 +22,13 @@ namespace Plevian.Units
             return new Ram(quantity);
         }
 
-        public override int baseAttackStrength { get { return 1; } }
+        public override int baseAttackStrength { get { return 0; } }
         public override double chanceOfInjury { get { return 0.6; } }
         
 
-        public override int baseDefenseInfantry { get { return 2; } }
-        public override int baseDefenseCavalry { get { return 2; } }
-        public override int baseDefenseArchers { get { return 5; } }
+        public override int baseDefenseInfantry { get { return 250; } }
+        public override int baseDefenseCavalry { get { return 250; } }
+        public override int baseDefenseArchers { get { return 250; } }
 
         public override int baseMovementSpeed { get { return 1; } }
         public override int baseLootCapacity { get { return 0; } }

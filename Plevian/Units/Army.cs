@@ -10,7 +10,7 @@ using Plevian.Resource;
 
 namespace Plevian.Units
 {
-    public class Army : IEnumerator, IEnumerable
+    public class Army : IEnumerable<Unit>
     {
         private Dictionary<UnitType, Unit> units = new Dictionary<UnitType, Unit>();
         
@@ -59,9 +59,14 @@ namespace Plevian.Units
             return this;
         }
 
-        public Dictionary<UnitType, Unit> getUnits()
+        public Dictionary<UnitType, Unit> getUnitsByType()
         {
             return units;
+        }
+
+        public IEnumerable<Unit> getAllUnits()
+        {
+            return units.Values;
         }
 
         public int getAttackStrength()
@@ -207,28 +212,19 @@ namespace Plevian.Units
             get { return get(type); }
         }
 
-        public object Current
-        {
-            get
-            {
-                return units.Values.ElementAt(position);
-            }
-        }
-
-        public bool MoveNext()
-        {
-            position++;
-            return (position < Count);
-        }
-
         public void Reset()
         {
             position = 0;
         }
 
-        public IEnumerator GetEnumerator()
+        public IEnumerator<Unit> GetEnumerator()
         {
-            return (IEnumerator)this;
+            return units.Values.GetEnumerator();
+        }
+
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return units.GetEnumerator();
         }
 
         public string ToStringMinimal()
@@ -243,6 +239,11 @@ namespace Plevian.Units
                 //army += unit.name + "=" + unit.quantity + "\n";
                 army += unit.ToString() + "\n";
             return army;
+        }
+
+        public Army clone()
+        {
+            return new Army().add(this);
         }
     }
 }

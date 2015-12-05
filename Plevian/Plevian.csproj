@@ -76,6 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Battles\BattleResolver.cs" />
     <Compile Include="Buildings\Workshop.cs" />
     <Compile Include="GUI\MapView\MapView.cs">
       <SubType>UserControl</SubType>
@@ -163,6 +164,7 @@
       <DependentUpon>ResourceControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="TechnologY\TechnologyTile.cs" />
+    <Compile Include="Units\SimpleArmy.cs" />
     <Compile Include="Util\SaveReader.cs" />
     <Compile Include="Util\SaveWriter.cs" />
     <Compile Include="TechnologY\ArmorTechnologies.cs" />
@@ -253,8 +255,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Battles\Battle.cs" />
-    <Compile Include="Battles\BattleState.cs" />
     <Compile Include="Battles\Report.cs" />
     <Compile Include="Buildings\Barracks.cs" />
     <Compile Include="Buildings\Building.cs" />

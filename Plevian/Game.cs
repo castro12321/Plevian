@@ -54,13 +54,13 @@ namespace Plevian
             //mainPlayer = enemy;
 
             /**
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < 30; ++i)
                 foreach (Player p in players)
                     foreach (Village v in p.villages)
                         foreach (var pair in v.buildings)
                         {
                             Building building = pair.Value;
-                            if (building.getMaxLevel() >= i)
+                            if (building.getMaxLevel() > i)
                                 building.upgrade();
                         }
              /**/

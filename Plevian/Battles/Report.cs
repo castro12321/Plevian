@@ -10,64 +10,51 @@ namespace Plevian.Battles
 {
     public class Report
     {
-        public readonly Dictionary<UnitType, int> attackerArmy, defenderArmy,
-                                  attackerLosses, defenderLosses;
-        public readonly float attackerLuck;
-        public readonly float defenderPercentageDefense;
-        public readonly BattleState battleResult;
-        public Resources loot;
-        public bool villageCaptured = false;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="atA">Attacking army</param>
-        /// <param name="defA">Defending army</param>
-        /// <param name="atL">Attacker's losses</param>
-        /// <param name="defL">Defender's losses</param>
-        /// <param name="luck">luck</param>
-        /// <param name="defense">defense</param>
-        /// <param name="result">result</param>
-        public Report(Dictionary<UnitType, int> atA, Dictionary<UnitType, int> defA, Dictionary<UnitType, int> atL, Dictionary<UnitType, int> defL, float defencePercentage, BattleState result)
+        public enum BattleResult
         {
-            attackerArmy = atA;
-            defenderArmy = defA;
-            attackerLosses = atL;
-            defenderLosses = defL;
-
-            defenderPercentageDefense = defencePercentage;
-            battleResult = result;
+            AttackerVictory,
+            DefenderVictory,
+            Draw,
+            Error,
         }
 
+        public SimpleArmy attackerBefore, attackerLosses, attackerAfter, defenderBefore, defenderLosses, defenderAfter;
+        public BattleResult result;
+        public Resources loot;
+        public bool villageCaptured = false;
+        
         public override string ToString()
         {
-            string _return = "Luck " + (int)(attackerLuck * 100) + "%\n";
+            String _return = "";
+
+            Dictionary<UnitType, List<Unit>> 
+                attackerBeforeByType = attackerBefore.GetUnitsByType(), 
+                attackerLossesByType = attackerLosses.GetUnitsByType(),
+                defenderBeforeByType = defenderBefore.GetUnitsByType(), 
+                defenderLossesByType = defenderLosses.GetUnitsByType();
+
+            //string _return = "Luck " + (int)(attackerLuck * 100) + "%\n";
             _return += "\nAttacker\n";
-            foreach(var pair in attackerArmy)
+            foreach(var pair in attackerBeforeByType)
             {
-                UnitType type = pair.Key;
-                string unitName = Enum.GetName(typeof(UnitType), type);
+                int before = pair.Value.Count;
                 int losses = 0;
-                if(attackerLosses.ContainsKey(type))
-                    losses = attackerLosses[type];
-                int startQuantity = pair.Value;
-                int endQuantity = pair.Value - losses;
-                _return += type + " >> " + startQuantity + " - " + losses + " = " + endQuantity + "\n";
+                if (attackerLossesByType.ContainsKey(pair.Key))
+                    losses = attackerLossesByType[pair.Key].Count;
+                _return += pair.Key + " >> " + before + " - " + losses + " = " + (before - losses) + "\n";
             }
 
             _return += "\nDefender\n";
-            foreach (var pair in defenderArmy)
+            foreach (var pair in defenderBeforeByType)
             {
-                UnitType type = pair.Key;
-                string unitName = Enum.GetName(typeof(UnitType), type);
+                int before = pair.Value.Count;
                 int losses = 0;
-                if (defenderLosses.ContainsKey(type))
-                    losses = defenderLosses[type];
-                int startQuantity = pair.Value;
-                int endQuantity = pair.Value - losses;
-                _return += type + " >> " + startQuantity + " - " + losses + " = " + endQuantity + "\n";
+                if (defenderLossesByType.ContainsKey(pair.Key))
+                    losses = defenderLossesByType[pair.Key].Count;
+                _return += pair.Key + " >> " + before + " - " + losses + " = " + (before - losses) + "\n";
             }
 
-            if( !Object.ReferenceEquals(loot,null) && villageCaptured == false)
+            if(loot != null && villageCaptured == false)
             {
                 _return += "\nLoot : \n";
                 _return += loot.ToString();
@@ -77,14 +64,8 @@ namespace Plevian.Battles
             {
                 _return += "\nVillage has been captured\n";
             }
-
+            
             return _return;
         }
-
-
-
-
-
-        
     }
 }

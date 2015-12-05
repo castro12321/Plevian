@@ -30,8 +30,9 @@ namespace Tests.Units
             ulong diff = GameTime.update(); // Update game time
             
             // assert
-            Assert.IsTrue(diff == 1);
-            Assert.IsTrue(GameTime.now == new GameTime(1));
+            ulong expectedDiff = 1;
+            Assert.AreEqual(expectedDiff, diff);
+            Assert.AreEqual(new GameTime(1), GameTime.now);
         }
 
         [TestMethod]

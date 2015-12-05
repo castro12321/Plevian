@@ -102,7 +102,7 @@ namespace Plevian.GUI
         private void updateUnits(Village village)
         {
             Army army = village.army;
-            foreach (var pair in army.getUnits())
+            foreach (var pair in army.getUnitsByType())
             {
                 for(int i = 0;i < UnitPanel.Children.Count;++i)
                 {

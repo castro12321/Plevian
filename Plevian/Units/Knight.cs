@@ -22,12 +22,12 @@ namespace Plevian.Units
             return new Knight(quantity);
         }
         
-        public override int baseAttackStrength { get { return 40; } }
+        public override int baseAttackStrength { get { return 100; } }
         public override double chanceOfInjury { get { return 0.3 ; } }
 
         public override int baseDefenseInfantry { get { return 50; } }
-        public override int baseDefenseCavalry { get { return 5; } }
-        public override int baseDefenseArchers { get { return 10; } }
+        public override int baseDefenseCavalry { get { return 100; } }
+        public override int baseDefenseArchers { get { return 200; } }
 
         public override int baseMovementSpeed { get { return 2; } }
         public override int baseLootCapacity { get { return 50; } }
