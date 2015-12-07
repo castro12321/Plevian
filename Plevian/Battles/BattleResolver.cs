@@ -82,7 +82,6 @@ namespace Plevian.Battles
             //Logger.Trace(" - " + attackingUnit.unitType + " vs " + defendingUnit.unitType);
 
             // Super secret formula for fighting below.
-            //const double attackModifier = 1.0d;
             const double attackBonus = 1.0d; // Or penalty if below 1.0d
             const double defenseBonus = 1.0d; // Or penalty if below 1.0d
 

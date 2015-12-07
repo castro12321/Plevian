@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SWF = System.Windows.Forms;
+using Plevian.Debugging;
 
 namespace Plevian.GUI
 {
@@ -61,6 +62,22 @@ namespace Plevian.GUI
             String loadPath = SelectDirectory("Select load folder", "");
             Entry.save = new SaveReader(loadPath);
             MainWindow.getInstance().Close();
+        }
+
+        private void TimeFaster(object sender, RoutedEventArgs e)
+        {
+            if (GameTime.speed > 256)
+                return;
+            GameTime.setSpeed(GameTime.speed * 2);
+            Logger.Trace("SPEED: " + GameTime.speed);
+        }
+
+        private void TimeSlower(object sender, RoutedEventArgs e)
+        {
+            if (GameTime.speed == 1)
+                return;
+            GameTime.setSpeed(GameTime.speed / 2);
+            Logger.Trace("SPEED: " + GameTime.speed);
         }
     }
 }

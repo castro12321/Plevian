@@ -32,7 +32,7 @@ namespace Plevian
             this.map = new MapGenerator().Generate(30, 30);
             this.technologiesMap = new MapGenerator().Generate(30, 30);
             
-            mainPlayer = createPlayer("Player", new Color(255, 106, 0));
+            mainPlayer = createPlayer("Player", SFML.Graphics.Color.Green);
             mainPlayer.SendMessage(new Message("System", "Welcome", "Welcome to the game!", DateTime.Parse("2014-08-13")));
             mainPlayer.SendMessage(new Message("God", "Meaning of the life", "Win the game", DateTime.Parse("2014-08-14 13:52")));
             mainPlayer.SendMessage(new Message("Enemy", "Message to you", "I'll kill you", DateTime.Now));
@@ -43,7 +43,11 @@ namespace Plevian
             //playerCapital.addUnit(new Warrior(10));
 
             Player enemy = createPlayer("Enemy", SFML.Graphics.Color.Red, true);
-            Village enemyCapital = createVillage(enemy, "EnemyLand");
+            Village enemyCapital = createVillage(enemy, "EnemyCapital");
+            Village enemyLand = createVillage(enemy, "EnemyLand");
+
+            Player partyzanci = createPlayer("Partyzanci", new Color(255, 106, 0), true);
+            Village partyzanciCapital = createVillage(partyzanci, "PartyLand");
             //enemyCapital.addUnit(new Warrior(10));
 
             /**
