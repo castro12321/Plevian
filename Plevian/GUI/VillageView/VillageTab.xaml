@@ -153,8 +153,10 @@
             </ScrollViewer>
                 
             <!-- Village image -->
-            <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_village" Margin="9,9,9,9" MinWidth="50" MinHeight="50"/>
-            
+            <Border BorderThickness="10" CornerRadius="15" >
+                <WindowsFormsHost DockPanel.Dock="Left" Name="sfml_village" Margin="9,9,9,9" MinWidth="500" MinHeight="50"/>
+            </Border>
+
         </DockPanel>
     </Grid>
 </UserControl>

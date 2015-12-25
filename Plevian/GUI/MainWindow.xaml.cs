@@ -21,6 +21,8 @@ namespace Plevian
         private bool running = true;
         private static Random random = new Random();
 
+        private OverlayWindow overlay;
+
         public MapTab mapTab;
         public VillageTab villageTab;
         public TechnologiesTab technologiesTab;
@@ -33,16 +35,17 @@ namespace Plevian
         {
             instance = this;
             InitializeComponent();
+            Show();
+            overlay = new OverlayWindow(this);
 
             // Initialize game
             Game game = new Game(save);
-            
             // Initialize tabs
-            villageTabItem.Content = (villageTab = new VillageTab());
-            mapTabItem.Content = (mapTab = new MapTab());
-            technologiesTabItem.Content = (technologiesTab = new TechnologiesTab());
-            messagesTabItem.Content = (messagesTab = new MessagesTab());
-            settingsTabItem.Content = (settingsTab = new SettingsTab());
+            villageTab = new VillageTab();
+            mapTab = new MapTab();
+            technologiesTab = new TechnologiesTab();
+            messagesTab = new MessagesTab();
+            settingsTab = new SettingsTab();
 
             // Listen to some events
             Closed += (x, y) => running = false;
@@ -51,7 +54,7 @@ namespace Plevian
             // Get keyboard focus :F
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(MainWindow.getInstance());
 
-            statusText.DataContext = villageTab.Village;
+            //StatusText.DataContext = villageTab.Village;
         }
 
         public void run()
@@ -89,22 +92,21 @@ namespace Plevian
 
         public static void changeTab(TabType type)
         {
-            TabControl tabs = getInstance().MainWindowTabs;
             switch(type)
             {
                 case TabType.Map:
                     {
-                        tabs.SelectedItem = getInstance().mapTabItem;
+                        getInstance().overlay.Content = getInstance().mapTab;
                         break;
                     }
                 case TabType.Village:
                     {
-                        tabs.SelectedItem = getInstance().villageTabItem;
+                        getInstance().overlay.Content = getInstance().villageTab;
                         break;
                     }
                 case TabType.Message:
                     {
-                        tabs.SelectedItem = getInstance().messagesTabItem;
+                        getInstance().overlay.Content = getInstance().messagesTab;
                         break;
                     }
             }
