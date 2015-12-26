@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,9 +10,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Plevian.Debugging;
 
 namespace Plevian.GUI
 {
@@ -18,11 +22,18 @@ namespace Plevian.GUI
     {
         public OverlayWindow(Window parentWindow)
         {
+            if (parentWindow == null)
+            {
+                Logger.Error("parentWindow is null");
+                return;
+            }
+            
             InitializeComponent();
             Owner = parentWindow;
 
-            WindowStyle = System.Windows.WindowStyle.None;
-            ResizeMode = System.Windows.ResizeMode.NoResize;
+            Closed += (x, y) => Owner.Close();
+
+            WindowStartupLocation = WindowStartupLocation.Manual;
             parentWindow.SizeChanged += parent_SizeChanged;
             parentWindow.LocationChanged += parent_LocationChanged;
             UpdateLocationAndSizeToParent();
@@ -30,14 +41,12 @@ namespace Plevian.GUI
             Show();
         }
 
-        private static int WindowBorderWidth = 8;
-        private static int WindowTitleBarWidth = 30;
         private void UpdateLocationAndSizeToParent()
         {
-            Top = Owner.Top + WindowTitleBarWidth;
-            Left = Owner.Left + WindowBorderWidth;
-            Width = Owner.Width - (WindowBorderWidth * 2);
-            Height = Owner.Height - WindowTitleBarWidth - WindowBorderWidth; // 5px bottom bar, 32px top menu
+            Top = Owner.Top;
+            Left = Owner.Left;
+            Width = Owner.ActualWidth;
+            Height = Owner.ActualHeight;
         }
 
         private void parent_LocationChanged(object sender, EventArgs e)
@@ -48,6 +57,11 @@ namespace Plevian.GUI
         private void parent_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateLocationAndSizeToParent();
+        }
+
+        private void OverlayWindow_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Logger.Trace("OVERLAY CLICK");
         }
     }
 }

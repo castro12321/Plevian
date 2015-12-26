@@ -7,6 +7,7 @@ using System.Windows.Media;
 using Plevian.GUI;
 using Plevian.Messages;
 using System.Collections.Generic;
+using System.Windows.Input;
 using Plevian.Players;
 using Plevian.Save;
 using Plevian.GUI.TechnologiesView;
@@ -64,6 +65,8 @@ namespace Plevian
                 System.Threading.Thread.Sleep(10); // Some fake lag (if needed)
                 System.Windows.Forms.Application.DoEvents(); // handle form events
 
+                continue; // TODO: Remove
+
                 // Process events
                 mapTab.handleEvents();
                 villageTab.handleEvents();
@@ -110,6 +113,11 @@ namespace Plevian
                         break;
                     }
             }
+        }
+
+        private void MainWindow_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Logger.Trace("HOST CLICK");
         }
     }
 }

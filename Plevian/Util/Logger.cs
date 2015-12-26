@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,15 @@ namespace Plevian.Debugging
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
             log("[" + type + "] " + message + " (" + sourceFilePath + ":" + sourceLineNumber);
+        }
+
+        [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
+        public static void Error(String message, LogType type = LogType.Trace,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Trace("ERROR: " + message, type, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <summary>
