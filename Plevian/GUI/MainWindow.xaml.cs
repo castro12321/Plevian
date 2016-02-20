@@ -115,7 +115,7 @@ namespace Plevian
             }
         }
 
-        private void MainWindow_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void MainWindow_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Logger.Trace("HOST CLICK");
         }

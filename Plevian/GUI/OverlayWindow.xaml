@@ -3,31 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="OverlayWindow" MinWidth="400" MinHeight="300"
         WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
-        Background="Aqua" MouseLeftButtonDown="OverlayWindow_OnMouseRightButtonDown">
+        Background="Aqua" MouseLeftButtonDown="OverlayWindow_OnMouseLeftButtonDown">
     <Window.OpacityMask>
         <DrawingBrush>
             <DrawingBrush.Drawing>
                 <GeometryDrawing>
                     <GeometryDrawing.Brush>
                         <RadialGradientBrush>
+                            <RadialGradientBrush.Center>
+                                <Point>
+                                    <Point.X>0.5</Point.X>
+                                    <Point.Y>0.5</Point.Y>
+                                </Point>
+                            </RadialGradientBrush.Center>
                             <RadialGradientBrush.GradientStops>
                                 <GradientStop Offset="1" Color="Black" />
-                                <GradientStop Offset="0.8" Color="Transparent" />
+                                <GradientStop Offset="0.9" Color="Transparent" />
                                 <GradientStop Offset="0" Color="Transparent" />
                             </RadialGradientBrush.GradientStops>
                         </RadialGradientBrush>
                     </GeometryDrawing.Brush>
                     <GeometryDrawing.Geometry>
-                        <RectangleGeometry Rect="0.05,0.05 0.9,0.9" />
+                        <RectangleGeometry Rect="0.005,0.005 0.995,0.995" />
                     </GeometryDrawing.Geometry>
                     <GeometryDrawing.Pen>
-                        <Pen Thickness="0.1" Brush="Black" />
+                        <Pen Thickness="0.05" Brush="Black" />
                     </GeometryDrawing.Pen>
                 </GeometryDrawing>
             </DrawingBrush.Drawing>
         </DrawingBrush>
     </Window.OpacityMask>
     <Grid>
+        <Border></Border>
         <Button HorizontalAlignment="Right" VerticalAlignment="Top" Content="Hello" Margin="0 50 1000 0" Width="200" Height="140"/>
         <!--<TextBlock Text="Testing OpacityMask with a rather long string................." Grid.ZIndex="3"/>-->
     </Grid>

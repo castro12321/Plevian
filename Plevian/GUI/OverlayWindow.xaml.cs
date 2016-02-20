@@ -59,9 +59,61 @@ namespace Plevian.GUI
             UpdateLocationAndSizeToParent();
         }
 
-        private void OverlayWindow_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void OverlayWindow_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Logger.Trace("OVERLAY CLICK");
+        }
+
+        public enum OpacityMaskType
+        {
+            Normal,
+            Village,
+            Map
+        }
+
+        public void SetOpacityMaskFor(OpacityMaskType maskType)
+        {
+            if (maskType == OpacityMaskType.Normal)
+            {
+                OpacityMask = null;
+                return;
+            }
+
+            OpacityMask = new DrawingBrush()
+            {
+                Drawing = new GeometryDrawing()
+                {
+                    Brush = new RadialGradientBrush()
+                    {
+                        Center = new Point(0.5, 0.5),
+                        GradientStops = new GradientStopCollection()
+                        {
+                            new GradientStop()
+                            {
+                                Offset = 1,
+                                Color = Colors.Black
+                            },
+                            new GradientStop()
+                            {
+                                Offset = 0.9,
+                                Color = Colors.Transparent
+                            },
+                            new GradientStop()
+                            {
+                                Offset = 0,
+                                Color = Colors.Transparent
+                            },
+                        }
+                    },
+                    Geometry = new RectangleGeometry()
+                    {
+                        Rect = new Rect(
+                            new Point(0.05, 0.05),
+                            new Point(0.95, 0.95))
+                    },
+                    Pen = new Pen(Brushes.Black, 0.1)
+                }
+            };
         }
     }
 }
